@@ -1,0 +1,43 @@
+algorithms:
+  - id: gatk-haplotypecaller
+    name: GATK HaplotypeCaller
+    description: |
+      基于局部重组装的变异检测算法，通过在活跃区域进行局部单倍型组装来发现变异。
+      该方法能够同时检测 SNP 和 Indel，是目前最广泛使用的变异检测工具之一。
+    purpose: 检测 SNP 和小型 Indel 变异
+    time_complexity: O(n * r)
+    space_complexity: O(r)
+    category: variant-calling
+    subcategory: snv
+    paper_url: https://doi.org/10.1038/ng.806
+    implementation_url: https://github.com/broadinstitute/gatk
+    related_tools:
+      - GATK
+      - Picard
+      - BWA
+    tags:
+      - haplotype
+      - snp
+      - indel
+      - germline
+
+  - id: freebayes
+    name: FreeBayes
+    description: |
+      基于贝叶斯统计的变异检测算法，使用单倍型作为基本单位进行变异调用。
+      该方法支持多倍体样本，能够检测复杂的变异模式，计算效率较高。
+    purpose: 基于贝叶斯的变异检测
+    time_complexity: O(n * h)
+    space_complexity: O(h)
+    category: variant-calling
+    subcategory: snv
+    paper_url: https://arxiv.org/abs/1207.3907
+    implementation_url: https://github.com/freebayes/freebayes
+    related_tools:
+      - VCFtools
+      - BCFtools
+    tags:
+      - bayesian
+      - haplotype
+      - polyploid
+      - snp

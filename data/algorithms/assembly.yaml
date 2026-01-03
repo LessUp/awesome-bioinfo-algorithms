@@ -1,0 +1,43 @@
+algorithms:
+  - id: de-bruijn-graph
+    name: De Bruijn Graph Assembly
+    description: |
+      基于 De Bruijn 图的序列组装算法，将测序读段分解为 k-mer，构建有向图进行组装。
+      该方法特别适合处理高通量测序产生的大量短读段，是现代基因组组装的核心方法。
+    purpose: 从短读段重建基因组序列
+    time_complexity: O(n)
+    space_complexity: O(k * 4^k)
+    category: assembly
+    subcategory: de-novo
+    paper_url: https://doi.org/10.1073/pnas.98.17.9748
+    implementation_url: https://github.com/voutcn/megahit
+    related_tools:
+      - SPAdes
+      - MEGAHIT
+      - Velvet
+    tags:
+      - graph-based
+      - k-mer
+      - de-novo
+      - short-read
+
+  - id: overlap-layout-consensus
+    name: Overlap-Layout-Consensus (OLC)
+    description: |
+      经典的序列组装方法，通过三个步骤完成组装：计算读段间的重叠、构建布局图、生成一致序列。
+      该方法适合处理长读段数据，能够产生高质量的组装结果。
+    purpose: 长读段序列组装
+    time_complexity: O(n^2)
+    space_complexity: O(n^2)
+    category: assembly
+    subcategory: de-novo
+    paper_url: https://doi.org/10.1101/gr.101360.109
+    related_tools:
+      - Canu
+      - Flye
+      - Miniasm
+    tags:
+      - overlap
+      - long-read
+      - de-novo
+      - classic

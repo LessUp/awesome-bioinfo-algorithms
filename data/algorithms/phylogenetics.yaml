@@ -1,0 +1,39 @@
+algorithms:
+  - id: neighbor-joining
+    name: Neighbor-Joining
+    description: |
+      基于距离矩阵的系统发育树构建算法，通过迭代地合并最近邻节点来构建无根树。
+      该方法计算速度快，适合处理大规模数据集，是最常用的距离法建树算法之一。
+    purpose: 快速构建系统发育树
+    time_complexity: O(n^3)
+    space_complexity: O(n^2)
+    category: phylogenetics
+    paper_url: https://doi.org/10.1093/oxfordjournals.molbev.a040454
+    related_tools:
+      - MEGA
+      - PHYLIP
+      - RapidNJ
+    tags:
+      - distance-based
+      - tree-building
+      - classic
+
+  - id: maximum-likelihood
+    name: Maximum Likelihood Phylogeny
+    description: |
+      基于最大似然法的系统发育推断算法，通过优化进化模型参数来寻找最可能的树拓扑。
+      该方法统计学基础扎实，能够提供可靠的分支支持度评估。
+    purpose: 统计学方法构建系统发育树
+    time_complexity: O(n^2 * s * r)
+    space_complexity: O(n * s)
+    category: phylogenetics
+    paper_url: https://doi.org/10.1093/sysbio/syq010
+    implementation_url: https://github.com/stamatak/standard-RAxML
+    related_tools:
+      - RAxML
+      - IQ-TREE
+      - PhyML
+    tags:
+      - maximum-likelihood
+      - statistical
+      - tree-building
