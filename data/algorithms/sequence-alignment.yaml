@@ -1,0 +1,62 @@
+algorithms:
+  - id: smith-waterman
+    name: Smith-Waterman
+    description: |
+      经典的局部序列比对算法，使用动态规划方法找出两条序列之间相似性最高的局部区域。
+      该算法保证找到最优的局部比对结果，适用于检测序列中的保守区域和功能域。
+    purpose: 局部序列比对，寻找序列间的相似区域
+    time_complexity: O(mn)
+    space_complexity: O(mn)
+    category: sequence-alignment
+    subcategory: pairwise
+    paper_url: https://doi.org/10.1016/0022-2836(81)90087-5
+    implementation_url: https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library
+    related_tools:
+      - BLAST
+      - FASTA
+      - SSEARCH
+    tags:
+      - dynamic-programming
+      - local-alignment
+      - classic
+
+  - id: needleman-wunsch
+    name: Needleman-Wunsch
+    description: |
+      全局序列比对的经典算法，使用动态规划对两条完整序列进行端到端比对。
+      该算法找出最优的全局对齐方案，适用于比较相似长度的同源序列。
+    purpose: 全局序列比对
+    time_complexity: O(mn)
+    space_complexity: O(mn)
+    category: sequence-alignment
+    subcategory: pairwise
+    paper_url: https://doi.org/10.1016/0022-2836(70)90057-4
+    related_tools:
+      - EMBOSS needle
+      - Clustal
+    tags:
+      - dynamic-programming
+      - global-alignment
+      - classic
+
+  - id: bwt-alignment
+    name: Burrows-Wheeler Transform Alignment
+    description: |
+      基于 Burrows-Wheeler 变换的序列比对算法，通过构建 BWT 索引实现快速的短读段比对。
+      该方法在保持高准确性的同时大幅提升比对速度，是现代测序数据分析的核心算法。
+    purpose: 高通量测序数据的快速比对
+    time_complexity: O(n)
+    space_complexity: O(n)
+    category: sequence-alignment
+    subcategory: pairwise
+    paper_url: https://doi.org/10.1093/bioinformatics/btp324
+    implementation_url: https://github.com/lh3/bwa
+    related_tools:
+      - BWA
+      - Bowtie
+      - HISAT2
+    tags:
+      - bwt
+      - indexing
+      - short-read
+      - high-throughput

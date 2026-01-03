@@ -1,0 +1,67 @@
+categories:
+  - id: sequence-alignment
+    name: 序列比对
+    name_en: Sequence Alignment
+    description: 用于比较和对齐生物序列的算法
+    subcategories:
+      - id: pairwise
+        name: 双序列比对
+        name_en: Pairwise Alignment
+        description: 两条序列之间的比对算法
+      - id: multiple
+        name: 多序列比对
+        name_en: Multiple Sequence Alignment
+        description: 多条序列同时比对的算法
+
+  - id: assembly
+    name: 序列组装
+    name_en: Sequence Assembly
+    description: 从短读段重建完整序列的算法
+    subcategories:
+      - id: de-novo
+        name: 从头组装
+        name_en: De Novo Assembly
+        description: 不依赖参考序列的组装方法
+      - id: reference-guided
+        name: 参考引导组装
+        name_en: Reference-Guided Assembly
+        description: 基于参考序列的组装方法
+
+  - id: variant-calling
+    name: 变异检测
+    name_en: Variant Calling
+    description: 检测基因组变异的算法
+    subcategories:
+      - id: snv
+        name: 单核苷酸变异
+        name_en: SNV Detection
+        description: 检测单核苷酸变异
+      - id: structural
+        name: 结构变异
+        name_en: Structural Variants
+        description: 检测大规模结构变异
+
+  - id: expression-analysis
+    name: 基因表达分析
+    name_en: Gene Expression Analysis
+    description: 分析基因表达水平的算法
+
+  - id: protein-structure
+    name: 蛋白质结构预测
+    name_en: Protein Structure Prediction
+    description: 预测蛋白质三维结构的算法
+
+  - id: phylogenetics
+    name: 系统发育分析
+    name_en: Phylogenetics
+    description: 构建和分析进化树的算法
+
+  - id: functional-annotation
+    name: 功能注释
+    name_en: Functional Annotation
+    description: 预测基因和蛋白质功能的算法
+
+  - id: data-compression
+    name: 数据压缩
+    name_en: Data Compression
+    description: 压缩生物信息学数据的算法

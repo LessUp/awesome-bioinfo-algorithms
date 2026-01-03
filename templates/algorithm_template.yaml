@@ -1,0 +1,43 @@
+# 算法条目模板
+# Algorithm Entry Template
+# 
+# 请复制此模板并填写算法信息
+# Please copy this template and fill in the algorithm information
+
+algorithms:
+  - id: algorithm-id                    # 唯一标识符，使用小写字母和连字符
+    name: Algorithm Name                # 算法名称
+    description: |
+      算法的详细描述，50-200字。
+      包括算法的基本原理、特点和适用场景。
+      A detailed description of the algorithm (50-200 characters).
+      Include basic principles, features, and applicable scenarios.
+    purpose: 算法的主要用途              # Main purpose of the algorithm
+    time_complexity: O(n)               # 时间复杂度 / Time complexity
+    space_complexity: O(n)              # 空间复杂度（可选）/ Space complexity (optional)
+    category: sequence-alignment        # 主分类ID / Main category ID
+    subcategory: pairwise               # 子分类ID（可选）/ Subcategory ID (optional)
+    paper_url: https://doi.org/...      # 原始论文链接（可选）/ Original paper URL (optional)
+    implementation_url: https://...     # 参考实现链接（可选）/ Reference implementation URL (optional)
+    related_tools:                      # 相关工具（可选）/ Related tools (optional)
+      - Tool1
+      - Tool2
+    tags:                               # 标签（可选）/ Tags (optional)
+      - tag1
+      - tag2
+
+# 可用分类 / Available Categories:
+# - sequence-alignment (序列比对)
+#   - pairwise (双序列比对)
+#   - multiple (多序列比对)
+# - assembly (序列组装)
+#   - de-novo (从头组装)
+#   - reference-guided (参考引导组装)
+# - variant-calling (变异检测)
+#   - snv (单核苷酸变异)
+#   - structural (结构变异)
+# - expression-analysis (基因表达分析)
+# - protein-structure (蛋白质结构预测)
+# - phylogenetics (系统发育分析)
+# - functional-annotation (功能注释)
+# - data-compression (数据压缩)
