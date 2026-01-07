@@ -1,0 +1,41 @@
+algorithms:
+  - id: gzip-fastq
+    name: GZIP for FASTQ
+    description: |
+      基于 DEFLATE 算法的通用数据压缩方法，广泛用于压缩 FASTQ 格式的测序数据。
+      该方法压缩比适中，兼容性好，是生物信息学数据存储的标准压缩格式。
+    purpose: 测序数据的通用压缩
+    time_complexity: O(n)
+    space_complexity: O(1)
+    category: data-compression
+    paper_url: https://doi.org/10.17487/RFC1952
+    related_tools:
+      - gzip
+      - pigz
+      - bgzip
+    tags:
+      - lossless
+      - general-purpose
+      - standard
+      - fastq
+
+  - id: cram
+    name: CRAM
+    description: |
+      专为比对数据设计的参考序列压缩格式，通过存储与参考序列的差异实现高压缩比。
+      该方法可将 BAM 文件压缩至原大小的 40-60%，是大规模测序项目的首选存储格式。
+    purpose: 比对数据的高效压缩存储
+    time_complexity: O(n)
+    space_complexity: O(r)
+    category: data-compression
+    paper_url: https://doi.org/10.1093/nar/gkq1373
+    implementation_url: https://github.com/samtools/htslib
+    related_tools:
+      - samtools
+      - htslib
+      - cramtools
+    tags:
+      - reference-based
+      - alignment
+      - bam
+      - efficient

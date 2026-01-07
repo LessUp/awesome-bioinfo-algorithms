@@ -1,0 +1,42 @@
+algorithms:
+  - id: deseq2
+    name: DESeq2
+    description: |
+      基于负二项分布的差异表达分析算法，使用收缩估计来提高方差估计的稳定性。
+      该方法特别适合处理小样本量的 RNA-seq 数据，是目前最广泛使用的差异表达分析工具之一。
+    purpose: RNA-seq 数据的差异表达分析
+    time_complexity: O(n * g)
+    space_complexity: O(g)
+    category: expression-analysis
+    paper_url: https://doi.org/10.1186/s13059-014-0550-8
+    implementation_url: https://bioconductor.org/packages/DESeq2
+    related_tools:
+      - edgeR
+      - limma
+      - Bioconductor
+    tags:
+      - rna-seq
+      - differential-expression
+      - negative-binomial
+      - statistical
+
+  - id: kallisto
+    name: Kallisto
+    description: |
+      基于伪比对的转录本定量算法，使用 k-mer 索引实现超快速的表达量估计。
+      该方法无需完整比对即可准确估计转录本丰度，大幅提升了分析速度。
+    purpose: 快速转录本定量
+    time_complexity: O(n)
+    space_complexity: O(t)
+    category: expression-analysis
+    paper_url: https://doi.org/10.1038/nbt.3519
+    implementation_url: https://github.com/pachterlab/kallisto
+    related_tools:
+      - Salmon
+      - RSEM
+      - Sleuth
+    tags:
+      - pseudoalignment
+      - quantification
+      - rna-seq
+      - fast

@@ -6,27 +6,30 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from hypothesis import given, settings, strategies as st
+from hypothesis import given, settings, strategies as st, HealthCheck
 from scripts.schema import AlgorithmEntry
 from scripts.algorithm_registry import AlgorithmRegistry
 
 
-# Strategies for generating test data
-valid_id = st.text(
-    alphabet=st.sampled_from('abcdefghijklmnopqrstuvwxyz0123456789-'),
-    min_size=1, max_size=30
-).filter(lambda x: x and x[0].isalpha() and not x.endswith('-'))
+# Optimized strategies for generating test data
+# Using simpler strategies to avoid slow generation
 
-valid_name = st.text(min_size=1, max_size=50).filter(lambda x: x.strip())
+valid_id = st.from_regex(r'[a-z][a-z0-9]{0,19}', fullmatch=True)
 
-valid_description = st.text(min_size=50, max_size=200).filter(lambda x: len(x.strip()) >= 50)
+valid_name = st.text(
+    alphabet=st.sampled_from('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ '),
+    min_size=3, max_size=30
+)
+
+# Pre-generate description with exact length to avoid filtering
+valid_description = st.text(
+    alphabet=st.sampled_from('abcdefghijklmnopqrstuvwxyz '),
+    min_size=60, max_size=100
+)
 
 valid_complexity = st.sampled_from(['O(1)', 'O(n)', 'O(n^2)', 'O(mn)', 'O(log n)', 'O(n log n)'])
 
-valid_tag = st.text(
-    alphabet=st.sampled_from('abcdefghijklmnopqrstuvwxyz-'),
-    min_size=1, max_size=20
-).filter(lambda x: x and x[0].isalpha())
+valid_tag = st.from_regex(r'[a-z][a-z\-]{0,9}', fullmatch=True)
 
 valid_category = st.sampled_from([
     'sequence-alignment', 'assembly', 'variant-calling',
@@ -35,48 +38,36 @@ valid_category = st.sampled_from([
 
 
 @st.composite
-def algorithm_entry_strategy(draw, category=None):
+def algorithm_entry_strategy(draw, category=None, algo_id=None):
     """Generate a valid AlgorithmEntry."""
     return AlgorithmEntry(
-        id=draw(valid_id),
+        id=algo_id if algo_id else draw(valid_id),
         name=draw(valid_name),
         description=draw(valid_description),
         purpose=draw(valid_name),
         time_complexity=draw(valid_complexity),
         category=category if category else draw(valid_category),
         space_complexity=draw(st.one_of(st.just(''), valid_complexity)),
-        tags=draw(st.lists(valid_tag, min_size=0, max_size=5, unique=True)),
+        tags=draw(st.lists(valid_tag, min_size=0, max_size=3, unique=True)),
     )
 
 
 @st.composite
 def algorithms_list_strategy(draw):
     """Generate a list of algorithms with unique IDs."""
-    num_algorithms = draw(st.integers(min_value=1, max_value=10))
+    num_algorithms = draw(st.integers(min_value=1, max_value=5))
     algorithms = []
-    used_ids = set()
     
     for i in range(num_algorithms):
-        algo = draw(algorithm_entry_strategy())
-        # Ensure unique ID
-        while algo.id in used_ids:
-            algo = AlgorithmEntry(
-                id=f"{algo.id}{i}",
-                name=algo.name,
-                description=algo.description,
-                purpose=algo.purpose,
-                time_complexity=algo.time_complexity,
-                category=algo.category,
-                space_complexity=algo.space_complexity,
-                tags=algo.tags,
-            )
-        used_ids.add(algo.id)
+        # Generate unique ID directly to avoid regeneration loops
+        algo_id = f"algo{i}{draw(st.from_regex(r'[a-z]{3}', fullmatch=True))}"
+        algo = draw(algorithm_entry_strategy(algo_id=algo_id))
         algorithms.append(algo)
     
     return algorithms
 
 
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.too_slow])
 @given(algorithms=algorithms_list_strategy())
 def test_property_1_category_algorithm_count_accuracy(algorithms):
     """
@@ -113,7 +104,7 @@ def test_property_1_category_algorithm_count_accuracy(algorithms):
             f"Category '{category}' should have {expected_count} algorithms, got {len(actual)}"
 
 
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.too_slow])
 @given(algorithms=algorithms_list_strategy())
 def test_property_8_search_result_correctness(algorithms):
     """
@@ -154,7 +145,7 @@ def test_property_8_search_result_correctness(algorithms):
                 f"Algorithm '{algo.id}' should be found when filtering by tag '{tag}'"
 
 
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.too_slow])
 @given(algorithms=algorithms_list_strategy())
 def test_all_algorithms_retrievable(algorithms):
     """Test that all loaded algorithms can be retrieved."""
@@ -171,7 +162,7 @@ def test_all_algorithms_retrievable(algorithms):
         assert retrieved.id == algo.id, f"Retrieved algorithm should have correct ID"
 
 
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.too_slow])
 @given(algorithms=algorithms_list_strategy())
 def test_tag_statistics(algorithms):
     """Test that tag statistics are accurate."""

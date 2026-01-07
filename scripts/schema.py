@@ -3,7 +3,7 @@ Data models for Awesome Bioinformatics Algorithms.
 Defines Category and AlgorithmEntry dataclasses.
 """
 from dataclasses import dataclass, field
-from typing import List, Optional
+from typing import Optional
 
 
 @dataclass
@@ -13,12 +13,12 @@ class Category:
     name: str
     name_en: str
     description: str = ""
-    subcategories: List['Category'] = field(default_factory=list)
+    subcategories: list['Category'] = field(default_factory=list)
     parent_id: Optional[str] = None
-    
+
     def to_dict(self) -> dict:
         """Convert to dictionary for serialization."""
-        result = {
+        result: dict = {
             'id': self.id,
             'name': self.name,
             'name_en': self.name_en,
@@ -27,14 +27,14 @@ class Category:
         if self.subcategories:
             result['subcategories'] = [sub.to_dict() for sub in self.subcategories]
         return result
-    
+
     @classmethod
     def from_dict(cls, data: dict, parent_id: Optional[str] = None) -> 'Category':
         """Create Category from dictionary."""
         subcategories = []
         if 'subcategories' in data:
             subcategories = [
-                cls.from_dict(sub, parent_id=data['id']) 
+                cls.from_dict(sub, parent_id=data['id'])
                 for sub in data['subcategories']
             ]
         return cls(
@@ -57,18 +57,18 @@ class AlgorithmEntry:
     purpose: str
     time_complexity: str
     category: str
-    
+
     # Optional fields
     space_complexity: str = ""
     paper_url: str = ""
     implementation_url: str = ""
-    related_tools: List[str] = field(default_factory=list)
-    tags: List[str] = field(default_factory=list)
+    related_tools: list[str] = field(default_factory=list)
+    tags: list[str] = field(default_factory=list)
     subcategory: str = ""
-    
+
     def to_dict(self) -> dict:
         """Convert to dictionary for serialization."""
-        result = {
+        result: dict = {
             'id': self.id,
             'name': self.name,
             'description': self.description,
@@ -90,7 +90,7 @@ class AlgorithmEntry:
         if self.subcategory:
             result['subcategory'] = self.subcategory
         return result
-    
+
     @classmethod
     def from_dict(cls, data: dict) -> 'AlgorithmEntry':
         """Create AlgorithmEntry from dictionary."""
@@ -108,7 +108,7 @@ class AlgorithmEntry:
             tags=data.get('tags', []),
             subcategory=data.get('subcategory', ''),
         )
-    
+
     def __eq__(self, other) -> bool:
         """Check equality based on all fields."""
         if not isinstance(other, AlgorithmEntry):

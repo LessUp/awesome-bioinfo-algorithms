@@ -12,16 +12,20 @@ This project collects and organizes commonly used algorithms in bioinformatics, 
 
 ## 📊 统计 | Statistics
 
-- 📊 算法总数 (Total Algorithms): 9
-- 📁 分类数量 (Categories): 4
-- 🏷️ 标签数量 (Tags): 23
+- 📊 算法总数 (Total Algorithms): 17
+- 📁 分类数量 (Categories): 8
+- 🏷️ 标签数量 (Tags): 51
 
 ## 📑 目录 | Table of Contents
 
 - [序列比对 (Sequence Alignment)](#序列比对)
 - [序列组装 (Sequence Assembly)](#序列组装)
 - [变异检测 (Variant Calling)](#变异检测)
+- [基因表达分析 (Gene Expression Analysis)](#基因表达分析)
+- [蛋白质结构预测 (Protein Structure Prediction)](#蛋白质结构预测)
 - [系统发育分析 (Phylogenetics)](#系统发育分析)
+- [功能注释 (Functional Annotation)](#功能注释)
+- [数据压缩 (Data Compression)](#数据压缩)
 
 ---
 
@@ -136,6 +140,72 @@ This project collects and organizes commonly used algorithms in bioinformatics, 
 **标签**: `bayesian` `haplotype` `polyploid` `snp`
 
 
+## 基因表达分析 (Gene Expression Analysis)
+
+分析基因表达水平的算法
+
+
+#### DESeq2
+
+基于负二项分布的差异表达分析算法，使用收缩估计来提高方差估计的稳定性。
+该方法特别适合处理小样本量的 RNA-seq 数据，是目前最广泛使用的差异表达分析工具之一。
+
+**用途**: RNA-seq 数据的差异表达分析
+**时间复杂度**: O(n * g)
+**空间复杂度**: O(g)
+**论文**: [https://doi.org/10.1186/s13059-014-0550-8](https://doi.org/10.1186/s13059-014-0550-8)
+**实现**: [https://bioconductor.org/packages/DESeq2](https://bioconductor.org/packages/DESeq2)
+**相关工具**: edgeR, limma, Bioconductor
+**标签**: `rna-seq` `differential-expression` `negative-binomial` `statistical`
+
+
+#### Kallisto
+
+基于伪比对的转录本定量算法，使用 k-mer 索引实现超快速的表达量估计。
+该方法无需完整比对即可准确估计转录本丰度，大幅提升了分析速度。
+
+**用途**: 快速转录本定量
+**时间复杂度**: O(n)
+**空间复杂度**: O(t)
+**论文**: [https://doi.org/10.1038/nbt.3519](https://doi.org/10.1038/nbt.3519)
+**实现**: [https://github.com/pachterlab/kallisto](https://github.com/pachterlab/kallisto)
+**相关工具**: Salmon, RSEM, Sleuth
+**标签**: `pseudoalignment` `quantification` `rna-seq` `fast`
+
+
+## 蛋白质结构预测 (Protein Structure Prediction)
+
+预测蛋白质三维结构的算法
+
+
+#### AlphaFold
+
+基于深度学习的蛋白质结构预测算法，使用注意力机制和进化信息预测蛋白质三维结构。
+该方法在 CASP14 竞赛中取得突破性成果，预测精度接近实验测定水平。
+
+**用途**: 从氨基酸序列预测蛋白质三维结构
+**时间复杂度**: O(n^2)
+**空间复杂度**: O(n^2)
+**论文**: [https://doi.org/10.1038/s41586-021-03819-2](https://doi.org/10.1038/s41586-021-03819-2)
+**实现**: [https://github.com/deepmind/alphafold](https://github.com/deepmind/alphafold)
+**相关工具**: ColabFold, ESMFold, RoseTTAFold
+**标签**: `deep-learning` `attention` `structure-prediction` `breakthrough`
+
+
+#### Rosetta
+
+基于物理能量函数的蛋白质结构预测和设计算法，使用蒙特卡洛采样探索构象空间。
+该方法广泛应用于蛋白质折叠、对接和设计，是计算结构生物学的重要工具。
+
+**用途**: 蛋白质结构预测和设计
+**时间复杂度**: O(n^3)
+**空间复杂度**: O(n^2)
+**论文**: [https://doi.org/10.1126/science.1089427](https://doi.org/10.1126/science.1089427)
+**实现**: [https://www.rosettacommons.org/](https://www.rosettacommons.org/)
+**相关工具**: PyRosetta, RosettaDock, RosettaDesign
+**标签**: `energy-function` `monte-carlo` `protein-design` `classic`
+
+
 ## 系统发育分析 (Phylogenetics)
 
 构建和分析进化树的算法
@@ -166,6 +236,71 @@ This project collects and organizes commonly used algorithms in bioinformatics, 
 **实现**: [https://github.com/stamatak/standard-RAxML](https://github.com/stamatak/standard-RAxML)
 **相关工具**: RAxML, IQ-TREE, PhyML
 **标签**: `maximum-likelihood` `statistical` `tree-building`
+
+
+## 功能注释 (Functional Annotation)
+
+预测基因和蛋白质功能的算法
+
+
+#### BLAST-based Annotation
+
+基于序列相似性的功能注释方法，通过与已知功能序列数据库比对来推断未知序列的功能。
+该方法是最基础和广泛使用的功能注释策略，适用于各类生物序列的初步功能预测。
+
+**用途**: 基于序列相似性的功能预测
+**时间复杂度**: O(mn)
+**空间复杂度**: O(m)
+**论文**: [https://doi.org/10.1016/S0022-2836(05)80360-2](https://doi.org/10.1016/S0022-2836(05)80360-2)
+**实现**: [https://blast.ncbi.nlm.nih.gov/](https://blast.ncbi.nlm.nih.gov/)
+**相关工具**: BLAST+, UniProt, InterPro
+**标签**: `sequence-similarity` `database-search` `classic` `annotation`
+
+
+#### HMMER
+
+基于隐马尔可夫模型的序列分析算法，使用概率模型检测远程同源序列和蛋白质结构域。
+该方法比简单的序列比对更敏感，能够发现进化距离较远的同源关系。
+
+**用途**: 蛋白质结构域识别和远程同源检测
+**时间复杂度**: O(mn)
+**空间复杂度**: O(m)
+**论文**: [https://doi.org/10.1371/journal.pcbi.1002195](https://doi.org/10.1371/journal.pcbi.1002195)
+**实现**: [http://hmmer.org/](http://hmmer.org/)
+**相关工具**: Pfam, InterProScan, SMART
+**标签**: `hmm` `domain-detection` `remote-homology` `probabilistic`
+
+
+## 数据压缩 (Data Compression)
+
+压缩生物信息学数据的算法
+
+
+#### GZIP for FASTQ
+
+基于 DEFLATE 算法的通用数据压缩方法，广泛用于压缩 FASTQ 格式的测序数据。
+该方法压缩比适中，兼容性好，是生物信息学数据存储的标准压缩格式。
+
+**用途**: 测序数据的通用压缩
+**时间复杂度**: O(n)
+**空间复杂度**: O(1)
+**论文**: [https://doi.org/10.17487/RFC1952](https://doi.org/10.17487/RFC1952)
+**相关工具**: gzip, pigz, bgzip
+**标签**: `lossless` `general-purpose` `standard` `fastq`
+
+
+#### CRAM
+
+专为比对数据设计的参考序列压缩格式，通过存储与参考序列的差异实现高压缩比。
+该方法可将 BAM 文件压缩至原大小的 40-60%，是大规模测序项目的首选存储格式。
+
+**用途**: 比对数据的高效压缩存储
+**时间复杂度**: O(n)
+**空间复杂度**: O(r)
+**论文**: [https://doi.org/10.1093/nar/gkq1373](https://doi.org/10.1093/nar/gkq1373)
+**实现**: [https://github.com/samtools/htslib](https://github.com/samtools/htslib)
+**相关工具**: samtools, htslib, cramtools
+**标签**: `reference-based` `alignment` `bam` `efficient`
 
 
 ## 🤝 贡献 | Contributing
