@@ -1,0 +1,42 @@
+algorithms:
+  - id: alphafold
+    name: AlphaFold
+    description: |
+      基于深度学习的蛋白质结构预测算法，使用注意力机制和进化信息预测蛋白质三维结构。
+      该方法在 CASP14 竞赛中取得突破性成果，预测精度接近实验测定水平。
+    purpose: 从氨基酸序列预测蛋白质三维结构
+    time_complexity: O(n^2)
+    space_complexity: O(n^2)
+    category: protein-structure
+    paper_url: https://doi.org/10.1038/s41586-021-03819-2
+    implementation_url: https://github.com/deepmind/alphafold
+    related_tools:
+      - ColabFold
+      - ESMFold
+      - RoseTTAFold
+    tags:
+      - deep-learning
+      - attention
+      - structure-prediction
+      - breakthrough
+
+  - id: rosetta
+    name: Rosetta
+    description: |
+      基于物理能量函数的蛋白质结构预测和设计算法，使用蒙特卡洛采样探索构象空间。
+      该方法广泛应用于蛋白质折叠、对接和设计，是计算结构生物学的重要工具。
+    purpose: 蛋白质结构预测和设计
+    time_complexity: O(n^3)
+    space_complexity: O(n^2)
+    category: protein-structure
+    paper_url: https://doi.org/10.1126/science.1089427
+    implementation_url: https://www.rosettacommons.org/
+    related_tools:
+      - PyRosetta
+      - RosettaDock
+      - RosettaDesign
+    tags:
+      - energy-function
+      - monte-carlo
+      - protein-design
+      - classic

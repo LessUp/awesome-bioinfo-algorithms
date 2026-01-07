@@ -1,0 +1,42 @@
+algorithms:
+  - id: blast-annotation
+    name: BLAST-based Annotation
+    description: |
+      基于序列相似性的功能注释方法，通过与已知功能序列数据库比对来推断未知序列的功能。
+      该方法是最基础和广泛使用的功能注释策略，适用于各类生物序列的初步功能预测。
+    purpose: 基于序列相似性的功能预测
+    time_complexity: O(mn)
+    space_complexity: O(m)
+    category: functional-annotation
+    paper_url: https://doi.org/10.1016/S0022-2836(05)80360-2
+    implementation_url: https://blast.ncbi.nlm.nih.gov/
+    related_tools:
+      - BLAST+
+      - UniProt
+      - InterPro
+    tags:
+      - sequence-similarity
+      - database-search
+      - classic
+      - annotation
+
+  - id: hmmer
+    name: HMMER
+    description: |
+      基于隐马尔可夫模型的序列分析算法，使用概率模型检测远程同源序列和蛋白质结构域。
+      该方法比简单的序列比对更敏感，能够发现进化距离较远的同源关系。
+    purpose: 蛋白质结构域识别和远程同源检测
+    time_complexity: O(mn)
+    space_complexity: O(m)
+    category: functional-annotation
+    paper_url: https://doi.org/10.1371/journal.pcbi.1002195
+    implementation_url: http://hmmer.org/
+    related_tools:
+      - Pfam
+      - InterProScan
+      - SMART
+    tags:
+      - hmm
+      - domain-detection
+      - remote-homology
+      - probabilistic
