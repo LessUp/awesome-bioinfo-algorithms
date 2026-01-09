@@ -1,7 +1,7 @@
 # Awesome Bioinformatics Algorithms
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
-[![Validate](https://github.com/YOUR_USERNAME/awesome-bioinformatics-algorithms/actions/workflows/validate.yml/badge.svg)](https://github.com/YOUR_USERNAME/awesome-bioinformatics-algorithms/actions/workflows/validate.yml)
+[![Validate](https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/validate.yml/badge.svg)](https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/validate.yml)
 [![License: CC0-1.0](https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg)](http://creativecommons.org/publicdomain/zero/1.0/)
 
 > 🧬 生物信息学算法概要汇总 | A curated list of bioinformatics algorithms
@@ -18,14 +18,14 @@ This project collects and organizes commonly used algorithms in bioinformatics, 
 
 ## 📑 目录 | Table of Contents
 
-- [序列比对 (Sequence Alignment)](#序列比对)
-- [序列组装 (Sequence Assembly)](#序列组装)
-- [变异检测 (Variant Calling)](#变异检测)
-- [基因表达分析 (Gene Expression Analysis)](#基因表达分析)
-- [蛋白质结构预测 (Protein Structure Prediction)](#蛋白质结构预测)
-- [系统发育分析 (Phylogenetics)](#系统发育分析)
-- [功能注释 (Functional Annotation)](#功能注释)
-- [数据压缩 (Data Compression)](#数据压缩)
+- [序列比对 (Sequence Alignment)](#序列比对-sequence-alignment)
+- [序列组装 (Sequence Assembly)](#序列组装-sequence-assembly)
+- [变异检测 (Variant Calling)](#变异检测-variant-calling)
+- [基因表达分析 (Gene Expression Analysis)](#基因表达分析-gene-expression-analysis)
+- [蛋白质结构预测 (Protein Structure Prediction)](#蛋白质结构预测-protein-structure-prediction)
+- [系统发育分析 (Phylogenetics)](#系统发育分析-phylogenetics)
+- [功能注释 (Functional Annotation)](#功能注释-functional-annotation)
+- [数据压缩 (Data Compression)](#数据压缩-data-compression)
 
 ---
 

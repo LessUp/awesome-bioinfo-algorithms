@@ -87,7 +87,7 @@
     - _Requirements: 3.5_
 
   - [x] 6.4 更新 README
-    - 更新 YOUR_USERNAME 占位符说明
+    - 更新仓库链接占位符说明
     - 添加代码覆盖率徽章
     - 添加快速开始指南
     - _Requirements: 3.2, 3.4, 4.5_

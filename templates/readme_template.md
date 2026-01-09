@@ -1,7 +1,7 @@
 # Awesome Bioinformatics Algorithms
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
-[![Validate](https://github.com/YOUR_USERNAME/awesome-bioinformatics-algorithms/actions/workflows/validate.yml/badge.svg)](https://github.com/YOUR_USERNAME/awesome-bioinformatics-algorithms/actions/workflows/validate.yml)
+[![Validate](https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/validate.yml/badge.svg)](https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/validate.yml)
 [![License: CC0-1.0](https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg)](http://creativecommons.org/publicdomain/zero/1.0/)
 
 > 🧬 生物信息学算法概要汇总 | A curated list of bioinformatics algorithms

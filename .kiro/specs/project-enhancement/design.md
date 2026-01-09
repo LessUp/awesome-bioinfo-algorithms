@@ -103,9 +103,9 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/YOUR_USERNAME/awesome-bioinformatics-algorithms"
-Repository = "https://github.com/YOUR_USERNAME/awesome-bioinformatics-algorithms"
-Issues = "https://github.com/YOUR_USERNAME/awesome-bioinformatics-algorithms/issues"
+Homepage = "https://github.com/LessUp/awesome-bioinfo-algorithms"
+Repository = "https://github.com/LessUp/awesome-bioinfo-algorithms"
+Issues = "https://github.com/LessUp/awesome-bioinfo-algorithms/issues"
 
 [tool.ruff]
 line-length = 100

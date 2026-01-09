@@ -69,8 +69,8 @@ Check `data/categories.yaml` for the complete list.
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/awesome-bioinformatics-algorithms.git
-cd awesome-bioinformatics-algorithms
+git clone https://github.com/LessUp/awesome-bioinfo-algorithms.git
+cd awesome-bioinfo-algorithms
 
 # Install in development mode
 pip install -e ".[dev]"
