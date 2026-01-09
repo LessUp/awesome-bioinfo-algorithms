@@ -47,8 +47,8 @@ awesome-bioinfo-algorithms/
 
 ```bash
 # 克隆仓库
-git clone https://github.com/YOUR_USERNAME/awesome-bioinformatics-algorithms.git
-cd awesome-bioinformatics-algorithms
+git clone https://github.com/LessUp/awesome-bioinfo-algorithms.git
+cd awesome-bioinfo-algorithms
 
 # 创建虚拟环境（推荐）
 python -m venv venv
@@ -166,8 +166,8 @@ awesome-bioinfo-algorithms/
 
 ```bash
 # Clone repository
-git clone https://github.com/YOUR_USERNAME/awesome-bioinformatics-algorithms.git
-cd awesome-bioinformatics-algorithms
+git clone https://github.com/LessUp/awesome-bioinfo-algorithms.git
+cd awesome-bioinfo-algorithms
 
 # Create virtual environment (recommended)
 python -m venv venv

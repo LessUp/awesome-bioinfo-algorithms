@@ -92,15 +92,17 @@ class ReadmeGenerator:
         for category in categories:
             algos = self._registry.get_by_category(category.id)
             if algos:  # Only include categories with algorithms
-                anchor = self._generate_anchor(category.name)
-                toc_lines.append(f"- [{category.name} ({category.name_en})](#{ anchor})")
+                title = f"{category.name} ({category.name_en})"
+                anchor = self._generate_anchor(title)
+                toc_lines.append(f"- [{title}](#{anchor})")
 
                 # Add subcategories
                 for sub in category.subcategories:
                     sub_algos = self._registry.get_by_category(sub.id)
                     if sub_algos:
-                        sub_anchor = self._generate_anchor(sub.name)
-                        toc_lines.append(f"  - [{sub.name} ({sub.name_en})](#{sub_anchor})")
+                        sub_title = f"{sub.name} ({sub.name_en})"
+                        sub_anchor = self._generate_anchor(sub_title)
+                        toc_lines.append(f"  - [{sub_title}](#{sub_anchor})")
 
         return "\n".join(toc_lines)
 
