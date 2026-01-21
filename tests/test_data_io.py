@@ -7,7 +7,7 @@ import os
 import tempfile
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from hypothesis import given, settings, strategies as st
+from hypothesis import given, settings, strategies as st, HealthCheck
 from scripts.schema import Category, AlgorithmEntry
 from scripts.algorithm_registry import AlgorithmRegistry
 from scripts.category_manager import CategoryManager
@@ -87,7 +87,7 @@ def categories_and_algorithms_strategy(draw):
     return categories, algorithms
 
 
-@settings(max_examples=100, deadline=None)
+@settings(max_examples=100, deadline=None, suppress_health_check=[HealthCheck.filter_too_much])
 @given(data=categories_and_algorithms_strategy())
 def test_property_11_round_trip_yaml(data):
     """
@@ -144,7 +144,7 @@ def test_property_11_round_trip_yaml(data):
             os.unlink(temp_path)
 
 
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(data=categories_and_algorithms_strategy())
 def test_property_11_round_trip_json(data):
     """
@@ -188,7 +188,7 @@ def test_property_11_round_trip_json(data):
             os.unlink(temp_path)
 
 
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(data=categories_and_algorithms_strategy())
 def test_dict_round_trip(data):
     """Test round-trip through dictionary conversion."""

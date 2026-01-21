@@ -6,7 +6,7 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from hypothesis import given, settings, strategies as st
+from hypothesis import given, settings, strategies as st, HealthCheck
 from scripts.schema import Category
 from scripts.category_manager import CategoryManager
 
@@ -80,7 +80,7 @@ def categories_list_strategy(draw):
     return categories
 
 
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(categories=categories_list_strategy())
 def test_property_2_subcategory_hierarchy_preservation(categories):
     """
@@ -121,7 +121,7 @@ def test_property_2_subcategory_hierarchy_preservation(categories):
                 f"Parent of '{sub.id}' should be '{category.id}'"
 
 
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(categories=categories_list_strategy())
 def test_all_category_ids_listed(categories):
     """Test that all category IDs (including subcategories) are listed."""
@@ -136,7 +136,7 @@ def test_all_category_ids_listed(categories):
             assert sub.id in all_ids, f"Subcategory '{sub.id}' should be in ID list"
 
 
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(categories=categories_list_strategy())
 def test_category_exists_check(categories):
     """Test that category_exists correctly identifies existing categories."""

@@ -12,13 +12,23 @@
 awesome-bioinfo-algorithms/
 ├── README.md                    # 自动生成的主文档
 ├── CONTRIBUTING.md              # 贡献指南
-├── requirements.txt             # Python 依赖
+├── CODE_OF_CONDUCT.md           # 行为准则
+├── SECURITY.md                  # 安全政策
+├── CHANGELOG.md                 # 版本变更记录
+├── LICENSE                      # 许可证
+├── pyproject.toml               # 项目配置（主要）
+├── .pre-commit-config.yaml      # 代码质量钩子
+├── requirements.txt             # 依赖清单（兼容/可选）
 ├── data/
 │   ├── categories.yaml          # 分类定义
 │   └── algorithms/              # 算法数据文件
 │       ├── sequence-alignment.yaml
 │       ├── assembly.yaml
 │       └── ...
+├── docs/
+│   ├── DEVELOPMENT.md           # 开发指南
+│   ├── API.md                   # API 文档
+│   └── FAQ.md                   # 常见问题
 ├── scripts/
 │   ├── schema.py                # 数据模型定义
 │   ├── validate.py              # 数据验证器
@@ -55,9 +65,11 @@ python -m venv venv
 source venv/bin/activate  # Linux/macOS
 # 或 venv\Scripts\activate  # Windows
 
-# 安装依赖
-pip install -r requirements.txt
+# 安装依赖（开发模式）
+pip install -e ".[dev]"
 ```
+
+> 提示：请将 `YOUR_GITHUB_USERNAME` 替换为你的 GitHub 用户名。
 
 ### 核心组件
 
@@ -152,10 +164,17 @@ categories, algorithms = data_io.import_data('backup.yaml')
 awesome-bioinfo-algorithms/
 ├── README.md                    # Auto-generated main document
 ├── CONTRIBUTING.md              # Contributing guide
-├── requirements.txt             # Python dependencies
+├── CODE_OF_CONDUCT.md           # Code of conduct
+├── SECURITY.md                  # Security policy
+├── CHANGELOG.md                 # Changelog
+├── LICENSE                      # License
+├── pyproject.toml               # Project config (primary)
+├── .pre-commit-config.yaml      # Pre-commit hooks
+├── requirements.txt             # Dependencies (legacy/optional)
 ├── data/
 │   ├── categories.yaml          # Category definitions
 │   └── algorithms/              # Algorithm data files
+├── docs/                        # Documentation
 ├── scripts/                     # Core scripts
 ├── templates/                   # Templates
 ├── tests/                       # Test files
@@ -173,9 +192,11 @@ cd awesome-bioinfo-algorithms
 python -m venv venv
 source venv/bin/activate  # Linux/macOS
 
-# Install dependencies
-pip install -r requirements.txt
+# Install dependencies (dev mode)
+pip install -e ".[dev]"
 ```
+
+> Note: Replace `YOUR_GITHUB_USERNAME` with your GitHub username.
 
 ### Core Components
 

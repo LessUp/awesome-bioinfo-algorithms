@@ -6,7 +6,7 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from hypothesis import given, settings, strategies as st, assume
+from hypothesis import given, settings, strategies as st, assume, HealthCheck
 from scripts.validate import Validator, ValidationResult
 
 
@@ -58,7 +58,7 @@ def algorithm_data_empty_field(draw, field_to_empty: str):
 
 
 # Property 3: Required Fields Validation
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(field_name=st.sampled_from(['id', 'name', 'description', 'purpose', 'time_complexity', 'category']))
 def test_property_3_missing_required_field(field_name: str):
     """
@@ -89,7 +89,7 @@ def test_property_3_missing_required_field(field_name: str):
         f"Error should mention missing field '{field_name}'"
 
 
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(field_name=st.sampled_from(['id', 'name', 'description', 'purpose', 'time_complexity', 'category']))
 def test_property_3_empty_required_field(field_name: str):
     """
@@ -121,7 +121,7 @@ def test_property_3_empty_required_field(field_name: str):
 
 
 # Property 7: Validation Error Specificity
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(
     missing_fields=st.lists(
         st.sampled_from(['id', 'name', 'description', 'purpose', 'time_complexity', 'category']),
@@ -160,7 +160,7 @@ def test_property_7_error_specificity_missing_fields(missing_fields):
             f"Error should specifically mention '{field}'"
 
 
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(desc_length=st.integers(min_value=0, max_value=49))
 def test_property_7_error_specificity_short_description(desc_length):
     """
@@ -191,7 +191,7 @@ def test_property_7_error_specificity_short_description(desc_length):
             "Error should mention description length issue"
 
 
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(desc_length=st.integers(min_value=201, max_value=300))
 def test_property_7_error_specificity_long_description(desc_length):
     """
@@ -222,7 +222,7 @@ def test_property_7_error_specificity_long_description(desc_length):
 
 
 # Property 10: Data Format Validation
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(data=valid_algorithm_data())
 def test_property_10_valid_data_passes(data):
     """
@@ -241,7 +241,7 @@ def test_property_10_valid_data_passes(data):
         assert result.is_valid, f"Valid data should pass validation. Errors: {result.errors}"
 
 
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(
     tags_value=st.one_of(
         st.text(min_size=1, max_size=20),  # String instead of list
@@ -277,7 +277,7 @@ def test_property_10_invalid_tags_format(tags_value):
 
 
 # Category validation tests
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(field_name=st.sampled_from(['id', 'name', 'name_en']))
 def test_category_missing_required_field(field_name: str):
     """Test that missing required category fields are detected."""

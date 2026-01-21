@@ -10,6 +10,18 @@
 
 This project collects and organizes commonly used algorithms in bioinformatics, providing brief introductions, complexity analysis, and related resource links to help developers quickly understand and choose appropriate algorithms.
 
+## 🚀 快速开始 | Quick Start
+
+```bash
+git clone https://github.com/YOUR_GITHUB_USERNAME/awesome-bioinformatics-algorithms.git
+cd awesome-bioinformatics-algorithms
+pip install -e ".[dev]"
+python scripts/generate_readme.py
+```
+
+> 注意：请将 `YOUR_GITHUB_USERNAME` 替换为你的 GitHub 用户名（或直接使用本仓库地址）。
+> Note: Replace `YOUR_GITHUB_USERNAME` with your GitHub username (or use the repository URL directly).
+
 ## 📊 统计 | Statistics
 
 - 📊 算法总数 (Total Algorithms): 17

@@ -103,9 +103,15 @@ dev = [
 ]
 
 [project.urls]
+<<<<<<< HEAD
 Homepage = "https://github.com/LessUp/awesome-bioinfo-algorithms"
 Repository = "https://github.com/LessUp/awesome-bioinfo-algorithms"
 Issues = "https://github.com/LessUp/awesome-bioinfo-algorithms/issues"
+=======
+Homepage = "https://github.com/YOUR_GITHUB_USERNAME/awesome-bioinformatics-algorithms"
+Repository = "https://github.com/YOUR_GITHUB_USERNAME/awesome-bioinformatics-algorithms"
+Issues = "https://github.com/YOUR_GITHUB_USERNAME/awesome-bioinformatics-algorithms/issues"
+>>>>>>> 0ba016b (docs: 更新文档中的 GitHub 用户名占位符和安装说明)
 
 [tool.ruff]
 line-length = 100
