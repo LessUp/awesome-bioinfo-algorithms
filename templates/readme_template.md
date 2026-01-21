@@ -1,7 +1,12 @@
 # Awesome Bioinformatics Algorithms
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
+<<<<<<< HEAD
 [![Validate](https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/validate.yml/badge.svg)](https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/validate.yml)
+=======
+[![Validate](https://github.com/YOUR_GITHUB_USERNAME/awesome-bioinformatics-algorithms/actions/workflows/validate.yml/badge.svg)](https://github.com/YOUR_GITHUB_USERNAME/awesome-bioinformatics-algorithms/actions/workflows/validate.yml)
+[![codecov](https://codecov.io/gh/YOUR_GITHUB_USERNAME/awesome-bioinformatics-algorithms/branch/main/graph/badge.svg)](https://codecov.io/gh/YOUR_GITHUB_USERNAME/awesome-bioinformatics-algorithms)
+>>>>>>> 0ba016b (docs: 更新文档中的 GitHub 用户名占位符和安装说明)
 [![License: CC0-1.0](https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg)](http://creativecommons.org/publicdomain/zero/1.0/)
 
 > 🧬 生物信息学算法概要汇总 | A curated list of bioinformatics algorithms
@@ -9,6 +14,18 @@
 本项目收集和整理生物信息学领域常用的算法，提供算法的简要介绍、复杂度分析和相关资源链接，帮助开发者快速了解和选择合适的算法。
 
 This project collects and organizes commonly used algorithms in bioinformatics, providing brief introductions, complexity analysis, and related resource links to help developers quickly understand and choose appropriate algorithms.
+
+## 🚀 快速开始 | Quick Start
+
+```bash
+git clone https://github.com/YOUR_GITHUB_USERNAME/awesome-bioinformatics-algorithms.git
+cd awesome-bioinformatics-algorithms
+pip install -e ".[dev]"
+python scripts/generate_readme.py
+```
+
+> 注意：请将 `YOUR_GITHUB_USERNAME` 替换为你的 GitHub 用户名（或直接使用本仓库地址）。
+> Note: Replace `YOUR_GITHUB_USERNAME` with your GitHub username (or use the repository URL directly).
 
 ## 📊 统计 | Statistics
 

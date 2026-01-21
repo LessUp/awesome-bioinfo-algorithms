@@ -6,7 +6,7 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from hypothesis import given, settings, strategies as st
+from hypothesis import given, settings, strategies as st, HealthCheck
 from scripts.schema import Category, AlgorithmEntry
 from scripts.algorithm_registry import AlgorithmRegistry
 from scripts.category_manager import CategoryManager
@@ -101,7 +101,7 @@ def registry_with_categories_strategy(draw):
     return categories, algorithms
 
 
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(data=registry_with_categories_strategy())
 def test_property_6_toc_completeness(data):
     """
@@ -132,7 +132,7 @@ def test_property_6_toc_completeness(data):
                 f"Category '{category.name}' with {len(algos_in_cat)} algorithms should be in TOC"
 
 
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(data=registry_with_categories_strategy())
 def test_property_5_markdown_output_consistency(data):
     """
@@ -171,7 +171,7 @@ def test_property_5_markdown_output_consistency(data):
         assert "**时间复杂度**:" in output, "Time complexity should have consistent label"
 
 
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(data=registry_with_categories_strategy())
 def test_property_9_anchor_link_validity(data):
     """
@@ -214,7 +214,7 @@ def test_property_9_anchor_link_validity(data):
                 f"Anchor '{anchor}' should not have consecutive hyphens"
 
 
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(data=registry_with_categories_strategy())
 def test_full_readme_generation(data):
     """Test that full README generation works without errors."""

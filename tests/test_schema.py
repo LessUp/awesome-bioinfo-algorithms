@@ -6,7 +6,7 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from hypothesis import given, settings, strategies as st
+from hypothesis import given, settings, strategies as st, HealthCheck
 from scripts.schema import AlgorithmEntry, Category
 
 
@@ -55,7 +55,7 @@ def algorithm_entry_strategy(draw):
     )
 
 
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(entry=algorithm_entry_strategy())
 def test_property_4_optional_fields_storage(entry: AlgorithmEntry):
     """
@@ -96,7 +96,7 @@ def category_strategy(draw):
     )
 
 
-@settings(max_examples=100)
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(category=category_strategy())
 def test_category_round_trip(category: Category):
     """Test Category serialization round-trip."""

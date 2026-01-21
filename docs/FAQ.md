@@ -83,6 +83,9 @@ ruff check scripts/
 mypy scripts/
 ```
 
+> 提示：请将 `YOUR_GITHUB_USERNAME` 替换为你的 GitHub 用户名。
+> Note: Replace `YOUR_GITHUB_USERNAME` with your GitHub username.
+
 ### How do I run the tests? / 如何运行测试？
 
 ```bash

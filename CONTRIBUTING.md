@@ -68,8 +68,8 @@ algorithms:
 在提交前，请在本地运行验证：
 
 ```bash
-# 安装依赖
-pip install -r requirements.txt
+# 安装依赖（开发模式）
+pip install -e ".[dev]"
 
 # 运行测试
 python -m pytest tests/ -v
@@ -157,8 +157,8 @@ algorithms:
 Before submitting, please run validation locally:
 
 ```bash
-# Install dependencies
-pip install -r requirements.txt
+# Install dependencies (dev mode)
+pip install -e ".[dev]"
 
 # Run tests
 python -m pytest tests/ -v
