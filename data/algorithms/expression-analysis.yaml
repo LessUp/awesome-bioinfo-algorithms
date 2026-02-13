@@ -20,6 +20,27 @@ algorithms:
       - negative-binomial
       - statistical
 
+  - id: star
+    name: STAR
+    description: |
+      超快速的 RNA-seq 比对工具，使用后缀数组和种子扩展策略实现剪接感知的比对。
+      该方法能够准确识别新的剪接位点，是 RNA-seq 数据分析流程中使用最广泛的比对工具。
+    purpose: RNA-seq 数据的剪接感知比对
+    time_complexity: O(n)
+    space_complexity: O(g)
+    category: expression-analysis
+    paper_url: https://doi.org/10.1093/bioinformatics/bts635
+    implementation_url: https://github.com/alexdobin/STAR
+    related_tools:
+      - HISAT2
+      - TopHat2
+      - Salmon
+    tags:
+      - rna-seq
+      - splice-aware
+      - alignment
+      - fast
+
   - id: kallisto
     name: Kallisto
     description: |

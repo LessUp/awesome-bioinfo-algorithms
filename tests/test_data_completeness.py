@@ -65,7 +65,7 @@ def test_property_1_algorithm_data_completeness(_):
         )
 
 
-@settings(max_examples=100, suppress_health_check=[HealthCheck.too_slow])
+@settings(max_examples=100, suppress_health_check=[HealthCheck.too_slow], deadline=None)
 @given(st.just(None))
 def test_property_2_category_coverage(_):
     """

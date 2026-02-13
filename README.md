@@ -13,20 +13,18 @@ This project collects and organizes commonly used algorithms in bioinformatics, 
 ## 🚀 快速开始 | Quick Start
 
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/awesome-bioinformatics-algorithms.git
-cd awesome-bioinformatics-algorithms
+git clone https://github.com/LessUp/awesome-bioinfo-algorithms.git
+cd awesome-bioinfo-algorithms
 pip install -e ".[dev]"
 python scripts/generate_readme.py
 ```
 
-> 注意：请将 `YOUR_GITHUB_USERNAME` 替换为你的 GitHub 用户名（或直接使用本仓库地址）。
-> Note: Replace `YOUR_GITHUB_USERNAME` with your GitHub username (or use the repository URL directly).
 
 ## 📊 统计 | Statistics
 
-- 📊 算法总数 (Total Algorithms): 17
+- 📊 算法总数 (Total Algorithms): 24
 - 📁 分类数量 (Categories): 8
-- 🏷️ 标签数量 (Tags): 51
+- 🏷️ 标签数量 (Tags): 68
 
 ## 📑 目录 | Table of Contents
 
@@ -73,6 +71,48 @@ python scripts/generate_readme.py
 **标签**: `dynamic-programming` `global-alignment` `classic`
 
 
+#### Clustal Omega
+
+高性能的多序列比对工具，使用 mBed 引导树和 HHalign 算法实现快速准确的多序列比对。
+该方法能够在合理时间内处理数千条序列的比对任务，是多序列比对领域的标准工具。
+
+**用途**: 大规模多序列比对
+**时间复杂度**: O(n * L^2)
+**空间复杂度**: O(n * L)
+**论文**: [https://doi.org/10.1038/msb.2011.75](https://doi.org/10.1038/msb.2011.75)
+**实现**: [http://www.clustal.org/omega/](http://www.clustal.org/omega/)
+**相关工具**: ClustalW, T-Coffee, MAFFT
+**标签**: `multiple-alignment` `guide-tree` `progressive` `scalable`
+
+
+#### MUSCLE
+
+基于迭代优化的多序列比对算法，通过多轮渐进比对和精化步骤提高比对质量。
+该方法在速度和准确性之间取得了良好平衡，适用于中等规模的序列集合。
+
+**用途**: 高精度多序列比对
+**时间复杂度**: O(n^2 * L)
+**空间复杂度**: O(n * L)
+**论文**: [https://doi.org/10.1093/nar/gkh340](https://doi.org/10.1093/nar/gkh340)
+**实现**: [https://github.com/rcedgar/muscle](https://github.com/rcedgar/muscle)
+**相关工具**: MAFFT, Clustal Omega, PROBCONS
+**标签**: `multiple-alignment` `iterative` `refinement` `classic`
+
+
+#### Minimap2
+
+通用的序列比对工具，支持长读段（PacBio/ONT）和短读段的快速比对。
+该方法使用最小化子（minimizer）索引实现超快速比对，是长读段数据分析的首选工具。
+
+**用途**: 长读段和短读段的通用快速比对
+**时间复杂度**: O(n)
+**空间复杂度**: O(n)
+**论文**: [https://doi.org/10.1093/bioinformatics/bty191](https://doi.org/10.1093/bioinformatics/bty191)
+**实现**: [https://github.com/lh3/minimap2](https://github.com/lh3/minimap2)
+**相关工具**: BWA, NGMLR, Winnowmap
+**标签**: `minimizer` `long-read` `versatile` `fast`
+
+
 #### Burrows-Wheeler Transform Alignment
 
 基于 Burrows-Wheeler 变换的序列比对算法，通过构建 BWT 索引实现快速的短读段比对。
@@ -104,6 +144,20 @@ python scripts/generate_readme.py
 **实现**: [https://github.com/voutcn/megahit](https://github.com/voutcn/megahit)
 **相关工具**: SPAdes, MEGAHIT, Velvet
 **标签**: `graph-based` `k-mer` `de-novo` `short-read`
+
+
+#### Reference-Guided Assembly
+
+基于参考基因组的序列组装方法，将测序读段先比对到参考序列上，再进行局部组装和变异检测。
+该方法适合有近缘参考基因组的物种，组装速度快且资源消耗低，常用于重测序项目。
+
+**用途**: 基于参考序列的快速基因组组装
+**时间复杂度**: O(n log n)
+**空间复杂度**: O(n)
+**论文**: [https://doi.org/10.1186/gb-2011-12-5-r42](https://doi.org/10.1186/gb-2011-12-5-r42)
+**实现**: [https://github.com/ablab/ragout](https://github.com/ablab/ragout)
+**相关工具**: Ragout, RaGOO, RagTag
+**标签**: `reference-based` `scaffolding` `resequencing` `efficient`
 
 
 #### Overlap-Layout-Consensus (OLC)
@@ -138,6 +192,34 @@ python scripts/generate_readme.py
 **标签**: `haplotype` `snp` `indel` `germline`
 
 
+#### Delly
+
+基于分裂读段和双端读段信号的结构变异检测算法，能够发现缺失、重复、倒位和易位等大规模基因组变异。
+该方法结合多种信号源提高检测灵敏度，是结构变异检测领域的代表性工具之一。
+
+**用途**: 检测基因组结构变异（缺失、重复、倒位、易位）
+**时间复杂度**: O(n * c)
+**空间复杂度**: O(n)
+**论文**: [https://doi.org/10.1093/bioinformatics/bts378](https://doi.org/10.1093/bioinformatics/bts378)
+**实现**: [https://github.com/dellytools/delly](https://github.com/dellytools/delly)
+**相关工具**: Manta, LUMPY, GRIDSS
+**标签**: `structural-variant` `split-read` `paired-end` `sv-detection`
+
+
+#### Manta
+
+高性能的结构变异和大型 Indel 检测工具，使用图组装方法精确定位变异断点。
+该方法速度快、准确性高，支持体细胞和生殖系变异检测，广泛用于临床基因组学。
+
+**用途**: 结构变异和大型 Indel 检测
+**时间复杂度**: O(n * c)
+**空间复杂度**: O(c)
+**论文**: [https://doi.org/10.1093/bioinformatics/btv710](https://doi.org/10.1093/bioinformatics/btv710)
+**实现**: [https://github.com/Illumina/manta](https://github.com/Illumina/manta)
+**相关工具**: Delly, GRIDSS, SvABA
+**标签**: `structural-variant` `graph-assembly` `clinical` `fast`
+
+
 #### FreeBayes
 
 基于贝叶斯统计的变异检测算法，使用单倍型作为基本单位进行变异调用。
@@ -169,6 +251,20 @@ python scripts/generate_readme.py
 **实现**: [https://bioconductor.org/packages/DESeq2](https://bioconductor.org/packages/DESeq2)
 **相关工具**: edgeR, limma, Bioconductor
 **标签**: `rna-seq` `differential-expression` `negative-binomial` `statistical`
+
+
+#### STAR
+
+超快速的 RNA-seq 比对工具，使用后缀数组和种子扩展策略实现剪接感知的比对。
+该方法能够准确识别新的剪接位点，是 RNA-seq 数据分析流程中使用最广泛的比对工具。
+
+**用途**: RNA-seq 数据的剪接感知比对
+**时间复杂度**: O(n)
+**空间复杂度**: O(g)
+**论文**: [https://doi.org/10.1093/bioinformatics/bts635](https://doi.org/10.1093/bioinformatics/bts635)
+**实现**: [https://github.com/alexdobin/STAR](https://github.com/alexdobin/STAR)
+**相关工具**: HISAT2, TopHat2, Salmon
+**标签**: `rna-seq` `splice-aware` `alignment` `fast`
 
 
 #### Kallisto
