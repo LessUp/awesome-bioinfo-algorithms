@@ -21,6 +21,28 @@ algorithms:
       - de-novo
       - short-read
 
+  - id: reference-guided-assembly
+    name: Reference-Guided Assembly
+    description: |
+      基于参考基因组的序列组装方法，将测序读段先比对到参考序列上，再进行局部组装和变异检测。
+      该方法适合有近缘参考基因组的物种，组装速度快且资源消耗低，常用于重测序项目。
+    purpose: 基于参考序列的快速基因组组装
+    time_complexity: O(n log n)
+    space_complexity: O(n)
+    category: assembly
+    subcategory: reference-guided
+    paper_url: https://doi.org/10.1186/gb-2011-12-5-r42
+    implementation_url: https://github.com/ablab/ragout
+    related_tools:
+      - Ragout
+      - RaGOO
+      - RagTag
+    tags:
+      - reference-based
+      - scaffolding
+      - resequencing
+      - efficient
+
   - id: overlap-layout-consensus
     name: Overlap-Layout-Consensus (OLC)
     description: |

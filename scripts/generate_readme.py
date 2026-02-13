@@ -5,9 +5,6 @@ Main script to generate README.md for Awesome Bioinformatics Algorithms.
 import os
 import sys
 
-# Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from scripts.algorithm_registry import AlgorithmRegistry
 from scripts.category_manager import CategoryManager
 from scripts.readme_generator import ReadmeGenerator

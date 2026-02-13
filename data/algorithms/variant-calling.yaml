@@ -21,6 +21,50 @@ algorithms:
       - indel
       - germline
 
+  - id: delly
+    name: Delly
+    description: |
+      基于分裂读段和双端读段信号的结构变异检测算法，能够发现缺失、重复、倒位和易位等大规模基因组变异。
+      该方法结合多种信号源提高检测灵敏度，是结构变异检测领域的代表性工具之一。
+    purpose: 检测基因组结构变异（缺失、重复、倒位、易位）
+    time_complexity: O(n * c)
+    space_complexity: O(n)
+    category: variant-calling
+    subcategory: structural
+    paper_url: https://doi.org/10.1093/bioinformatics/bts378
+    implementation_url: https://github.com/dellytools/delly
+    related_tools:
+      - Manta
+      - LUMPY
+      - GRIDSS
+    tags:
+      - structural-variant
+      - split-read
+      - paired-end
+      - sv-detection
+
+  - id: manta
+    name: Manta
+    description: |
+      高性能的结构变异和大型 Indel 检测工具，使用图组装方法精确定位变异断点。
+      该方法速度快、准确性高，支持体细胞和生殖系变异检测，广泛用于临床基因组学。
+    purpose: 结构变异和大型 Indel 检测
+    time_complexity: O(n * c)
+    space_complexity: O(c)
+    category: variant-calling
+    subcategory: structural
+    paper_url: https://doi.org/10.1093/bioinformatics/btv710
+    implementation_url: https://github.com/Illumina/manta
+    related_tools:
+      - Delly
+      - GRIDSS
+      - SvABA
+    tags:
+      - structural-variant
+      - graph-assembly
+      - clinical
+      - fast
+
   - id: freebayes
     name: FreeBayes
     description: |

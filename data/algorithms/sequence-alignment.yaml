@@ -39,6 +39,72 @@ algorithms:
       - global-alignment
       - classic
 
+  - id: clustal-omega
+    name: Clustal Omega
+    description: |
+      高性能的多序列比对工具，使用 mBed 引导树和 HHalign 算法实现快速准确的多序列比对。
+      该方法能够在合理时间内处理数千条序列的比对任务，是多序列比对领域的标准工具。
+    purpose: 大规模多序列比对
+    time_complexity: O(n * L^2)
+    space_complexity: O(n * L)
+    category: sequence-alignment
+    subcategory: multiple
+    paper_url: https://doi.org/10.1038/msb.2011.75
+    implementation_url: http://www.clustal.org/omega/
+    related_tools:
+      - ClustalW
+      - T-Coffee
+      - MAFFT
+    tags:
+      - multiple-alignment
+      - guide-tree
+      - progressive
+      - scalable
+
+  - id: muscle
+    name: MUSCLE
+    description: |
+      基于迭代优化的多序列比对算法，通过多轮渐进比对和精化步骤提高比对质量。
+      该方法在速度和准确性之间取得了良好平衡，适用于中等规模的序列集合。
+    purpose: 高精度多序列比对
+    time_complexity: O(n^2 * L)
+    space_complexity: O(n * L)
+    category: sequence-alignment
+    subcategory: multiple
+    paper_url: https://doi.org/10.1093/nar/gkh340
+    implementation_url: https://github.com/rcedgar/muscle
+    related_tools:
+      - MAFFT
+      - Clustal Omega
+      - PROBCONS
+    tags:
+      - multiple-alignment
+      - iterative
+      - refinement
+      - classic
+
+  - id: minimap2
+    name: Minimap2
+    description: |
+      通用的序列比对工具，支持长读段（PacBio/ONT）和短读段的快速比对。
+      该方法使用最小化子（minimizer）索引实现超快速比对，是长读段数据分析的首选工具。
+    purpose: 长读段和短读段的通用快速比对
+    time_complexity: O(n)
+    space_complexity: O(n)
+    category: sequence-alignment
+    subcategory: pairwise
+    paper_url: https://doi.org/10.1093/bioinformatics/bty191
+    implementation_url: https://github.com/lh3/minimap2
+    related_tools:
+      - BWA
+      - NGMLR
+      - Winnowmap
+    tags:
+      - minimizer
+      - long-read
+      - versatile
+      - fast
+
   - id: bwt-alignment
     name: Burrows-Wheeler Transform Alignment
     description: |
