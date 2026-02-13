@@ -2,10 +2,6 @@
 Property-based tests for data models.
 Feature: awesome-bioinfo-algorithms, Property 4: Optional Fields Storage
 """
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from hypothesis import given, settings, strategies as st, HealthCheck
 from scripts.schema import AlgorithmEntry, Category
 

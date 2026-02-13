@@ -21,13 +21,13 @@ class DataIO:
         self._registry = registry or AlgorithmRegistry()
         self._category_manager = category_manager or CategoryManager()
 
-    def export_data(self, output_path: str, format: str = "yaml") -> None:
+    def export_data(self, output_path: str, fmt: str = "yaml") -> None:
         """
         Export all data to a file.
 
         Args:
             output_path: Path to save the exported data
-            format: Export format ('yaml' or 'json')
+            fmt: Export format ('yaml' or 'json')
         """
         data = {
             'categories': [cat.to_dict() for cat in self._category_manager.list_all_categories()],
@@ -35,7 +35,7 @@ class DataIO:
         }
 
         with open(output_path, 'w', encoding='utf-8') as f:
-            if format.lower() == 'json':
+            if fmt.lower() == 'json':
                 json.dump(data, f, ensure_ascii=False, indent=2)
             else:
                 yaml.dump(data, f, allow_unicode=True, default_flow_style=False)
@@ -87,26 +87,26 @@ class DataIO:
 
         return self._category_manager, self._registry
 
-    def export_categories(self, output_path: str, format: str = "yaml") -> None:
+    def export_categories(self, output_path: str, fmt: str = "yaml") -> None:
         """Export only categories to a file."""
         data = {
             'categories': [cat.to_dict() for cat in self._category_manager.list_all_categories()]
         }
 
         with open(output_path, 'w', encoding='utf-8') as f:
-            if format.lower() == 'json':
+            if fmt.lower() == 'json':
                 json.dump(data, f, ensure_ascii=False, indent=2)
             else:
                 yaml.dump(data, f, allow_unicode=True, default_flow_style=False)
 
-    def export_algorithms(self, output_path: str, format: str = "yaml") -> None:
+    def export_algorithms(self, output_path: str, fmt: str = "yaml") -> None:
         """Export only algorithms to a file."""
         data = {
             'algorithms': [algo.to_dict() for algo in self._registry.get_all_algorithms()]
         }
 
         with open(output_path, 'w', encoding='utf-8') as f:
-            if format.lower() == 'json':
+            if fmt.lower() == 'json':
                 json.dump(data, f, ensure_ascii=False, indent=2)
             else:
                 yaml.dump(data, f, allow_unicode=True, default_flow_style=False)

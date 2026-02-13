@@ -2,10 +2,6 @@
 Property-based tests for Validator class.
 Feature: awesome-bioinfo-algorithms
 """
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from hypothesis import given, settings, strategies as st, assume, HealthCheck
 from scripts.validate import Validator, ValidationResult
 

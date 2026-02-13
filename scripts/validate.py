@@ -149,37 +149,37 @@ class Validator:
 
         return result
 
-    def validate_yaml_file(self, file_path: str) -> ValidationResult:
+    def validate_yaml_file(self, file_path: str):
         """
-        Validate a YAML file.
+        Validate a YAML file and return parsed data.
 
         Args:
             file_path: Path to the YAML file
 
         Returns:
-            ValidationResult with validation status and any errors/warnings
+            Tuple of (ValidationResult, parsed data or None)
         """
         result = ValidationResult(is_valid=True)
 
         if not os.path.exists(file_path):
             result.add_error(f"File not found: {file_path}")
-            return result
+            return result, None
 
         try:
             with open(file_path, encoding='utf-8') as f:
                 data = yaml.safe_load(f)
         except yaml.YAMLError as e:
             result.add_error(f"YAML parsing error: {str(e)}")
-            return result
+            return result, None
         except UnicodeDecodeError as e:
             result.add_error(f"Encoding error (use UTF-8): {str(e)}")
-            return result
+            return result, None
 
         if data is None:
             result.add_error("Empty YAML file")
-            return result
+            return result, None
 
-        return result
+        return result, data
 
     def validate_algorithms_file(self, file_path: str) -> ValidationResult:
         """
@@ -191,12 +191,9 @@ class Validator:
         Returns:
             ValidationResult with validation status and any errors/warnings
         """
-        result = self.validate_yaml_file(file_path)
+        result, data = self.validate_yaml_file(file_path)
         if not result.is_valid:
             return result
-
-        with open(file_path, encoding='utf-8') as f:
-            data = yaml.safe_load(f)
 
         if 'algorithms' not in data:
             result.add_error("Missing 'algorithms' key in file")
@@ -233,12 +230,9 @@ class Validator:
         Returns:
             ValidationResult with validation status and any errors/warnings
         """
-        result = self.validate_yaml_file(file_path)
+        result, data = self.validate_yaml_file(file_path)
         if not result.is_valid:
             return result
-
-        with open(file_path, encoding='utf-8') as f:
-            data = yaml.safe_load(f)
 
         if 'categories' not in data:
             result.add_error("Missing 'categories' key in file")

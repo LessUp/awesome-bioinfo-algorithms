@@ -2,10 +2,6 @@
 Property-based tests for data completeness.
 Feature: project-enhancement
 """
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from hypothesis import given, settings, strategies as st, HealthCheck
 from scripts.schema import AlgorithmEntry
 from scripts.algorithm_registry import AlgorithmRegistry

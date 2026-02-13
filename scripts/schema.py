@@ -109,21 +109,6 @@ class AlgorithmEntry:
             subcategory=data.get('subcategory', ''),
         )
 
-    def __eq__(self, other) -> bool:
-        """Check equality based on all fields."""
-        if not isinstance(other, AlgorithmEntry):
-            return False
-        return (
-            self.id == other.id and
-            self.name == other.name and
-            self.description == other.description and
-            self.purpose == other.purpose and
-            self.time_complexity == other.time_complexity and
-            self.category == other.category and
-            self.space_complexity == other.space_complexity and
-            self.paper_url == other.paper_url and
-            self.implementation_url == other.implementation_url and
-            self.related_tools == other.related_tools and
-            self.tags == other.tags and
-            self.subcategory == other.subcategory
-        )
+    def __hash__(self) -> int:
+        """Hash based on algorithm ID for use in sets and dicts."""
+        return hash(self.id)

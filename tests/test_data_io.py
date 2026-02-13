@@ -2,10 +2,8 @@
 Property-based tests for Data Import/Export.
 Feature: awesome-bioinfo-algorithms, Property 11: Data Import/Export Round-Trip
 """
-import sys
 import os
 import tempfile
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from hypothesis import given, settings, strategies as st, HealthCheck
 from scripts.schema import Category, AlgorithmEntry
@@ -114,7 +112,7 @@ def test_property_11_round_trip_yaml(data):
         temp_path = f.name
     
     try:
-        data_io.export_data(temp_path, format='yaml')
+        data_io.export_data(temp_path, fmt='yaml')
         
         # Import back
         imported_categories, imported_algorithms = data_io.import_data(temp_path)
@@ -170,7 +168,7 @@ def test_property_11_round_trip_json(data):
         temp_path = f.name
     
     try:
-        data_io.export_data(temp_path, format='json')
+        data_io.export_data(temp_path, fmt='json')
         
         # Import back
         imported_categories, imported_algorithms = data_io.import_data(temp_path)
