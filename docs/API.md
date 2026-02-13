@@ -214,13 +214,14 @@ Handles import/export of algorithm and category data.
 
 ### Methods
 
-#### `export_data(output_path: str, categories: list[Category], algorithms: list[AlgorithmEntry])`
+#### `export_data(output_path: str, fmt: str = "yaml") -> None`
 
 Export all data to a file (YAML or JSON).
 
 ```python
-io = DataIO()
-io.export_data('backup.yaml', categories, algorithms)
+io = DataIO(registry, category_manager)
+io.export_data('backup.yaml', fmt='yaml')
+io.export_data('backup.json', fmt='json')
 ```
 
 #### `import_data(input_path: str) -> tuple[list[Category], list[AlgorithmEntry]]`
@@ -242,7 +243,7 @@ Generates README.md from categories and algorithms.
 ### Constructor
 
 ```python
-ReadmeGenerator(category_manager: CategoryManager, algorithm_registry: AlgorithmRegistry)
+ReadmeGenerator(registry: AlgorithmRegistry, category_manager: CategoryManager, template_path: str = "templates/readme_template.md")
 ```
 
 ### Methods
@@ -252,7 +253,7 @@ ReadmeGenerator(category_manager: CategoryManager, algorithm_registry: Algorithm
 Generate the complete README content.
 
 ```python
-generator = ReadmeGenerator(cm, registry)
+generator = ReadmeGenerator(registry, cm)
 readme_content = generator.generate()
 ```
 
