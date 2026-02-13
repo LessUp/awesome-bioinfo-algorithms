@@ -2,10 +2,6 @@
 Property-based tests for CategoryManager.
 Feature: awesome-bioinfo-algorithms, Property 2: Subcategory Hierarchy Preservation
 """
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from hypothesis import given, settings, strategies as st, HealthCheck
 from scripts.schema import Category
 from scripts.category_manager import CategoryManager
