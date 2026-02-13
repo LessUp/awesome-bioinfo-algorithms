@@ -69,8 +69,6 @@ source venv/bin/activate  # Linux/macOS
 pip install -e ".[dev]"
 ```
 
-> 提示：请将 `YOUR_GITHUB_USERNAME` 替换为你的 GitHub 用户名。
-
 ### 核心组件
 
 #### 1. 数据模型 (schema.py)
@@ -195,8 +193,6 @@ source venv/bin/activate  # Linux/macOS
 # Install dependencies (dev mode)
 pip install -e ".[dev]"
 ```
-
-> Note: Replace `YOUR_GITHUB_USERNAME` with your GitHub username.
 
 ### Core Components
 

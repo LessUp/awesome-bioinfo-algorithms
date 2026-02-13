@@ -54,12 +54,16 @@ Descriptions must be between 50 and 200 characters. This ensures:
 ### What categories are available? / 有哪些可用的分类？
 
 Current categories include:
-- `sequence-alignment`: Sequence alignment algorithms
-- `assembly`: Genome assembly algorithms
-- `variant-calling`: Variant calling algorithms
-- `phylogenetics`: Phylogenetic analysis algorithms
+- `sequence-alignment`: Sequence alignment algorithms / 序列比对
+- `assembly`: Genome assembly algorithms / 序列组装
+- `variant-calling`: Variant calling algorithms / 变异检测
+- `expression-analysis`: Gene expression analysis / 基因表达分析
+- `protein-structure`: Protein structure prediction / 蛋白质结构预测
+- `phylogenetics`: Phylogenetic analysis algorithms / 系统发育分析
+- `functional-annotation`: Functional annotation / 功能注释
+- `data-compression`: Data compression / 数据压缩
 
-Check `data/categories.yaml` for the complete list.
+Check `data/categories.yaml` for the complete list including subcategories.
 
 ---
 
@@ -82,9 +86,6 @@ python -m pytest tests/
 ruff check scripts/
 mypy scripts/
 ```
-
-> 提示：请将 `YOUR_GITHUB_USERNAME` 替换为你的 GitHub 用户名。
-> Note: Replace `YOUR_GITHUB_USERNAME` with your GitHub username.
 
 ### How do I run the tests? / 如何运行测试？
 

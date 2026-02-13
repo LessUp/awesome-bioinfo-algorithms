@@ -17,8 +17,8 @@ We take security seriously. If you discover a security vulnerability, please fol
 1. **Do NOT** create a public GitHub issue for security vulnerabilities.
    **不要**为安全漏洞创建公开的 GitHub issue。
 
-2. Send an email to the project maintainers with:
-   向项目维护者发送电子邮件，包含：
+2. Send an email to **security@lessup.org** with:
+   向 **security@lessup.org** 发送电子邮件，包含：
    - A description of the vulnerability / 漏洞描述
    - Steps to reproduce the issue / 复现步骤
    - Potential impact / 潜在影响
