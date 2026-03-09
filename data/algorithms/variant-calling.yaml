@@ -7,6 +7,7 @@ algorithms:
     purpose: 检测 SNP 和小型 Indel 变异
     time_complexity: O(n * r)
     space_complexity: O(r)
+    year: 2010
     category: variant-calling
     subcategory: snv
     paper_url: https://doi.org/10.1038/ng.806
@@ -21,6 +22,74 @@ algorithms:
       - indel
       - germline
 
+  - id: deepvariant
+    name: DeepVariant
+    description: |
+      基于深度学习的变异检测工具，将比对数据转化为图像后使用卷积神经网络进行变异分类。
+      该方法在多个基准测试中表现优异，能有效降低假阳性率，支持多种测序平台数据。
+    purpose: 基于深度学习的高精度变异检测
+    time_complexity: O(n * r)
+    space_complexity: O(r)
+    year: 2018
+    category: variant-calling
+    subcategory: snv
+    paper_url: https://doi.org/10.1038/nbt.4235
+    implementation_url: https://github.com/google/deepvariant
+    related_tools:
+      - GATK
+      - PEPPER-Margin-DeepVariant
+      - Clair3
+    tags:
+      - deep-learning
+      - cnn
+      - snp
+      - high-accuracy
+
+  - id: freebayes
+    name: FreeBayes
+    description: |
+      基于贝叶斯统计的变异检测算法，使用单倍型作为基本单位进行变异调用。
+      该方法支持多倍体样本，能够检测复杂的变异模式，计算效率较高。
+    purpose: 基于贝叶斯的变异检测
+    time_complexity: O(n * h)
+    space_complexity: O(h)
+    year: 2012
+    category: variant-calling
+    subcategory: snv
+    paper_url: https://arxiv.org/abs/1207.3907
+    implementation_url: https://github.com/freebayes/freebayes
+    related_tools:
+      - VCFtools
+      - BCFtools
+    tags:
+      - bayesian
+      - haplotype
+      - polyploid
+      - snp
+
+  - id: strelka2
+    name: Strelka2
+    description: |
+      快速准确的体细胞和生殖系小型变异检测工具，使用分层混合模型提高检测灵敏度。
+      该方法速度极快，能在数小时内完成全基因组变异检测，广泛用于癌症基因组学研究。
+    purpose: 快速体细胞和生殖系变异检测
+    time_complexity: O(n * r)
+    space_complexity: O(r)
+    year: 2018
+    category: variant-calling
+    subcategory: snv
+    paper_url: https://doi.org/10.1038/s41592-018-0051-x
+    implementation_url: https://github.com/Illumina/strelka
+    related_tools:
+      - Mutect2
+      - VarScan2
+      - GATK
+    tags:
+      - somatic
+      - germline
+      - fast
+      - clinical
+
   - id: delly
     name: Delly
     description: |
@@ -29,6 +98,7 @@ algorithms:
     purpose: 检测基因组结构变异（缺失、重复、倒位、易位）
     time_complexity: O(n * c)
     space_complexity: O(n)
+    year: 2012
     category: variant-calling
     subcategory: structural
     paper_url: https://doi.org/10.1093/bioinformatics/bts378
@@ -51,6 +121,7 @@ algorithms:
     purpose: 结构变异和大型 Indel 检测
     time_complexity: O(n * c)
     space_complexity: O(c)
+    year: 2016
     category: variant-calling
     subcategory: structural
     paper_url: https://doi.org/10.1093/bioinformatics/btv710
@@ -64,24 +135,3 @@ algorithms:
       - graph-assembly
       - clinical
       - fast
-
-  - id: freebayes
-    name: FreeBayes
-    description: |
-      基于贝叶斯统计的变异检测算法，使用单倍型作为基本单位进行变异调用。
-      该方法支持多倍体样本，能够检测复杂的变异模式，计算效率较高。
-    purpose: 基于贝叶斯的变异检测
-    time_complexity: O(n * h)
-    space_complexity: O(h)
-    category: variant-calling
-    subcategory: snv
-    paper_url: https://arxiv.org/abs/1207.3907
-    implementation_url: https://github.com/freebayes/freebayes
-    related_tools:
-      - VCFtools
-      - BCFtools
-    tags:
-      - bayesian
-      - haplotype
-      - polyploid
-      - snp

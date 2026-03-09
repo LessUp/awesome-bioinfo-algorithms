@@ -175,8 +175,11 @@ class ReadmeGenerator:
         """
         lines = []
 
-        # Algorithm name as bold header
-        lines.append(f"\n#### {algo.name}")
+        # Algorithm name as header (with year if available)
+        if algo.year:
+            lines.append(f"\n#### {algo.name} ({algo.year})")
+        else:
+            lines.append(f"\n#### {algo.name}")
         lines.append("")
 
         # Description

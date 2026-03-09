@@ -43,6 +43,7 @@ def algorithm_entry_strategy(draw):
         time_complexity=draw(st.sampled_from(['O(n)', 'O(n^2)', 'O(mn)', 'O(n log n)', 'O(1)'])),
         category=draw(valid_id),
         space_complexity=draw(st.sampled_from(['', 'O(n)', 'O(n^2)', 'O(mn)', 'O(1)'])),
+        year=draw(st.one_of(st.just(0), st.integers(min_value=1970, max_value=2025))),
         paper_url=draw(valid_url),
         implementation_url=draw(valid_url),
         related_tools=draw(valid_tools),
@@ -69,6 +70,7 @@ def test_property_4_optional_fields_storage(entry: AlgorithmEntry):
     
     # Verify all optional fields are preserved
     assert restored_entry.space_complexity == entry.space_complexity
+    assert restored_entry.year == entry.year
     assert restored_entry.paper_url == entry.paper_url
     assert restored_entry.implementation_url == entry.implementation_url
     assert restored_entry.related_tools == entry.related_tools

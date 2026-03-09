@@ -7,7 +7,9 @@ algorithms:
     purpose: 基于序列相似性的功能预测
     time_complexity: O(mn)
     space_complexity: O(m)
+    year: 1990
     category: functional-annotation
+    subcategory: homology-based
     paper_url: https://doi.org/10.1016/S0022-2836(05)80360-2
     implementation_url: https://blast.ncbi.nlm.nih.gov/
     related_tools:
@@ -28,7 +30,9 @@ algorithms:
     purpose: 蛋白质结构域识别和远程同源检测
     time_complexity: O(mn)
     space_complexity: O(m)
+    year: 2011
     category: functional-annotation
+    subcategory: domain-based
     paper_url: https://doi.org/10.1371/journal.pcbi.1002195
     implementation_url: http://hmmer.org/
     related_tools:
@@ -40,3 +44,49 @@ algorithms:
       - domain-detection
       - remote-homology
       - probabilistic
+
+  - id: interproscan
+    name: InterProScan
+    description: |
+      综合性蛋白质功能注释平台，整合多个签名数据库进行蛋白质结构域、家族和功能位点预测。
+      该工具统一了 Pfam、PROSITE、Gene3D 等十余个数据库的分析，提供一站式功能注释服务。
+    purpose: 多数据库整合的蛋白质功能注释
+    time_complexity: O(m * d)
+    space_complexity: O(m)
+    year: 2014
+    category: functional-annotation
+    subcategory: domain-based
+    paper_url: https://doi.org/10.1093/bioinformatics/btu031
+    implementation_url: https://github.com/ebi-pf-team/interproscan
+    related_tools:
+      - HMMER
+      - Pfam
+      - eggNOG-mapper
+    tags:
+      - multi-database
+      - domain-detection
+      - go-annotation
+      - comprehensive
+
+  - id: eggnog-mapper
+    name: eggNOG-mapper
+    description: |
+      基于直系同源群（eggNOG）数据库的快速功能注释工具，使用预计算的进化系统树提高注释准确性。
+      该方法能高效注释大规模蛋白质组数据，提供 GO、KEGG 和 COG 等多种功能分类。
+    purpose: 基于直系同源关系的快速功能注释
+    time_complexity: O(n * m)
+    space_complexity: O(m)
+    year: 2017
+    category: functional-annotation
+    subcategory: homology-based
+    paper_url: https://doi.org/10.1093/molbev/msx148
+    implementation_url: https://github.com/eggnogdb/eggnog-mapper
+    related_tools:
+      - InterProScan
+      - BLAST+
+      - KofamKOALA
+    tags:
+      - orthology
+      - go-annotation
+      - kegg
+      - fast

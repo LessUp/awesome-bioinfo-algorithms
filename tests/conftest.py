@@ -55,6 +55,7 @@ def sample_algorithm():
         time_complexity='O(mn)',
         category='sequence-alignment',
         space_complexity='O(mn)',
+        year=1981,
         paper_url='https://doi.org/10.1016/0022-2836(81)90087-5',
         implementation_url='https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library',
         related_tools=['BLAST', 'FASTA', 'SSEARCH'],

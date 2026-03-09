@@ -1,0 +1,92 @@
+algorithms:
+  - id: cell-ranger
+    name: Cell Ranger
+    description: |
+      10x Genomics 开发的单细胞 RNA-seq 数据处理流水线，完成从原始数据到基因表达矩阵的全流程分析。
+      该工具集成了比对、细胞条码识别、UMI 计数等步骤，是单细胞数据预处理的行业标准。
+    purpose: 单细胞 RNA-seq 数据预处理和定量
+    time_complexity: O(n * g)
+    space_complexity: O(c * g)
+    year: 2017
+    category: single-cell
+    subcategory: sc-preprocessing
+    paper_url: https://doi.org/10.1038/ncomms14049
+    implementation_url: https://github.com/10XGenomics/cellranger
+    related_tools:
+      - STARsolo
+      - Alevin
+      - Kallisto-bustools
+    tags:
+      - 10x-genomics
+      - preprocessing
+      - umi
+      - pipeline
+
+  - id: seurat
+    name: Seurat
+    description: |
+      综合性单细胞数据分析框架，提供从质控、标准化、降维到细胞聚类和差异表达的完整分析流程。
+      该工具支持多模态数据整合（RNA + ATAC + protein），是 R 语言生态中最主流的单细胞分析工具。
+    purpose: 单细胞多模态数据分析与整合
+    time_complexity: O(c * g)
+    space_complexity: O(c * g)
+    year: 2015
+    category: single-cell
+    subcategory: sc-clustering
+    paper_url: https://doi.org/10.1016/j.cell.2021.04.048
+    implementation_url: https://github.com/satijalab/seurat
+    related_tools:
+      - Scanpy
+      - Monocle3
+      - scVI
+    tags:
+      - clustering
+      - multi-modal
+      - integration
+      - comprehensive
+
+  - id: scanpy
+    name: Scanpy
+    description: |
+      基于 Python 的可扩展单细胞分析工具包，使用 AnnData 数据结构高效处理大规模单细胞数据。
+      该工具提供完整的分析流程，支持 GPU 加速，与 scverse 生态深度集成。
+    purpose: 可扩展的单细胞数据分析
+    time_complexity: O(c * g)
+    space_complexity: O(c * g)
+    year: 2018
+    category: single-cell
+    subcategory: sc-clustering
+    paper_url: https://doi.org/10.1186/s13059-017-1382-0
+    implementation_url: https://github.com/scverse/scanpy
+    related_tools:
+      - Seurat
+      - scVI
+      - AnnData
+    tags:
+      - python
+      - scalable
+      - scverse
+      - gpu-accelerated
+
+  - id: scvi
+    name: scVI
+    description: |
+      基于变分自编码器的单细胞数据分析深度学习框架，使用概率生成模型处理数据噪声和批次效应。
+      该方法能高效整合多个数据集，支持差异表达分析和缺失值插补等下游任务。
+    purpose: 基于深度学习的单细胞数据建模与整合
+    time_complexity: O(c * g * e)
+    space_complexity: O(c * g)
+    year: 2018
+    category: single-cell
+    subcategory: sc-clustering
+    paper_url: https://doi.org/10.1038/s41592-018-0229-2
+    implementation_url: https://github.com/scverse/scvi-tools
+    related_tools:
+      - Scanpy
+      - Harmony
+      - LIGER
+    tags:
+      - deep-learning
+      - vae
+      - batch-correction
+      - probabilistic

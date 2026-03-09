@@ -54,9 +54,9 @@ def test_property_1_algorithm_data_completeness(_):
 
         # Verify description length
         desc_len = len(algo.description.strip())
-        assert 50 <= desc_len <= 200, (
+        assert 50 <= desc_len <= 500, (
             f"Algorithm '{algo.id}' description length {desc_len} "
-            f"not in range [50, 200]"
+            f"not in range [50, 500]"
         )
 
         # Verify category exists

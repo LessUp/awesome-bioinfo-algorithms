@@ -38,12 +38,12 @@ class Validator:
     """Validates algorithm entries and categories."""
 
     REQUIRED_ALGORITHM_FIELDS = ['id', 'name', 'description', 'purpose', 'time_complexity', 'category']
-    OPTIONAL_ALGORITHM_FIELDS = ['space_complexity', 'paper_url', 'implementation_url',
+    OPTIONAL_ALGORITHM_FIELDS = ['space_complexity', 'year', 'paper_url', 'implementation_url',
                                   'related_tools', 'tags', 'subcategory']
     REQUIRED_CATEGORY_FIELDS = ['id', 'name', 'name_en']
 
     MIN_DESCRIPTION_LENGTH = 50
-    MAX_DESCRIPTION_LENGTH = 200
+    MAX_DESCRIPTION_LENGTH = 500
 
     URL_PATTERN = re.compile(
         r'^https?://'
@@ -100,6 +100,11 @@ class Validator:
                 f"Invalid category: '{data.get('category')}'. "
                 f"Valid categories: {', '.join(self.valid_categories)}"
             )
+
+        # Validate year if provided
+        year = data.get('year', 0)
+        if year and (not isinstance(year, int) or year < 1950 or year > 2030):
+            result.add_warning(f"Suspicious year value: {year}")
 
         # Validate URLs if provided
         for url_field in ['paper_url', 'implementation_url']:

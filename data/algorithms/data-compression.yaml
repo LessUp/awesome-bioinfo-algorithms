@@ -7,7 +7,9 @@ algorithms:
     purpose: 测序数据的通用压缩
     time_complexity: O(n)
     space_complexity: O(1)
+    year: 1992
     category: data-compression
+    subcategory: general-compression
     paper_url: https://doi.org/10.17487/RFC1952
     related_tools:
       - gzip
@@ -27,7 +29,9 @@ algorithms:
     purpose: 比对数据的高效压缩存储
     time_complexity: O(n)
     space_complexity: O(r)
+    year: 2011
     category: data-compression
+    subcategory: specialized-compression
     paper_url: https://doi.org/10.1093/nar/gkq1373
     implementation_url: https://github.com/samtools/htslib
     related_tools:
@@ -39,3 +43,26 @@ algorithms:
       - alignment
       - bam
       - efficient
+
+  - id: genozip
+    name: Genozip
+    description: |
+      专为基因组数据设计的高性能压缩工具，支持 FASTQ、BAM、VCF 等多种格式的无损压缩。
+      该方法利用基因组数据的特殊结构实现远超通用压缩的压缩比，支持随机访问和加密。
+    purpose: 基因组数据的高压缩比无损压缩
+    time_complexity: O(n)
+    space_complexity: O(1)
+    year: 2021
+    category: data-compression
+    subcategory: specialized-compression
+    paper_url: https://doi.org/10.1093/bioinformatics/btab102
+    implementation_url: https://github.com/divonlan/genozip
+    related_tools:
+      - gzip
+      - CRAM
+      - Spring
+    tags:
+      - multi-format
+      - high-ratio
+      - random-access
+      - encryption

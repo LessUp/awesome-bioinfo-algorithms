@@ -1,23 +1,35 @@
 #!/usr/bin/env python3
 """
 Main script to generate README.md for Awesome Bioinformatics Algorithms.
+
+Usage:
+    python -m scripts.generate_readme
+    python scripts/generate_readme.py
 """
 import os
 import sys
+from pathlib import Path
 
-from scripts.algorithm_registry import AlgorithmRegistry
-from scripts.category_manager import CategoryManager
-from scripts.readme_generator import ReadmeGenerator
+# Support both `python -m scripts.generate_readme` and `python scripts/generate_readme.py`
+try:
+    from .algorithm_registry import AlgorithmRegistry
+    from .category_manager import CategoryManager
+    from .readme_generator import ReadmeGenerator
+except ImportError:
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    from scripts.algorithm_registry import AlgorithmRegistry
+    from scripts.category_manager import CategoryManager
+    from scripts.readme_generator import ReadmeGenerator
 
 
 def main():
     """Generate README.md from algorithm data."""
     # Paths
-    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    categories_path = os.path.join(base_dir, 'data', 'categories.yaml')
-    algorithms_dir = os.path.join(base_dir, 'data', 'algorithms')
-    template_path = os.path.join(base_dir, 'templates', 'readme_template.md')
-    output_path = os.path.join(base_dir, 'README.md')
+    base_dir = Path(__file__).resolve().parent.parent
+    categories_path = base_dir / 'data' / 'categories.yaml'
+    algorithms_dir = base_dir / 'data' / 'algorithms'
+    template_path = base_dir / 'templates' / 'readme_template.md'
+    output_path = base_dir / 'README.md'
 
     # Load categories
     print("Loading categories...")
