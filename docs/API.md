@@ -1,3 +1,10 @@
+---
+title: API 文档
+layout: default
+nav_order: 2
+description: "公共 API 接口说明"
+---
+
 # API Documentation / API 文档
 
 This document describes the public API of the Awesome Bioinformatics Algorithms project.
