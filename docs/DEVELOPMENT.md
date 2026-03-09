@@ -1,3 +1,10 @@
+---
+title: 开发指南
+layout: default
+nav_order: 3
+description: "项目结构、环境设置与核心组件"
+---
+
 # 开发指南 | Development Guide
 
 [English](#english) | [中文](#中文)

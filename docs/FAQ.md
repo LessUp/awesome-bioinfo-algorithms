@@ -1,3 +1,10 @@
+---
+title: 常见问题
+layout: default
+nav_order: 4
+description: "使用与贡献常见问题解答"
+---
+
 # Frequently Asked Questions / 常见问题
 
 ## General / 一般问题

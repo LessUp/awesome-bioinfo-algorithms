@@ -2,6 +2,7 @@
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 [![Validate](https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/validate.yml/badge.svg)](https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/validate.yml)
+[![Docs](https://img.shields.io/badge/Docs-GitHub%20Pages-blue?logo=github)](https://lessup.github.io/awesome-bioinfo-algorithms/)
 [![License: CC0-1.0](https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg)](http://creativecommons.org/publicdomain/zero/1.0/)
 [![Algorithms](https://img.shields.io/badge/algorithms-54-blue.svg)](#-统计--statistics)
 [![Categories](https://img.shields.io/badge/categories-12-green.svg)](#-统计--statistics)
@@ -880,7 +881,17 @@ We welcome contributions! We accept the following types of contributions:
 
 Please read the [Contributing Guide](CONTRIBUTING.md) for details.
 
-## 📚 相关资源 | Related Resources
+## � 文档 | Documentation
+
+📘 **在线文档** → [lessup.github.io/awesome-bioinfo-algorithms](https://lessup.github.io/awesome-bioinfo-algorithms/)
+
+- [API 文档 | API Reference](https://lessup.github.io/awesome-bioinfo-algorithms/API.html)
+- [开发指南 | Development Guide](https://lessup.github.io/awesome-bioinfo-algorithms/DEVELOPMENT.html)
+- [常见问题 | FAQ](https://lessup.github.io/awesome-bioinfo-algorithms/FAQ.html)
+- [贡献指南 | Contributing](https://lessup.github.io/awesome-bioinfo-algorithms/contributing.html)
+- [变更日志 | Changelog](https://lessup.github.io/awesome-bioinfo-algorithms/changelog.html)
+
+## �📚 相关资源 | Related Resources
 
 - [Rosalind](http://rosalind.info/) - 生物信息学算法学习平台
 - [NCBI](https://www.ncbi.nlm.nih.gov/) - 美国国家生物技术信息中心
