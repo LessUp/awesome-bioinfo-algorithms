@@ -14,14 +14,14 @@ valid_id = st.text(
 
 valid_name = st.text(min_size=1, max_size=100).filter(lambda x: x.strip())
 
-# Description between 50-200 characters
-valid_description = st.text(min_size=50, max_size=200).filter(lambda x: 50 <= len(x.strip()) <= 200)
+# Description between 50-500 characters
+valid_description = st.text(min_size=50, max_size=500).filter(lambda x: 50 <= len(x.strip()) <= 500)
 
 # Description that's too short
 short_description = st.text(min_size=0, max_size=49)
 
 # Description that's too long
-long_description = st.text(min_size=201, max_size=300)
+long_description = st.text(min_size=501, max_size=600)
 
 
 @st.composite
@@ -188,7 +188,7 @@ def test_property_7_error_specificity_short_description(desc_length):
 
 
 @settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
-@given(desc_length=st.integers(min_value=201, max_value=300))
+@given(desc_length=st.integers(min_value=501, max_value=600))
 def test_property_7_error_specificity_long_description(desc_length):
     """
     Feature: awesome-bioinfo-algorithms, Property 7: Validation Error Specificity
@@ -233,7 +233,7 @@ def test_property_10_valid_data_passes(data):
     
     # Valid data should pass (unless description length is wrong)
     desc_len = len(data['description'].strip())
-    if 50 <= desc_len <= 200:
+    if 50 <= desc_len <= 500:
         assert result.is_valid, f"Valid data should pass validation. Errors: {result.errors}"
 
 

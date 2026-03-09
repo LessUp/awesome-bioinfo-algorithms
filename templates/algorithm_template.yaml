@@ -8,13 +8,14 @@ algorithms:
   - id: algorithm-id                    # 唯一标识符，使用小写字母和连字符
     name: Algorithm Name                # 算法名称
     description: |
-      算法的详细描述，50-200字。
+      算法的详细描述，50-500字。
       包括算法的基本原理、特点和适用场景。
-      A detailed description of the algorithm (50-200 characters).
+      A detailed description of the algorithm (50-500 characters).
       Include basic principles, features, and applicable scenarios.
     purpose: 算法的主要用途              # Main purpose of the algorithm
     time_complexity: O(n)               # 时间复杂度 / Time complexity
     space_complexity: O(n)              # 空间复杂度（可选）/ Space complexity (optional)
+    year: 2024                          # 发表年份（可选）/ Publication year (optional)
     category: sequence-alignment        # 主分类ID / Main category ID
     subcategory: pairwise               # 子分类ID（可选）/ Subcategory ID (optional)
     paper_url: https://doi.org/...      # 原始论文链接（可选）/ Original paper URL (optional)
@@ -37,7 +38,29 @@ algorithms:
 #   - snv (单核苷酸变异)
 #   - structural (结构变异)
 # - expression-analysis (基因表达分析)
+#   - quantification (表达定量)
+#   - differential-expression (差异表达)
 # - protein-structure (蛋白质结构预测)
+#   - ab-initio (从头预测)
+#   - template-based (模板方法)
 # - phylogenetics (系统发育分析)
+#   - distance-method (距离法)
+#   - character-method (特征法)
 # - functional-annotation (功能注释)
+#   - homology-based (同源性方法)
+#   - domain-based (结构域方法)
 # - data-compression (数据压缩)
+#   - general-compression (通用压缩)
+#   - specialized-compression (专用压缩)
+# - single-cell (单细胞基因组学)
+#   - sc-preprocessing (数据预处理)
+#   - sc-clustering (细胞聚类与注释)
+# - metagenomics (宏基因组学)
+#   - taxonomic-profiling (物种分类)
+#   - functional-profiling (功能分析)
+# - epigenomics (表观基因组学)
+#   - chip-seq (ChIP-seq 分析)
+#   - methylation (甲基化分析)
+# - gene-prediction (基因预测)
+#   - eukaryotic (真核基因预测)
+#   - prokaryotic (原核基因预测)

@@ -74,6 +74,7 @@ def categories_and_algorithms_strategy(draw):
                 time_complexity=draw(valid_complexity),
                 category=cat_id,
                 space_complexity=draw(st.one_of(st.just(''), valid_complexity)),
+                year=draw(st.one_of(st.just(0), st.integers(min_value=1970, max_value=2025))),
                 paper_url=draw(st.one_of(st.just(''), st.just('https://example.com/paper'))),
                 implementation_url=draw(st.one_of(st.just(''), st.just('https://github.com/example'))),
                 related_tools=draw(st.lists(valid_name, min_size=0, max_size=3)),

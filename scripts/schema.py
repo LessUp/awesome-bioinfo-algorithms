@@ -60,6 +60,7 @@ class AlgorithmEntry:
 
     # Optional fields
     space_complexity: str = ""
+    year: int = 0
     paper_url: str = ""
     implementation_url: str = ""
     related_tools: list[str] = field(default_factory=list)
@@ -79,6 +80,8 @@ class AlgorithmEntry:
         # Include optional fields only if they have values
         if self.space_complexity:
             result['space_complexity'] = self.space_complexity
+        if self.year:
+            result['year'] = self.year
         if self.paper_url:
             result['paper_url'] = self.paper_url
         if self.implementation_url:
@@ -102,6 +105,7 @@ class AlgorithmEntry:
             time_complexity=data['time_complexity'],
             category=data['category'],
             space_complexity=data.get('space_complexity', ''),
+            year=data.get('year', 0),
             paper_url=data.get('paper_url', ''),
             implementation_url=data.get('implementation_url', ''),
             related_tools=data.get('related_tools', []),

@@ -1,0 +1,69 @@
+algorithms:
+  - id: kraken2
+    name: Kraken2
+    description: |
+      基于 k-mer 精确匹配的超快速物种分类工具，使用紧凑哈希表在数分钟内完成宏基因组样本的物种鉴定。
+      该方法速度极快且准确性高，支持自定义参考数据库，是宏基因组物种分类的首选工具。
+    purpose: 基于 k-mer 的超快速宏基因组物种分类
+    time_complexity: O(n * k)
+    space_complexity: O(d)
+    year: 2019
+    category: metagenomics
+    subcategory: taxonomic-profiling
+    paper_url: https://doi.org/10.1186/s13059-019-1891-0
+    implementation_url: https://github.com/DerrickWood/kraken2
+    related_tools:
+      - Bracken
+      - Centrifuge
+      - CLARK
+    tags:
+      - k-mer
+      - classification
+      - fast
+      - taxonomic
+
+  - id: metaphlan
+    name: MetaPhlAn
+    description: |
+      基于标记基因的宏基因组物种组成分析工具，使用物种特异性标记序列精确量化微生物丰度。
+      该方法无需组装即可获得准确的物种丰度信息，内存占用低，适合大规模样本分析。
+    purpose: 基于标记基因的微生物组成和丰度定量
+    time_complexity: O(n * m)
+    space_complexity: O(m)
+    year: 2012
+    category: metagenomics
+    subcategory: taxonomic-profiling
+    paper_url: https://doi.org/10.1038/nmeth.2066
+    implementation_url: https://github.com/biobakery/MetaPhlAn
+    related_tools:
+      - Kraken2
+      - mOTUs
+      - HUMAnN
+    tags:
+      - marker-gene
+      - abundance
+      - low-memory
+      - species-level
+
+  - id: humann
+    name: HUMAnN
+    description: |
+      宏基因组功能分析流水线，将测序读段映射到基因家族和代谢通路，量化微生物群落的功能潜力。
+      该方法整合了物种分类和功能注释，能同时提供群落水平和物种水平的功能组成。
+    purpose: 宏基因组功能组成和代谢通路分析
+    time_complexity: O(n * d)
+    space_complexity: O(d)
+    year: 2014
+    category: metagenomics
+    subcategory: functional-profiling
+    paper_url: https://doi.org/10.1371/journal.pcbi.1002358
+    implementation_url: https://github.com/biobakery/humann
+    related_tools:
+      - MetaPhlAn
+      - KEGG
+      - eggNOG-mapper
+    tags:
+      - pathway-analysis
+      - gene-family
+      - functional
+      - pipeline

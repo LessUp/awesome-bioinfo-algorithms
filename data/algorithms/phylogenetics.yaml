@@ -7,7 +7,9 @@ algorithms:
     purpose: 快速构建系统发育树
     time_complexity: O(n^3)
     space_complexity: O(n^2)
+    year: 1987
     category: phylogenetics
+    subcategory: distance-method
     paper_url: https://doi.org/10.1093/oxfordjournals.molbev.a040454
     related_tools:
       - MEGA
@@ -26,7 +28,9 @@ algorithms:
     purpose: 统计学方法构建系统发育树
     time_complexity: O(n^2 * s * r)
     space_complexity: O(n * s)
+    year: 2014
     category: phylogenetics
+    subcategory: character-method
     paper_url: https://doi.org/10.1093/sysbio/syq010
     implementation_url: https://github.com/stamatak/standard-RAxML
     related_tools:
@@ -37,3 +41,49 @@ algorithms:
       - maximum-likelihood
       - statistical
       - tree-building
+
+  - id: iq-tree
+    name: IQ-TREE
+    description: |
+      高效的最大似然系统发育推断工具，集成了自动模型选择（ModelFinder）和超快自展分析。
+      该方法在速度和准确性上优于传统 ML 工具，支持数千个分类单元的大规模建树。
+    purpose: 快速最大似然系统发育推断
+    time_complexity: O(n^2 * s)
+    space_complexity: O(n * s)
+    year: 2015
+    category: phylogenetics
+    subcategory: character-method
+    paper_url: https://doi.org/10.1093/molbev/msu300
+    implementation_url: https://github.com/iqtree/iqtree2
+    related_tools:
+      - RAxML-NG
+      - PhyML
+      - FastTree
+    tags:
+      - maximum-likelihood
+      - model-selection
+      - ultrafast-bootstrap
+      - scalable
+
+  - id: bayesian-phylogeny
+    name: Bayesian Phylogenetic Inference
+    description: |
+      基于贝叶斯统计框架的系统发育推断方法，使用马尔可夫链蒙特卡洛采样估计后验概率分布。
+      该方法能同时估计树拓扑、分支长度和模型参数的不确定性，适合分子钟和分歧时间估计。
+    purpose: 贝叶斯框架的系统发育推断和分歧时间估计
+    time_complexity: O(n^2 * s * r)
+    space_complexity: O(n * s)
+    year: 2001
+    category: phylogenetics
+    subcategory: character-method
+    paper_url: https://doi.org/10.1093/bioinformatics/17.8.754
+    implementation_url: https://github.com/beast-dev/beast-mcmc
+    related_tools:
+      - MrBayes
+      - BEAST2
+      - RevBayes
+    tags:
+      - bayesian
+      - mcmc
+      - molecular-clock
+      - divergence-time

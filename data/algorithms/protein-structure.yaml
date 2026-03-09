@@ -7,7 +7,9 @@ algorithms:
     purpose: 从氨基酸序列预测蛋白质三维结构
     time_complexity: O(n^2)
     space_complexity: O(n^2)
+    year: 2021
     category: protein-structure
+    subcategory: ab-initio
     paper_url: https://doi.org/10.1038/s41586-021-03819-2
     implementation_url: https://github.com/deepmind/alphafold
     related_tools:
@@ -20,6 +22,29 @@ algorithms:
       - structure-prediction
       - breakthrough
 
+  - id: esmfold
+    name: ESMFold
+    description: |
+      基于蛋白质语言模型的端到端结构预测方法，使用大规模预训练的 ESM-2 模型直接从单条序列预测结构。
+      该方法无需多序列比对输入，推理速度比 AlphaFold 快一个数量级，适合大规模结构预测。
+    purpose: 基于语言模型的快速蛋白质结构预测
+    time_complexity: O(n^2)
+    space_complexity: O(n^2)
+    year: 2023
+    category: protein-structure
+    subcategory: ab-initio
+    paper_url: https://doi.org/10.1126/science.ade2574
+    implementation_url: https://github.com/facebookresearch/esm
+    related_tools:
+      - AlphaFold
+      - OmegaFold
+      - RoseTTAFold
+    tags:
+      - language-model
+      - single-sequence
+      - fast
+      - deep-learning
+
   - id: rosetta
     name: Rosetta
     description: |
@@ -28,7 +53,9 @@ algorithms:
     purpose: 蛋白质结构预测和设计
     time_complexity: O(n^3)
     space_complexity: O(n^2)
+    year: 2003
     category: protein-structure
+    subcategory: template-based
     paper_url: https://doi.org/10.1126/science.1089427
     implementation_url: https://www.rosettacommons.org/
     related_tools:

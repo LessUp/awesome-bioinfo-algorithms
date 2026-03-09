@@ -1,0 +1,69 @@
+algorithms:
+  - id: augustus
+    name: AUGUSTUS
+    description: |
+      基于广义隐马尔可夫模型的真核基因预测工具，能准确预测基因结构包括外显子、内含子和 UTR。
+      该方法支持使用 RNA-seq 和蛋白质同源性作为外部提示信息，显著提高预测准确性。
+    purpose: 真核生物基因结构从头预测
+    time_complexity: O(n * s^2)
+    space_complexity: O(n * s)
+    year: 2003
+    category: gene-prediction
+    subcategory: eukaryotic
+    paper_url: https://doi.org/10.1093/bioinformatics/btg1080
+    implementation_url: https://github.com/Gaius-Augustus/Augustus
+    related_tools:
+      - GeneMark
+      - SNAP
+      - GlimmerHMM
+    tags:
+      - ghmm
+      - ab-initio
+      - exon-intron
+      - rna-seq-hints
+
+  - id: prodigal
+    name: Prodigal
+    description: |
+      高效的原核基因识别工具，使用动态规划算法自动学习物种特异性参数进行基因预测。
+      该方法无需训练数据即可准确预测蛋白编码基因，支持宏基因组模式处理混合物种数据。
+    purpose: 原核生物蛋白编码基因快速预测
+    time_complexity: O(n)
+    space_complexity: O(n)
+    year: 2010
+    category: gene-prediction
+    subcategory: prokaryotic
+    paper_url: https://doi.org/10.1186/1471-2105-11-119
+    implementation_url: https://github.com/hyattpd/Prodigal
+    related_tools:
+      - Pyrodigal
+      - GeneMark
+      - Glimmer
+    tags:
+      - prokaryotic
+      - self-training
+      - metagenome
+      - fast
+
+  - id: braker
+    name: BRAKER
+    description: |
+      结合从头预测和证据驱动方法的真核基因注释流水线，自动整合 RNA-seq 和蛋白质数据训练基因预测模型。
+      该工具将 GeneMark 和 AUGUSTUS 有机结合，实现全自动的高精度基因结构注释。
+    purpose: 全自动真核基因结构注释
+    time_complexity: O(n * g)
+    space_complexity: O(n)
+    year: 2016
+    category: gene-prediction
+    subcategory: eukaryotic
+    paper_url: https://doi.org/10.1093/bioinformatics/btv661
+    implementation_url: https://github.com/Gaius-Augustus/BRAKER
+    related_tools:
+      - AUGUSTUS
+      - GeneMark-ET
+      - MAKER
+    tags:
+      - pipeline
+      - evidence-based
+      - automated
+      - rna-seq

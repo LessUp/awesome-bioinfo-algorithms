@@ -3,6 +3,8 @@
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 [![Validate](https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/validate.yml/badge.svg)](https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/validate.yml)
 [![License: CC0-1.0](https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg)](http://creativecommons.org/publicdomain/zero/1.0/)
+[![Algorithms](https://img.shields.io/badge/algorithms-{{ total_algorithms }}-blue.svg)](#-统计--statistics)
+[![Categories](https://img.shields.io/badge/categories-{{ total_categories }}-green.svg)](#-统计--statistics)
 
 > 🧬 生物信息学算法概要汇总 | A curated list of bioinformatics algorithms
 
@@ -16,15 +18,23 @@ This project collects and organizes commonly used algorithms in bioinformatics, 
 git clone https://github.com/LessUp/awesome-bioinfo-algorithms.git
 cd awesome-bioinfo-algorithms
 pip install -e ".[dev]"
-python scripts/generate_readme.py
+
+# 生成 README | Generate README
+python -m scripts generate
+
+# 验证数据 | Validate data
+python -m scripts validate
+
+# 查看统计 | Show statistics
+python -m scripts stats
 ```
 
 
 ## 📊 统计 | Statistics
 
-- 📊 算法总数 (Total Algorithms): {{ total_algorithms }}
-- 📁 分类数量 (Categories): {{ total_categories }}
-- 🏷️ 标签数量 (Tags): {{ total_tags }}
+- 📊 算法总数 (Total Algorithms): **{{ total_algorithms }}**
+- 📁 分类数量 (Categories): **{{ total_categories }}**
+- 🏷️ 标签数量 (Tags): **{{ total_tags }}**
 
 ## 📑 目录 | Table of Contents
 
@@ -55,6 +65,10 @@ Please read the [Contributing Guide](CONTRIBUTING.md) for details.
 - [NCBI](https://www.ncbi.nlm.nih.gov/) - 美国国家生物技术信息中心
 - [EBI](https://www.ebi.ac.uk/) - 欧洲生物信息学研究所
 - [Bioconductor](https://www.bioconductor.org/) - R 语言生物信息学工具包
+- [Galaxy](https://usegalaxy.org/) - 开放的生物信息学分析平台
+- [BioStars](https://www.biostars.org/) - 生物信息学问答社区
+- [SEQanswers](http://seqanswers.com/) - 高通量测序社区
+- [scverse](https://scverse.org/) - 单细胞分析 Python 生态
 
 ## 📄 License
 

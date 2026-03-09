@@ -1,0 +1,69 @@
+algorithms:
+  - id: macs2
+    name: MACS2
+    description: |
+      ChIP-seq 峰值检测的标准工具，使用泊松分布模型识别蛋白质-DNA 结合位点和组蛋白修饰区域。
+      该方法能有效校正局部偏差和背景噪声，支持窄峰和宽峰检测模式。
+    purpose: ChIP-seq 数据的峰值检测和富集分析
+    time_complexity: O(n)
+    space_complexity: O(n)
+    year: 2008
+    category: epigenomics
+    subcategory: chip-seq
+    paper_url: https://doi.org/10.1186/gb-2008-9-9-r137
+    implementation_url: https://github.com/macs3-project/MACS
+    related_tools:
+      - HOMER
+      - SICER
+      - ENCODE
+    tags:
+      - peak-calling
+      - chip-seq
+      - histone
+      - transcription-factor
+
+  - id: bismark
+    name: Bismark
+    description: |
+      亚硫酸氢盐测序数据的比对和甲基化分析工具，处理 C-to-T 转换后的序列比对和甲基化水平量化。
+      该方法能区分 CpG、CHG、CHH 不同类型的甲基化，是 DNA 甲基化分析的核心工具。
+    purpose: 亚硫酸氢盐测序数据的比对和甲基化定量
+    time_complexity: O(n * g)
+    space_complexity: O(g)
+    year: 2011
+    category: epigenomics
+    subcategory: methylation
+    paper_url: https://doi.org/10.1093/bioinformatics/btr167
+    implementation_url: https://github.com/FelixKrueger/Bismark
+    related_tools:
+      - BSseeker2
+      - methylKit
+      - bwa-meth
+    tags:
+      - bisulfite-seq
+      - methylation
+      - cpg
+      - epigenetic
+
+  - id: chromhmm
+    name: ChromHMM
+    description: |
+      基于隐马尔可夫模型的染色质状态注释工具，整合多种组蛋白修饰信号自动学习和标注染色质状态。
+      该方法能发现启动子、增强子、异染色质等功能区域，是表观基因组注释的标准方法。
+    purpose: 染色质状态自动发现和基因组注释
+    time_complexity: O(n * s^2)
+    space_complexity: O(n * s)
+    year: 2012
+    category: epigenomics
+    subcategory: chip-seq
+    paper_url: https://doi.org/10.1038/nmeth.1906
+    implementation_url: https://github.com/jernst98/ChromHMM
+    related_tools:
+      - Segway
+      - ENCODE
+      - EpiCSeg
+    tags:
+      - hmm
+      - chromatin-state
+      - histone
+      - annotation

@@ -35,7 +35,7 @@ categories:
       - id: snv
         name: 单核苷酸变异
         name_en: SNV Detection
-        description: 检测单核苷酸变异
+        description: 检测单核苷酸变异和小型插入缺失
       - id: structural
         name: 结构变异
         name_en: Structural Variants
@@ -45,23 +45,124 @@ categories:
     name: 基因表达分析
     name_en: Gene Expression Analysis
     description: 分析基因表达水平的算法
+    subcategories:
+      - id: quantification
+        name: 表达定量
+        name_en: Expression Quantification
+        description: 转录本和基因水平的表达量估计
+      - id: differential-expression
+        name: 差异表达
+        name_en: Differential Expression
+        description: 不同条件间的差异表达分析
 
   - id: protein-structure
     name: 蛋白质结构预测
     name_en: Protein Structure Prediction
     description: 预测蛋白质三维结构的算法
+    subcategories:
+      - id: ab-initio
+        name: 从头预测
+        name_en: Ab Initio Prediction
+        description: 基于序列信息的从头结构预测
+      - id: template-based
+        name: 模板方法
+        name_en: Template-Based Modeling
+        description: 基于已知结构模板的建模方法
 
   - id: phylogenetics
     name: 系统发育分析
     name_en: Phylogenetics
     description: 构建和分析进化树的算法
+    subcategories:
+      - id: distance-method
+        name: 距离法
+        name_en: Distance Methods
+        description: 基于距离矩阵的建树方法
+      - id: character-method
+        name: 特征法
+        name_en: Character-Based Methods
+        description: 基于序列特征的建树方法
 
   - id: functional-annotation
     name: 功能注释
     name_en: Functional Annotation
     description: 预测基因和蛋白质功能的算法
+    subcategories:
+      - id: homology-based
+        name: 同源性方法
+        name_en: Homology-Based
+        description: 基于序列同源性的功能推断
+      - id: domain-based
+        name: 结构域方法
+        name_en: Domain-Based
+        description: 基于蛋白质结构域的功能注释
 
   - id: data-compression
     name: 数据压缩
     name_en: Data Compression
     description: 压缩生物信息学数据的算法
+    subcategories:
+      - id: general-compression
+        name: 通用压缩
+        name_en: General Compression
+        description: 通用数据压缩格式
+      - id: specialized-compression
+        name: 专用压缩
+        name_en: Specialized Compression
+        description: 针对特定生物数据格式的压缩方法
+
+  - id: single-cell
+    name: 单细胞基因组学
+    name_en: Single-Cell Genomics
+    description: 单细胞水平的基因组和转录组分析算法
+    subcategories:
+      - id: sc-preprocessing
+        name: 数据预处理
+        name_en: Preprocessing
+        description: 单细胞数据的质控、标准化和预处理
+      - id: sc-clustering
+        name: 细胞聚类与注释
+        name_en: Cell Clustering & Annotation
+        description: 细胞类型识别和聚类分析
+
+  - id: metagenomics
+    name: 宏基因组学
+    name_en: Metagenomics
+    description: 微生物群落的基因组分析算法
+    subcategories:
+      - id: taxonomic-profiling
+        name: 物种分类
+        name_en: Taxonomic Profiling
+        description: 微生物物种组成鉴定
+      - id: functional-profiling
+        name: 功能分析
+        name_en: Functional Profiling
+        description: 微生物群落功能分析
+
+  - id: epigenomics
+    name: 表观基因组学
+    name_en: Epigenomics
+    description: 分析表观遗传修饰的算法
+    subcategories:
+      - id: chip-seq
+        name: ChIP-seq 分析
+        name_en: ChIP-seq Analysis
+        description: 染色质免疫共沉淀测序分析
+      - id: methylation
+        name: 甲基化分析
+        name_en: Methylation Analysis
+        description: DNA 甲基化数据分析
+
+  - id: gene-prediction
+    name: 基因预测
+    name_en: Gene Prediction
+    description: 基因结构预测和基因组注释算法
+    subcategories:
+      - id: eukaryotic
+        name: 真核基因预测
+        name_en: Eukaryotic Gene Prediction
+        description: 真核生物基因结构预测
+      - id: prokaryotic
+        name: 原核基因预测
+        name_en: Prokaryotic Gene Prediction
+        description: 原核生物基因识别

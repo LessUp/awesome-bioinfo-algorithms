@@ -7,6 +7,7 @@ algorithms:
     purpose: 从短读段重建基因组序列
     time_complexity: O(n)
     space_complexity: O(k * 4^k)
+    year: 2001
     category: assembly
     subcategory: de-novo
     paper_url: https://doi.org/10.1073/pnas.98.17.9748
@@ -21,6 +22,52 @@ algorithms:
       - de-novo
       - short-read
 
+  - id: spades
+    name: SPAdes
+    description: |
+      基于多尺度 De Bruijn 图的基因组组装工具，使用多个 k-mer 长度构建和合并组装图。
+      该方法在小基因组组装中表现优异，支持单细胞、宏基因组等多种测序数据的组装。
+    purpose: 小基因组和单细胞数据的高质量组装
+    time_complexity: O(n * k)
+    space_complexity: O(n)
+    year: 2012
+    category: assembly
+    subcategory: de-novo
+    paper_url: https://doi.org/10.1089/cmb.2012.0021
+    implementation_url: https://github.com/ablab/spades
+    related_tools:
+      - MEGAHIT
+      - Velvet
+      - IDBA-UD
+    tags:
+      - de-bruijn
+      - multi-kmer
+      - versatile
+      - single-cell
+
+  - id: hifiasm
+    name: Hifiasm
+    description: |
+      专为 PacBio HiFi 长读段设计的单倍型感知组装工具，利用高精度长读段实现染色体级别的组装。
+      该方法能够区分父本和母本单倍型，是当前最先进的基因组从头组装工具之一。
+    purpose: HiFi 长读段的高质量单倍型组装
+    time_complexity: O(n log n)
+    space_complexity: O(n)
+    year: 2021
+    category: assembly
+    subcategory: de-novo
+    paper_url: https://doi.org/10.1038/s41592-020-01056-5
+    implementation_url: https://github.com/chhylp123/hifiasm
+    related_tools:
+      - Canu
+      - Flye
+      - Verkko
+    tags:
+      - hifi
+      - haplotype-aware
+      - long-read
+      - chromosome-level
+
   - id: reference-guided-assembly
     name: Reference-Guided Assembly
     description: |
@@ -29,6 +76,7 @@ algorithms:
     purpose: 基于参考序列的快速基因组组装
     time_complexity: O(n log n)
     space_complexity: O(n)
+    year: 2011
     category: assembly
     subcategory: reference-guided
     paper_url: https://doi.org/10.1186/gb-2011-12-5-r42
@@ -51,6 +99,7 @@ algorithms:
     purpose: 长读段序列组装
     time_complexity: O(n^2)
     space_complexity: O(n^2)
+    year: 2010
     category: assembly
     subcategory: de-novo
     paper_url: https://doi.org/10.1101/gr.101360.109
@@ -63,3 +112,26 @@ algorithms:
       - long-read
       - de-novo
       - classic
+
+  - id: flye
+    name: Flye
+    description: |
+      基于重复图的长读段从头组装工具，使用 A-Bruijn 图处理长读段中的重复序列。
+      该方法对 ONT 和 PacBio CLR 读段效果出色，能快速组装完整的微生物和中大型基因组。
+    purpose: 长读段快速从头组装
+    time_complexity: O(n log n)
+    space_complexity: O(n)
+    year: 2019
+    category: assembly
+    subcategory: de-novo
+    paper_url: https://doi.org/10.1038/s41587-019-0072-8
+    implementation_url: https://github.com/fenderglass/Flye
+    related_tools:
+      - Canu
+      - Hifiasm
+      - Miniasm
+    tags:
+      - repeat-graph
+      - long-read
+      - ont
+      - fast

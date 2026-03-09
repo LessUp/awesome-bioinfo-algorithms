@@ -7,7 +7,9 @@ algorithms:
     purpose: RNA-seq 数据的差异表达分析
     time_complexity: O(n * g)
     space_complexity: O(g)
+    year: 2014
     category: expression-analysis
+    subcategory: differential-expression
     paper_url: https://doi.org/10.1186/s13059-014-0550-8
     implementation_url: https://bioconductor.org/packages/DESeq2
     related_tools:
@@ -20,6 +22,29 @@ algorithms:
       - negative-binomial
       - statistical
 
+  - id: edger
+    name: edgeR
+    description: |
+      基于经验贝叶斯方法的差异表达分析工具，使用负二项分布建模并通过标签化分散估计提高统计效力。
+      该方法适合处理小样本和多因素实验设计，与 DESeq2 并列为最主流的差异表达分析工具。
+    purpose: 基于经验贝叶斯的差异表达分析
+    time_complexity: O(n * g)
+    space_complexity: O(g)
+    year: 2010
+    category: expression-analysis
+    subcategory: differential-expression
+    paper_url: https://doi.org/10.1093/bioinformatics/btp616
+    implementation_url: https://bioconductor.org/packages/edgeR
+    related_tools:
+      - DESeq2
+      - limma-voom
+      - Bioconductor
+    tags:
+      - rna-seq
+      - differential-expression
+      - empirical-bayes
+      - statistical
+
   - id: star
     name: STAR
     description: |
@@ -28,7 +53,9 @@ algorithms:
     purpose: RNA-seq 数据的剪接感知比对
     time_complexity: O(n)
     space_complexity: O(g)
+    year: 2013
     category: expression-analysis
+    subcategory: quantification
     paper_url: https://doi.org/10.1093/bioinformatics/bts635
     implementation_url: https://github.com/alexdobin/STAR
     related_tools:
@@ -41,6 +68,29 @@ algorithms:
       - alignment
       - fast
 
+  - id: salmon
+    name: Salmon
+    description: |
+      基于选择性比对的高速转录本定量工具，使用轻量级比对和在线 EM 算法估计转录本丰度。
+      该方法速度极快且内存占用低，能够校正 GC 含量偏差和序列特异性偏差。
+    purpose: 快速准确的转录本定量
+    time_complexity: O(n)
+    space_complexity: O(t)
+    year: 2017
+    category: expression-analysis
+    subcategory: quantification
+    paper_url: https://doi.org/10.1038/nmeth.4197
+    implementation_url: https://github.com/COMBINE-lab/salmon
+    related_tools:
+      - Kallisto
+      - RSEM
+      - Sailfish
+    tags:
+      - selective-alignment
+      - quantification
+      - rna-seq
+      - fast
+
   - id: kallisto
     name: Kallisto
     description: |
@@ -49,7 +99,9 @@ algorithms:
     purpose: 快速转录本定量
     time_complexity: O(n)
     space_complexity: O(t)
+    year: 2016
     category: expression-analysis
+    subcategory: quantification
     paper_url: https://doi.org/10.1038/nbt.3519
     implementation_url: https://github.com/pachterlab/kallisto
     related_tools:
