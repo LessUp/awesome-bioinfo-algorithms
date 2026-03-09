@@ -32,7 +32,11 @@ color_scheme: light
 
 last_edit_time_format: "%Y-%m-%d %H:%M"
 
-footer_content: "Copyright &copy; 2025 LessUp &mdash; <a href=\"https://github.com/LessUp/awesome-bioinfo-algorithms/blob/main/LICENSE\">CC0 1.0</a>"
+footer_content: "Copyright &copy; 2025-2026 LessUp &mdash; <a href=\"https://github.com/LessUp/awesome-bioinfo-algorithms/blob/main/LICENSE\">CC0 1.0</a>"
+
+# --- Mermaid ---------------------------------------------------------------
+mermaid:
+  version: "10.9.0"
 
 # --- Callouts --------------------------------------------------------------
 callouts:
