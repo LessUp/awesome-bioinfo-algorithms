@@ -12,7 +12,8 @@ description: "Awesome Bioinformatics Algorithms — 生物信息学算法概要�
 {: .fs-6 .fw-300 }
 
 [算法列表](https://github.com/LessUp/awesome-bioinfo-algorithms#%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9-sequence-alignment){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
-[API 文档]({% link API.md %}){: .btn .fs-5 .mb-4 .mb-md-0 }
+[API 文档]({% link API.md %}){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[开发指南]({% link DEVELOPMENT.md %}){: .btn .btn-outline .fs-5 .mb-4 .mb-md-0 }
 
 ---
 
@@ -77,6 +78,19 @@ python -m scripts stats
 
 ---
 
+## 相关资源
+
+| 资源 | 说明 |
+|:--|:--|
+| [Rosalind](http://rosalind.info/) | 生物信息学算法学习平台 |
+| [NCBI](https://www.ncbi.nlm.nih.gov/) | 美国国家生物技术信息中心 |
+| [EBI](https://www.ebi.ac.uk/) | 欧洲生物信息学研究所 |
+| [Bioconductor](https://www.bioconductor.org/) | R 生物信息学工具包 |
+| [Galaxy](https://usegalaxy.org/) | 开放生物信息学分析平台 |
+| [scverse](https://scverse.org/) | 单细胞 Python 生态系统 |
+
+---
+
 ## 许可证
 
-[CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) © LessUp
+[CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) © 2025-2026 LessUp

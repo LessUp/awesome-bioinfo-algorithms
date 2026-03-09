@@ -1,6 +1,7 @@
 title: Awesome Bioinformatics Algorithms
 description: 生物信息学算法概要汇总 | A curated list of bioinformatics algorithms
 remote_theme: just-the-docs/just-the-docs@v0.10.0
+lang: zh-CN
 
 url: "https://lessup.github.io"
 baseurl: "/awesome-bioinfo-algorithms"
@@ -57,8 +58,25 @@ callouts:
 plugins:
   - jekyll-seo-tag
 
+# --- Kramdown --------------------------------------------------------------
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+
 # --- Exclude ---------------------------------------------------------------
 exclude:
   - node_modules/
   - vendor/
   - Gemfile.lock
+  - "*.py"
+  - "*.toml"
+  - "*.txt"
+  - "*.yaml"
+  - "*.yml"
+  - Makefile
+  - Dockerfile
+  - LICENSE
+  - SECURITY.md
+  - CODE_OF_CONDUCT.md
