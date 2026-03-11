@@ -3,8 +3,20 @@ name: Validate and Generate README
 on:
   push:
     branches: [ main, master ]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'changelog/**'
+      - '_config.yml'
+      - 'LICENSE'
   pull_request:
     branches: [ main, master ]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'changelog/**'
+      - '_config.yml'
+      - 'LICENSE'
   workflow_dispatch:
 
 permissions:
