@@ -6,7 +6,6 @@ Usage:
     python -m scripts.generate_readme
     python scripts/generate_readme.py
 """
-import os
 import sys
 from pathlib import Path
 
