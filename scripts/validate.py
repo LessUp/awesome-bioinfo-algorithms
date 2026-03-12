@@ -5,7 +5,7 @@ Implements Validator class for algorithm and category validation.
 import os
 import re
 from dataclasses import dataclass, field
-from typing import Any, Optional
+from typing import Any, Optional, Tuple
 
 import yaml
 
@@ -154,7 +154,7 @@ class Validator:
 
         return result
 
-    def validate_yaml_file(self, file_path: str):
+    def validate_yaml_file(self, file_path: str) -> Tuple[ValidationResult, Any]:
         """
         Validate a YAML file and return parsed data.
 
