@@ -21,14 +21,14 @@ Please read our [Contributing Guide](../CONTRIBUTING.md) for detailed instructio
 
 1. Fork the repository
 2. Add your algorithm to the appropriate YAML file in `data/algorithms/`
-3. Run validation: `python -m pytest tests/`
+3. Run validation: `python -m scripts validate`
 4. Submit a Pull Request
 
 请阅读我们的[贡献指南](../CONTRIBUTING.md)获取详细说明。简而言之：
 
 1. Fork 仓库
 2. 将算法添加到 `data/algorithms/` 中的相应 YAML 文件
-3. 运行验证：`python -m pytest tests/`
+3. 运行验证：`python -m scripts validate`
 4. 提交 Pull Request
 
 ---
@@ -40,7 +40,7 @@ Please read our [Contributing Guide](../CONTRIBUTING.md) for detailed instructio
 Required fields:
 - `id`: Unique identifier (lowercase, hyphens allowed)
 - `name`: Algorithm name
-- `description`: Description (50-200 characters)
+- `description`: Description (50-500 characters)
 - `purpose`: What the algorithm is used for
 - `time_complexity`: Big-O notation (e.g., "O(n^2)")
 - `category`: Must match an existing category ID
@@ -54,21 +54,15 @@ Optional fields:
 
 ### Why is my description being rejected? / 为什么我的描述被拒绝？
 
-Descriptions must be between 50 and 200 characters. This ensures:
+Descriptions must be between 50 and 500 characters. This ensures:
 - Enough detail to understand the algorithm
 - Concise enough for readability
 
 ### What categories are available? / 有哪些可用的分类？
 
-Current categories include:
-- `sequence-alignment`: Sequence alignment algorithms / 序列比对
-- `assembly`: Genome assembly algorithms / 序列组装
-- `variant-calling`: Variant calling algorithms / 变异检测
-- `expression-analysis`: Gene expression analysis / 基因表达分析
-- `protein-structure`: Protein structure prediction / 蛋白质结构预测
-- `phylogenetics`: Phylogenetic analysis algorithms / 系统发育分析
-- `functional-annotation`: Functional annotation / 功能注释
-- `data-compression`: Data compression / 数据压缩
+The project currently has 12 top-level categories, including sequence alignment, assembly,
+variant calling, expression analysis, protein structure, phylogenetics, functional annotation,
+data compression, single-cell genomics, metagenomics, epigenomics, and gene prediction.
 
 Check `data/categories.yaml` for the complete list including subcategories.
 
@@ -110,7 +104,7 @@ python -m pytest tests/test_validate.py
 ### How do I generate the README? / 如何生成 README？
 
 ```bash
-python scripts/generate_readme.py
+python -m scripts generate
 ```
 
 This will regenerate `README.md` from the data in `data/` directory.

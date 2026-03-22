@@ -11,6 +11,9 @@ description: "Awesome Bioinformatics Algorithms — 生物信息学算法概要�
 🧬 生物信息学算法概要汇总 — 收集和整理常用的生物信息学算法，提供简要介绍、复杂度分析和相关资源链接。
 {: .fs-6 .fw-300 }
 
+完整统计和算法目录以仓库根目录自动生成的 `README.md` 为准，当前页面只展示摘要。
+{: .fs-4 .text-grey-dk-100 }
+
 [算法列表](https://github.com/LessUp/awesome-bioinfo-algorithms#%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9-sequence-alignment){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [API 文档]({% link API.md %}){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [开发指南]({% link DEVELOPMENT.md %}){: .btn .btn-outline .fs-5 .mb-4 .mb-md-0 }

@@ -1,7 +1,7 @@
 # Awesome Bioinformatics Algorithms
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
-[![Validate](https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/validate.yml/badge.svg)](https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/validate.yml)
+[![CI](https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/ci.yml/badge.svg)](https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/ci.yml)
 [![License: CC0-1.0](https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg)](http://creativecommons.org/publicdomain/zero/1.0/)
 [![Algorithms](https://img.shields.io/badge/algorithms-{{ total_algorithms }}-blue.svg)](#-统计--statistics)
 [![Categories](https://img.shields.io/badge/categories-{{ total_categories }}-green.svg)](#-统计--statistics)

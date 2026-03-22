@@ -37,7 +37,7 @@ description: "如何添加新算法、分支规范与提交流程"
 algorithms:
   - id: algorithm-id          # 唯一标识（小写、数字、连字符）
     name: Algorithm Name      # 算法名称
-    description: |            # 描述（50-200 字符）
+    description: |            # 描述（50-500 字符）
       详细描述，包括原理、特点和应用场景。
     purpose: 主要用途          # 算法主要用途
     time_complexity: O(n)     # 时间复杂度
@@ -70,9 +70,11 @@ algorithms:
 
 ## 质量要求
 
-- ✅ 描述长度在 50-200 字之间
+- ✅ 描述长度在 50-500 字之间
 - ✅ 必须包含所有必填字段
-- ✅ 分类 ID 必须有效
+- ✅ 分类 ID 和子分类 ID 必须有效
+- ✅ `subcategory` 必须属于所选 `category`
+- ✅ 算法 ID 在整个仓库范围内必须唯一
 - ✅ YAML 格式正确
 - ✅ 链接有效且可访问
 

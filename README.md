@@ -1,7 +1,7 @@
 # Awesome Bioinformatics Algorithms
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
-[![Validate](https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/validate.yml/badge.svg)](https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/validate.yml)
+[![CI](https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/ci.yml/badge.svg)](https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/ci.yml)
 [![License: CC0-1.0](https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg)](http://creativecommons.org/publicdomain/zero/1.0/)
 [![Algorithms](https://img.shields.io/badge/algorithms-54-blue.svg)](#-统计--statistics)
 [![Categories](https://img.shields.io/badge/categories-12-green.svg)](#-统计--statistics)
@@ -39,23 +39,52 @@ python -m scripts stats
 ## 📑 目录 | Table of Contents
 
 - [序列比对 (Sequence Alignment)](#序列比对-sequence-alignment)
+  - [双序列比对 (Pairwise Alignment)](#双序列比对-pairwise-alignment)
+  - [多序列比对 (Multiple Sequence Alignment)](#多序列比对-multiple-sequence-alignment)
 - [序列组装 (Sequence Assembly)](#序列组装-sequence-assembly)
+  - [从头组装 (De Novo Assembly)](#从头组装-de-novo-assembly)
+  - [参考引导组装 (Reference-Guided Assembly)](#参考引导组装-reference-guided-assembly)
 - [变异检测 (Variant Calling)](#变异检测-variant-calling)
+  - [单核苷酸变异 (SNV Detection)](#单核苷酸变异-snv-detection)
+  - [结构变异 (Structural Variants)](#结构变异-structural-variants)
 - [基因表达分析 (Gene Expression Analysis)](#基因表达分析-gene-expression-analysis)
+  - [表达定量 (Expression Quantification)](#表达定量-expression-quantification)
+  - [差异表达 (Differential Expression)](#差异表达-differential-expression)
 - [蛋白质结构预测 (Protein Structure Prediction)](#蛋白质结构预测-protein-structure-prediction)
+  - [从头预测 (Ab Initio Prediction)](#从头预测-ab-initio-prediction)
+  - [模板方法 (Template-Based Modeling)](#模板方法-template-based-modeling)
 - [系统发育分析 (Phylogenetics)](#系统发育分析-phylogenetics)
+  - [距离法 (Distance Methods)](#距离法-distance-methods)
+  - [特征法 (Character-Based Methods)](#特征法-character-based-methods)
 - [功能注释 (Functional Annotation)](#功能注释-functional-annotation)
+  - [同源性方法 (Homology-Based)](#同源性方法-homology-based)
+  - [结构域方法 (Domain-Based)](#结构域方法-domain-based)
 - [数据压缩 (Data Compression)](#数据压缩-data-compression)
+  - [通用压缩 (General Compression)](#通用压缩-general-compression)
+  - [专用压缩 (Specialized Compression)](#专用压缩-specialized-compression)
 - [单细胞基因组学 (Single-Cell Genomics)](#单细胞基因组学-single-cell-genomics)
+  - [数据预处理 (Preprocessing)](#数据预处理-preprocessing)
+  - [细胞聚类与注释 (Cell Clustering & Annotation)](#细胞聚类与注释-cell-clustering-annotation)
 - [宏基因组学 (Metagenomics)](#宏基因组学-metagenomics)
+  - [物种分类 (Taxonomic Profiling)](#物种分类-taxonomic-profiling)
+  - [功能分析 (Functional Profiling)](#功能分析-functional-profiling)
 - [表观基因组学 (Epigenomics)](#表观基因组学-epigenomics)
+  - [ChIP-seq 分析 (ChIP-seq Analysis)](#chip-seq-分析-chip-seq-analysis)
+  - [甲基化分析 (Methylation Analysis)](#甲基化分析-methylation-analysis)
 - [基因预测 (Gene Prediction)](#基因预测-gene-prediction)
+  - [真核基因预测 (Eukaryotic Gene Prediction)](#真核基因预测-eukaryotic-gene-prediction)
+  - [原核基因预测 (Prokaryotic Gene Prediction)](#原核基因预测-prokaryotic-gene-prediction)
 
 ---
 
 ## 序列比对 (Sequence Alignment)
 
 用于比较和对齐生物序列的算法
+
+
+### 双序列比对 (Pairwise Alignment)
+
+两条序列之间的比对算法
 
 
 #### Smith-Waterman (1981)
@@ -113,48 +142,6 @@ python -m scripts stats
 **标签**: `fm-index` `short-read` `fast` `high-throughput`
 
 
-#### Clustal Omega (2011)
-
-高性能的多序列比对工具，使用 mBed 引导树和 HHalign 算法实现快速准确的多序列比对。
-该方法能够在合理时间内处理数千条序列的比对任务，是多序列比对领域的标准工具。
-
-**用途**: 大规模多序列比对
-**时间复杂度**: O(n * L^2)
-**空间复杂度**: O(n * L)
-**论文**: [https://doi.org/10.1038/msb.2011.75](https://doi.org/10.1038/msb.2011.75)
-**实现**: [http://www.clustal.org/omega/](http://www.clustal.org/omega/)
-**相关工具**: ClustalW, T-Coffee, MAFFT
-**标签**: `multiple-alignment` `guide-tree` `progressive` `scalable`
-
-
-#### MUSCLE (2004)
-
-基于迭代优化的多序列比对算法，通过多轮渐进比对和精化步骤提高比对质量。
-该方法在速度和准确性之间取得了良好平衡，适用于中等规模的序列集合。
-
-**用途**: 高精度多序列比对
-**时间复杂度**: O(n^2 * L)
-**空间复杂度**: O(n * L)
-**论文**: [https://doi.org/10.1093/nar/gkh340](https://doi.org/10.1093/nar/gkh340)
-**实现**: [https://github.com/rcedgar/muscle](https://github.com/rcedgar/muscle)
-**相关工具**: MAFFT, Clustal Omega, PROBCONS
-**标签**: `multiple-alignment` `iterative` `refinement` `classic`
-
-
-#### MAFFT (2002)
-
-基于快速傅里叶变换的多序列比对工具，使用 FFT 加速同源区域检测和比对优化。
-该方法提供多种比对策略，能高效处理从数十到数万条序列的比对任务。
-
-**用途**: 高效多序列比对
-**时间复杂度**: O(n * L * log L)
-**空间复杂度**: O(n * L)
-**论文**: [https://doi.org/10.1093/nar/gkf436](https://doi.org/10.1093/nar/gkf436)
-**实现**: [https://github.com/GSLBiotech/mafft](https://github.com/GSLBiotech/mafft)
-**相关工具**: MUSCLE, Clustal Omega, T-Coffee
-**标签**: `fft` `multiple-alignment` `scalable` `versatile`
-
-
 #### Minimap2 (2018)
 
 通用的序列比对工具，支持长读段（PacBio/ONT）和短读段的快速比对。
@@ -197,9 +184,61 @@ python -m scripts stats
 **标签**: `fm-index` `splice-aware` `rna-seq` `low-memory`
 
 
+### 多序列比对 (Multiple Sequence Alignment)
+
+多条序列同时比对的算法
+
+
+#### Clustal Omega (2011)
+
+高性能的多序列比对工具，使用 mBed 引导树和 HHalign 算法实现快速准确的多序列比对。
+该方法能够在合理时间内处理数千条序列的比对任务，是多序列比对领域的标准工具。
+
+**用途**: 大规模多序列比对
+**时间复杂度**: O(n * L^2)
+**空间复杂度**: O(n * L)
+**论文**: [https://doi.org/10.1038/msb.2011.75](https://doi.org/10.1038/msb.2011.75)
+**实现**: [http://www.clustal.org/omega/](http://www.clustal.org/omega/)
+**相关工具**: ClustalW, T-Coffee, MAFFT
+**标签**: `multiple-alignment` `guide-tree` `progressive` `scalable`
+
+
+#### MUSCLE (2004)
+
+基于迭代优化的多序列比对算法，通过多轮渐进比对和精化步骤提高比对质量。
+该方法在速度和准确性之间取得了良好平衡，适用于中等规模的序列集合。
+
+**用途**: 高精度多序列比对
+**时间复杂度**: O(n^2 * L)
+**空间复杂度**: O(n * L)
+**论文**: [https://doi.org/10.1093/nar/gkh340](https://doi.org/10.1093/nar/gkh340)
+**实现**: [https://github.com/rcedgar/muscle](https://github.com/rcedgar/muscle)
+**相关工具**: MAFFT, Clustal Omega, PROBCONS
+**标签**: `multiple-alignment` `iterative` `refinement` `classic`
+
+
+#### MAFFT (2002)
+
+基于快速傅里叶变换的多序列比对工具，使用 FFT 加速同源区域检测和比对优化。
+该方法提供多种比对策略，能高效处理从数十到数万条序列的比对任务。
+
+**用途**: 高效多序列比对
+**时间复杂度**: O(n * L * log L)
+**空间复杂度**: O(n * L)
+**论文**: [https://doi.org/10.1093/nar/gkf436](https://doi.org/10.1093/nar/gkf436)
+**实现**: [https://github.com/GSLBiotech/mafft](https://github.com/GSLBiotech/mafft)
+**相关工具**: MUSCLE, Clustal Omega, T-Coffee
+**标签**: `fft` `multiple-alignment` `scalable` `versatile`
+
+
 ## 序列组装 (Sequence Assembly)
 
 从短读段重建完整序列的算法
+
+
+### 从头组装 (De Novo Assembly)
+
+不依赖参考序列的组装方法
 
 
 #### De Bruijn Graph Assembly (2001)
@@ -244,20 +283,6 @@ python -m scripts stats
 **标签**: `hifi` `haplotype-aware` `long-read` `chromosome-level`
 
 
-#### Reference-Guided Assembly (2011)
-
-基于参考基因组的序列组装方法，将测序读段先比对到参考序列上，再进行局部组装和变异检测。
-该方法适合有近缘参考基因组的物种，组装速度快且资源消耗低，常用于重测序项目。
-
-**用途**: 基于参考序列的快速基因组组装
-**时间复杂度**: O(n log n)
-**空间复杂度**: O(n)
-**论文**: [https://doi.org/10.1186/gb-2011-12-5-r42](https://doi.org/10.1186/gb-2011-12-5-r42)
-**实现**: [https://github.com/ablab/ragout](https://github.com/ablab/ragout)
-**相关工具**: Ragout, RaGOO, RagTag
-**标签**: `reference-based` `scaffolding` `resequencing` `efficient`
-
-
 #### Overlap-Layout-Consensus (OLC) (2010)
 
 经典的序列组装方法，通过三个步骤完成组装：计算读段间的重叠、构建布局图、生成一致序列。
@@ -285,9 +310,33 @@ python -m scripts stats
 **标签**: `repeat-graph` `long-read` `ont` `fast`
 
 
+### 参考引导组装 (Reference-Guided Assembly)
+
+基于参考序列的组装方法
+
+
+#### Reference-Guided Assembly (2011)
+
+基于参考基因组的序列组装方法，将测序读段先比对到参考序列上，再进行局部组装和变异检测。
+该方法适合有近缘参考基因组的物种，组装速度快且资源消耗低，常用于重测序项目。
+
+**用途**: 基于参考序列的快速基因组组装
+**时间复杂度**: O(n log n)
+**空间复杂度**: O(n)
+**论文**: [https://doi.org/10.1186/gb-2011-12-5-r42](https://doi.org/10.1186/gb-2011-12-5-r42)
+**实现**: [https://github.com/ablab/ragout](https://github.com/ablab/ragout)
+**相关工具**: Ragout, RaGOO, RagTag
+**标签**: `reference-based` `scaffolding` `resequencing` `efficient`
+
+
 ## 变异检测 (Variant Calling)
 
 检测基因组变异的算法
+
+
+### 单核苷酸变异 (SNV Detection)
+
+检测单核苷酸变异和小型插入缺失
 
 
 #### GATK HaplotypeCaller (2010)
@@ -346,6 +395,11 @@ python -m scripts stats
 **标签**: `somatic` `germline` `fast` `clinical`
 
 
+### 结构变异 (Structural Variants)
+
+检测大规模结构变异
+
+
 #### Delly (2012)
 
 基于分裂读段和双端读段信号的结构变异检测算法，能够发现缺失、重复、倒位和易位等大规模基因组变异。
@@ -379,32 +433,9 @@ python -m scripts stats
 分析基因表达水平的算法
 
 
-#### DESeq2 (2014)
+### 表达定量 (Expression Quantification)
 
-基于负二项分布的差异表达分析算法，使用收缩估计来提高方差估计的稳定性。
-该方法特别适合处理小样本量的 RNA-seq 数据，是目前最广泛使用的差异表达分析工具之一。
-
-**用途**: RNA-seq 数据的差异表达分析
-**时间复杂度**: O(n * g)
-**空间复杂度**: O(g)
-**论文**: [https://doi.org/10.1186/s13059-014-0550-8](https://doi.org/10.1186/s13059-014-0550-8)
-**实现**: [https://bioconductor.org/packages/DESeq2](https://bioconductor.org/packages/DESeq2)
-**相关工具**: edgeR, limma, Bioconductor
-**标签**: `rna-seq` `differential-expression` `negative-binomial` `statistical`
-
-
-#### edgeR (2010)
-
-基于经验贝叶斯方法的差异表达分析工具，使用负二项分布建模并通过标签化分散估计提高统计效力。
-该方法适合处理小样本和多因素实验设计，与 DESeq2 并列为最主流的差异表达分析工具。
-
-**用途**: 基于经验贝叶斯的差异表达分析
-**时间复杂度**: O(n * g)
-**空间复杂度**: O(g)
-**论文**: [https://doi.org/10.1093/bioinformatics/btp616](https://doi.org/10.1093/bioinformatics/btp616)
-**实现**: [https://bioconductor.org/packages/edgeR](https://bioconductor.org/packages/edgeR)
-**相关工具**: DESeq2, limma-voom, Bioconductor
-**标签**: `rna-seq` `differential-expression` `empirical-bayes` `statistical`
+转录本和基因水平的表达量估计
 
 
 #### STAR (2013)
@@ -449,9 +480,47 @@ python -m scripts stats
 **标签**: `pseudoalignment` `quantification` `rna-seq` `fast`
 
 
+### 差异表达 (Differential Expression)
+
+不同条件间的差异表达分析
+
+
+#### DESeq2 (2014)
+
+基于负二项分布的差异表达分析算法，使用收缩估计来提高方差估计的稳定性。
+该方法特别适合处理小样本量的 RNA-seq 数据，是目前最广泛使用的差异表达分析工具之一。
+
+**用途**: RNA-seq 数据的差异表达分析
+**时间复杂度**: O(n * g)
+**空间复杂度**: O(g)
+**论文**: [https://doi.org/10.1186/s13059-014-0550-8](https://doi.org/10.1186/s13059-014-0550-8)
+**实现**: [https://bioconductor.org/packages/DESeq2](https://bioconductor.org/packages/DESeq2)
+**相关工具**: edgeR, limma, Bioconductor
+**标签**: `rna-seq` `differential-expression` `negative-binomial` `statistical`
+
+
+#### edgeR (2010)
+
+基于经验贝叶斯方法的差异表达分析工具，使用负二项分布建模并通过标签化分散估计提高统计效力。
+该方法适合处理小样本和多因素实验设计，与 DESeq2 并列为最主流的差异表达分析工具。
+
+**用途**: 基于经验贝叶斯的差异表达分析
+**时间复杂度**: O(n * g)
+**空间复杂度**: O(g)
+**论文**: [https://doi.org/10.1093/bioinformatics/btp616](https://doi.org/10.1093/bioinformatics/btp616)
+**实现**: [https://bioconductor.org/packages/edgeR](https://bioconductor.org/packages/edgeR)
+**相关工具**: DESeq2, limma-voom, Bioconductor
+**标签**: `rna-seq` `differential-expression` `empirical-bayes` `statistical`
+
+
 ## 蛋白质结构预测 (Protein Structure Prediction)
 
 预测蛋白质三维结构的算法
+
+
+### 从头预测 (Ab Initio Prediction)
+
+基于序列信息的从头结构预测
 
 
 #### AlphaFold (2021)
@@ -482,6 +551,11 @@ python -m scripts stats
 **标签**: `language-model` `single-sequence` `fast` `deep-learning`
 
 
+### 模板方法 (Template-Based Modeling)
+
+基于已知结构模板的建模方法
+
+
 #### Rosetta (2003)
 
 基于物理能量函数的蛋白质结构预测和设计算法，使用蒙特卡洛采样探索构象空间。
@@ -501,6 +575,11 @@ python -m scripts stats
 构建和分析进化树的算法
 
 
+### 距离法 (Distance Methods)
+
+基于距离矩阵的建树方法
+
+
 #### Neighbor-Joining (1987)
 
 基于距离矩阵的系统发育树构建算法，通过迭代地合并最近邻节点来构建无根树。
@@ -512,6 +591,11 @@ python -m scripts stats
 **论文**: [https://doi.org/10.1093/oxfordjournals.molbev.a040454](https://doi.org/10.1093/oxfordjournals.molbev.a040454)
 **相关工具**: MEGA, PHYLIP, RapidNJ
 **标签**: `distance-based` `tree-building` `classic`
+
+
+### 特征法 (Character-Based Methods)
+
+基于序列特征的建树方法
 
 
 #### Maximum Likelihood Phylogeny (2014)
@@ -561,6 +645,11 @@ python -m scripts stats
 预测基因和蛋白质功能的算法
 
 
+### 同源性方法 (Homology-Based)
+
+基于序列同源性的功能推断
+
+
 #### BLAST-based Annotation (1990)
 
 基于序列相似性的功能注释方法，通过与已知功能序列数据库比对来推断未知序列的功能。
@@ -573,6 +662,25 @@ python -m scripts stats
 **实现**: [https://blast.ncbi.nlm.nih.gov/](https://blast.ncbi.nlm.nih.gov/)
 **相关工具**: BLAST+, UniProt, InterPro
 **标签**: `sequence-similarity` `database-search` `classic` `annotation`
+
+
+#### eggNOG-mapper (2017)
+
+基于直系同源群（eggNOG）数据库的快速功能注释工具，使用预计算的进化系统树提高注释准确性。
+该方法能高效注释大规模蛋白质组数据，提供 GO、KEGG 和 COG 等多种功能分类。
+
+**用途**: 基于直系同源关系的快速功能注释
+**时间复杂度**: O(n * m)
+**空间复杂度**: O(m)
+**论文**: [https://doi.org/10.1093/molbev/msx148](https://doi.org/10.1093/molbev/msx148)
+**实现**: [https://github.com/eggnogdb/eggnog-mapper](https://github.com/eggnogdb/eggnog-mapper)
+**相关工具**: InterProScan, BLAST+, KofamKOALA
+**标签**: `orthology` `go-annotation` `kegg` `fast`
+
+
+### 结构域方法 (Domain-Based)
+
+基于蛋白质结构域的功能注释
 
 
 #### HMMER (2011)
@@ -603,23 +711,14 @@ python -m scripts stats
 **标签**: `multi-database` `domain-detection` `go-annotation` `comprehensive`
 
 
-#### eggNOG-mapper (2017)
-
-基于直系同源群（eggNOG）数据库的快速功能注释工具，使用预计算的进化系统树提高注释准确性。
-该方法能高效注释大规模蛋白质组数据，提供 GO、KEGG 和 COG 等多种功能分类。
-
-**用途**: 基于直系同源关系的快速功能注释
-**时间复杂度**: O(n * m)
-**空间复杂度**: O(m)
-**论文**: [https://doi.org/10.1093/molbev/msx148](https://doi.org/10.1093/molbev/msx148)
-**实现**: [https://github.com/eggnogdb/eggnog-mapper](https://github.com/eggnogdb/eggnog-mapper)
-**相关工具**: InterProScan, BLAST+, KofamKOALA
-**标签**: `orthology` `go-annotation` `kegg` `fast`
-
-
 ## 数据压缩 (Data Compression)
 
 压缩生物信息学数据的算法
+
+
+### 通用压缩 (General Compression)
+
+通用数据压缩格式
 
 
 #### GZIP for FASTQ (1992)
@@ -633,6 +732,11 @@ python -m scripts stats
 **论文**: [https://doi.org/10.17487/RFC1952](https://doi.org/10.17487/RFC1952)
 **相关工具**: gzip, pigz, bgzip
 **标签**: `lossless` `general-purpose` `standard` `fastq`
+
+
+### 专用压缩 (Specialized Compression)
+
+针对特定生物数据格式的压缩方法
 
 
 #### CRAM (2011)
@@ -668,6 +772,11 @@ python -m scripts stats
 单细胞水平的基因组和转录组分析算法
 
 
+### 数据预处理 (Preprocessing)
+
+单细胞数据的质控、标准化和预处理
+
+
 #### Cell Ranger (2017)
 
 10x Genomics 开发的单细胞 RNA-seq 数据处理流水线，完成从原始数据到基因表达矩阵的全流程分析。
@@ -680,6 +789,11 @@ python -m scripts stats
 **实现**: [https://github.com/10XGenomics/cellranger](https://github.com/10XGenomics/cellranger)
 **相关工具**: STARsolo, Alevin, Kallisto-bustools
 **标签**: `10x-genomics` `preprocessing` `umi` `pipeline`
+
+
+### 细胞聚类与注释 (Cell Clustering & Annotation)
+
+细胞类型识别和聚类分析
 
 
 #### Seurat (2015)
@@ -729,6 +843,11 @@ python -m scripts stats
 微生物群落的基因组分析算法
 
 
+### 物种分类 (Taxonomic Profiling)
+
+微生物物种组成鉴定
+
+
 #### Kraken2 (2019)
 
 基于 k-mer 精确匹配的超快速物种分类工具，使用紧凑哈希表在数分钟内完成宏基因组样本的物种鉴定。
@@ -757,6 +876,11 @@ python -m scripts stats
 **标签**: `marker-gene` `abundance` `low-memory` `species-level`
 
 
+### 功能分析 (Functional Profiling)
+
+微生物群落功能分析
+
+
 #### HUMAnN (2014)
 
 宏基因组功能分析流水线，将测序读段映射到基因家族和代谢通路，量化微生物群落的功能潜力。
@@ -776,6 +900,11 @@ python -m scripts stats
 分析表观遗传修饰的算法
 
 
+### ChIP-seq 分析 (ChIP-seq Analysis)
+
+染色质免疫共沉淀测序分析
+
+
 #### MACS2 (2008)
 
 ChIP-seq 峰值检测的标准工具，使用泊松分布模型识别蛋白质-DNA 结合位点和组蛋白修饰区域。
@@ -788,20 +917,6 @@ ChIP-seq 峰值检测的标准工具，使用泊松分布模型识别蛋白质-D
 **实现**: [https://github.com/macs3-project/MACS](https://github.com/macs3-project/MACS)
 **相关工具**: HOMER, SICER, ENCODE
 **标签**: `peak-calling` `chip-seq` `histone` `transcription-factor`
-
-
-#### Bismark (2011)
-
-亚硫酸氢盐测序数据的比对和甲基化分析工具，处理 C-to-T 转换后的序列比对和甲基化水平量化。
-该方法能区分 CpG、CHG、CHH 不同类型的甲基化，是 DNA 甲基化分析的核心工具。
-
-**用途**: 亚硫酸氢盐测序数据的比对和甲基化定量
-**时间复杂度**: O(n * g)
-**空间复杂度**: O(g)
-**论文**: [https://doi.org/10.1093/bioinformatics/btr167](https://doi.org/10.1093/bioinformatics/btr167)
-**实现**: [https://github.com/FelixKrueger/Bismark](https://github.com/FelixKrueger/Bismark)
-**相关工具**: BSseeker2, methylKit, bwa-meth
-**标签**: `bisulfite-seq` `methylation` `cpg` `epigenetic`
 
 
 #### ChromHMM (2012)
@@ -818,9 +933,33 @@ ChIP-seq 峰值检测的标准工具，使用泊松分布模型识别蛋白质-D
 **标签**: `hmm` `chromatin-state` `histone` `annotation`
 
 
+### 甲基化分析 (Methylation Analysis)
+
+DNA 甲基化数据分析
+
+
+#### Bismark (2011)
+
+亚硫酸氢盐测序数据的比对和甲基化分析工具，处理 C-to-T 转换后的序列比对和甲基化水平量化。
+该方法能区分 CpG、CHG、CHH 不同类型的甲基化，是 DNA 甲基化分析的核心工具。
+
+**用途**: 亚硫酸氢盐测序数据的比对和甲基化定量
+**时间复杂度**: O(n * g)
+**空间复杂度**: O(g)
+**论文**: [https://doi.org/10.1093/bioinformatics/btr167](https://doi.org/10.1093/bioinformatics/btr167)
+**实现**: [https://github.com/FelixKrueger/Bismark](https://github.com/FelixKrueger/Bismark)
+**相关工具**: BSseeker2, methylKit, bwa-meth
+**标签**: `bisulfite-seq` `methylation` `cpg` `epigenetic`
+
+
 ## 基因预测 (Gene Prediction)
 
 基因结构预测和基因组注释算法
+
+
+### 真核基因预测 (Eukaryotic Gene Prediction)
+
+真核生物基因结构预测
 
 
 #### AUGUSTUS (2003)
@@ -837,20 +976,6 @@ ChIP-seq 峰值检测的标准工具，使用泊松分布模型识别蛋白质-D
 **标签**: `ghmm` `ab-initio` `exon-intron` `rna-seq-hints`
 
 
-#### Prodigal (2010)
-
-高效的原核基因识别工具，使用动态规划算法自动学习物种特异性参数进行基因预测。
-该方法无需训练数据即可准确预测蛋白编码基因，支持宏基因组模式处理混合物种数据。
-
-**用途**: 原核生物蛋白编码基因快速预测
-**时间复杂度**: O(n)
-**空间复杂度**: O(n)
-**论文**: [https://doi.org/10.1186/1471-2105-11-119](https://doi.org/10.1186/1471-2105-11-119)
-**实现**: [https://github.com/hyattpd/Prodigal](https://github.com/hyattpd/Prodigal)
-**相关工具**: Pyrodigal, GeneMark, Glimmer
-**标签**: `prokaryotic` `self-training` `metagenome` `fast`
-
-
 #### BRAKER (2016)
 
 结合从头预测和证据驱动方法的真核基因注释流水线，自动整合 RNA-seq 和蛋白质数据训练基因预测模型。
@@ -863,6 +988,25 @@ ChIP-seq 峰值检测的标准工具，使用泊松分布模型识别蛋白质-D
 **实现**: [https://github.com/Gaius-Augustus/BRAKER](https://github.com/Gaius-Augustus/BRAKER)
 **相关工具**: AUGUSTUS, GeneMark-ET, MAKER
 **标签**: `pipeline` `evidence-based` `automated` `rna-seq`
+
+
+### 原核基因预测 (Prokaryotic Gene Prediction)
+
+原核生物基因识别
+
+
+#### Prodigal (2010)
+
+高效的原核基因识别工具，使用动态规划算法自动学习物种特异性参数进行基因预测。
+该方法无需训练数据即可准确预测蛋白编码基因，支持宏基因组模式处理混合物种数据。
+
+**用途**: 原核生物蛋白编码基因快速预测
+**时间复杂度**: O(n)
+**空间复杂度**: O(n)
+**论文**: [https://doi.org/10.1186/1471-2105-11-119](https://doi.org/10.1186/1471-2105-11-119)
+**实现**: [https://github.com/hyattpd/Prodigal](https://github.com/hyattpd/Prodigal)
+**相关工具**: Pyrodigal, GeneMark, Glimmer
+**标签**: `prokaryotic` `self-training` `metagenome` `fast`
 
 
 ## 🤝 贡献 | Contributing

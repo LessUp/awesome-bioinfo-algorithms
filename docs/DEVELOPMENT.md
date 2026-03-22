@@ -37,13 +37,14 @@ awesome-bioinfo-algorithms/
 │   ├── API.md                   # API 文档
 │   └── FAQ.md                   # 常见问题
 ├── scripts/
+│   ├── __main__.py              # CLI 入口（generate/validate/stats）
 │   ├── schema.py                # 数据模型定义
 │   ├── validate.py              # 数据验证器
 │   ├── category_manager.py      # 分类管理器
 │   ├── algorithm_registry.py    # 算法注册表
 │   ├── readme_generator.py      # README 生成器
 │   ├── data_io.py               # 数据导入导出
-│   └── generate_readme.py       # 主生成脚本
+│   └── generate_readme.py       # 兼容旧用法的包装脚本
 ├── templates/
 │   ├── readme_template.md       # README 模板
 │   └── algorithm_template.yaml  # 算法条目模板
@@ -57,7 +58,7 @@ awesome-bioinfo-algorithms/
 └── .github/
     ├── ISSUE_TEMPLATE/
     └── workflows/
-        └── validate.yml         # CI 工作流
+        └── ci.yml               # CI 工作流
 ```
 
 ### 环境设置
@@ -90,8 +91,10 @@ pip install -e ".[dev]"
 提供数据验证功能：
 
 - 必填字段检查
-- 描述长度验证 (50-200字)
+- 描述长度验证 (50-500字)
 - 分类 ID 验证
+- 子分类与父分类关系验证
+- 跨文件重复算法 ID 检查
 - YAML 格式验证
 
 #### 3. 分类管理器 (category_manager.py)
@@ -135,7 +138,7 @@ python -m pytest tests/ --cov=scripts --cov-report=html
 ### 生成 README
 
 ```bash
-python scripts/generate_readme.py
+python -m scripts generate
 ```
 
 ### 数据导入导出
@@ -152,8 +155,8 @@ category_manager = CategoryManager()
 category_manager.load_categories('data/categories.yaml')
 
 data_io = DataIO(registry, category_manager)
-data_io.export_data('backup.yaml', format='yaml')
-data_io.export_data('backup.json', format='json')
+data_io.export_data('backup.yaml', fmt='yaml')
+data_io.export_data('backup.json', fmt='json')
 
 # 导入数据
 categories, algorithms = data_io.import_data('backup.yaml')
@@ -219,5 +222,5 @@ python -m pytest tests/ -v
 ### Generating README
 
 ```bash
-python scripts/generate_readme.py
+python -m scripts generate
 ```

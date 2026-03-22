@@ -57,6 +57,7 @@ class Validator:
     def __init__(self, valid_categories: Optional[list[str]] = None):
         """Initialize validator with optional list of valid category IDs."""
         self.valid_categories = valid_categories or []
+        self.category_parents: dict[str, Optional[str]] = {}
 
     def validate_algorithm(self, data: dict[str, Any]) -> ValidationResult:
         """
@@ -100,6 +101,26 @@ class Validator:
                 f"Invalid category: '{data.get('category')}'. "
                 f"Valid categories: {', '.join(self.valid_categories)}"
             )
+
+        # Validate subcategory exists and matches the parent category
+        subcategory = data.get('subcategory', '')
+        if subcategory:
+            if not isinstance(subcategory, str):
+                result.add_error("Field 'subcategory' must be a string")
+            elif self.category_parents:
+                if subcategory not in self.category_parents:
+                    result.add_error(f"Invalid subcategory: '{subcategory}'")
+                else:
+                    parent_category = self.category_parents[subcategory]
+                    if parent_category is None:
+                        result.add_error(
+                            f"Invalid subcategory: '{subcategory}' is a top-level category"
+                        )
+                    elif parent_category != data.get('category'):
+                        result.add_error(
+                            f"Subcategory '{subcategory}' does not belong to "
+                            f"category '{data.get('category')}'"
+                        )
 
         # Validate year if provided
         year = data.get('year', 0)
@@ -247,12 +268,20 @@ class Validator:
             result.add_error("'categories' must be a list")
             return result
 
+        self.valid_categories = []
+        self.category_parents = {}
+
         for i, cat in enumerate(data['categories']):
             cat_result = self.validate_category(cat)
             for error in cat_result.errors:
                 result.add_error(f"Category {i} ({cat.get('id', 'unknown')}): {error}")
             for warning in cat_result.warnings:
                 result.add_warning(f"Category {i} ({cat.get('id', 'unknown')}): {warning}")
+
+        relationships = self._collect_category_relationships(data['categories'], result)
+        if result.is_valid:
+            self.category_parents = relationships
+            self.valid_categories = list(relationships.keys())
 
         return result
 
@@ -267,6 +296,8 @@ class Validator:
             ValidationResult with validation status and any errors/warnings
         """
         result = ValidationResult(is_valid=True)
+        self.valid_categories = []
+        self.category_parents = {}
 
         # Validate categories file
         categories_path = os.path.join(data_dir, 'categories.yaml')
@@ -274,16 +305,11 @@ class Validator:
             cat_result = self.validate_categories_file(categories_path)
             result.merge(cat_result)
 
-            # Load valid categories for algorithm validation
-            with open(categories_path, encoding='utf-8') as f:
-                cat_data = yaml.safe_load(f)
-                if cat_data and 'categories' in cat_data:
-                    self.valid_categories = self._extract_category_ids(cat_data['categories'])
-
         # Validate algorithm files
         algorithms_dir = os.path.join(data_dir, 'algorithms')
+        seen_ids: dict[str, str] = {}
         if os.path.exists(algorithms_dir):
-            for filename in os.listdir(algorithms_dir):
+            for filename in sorted(os.listdir(algorithms_dir)):
                 if filename.endswith('.yaml') or filename.endswith('.yml'):
                     file_path = os.path.join(algorithms_dir, filename)
                     algo_result = self.validate_algorithms_file(file_path)
@@ -292,14 +318,50 @@ class Validator:
                     for warning in algo_result.warnings:
                         result.add_warning(f"{filename}: {warning}")
 
+                    parse_result, data = self.validate_yaml_file(file_path)
+                    if parse_result.is_valid and isinstance(data.get('algorithms'), list):
+                        for algo in data['algorithms']:
+                            algo_id = algo.get('id')
+                            if not algo_id:
+                                continue
+                            if algo_id in seen_ids:
+                                result.add_error(
+                                    f"Duplicate algorithm ID across files: '{algo_id}' "
+                                    f"({seen_ids[algo_id]}, {filename})"
+                                )
+                            else:
+                                seen_ids[algo_id] = filename
+
         return result
 
-    def _extract_category_ids(self, categories: list[dict]) -> list[str]:
-        """Extract all category IDs including subcategories."""
-        ids = []
-        for cat in categories:
-            if 'id' in cat:
-                ids.append(cat['id'])
-            if 'subcategories' in cat:
-                ids.extend(self._extract_category_ids(cat['subcategories']))
-        return ids
+    def _collect_category_relationships(
+        self,
+        categories: list[dict[str, Any]],
+        result: ValidationResult,
+        parent_id: Optional[str] = None,
+        relationships: Optional[dict[str, Optional[str]]] = None,
+    ) -> dict[str, Optional[str]]:
+        """Collect category IDs and their parent category IDs."""
+        if relationships is None:
+            relationships = {}
+
+        for category in categories:
+            category_id = category.get('id')
+            if not category_id:
+                continue
+
+            if category_id in relationships:
+                result.add_error(f"Duplicate category ID: '{category_id}'")
+                continue
+
+            relationships[category_id] = parent_id
+            subcategories = category.get('subcategories', [])
+            if isinstance(subcategories, list):
+                self._collect_category_relationships(
+                    subcategories,
+                    result,
+                    parent_id=category_id,
+                    relationships=relationships,
+                )
+
+        return relationships

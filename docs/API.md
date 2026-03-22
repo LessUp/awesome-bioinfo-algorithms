@@ -56,6 +56,22 @@ Get all algorithms in a specific category.
 alignment_algos = registry.get_by_category('sequence-alignment')
 ```
 
+#### `get_by_subcategory(subcategory_id: str) -> list[AlgorithmEntry]`
+
+Get all algorithms in a specific subcategory.
+
+```python
+pairwise_algos = registry.get_by_subcategory('pairwise')
+```
+
+#### `get_direct_by_category(category_id: str) -> list[AlgorithmEntry]`
+
+Get algorithms that belong directly to a category without a subcategory.
+
+```python
+top_level_algos = registry.get_direct_by_category('sequence-alignment')
+```
+
 #### `get_by_tag(tag: str) -> list[AlgorithmEntry]`
 
 Get all algorithms with a specific tag.
@@ -157,6 +173,22 @@ if cm.category_exists('assembly'):
     print("Category exists")
 ```
 
+#### `get_subcategories(category_id: str) -> list[Category]`
+
+Get subcategories of a top-level category.
+
+```python
+subcategories = cm.get_subcategories('sequence-alignment')
+```
+
+#### `get_parent_category(category_id: str) -> Optional[Category]`
+
+Get the parent category of a subcategory.
+
+```python
+parent = cm.get_parent_category('pairwise')
+```
+
 ---
 
 ## Validator
@@ -195,12 +227,12 @@ Validate a category entry dictionary.
 result = validator.validate_category(category_dict)
 ```
 
-#### `validate_yaml_file(file_path: str) -> ValidationResult`
+#### `validate_yaml_file(file_path: str) -> tuple[ValidationResult, Any]`
 
 Validate a YAML file for syntax errors.
 
 ```python
-result = validator.validate_yaml_file('data/algorithms/assembly.yaml')
+result, data = validator.validate_yaml_file('data/algorithms/assembly.yaml')
 ```
 
 #### `validate_all(data_dir: str) -> ValidationResult`
@@ -285,11 +317,12 @@ Represents a single algorithm entry.
 class AlgorithmEntry:
     id: str                    # Unique identifier
     name: str                  # Algorithm name
-    description: str           # Description (50-200 chars)
+    description: str           # Description (50-500 chars)
     purpose: str               # Purpose/use case
     time_complexity: str       # Time complexity (e.g., "O(n^2)")
     category: str              # Category ID
     space_complexity: str = "" # Optional space complexity
+    year: int = 0              # Optional publication year
     paper_url: str = ""        # Optional paper URL
     implementation_url: str = "" # Optional implementation URL
     related_tools: list[str] = [] # Optional related tools

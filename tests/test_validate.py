@@ -2,9 +2,12 @@
 Property-based tests for Validator class.
 Feature: awesome-bioinfo-algorithms
 """
-from hypothesis import given, settings, strategies as st, assume, HealthCheck
-from scripts.validate import Validator, ValidationResult
+from pathlib import Path
 
+from hypothesis import HealthCheck, given, settings
+from hypothesis import strategies as st
+
+from scripts.validate import Validator
 
 # Strategies for generating test data
 valid_id = st.text(
@@ -59,14 +62,14 @@ def algorithm_data_empty_field(draw, field_to_empty: str):
 def test_property_3_missing_required_field(field_name: str):
     """
     Feature: awesome-bioinfo-algorithms, Property 3: Required Fields Validation
-    
+
     For any algorithm entry submission, if any required field is missing,
     the validator SHALL reject the entry and return an error.
-    
+
     Validates: Requirements 1.4, 2.1, 4.2
     """
     validator = Validator()
-    
+
     # Create valid data then remove the field
     data = {
         'id': 'test-algo',
@@ -77,9 +80,9 @@ def test_property_3_missing_required_field(field_name: str):
         'category': 'test-category',
     }
     del data[field_name]
-    
+
     result = validator.validate_algorithm(data)
-    
+
     assert not result.is_valid, f"Should reject when '{field_name}' is missing"
     assert any(field_name in error for error in result.errors), \
         f"Error should mention missing field '{field_name}'"
@@ -90,14 +93,14 @@ def test_property_3_missing_required_field(field_name: str):
 def test_property_3_empty_required_field(field_name: str):
     """
     Feature: awesome-bioinfo-algorithms, Property 3: Required Fields Validation
-    
+
     For any algorithm entry submission, if any required field is empty,
     the validator SHALL reject the entry and return an error.
-    
+
     Validates: Requirements 1.4, 2.1, 4.2
     """
     validator = Validator()
-    
+
     # Create valid data then empty the field
     data = {
         'id': 'test-algo',
@@ -108,9 +111,9 @@ def test_property_3_empty_required_field(field_name: str):
         'category': 'test-category',
     }
     data[field_name] = ""
-    
+
     result = validator.validate_algorithm(data)
-    
+
     assert not result.is_valid, f"Should reject when '{field_name}' is empty"
     assert any(field_name in error for error in result.errors), \
         f"Error should mention empty field '{field_name}'"
@@ -127,14 +130,14 @@ def test_property_3_empty_required_field(field_name: str):
 def test_property_7_error_specificity_missing_fields(missing_fields):
     """
     Feature: awesome-bioinfo-algorithms, Property 7: Validation Error Specificity
-    
+
     For any invalid algorithm entry, the validator SHALL return an error message
     that identifies the specific field issue.
-    
+
     Validates: Requirements 4.4, 6.3
     """
     validator = Validator()
-    
+
     # Create data with multiple missing fields
     data = {
         'id': 'test-algo',
@@ -146,9 +149,9 @@ def test_property_7_error_specificity_missing_fields(missing_fields):
     }
     for field in missing_fields:
         del data[field]
-    
+
     result = validator.validate_algorithm(data)
-    
+
     assert not result.is_valid
     # Each missing field should be mentioned in errors
     for field in missing_fields:
@@ -161,14 +164,14 @@ def test_property_7_error_specificity_missing_fields(missing_fields):
 def test_property_7_error_specificity_short_description(desc_length):
     """
     Feature: awesome-bioinfo-algorithms, Property 7: Validation Error Specificity
-    
+
     For description that's too short, the validator SHALL return an error
     that identifies the length issue.
-    
+
     Validates: Requirements 4.4, 6.3
     """
     validator = Validator()
-    
+
     data = {
         'id': 'test-algo',
         'name': 'Test Algorithm',
@@ -177,12 +180,12 @@ def test_property_7_error_specificity_short_description(desc_length):
         'time_complexity': 'O(n)',
         'category': 'test-category',
     }
-    
+
     result = validator.validate_algorithm(data)
-    
+
     if desc_length < 50:
         assert not result.is_valid
-        assert any('short' in error.lower() or 'description' in error.lower() 
+        assert any('short' in error.lower() or 'description' in error.lower()
                    for error in result.errors), \
             "Error should mention description length issue"
 
@@ -192,14 +195,14 @@ def test_property_7_error_specificity_short_description(desc_length):
 def test_property_7_error_specificity_long_description(desc_length):
     """
     Feature: awesome-bioinfo-algorithms, Property 7: Validation Error Specificity
-    
+
     For description that's too long, the validator SHALL return an error
     that identifies the length issue.
-    
+
     Validates: Requirements 4.4, 6.3
     """
     validator = Validator()
-    
+
     data = {
         'id': 'test-algo',
         'name': 'Test Algorithm',
@@ -208,11 +211,11 @@ def test_property_7_error_specificity_long_description(desc_length):
         'time_complexity': 'O(n)',
         'category': 'test-category',
     }
-    
+
     result = validator.validate_algorithm(data)
-    
+
     assert not result.is_valid
-    assert any('long' in error.lower() or 'description' in error.lower() 
+    assert any('long' in error.lower() or 'description' in error.lower()
                for error in result.errors), \
         "Error should mention description length issue"
 
@@ -223,14 +226,14 @@ def test_property_7_error_specificity_long_description(desc_length):
 def test_property_10_valid_data_passes(data):
     """
     Feature: awesome-bioinfo-algorithms, Property 10: Data Format Validation
-    
+
     For any valid algorithm data, the validator SHALL accept it.
-    
+
     Validates: Requirements 6.2
     """
     validator = Validator()
     result = validator.validate_algorithm(data)
-    
+
     # Valid data should pass (unless description length is wrong)
     desc_len = len(data['description'].strip())
     if 50 <= desc_len <= 500:
@@ -248,13 +251,13 @@ def test_property_10_valid_data_passes(data):
 def test_property_10_invalid_tags_format(tags_value):
     """
     Feature: awesome-bioinfo-algorithms, Property 10: Data Format Validation
-    
+
     For any data with invalid tags format (not a list), the validator SHALL report the violation.
-    
+
     Validates: Requirements 6.2
     """
     validator = Validator()
-    
+
     data = {
         'id': 'test-algo',
         'name': 'Test Algorithm',
@@ -264,9 +267,9 @@ def test_property_10_invalid_tags_format(tags_value):
         'category': 'test-category',
         'tags': tags_value,
     }
-    
+
     result = validator.validate_algorithm(data)
-    
+
     assert not result.is_valid
     assert any('tags' in error.lower() for error in result.errors), \
         "Error should mention 'tags' field"
@@ -278,15 +281,81 @@ def test_property_10_invalid_tags_format(tags_value):
 def test_category_missing_required_field(field_name: str):
     """Test that missing required category fields are detected."""
     validator = Validator()
-    
+
     data = {
         'id': 'test-cat',
         'name': '测试分类',
         'name_en': 'Test Category',
     }
     del data[field_name]
-    
+
     result = validator.validate_category(data)
-    
+
     assert not result.is_valid
     assert any(field_name in error for error in result.errors)
+
+
+def test_subcategory_must_exist_and_match_parent_category():
+    """Test that subcategory validation enforces parent-child relationships."""
+    validator = Validator(
+        valid_categories=['sequence-alignment', 'assembly', 'pairwise'],
+    )
+    validator.category_parents = {
+        'sequence-alignment': None,
+        'assembly': None,
+        'pairwise': 'sequence-alignment',
+    }
+
+    valid_data = {
+        'id': 'smith-waterman',
+        'name': 'Smith-Waterman',
+        'description': 'A' * 60,
+        'purpose': 'Local alignment',
+        'time_complexity': 'O(mn)',
+        'category': 'sequence-alignment',
+        'subcategory': 'pairwise',
+    }
+    assert validator.validate_algorithm(valid_data).is_valid
+
+    wrong_parent = dict(valid_data, category='assembly')
+    wrong_parent_result = validator.validate_algorithm(wrong_parent)
+    assert not wrong_parent_result.is_valid
+    assert any('does not belong' in error for error in wrong_parent_result.errors)
+
+    invalid_subcategory = dict(valid_data, subcategory='multiple')
+    invalid_subcategory_result = validator.validate_algorithm(invalid_subcategory)
+    assert not invalid_subcategory_result.is_valid
+    assert any('Invalid subcategory' in error for error in invalid_subcategory_result.errors)
+
+
+def test_validate_all_rejects_duplicate_ids_across_files(tmp_path: Path):
+    """Test that duplicate algorithm IDs across files are rejected."""
+    data_dir = tmp_path / 'data'
+    algorithms_dir = data_dir / 'algorithms'
+    algorithms_dir.mkdir(parents=True)
+
+    (data_dir / 'categories.yaml').write_text(
+        """categories:
+  - id: sequence-alignment
+    name: Sequence Alignment
+    name_en: Sequence Alignment
+""",
+        encoding='utf-8',
+    )
+
+    algorithm_body = """algorithms:
+  - id: shared-id
+    name: Example
+    description: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    purpose: Example purpose
+    time_complexity: O(n)
+    category: sequence-alignment
+"""
+    (algorithms_dir / 'first.yaml').write_text(algorithm_body, encoding='utf-8')
+    (algorithms_dir / 'second.yaml').write_text(algorithm_body, encoding='utf-8')
+
+    validator = Validator()
+    result = validator.validate_all(str(data_dir))
+
+    assert not result.is_valid
+    assert any('Duplicate algorithm ID across files' in error for error in result.errors)

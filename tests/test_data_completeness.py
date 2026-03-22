@@ -2,8 +2,9 @@
 Property-based tests for data completeness.
 Feature: project-enhancement
 """
-from hypothesis import given, settings, strategies as st, HealthCheck
-from scripts.schema import AlgorithmEntry
+from hypothesis import HealthCheck, given, settings
+from hypothesis import strategies as st
+
 from scripts.algorithm_registry import AlgorithmRegistry
 from scripts.category_manager import CategoryManager
 from scripts.validate import Validator
@@ -24,22 +25,24 @@ def load_categories():
     return cm
 
 
-@settings(max_examples=100, suppress_health_check=[HealthCheck.too_slow])
+@settings(max_examples=1, suppress_health_check=[HealthCheck.too_slow], deadline=None)
 @given(st.just(None))
 def test_property_1_algorithm_data_completeness(_):
     """
     Feature: project-enhancement, Property 1: Algorithm Data Completeness
 
     For any algorithm entry in the registry, the entry SHALL pass all validation
-    rules including required fields, description length (50-200 characters),
+    rules including required fields, description length (50-500 characters),
     and valid category reference.
 
     Validates: Requirements 7.2, 7.3
     """
     registry = load_registry()
     cm = load_categories()
+    validator = Validator()
+    categories_result = validator.validate_categories_file('data/categories.yaml')
+    assert categories_result.is_valid, categories_result.errors
     valid_categories = cm.list_all_category_ids()
-    validator = Validator(valid_categories=valid_categories)
 
     algorithms = registry.get_all_algorithms()
     assert len(algorithms) > 0, "Registry should contain at least one algorithm"
@@ -65,7 +68,7 @@ def test_property_1_algorithm_data_completeness(_):
         )
 
 
-@settings(max_examples=100, suppress_health_check=[HealthCheck.too_slow], deadline=None)
+@settings(max_examples=1, suppress_health_check=[HealthCheck.too_slow], deadline=None)
 @given(st.just(None))
 def test_property_2_category_coverage(_):
     """

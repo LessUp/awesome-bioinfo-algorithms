@@ -24,10 +24,25 @@ def get_base_dir() -> Path:
 def cmd_generate() -> int:
     """Generate README.md from algorithm data."""
     base_dir = get_base_dir()
+    data_dir = base_dir / 'data'
     categories_path = base_dir / 'data' / 'categories.yaml'
     algorithms_dir = base_dir / 'data' / 'algorithms'
     template_path = base_dir / 'templates' / 'readme_template.md'
     output_path = base_dir / 'README.md'
+
+    print("Validating data files...")
+    validator = Validator()
+    validation_result = validator.validate_all(str(data_dir))
+    if validation_result.errors:
+        print(f"  Error: Cannot generate README with {len(validation_result.errors)} validation error(s).")
+        for error in validation_result.errors:
+            print(f"    - {error}")
+        return 1
+
+    if validation_result.warnings:
+        print(f"  Warning: {len(validation_result.warnings)} validation warning(s) detected.")
+        for warning in validation_result.warnings:
+            print(f"    - {warning}")
 
     print("Loading categories...")
     category_manager = CategoryManager()
@@ -39,7 +54,11 @@ def cmd_generate() -> int:
 
     print("Loading algorithms...")
     registry = AlgorithmRegistry(str(algorithms_dir))
-    registry.load_all()
+    try:
+        registry.load_all()
+    except ValueError as exc:
+        print(f"  Error: {exc}")
+        return 1
     stats = registry.get_statistics()
     print(f"  Loaded {stats.total_algorithms} algorithms")
     print(f"  Categories with algorithms: {stats.total_categories}")
@@ -90,7 +109,11 @@ def cmd_stats() -> int:
     category_manager.load_categories(str(categories_path))
 
     registry = AlgorithmRegistry(str(algorithms_dir))
-    registry.load_all()
+    try:
+        registry.load_all()
+    except ValueError as exc:
+        print(f"Error: {exc}")
+        return 1
     stats = registry.get_statistics()
 
     print("📊 Awesome Bioinformatics Algorithms - Statistics")
