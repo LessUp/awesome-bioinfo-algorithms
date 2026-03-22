@@ -2,12 +2,13 @@
 Property-based tests for ReadmeGenerator.
 Feature: awesome-bioinfo-algorithms
 """
-from hypothesis import given, settings, strategies as st, HealthCheck
-from scripts.schema import Category, AlgorithmEntry
+from hypothesis import HealthCheck, given, settings
+from hypothesis import strategies as st
+
 from scripts.algorithm_registry import AlgorithmRegistry
 from scripts.category_manager import CategoryManager
 from scripts.readme_generator import ReadmeGenerator
-
+from scripts.schema import AlgorithmEntry, Category
 
 # Strategies for generating test data
 valid_id = st.text(
@@ -57,7 +58,7 @@ def registry_with_categories_strategy(draw):
     algorithms = []
     used_ids = set()
     counter = [0]
-    
+
     def get_unique_id(prefix=""):
         base = draw(valid_id)
         while f"{prefix}{base}" in used_ids:
@@ -66,7 +67,7 @@ def registry_with_categories_strategy(draw):
         unique_id = f"{prefix}{base}" if prefix else base
         used_ids.add(unique_id)
         return unique_id
-    
+
     for _ in range(num_categories):
         cat_id = get_unique_id("cat")
         cat = Category(
@@ -78,7 +79,7 @@ def registry_with_categories_strategy(draw):
             parent_id=None
         )
         categories.append(cat)
-        
+
         # Add algorithms to this category
         num_algos = draw(st.integers(min_value=0, max_value=3))
         for _ in range(num_algos):
@@ -93,7 +94,7 @@ def registry_with_categories_strategy(draw):
                 tags=draw(st.lists(valid_id, min_size=0, max_size=3, unique=True)),
             )
             algorithms.append(algo)
-    
+
     return categories, algorithms
 
 
@@ -102,23 +103,23 @@ def registry_with_categories_strategy(draw):
 def test_property_6_toc_completeness(data):
     """
     Feature: awesome-bioinfo-algorithms, Property 6: Table of Contents Completeness
-    
+
     For any algorithm registry, the generated table of contents SHALL contain
     an entry for every category that has at least one algorithm.
-    
+
     Validates: Requirements 3.1
     """
     categories, algorithms = data
-    
+
     registry = AlgorithmRegistry()
     registry.from_algorithms(algorithms)
-    
+
     category_manager = CategoryManager()
     category_manager.from_categories(categories)
-    
+
     generator = ReadmeGenerator(registry, category_manager)
     toc = generator.generate_toc()
-    
+
     # Check that every category with algorithms is in the TOC
     for category in categories:
         algos_in_cat = registry.get_by_category(category.id)
@@ -133,35 +134,35 @@ def test_property_6_toc_completeness(data):
 def test_property_5_markdown_output_consistency(data):
     """
     Feature: awesome-bioinfo-algorithms, Property 5: Markdown Output Consistency
-    
+
     For any algorithm entry, the generated Markdown output SHALL contain
     the algorithm name, description, purpose, and time complexity in a consistent format.
-    
+
     Validates: Requirements 2.3
     """
     categories, algorithms = data
-    
+
     registry = AlgorithmRegistry()
     registry.from_algorithms(algorithms)
-    
+
     category_manager = CategoryManager()
     category_manager.from_categories(categories)
-    
+
     generator = ReadmeGenerator(registry, category_manager)
-    
+
     for algo in algorithms:
         output = generator.generate_algorithm_entry(algo)
-        
+
         # Verify required fields are present
         assert algo.name in output, \
             f"Algorithm name '{algo.name}' should be in output"
         assert algo.description.strip() in output, \
-            f"Algorithm description should be in output"
+            "Algorithm description should be in output"
         assert algo.purpose in output, \
             f"Algorithm purpose '{algo.purpose}' should be in output"
         assert algo.time_complexity in output, \
             f"Time complexity '{algo.time_complexity}' should be in output"
-        
+
         # Verify consistent format markers
         assert "**用途**:" in output, "Purpose should have consistent label"
         assert "**时间复杂度**:" in output, "Time complexity should have consistent label"
@@ -172,39 +173,39 @@ def test_property_5_markdown_output_consistency(data):
 def test_property_9_anchor_link_validity(data):
     """
     Feature: awesome-bioinfo-algorithms, Property 9: Anchor Link Format Validity
-    
+
     For any generated table of contents entry, the anchor link SHALL be a valid
     Markdown anchor that correctly links to the corresponding section.
-    
+
     Validates: Requirements 5.4
     """
     categories, algorithms = data
-    
+
     registry = AlgorithmRegistry()
     registry.from_algorithms(algorithms)
-    
+
     category_manager = CategoryManager()
     category_manager.from_categories(categories)
-    
+
     generator = ReadmeGenerator(registry, category_manager)
-    
+
     for category in categories:
         algos_in_cat = registry.get_by_category(category.id)
         if algos_in_cat:
             anchor = generator._generate_anchor(category.name)
-            
+
             # Anchor should be lowercase
             assert anchor == anchor.lower(), \
                 f"Anchor '{anchor}' should be lowercase"
-            
+
             # Anchor should not have spaces
             assert ' ' not in anchor, \
                 f"Anchor '{anchor}' should not contain spaces"
-            
+
             # Anchor should not start or end with hyphen
             assert not anchor.startswith('-') and not anchor.endswith('-'), \
                 f"Anchor '{anchor}' should not start or end with hyphen"
-            
+
             # Anchor should not have consecutive hyphens
             assert '--' not in anchor, \
                 f"Anchor '{anchor}' should not have consecutive hyphens"
@@ -215,21 +216,64 @@ def test_property_9_anchor_link_validity(data):
 def test_full_readme_generation(data):
     """Test that full README generation works without errors."""
     categories, algorithms = data
-    
+
     registry = AlgorithmRegistry()
     registry.from_algorithms(algorithms)
-    
+
     category_manager = CategoryManager()
     category_manager.from_categories(categories)
-    
+
     generator = ReadmeGenerator(registry, category_manager)
     readme = generator.generate()
-    
+
     # Verify basic structure
     assert "# Awesome Bioinformatics Algorithms" in readme
     assert "统计" in readme  # Statistics section (may have emoji prefix)
     assert "目录" in readme  # Table of Contents section
-    
+
     # Verify statistics are filled in
     stats = registry.get_statistics()
     assert str(stats.total_algorithms) in readme
+
+
+def test_subcategory_sections_and_toc_are_rendered():
+    """Test that subcategories appear in the TOC and content sections."""
+    pairwise = Category(
+        id='pairwise',
+        name='双序列比对',
+        name_en='Pairwise Alignment',
+        description='两条序列之间的比对算法',
+        subcategories=[],
+        parent_id='sequence-alignment',
+    )
+    category = Category(
+        id='sequence-alignment',
+        name='序列比对',
+        name_en='Sequence Alignment',
+        description='用于比较和对齐生物序列的算法',
+        subcategories=[pairwise],
+        parent_id=None,
+    )
+    algorithm = AlgorithmEntry(
+        id='smith-waterman',
+        name='Smith-Waterman',
+        description='A' * 60,
+        purpose='局部序列比对',
+        time_complexity='O(mn)',
+        category='sequence-alignment',
+        subcategory='pairwise',
+    )
+
+    registry = AlgorithmRegistry()
+    registry.from_algorithms([algorithm])
+
+    category_manager = CategoryManager()
+    category_manager.from_categories([category])
+
+    generator = ReadmeGenerator(registry, category_manager)
+    toc = generator.generate_toc()
+    section = generator.generate_category_section(category)
+
+    assert 'Pairwise Alignment' in toc
+    assert '### 双序列比对 (Pairwise Alignment)' in section
+    assert 'Smith-Waterman' in section

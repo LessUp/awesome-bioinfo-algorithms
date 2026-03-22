@@ -5,12 +5,13 @@ Feature: awesome-bioinfo-algorithms, Property 11: Data Import/Export Round-Trip
 import os
 import tempfile
 
-from hypothesis import given, settings, strategies as st, HealthCheck
-from scripts.schema import Category, AlgorithmEntry
+from hypothesis import HealthCheck, given, settings
+from hypothesis import strategies as st
+
 from scripts.algorithm_registry import AlgorithmRegistry
 from scripts.category_manager import CategoryManager
 from scripts.data_io import DataIO
-
+from scripts.schema import AlgorithmEntry, Category
 
 # Strategies for generating test data - using ASCII-safe characters for YAML round-trip
 valid_id = st.text(
@@ -40,7 +41,7 @@ def categories_and_algorithms_strategy(draw):
     algorithms = []
     used_ids = set()
     counter = [0]
-    
+
     def get_unique_id(prefix=""):
         base = draw(valid_id)
         while f"{prefix}{base}" in used_ids:
@@ -49,7 +50,7 @@ def categories_and_algorithms_strategy(draw):
         unique_id = f"{prefix}{base}" if prefix else base
         used_ids.add(unique_id)
         return unique_id
-    
+
     for _ in range(num_categories):
         cat_id = get_unique_id("cat")
         cat = Category(
@@ -61,7 +62,7 @@ def categories_and_algorithms_strategy(draw):
             parent_id=None
         )
         categories.append(cat)
-        
+
         # Add algorithms to this category
         num_algos = draw(st.integers(min_value=0, max_value=3))
         for _ in range(num_algos):
@@ -82,7 +83,7 @@ def categories_and_algorithms_strategy(draw):
                 subcategory=draw(st.one_of(st.just(''), valid_id)),
             )
             algorithms.append(algo)
-    
+
     return categories, algorithms
 
 
@@ -91,53 +92,53 @@ def categories_and_algorithms_strategy(draw):
 def test_property_11_round_trip_yaml(data):
     """
     Feature: awesome-bioinfo-algorithms, Property 11: Data Import/Export Round-Trip
-    
+
     For any valid algorithm registry, exporting the data and then importing it back
     SHALL produce an equivalent registry with identical algorithms and categories.
-    
+
     Validates: Requirements 6.4
     """
     categories, algorithms = data
-    
+
     # Set up registry and category manager
     registry = AlgorithmRegistry()
     registry.from_algorithms(algorithms)
-    
+
     category_manager = CategoryManager()
     category_manager.from_categories(categories)
-    
+
     data_io = DataIO(registry, category_manager)
-    
+
     # Export to YAML
     with tempfile.NamedTemporaryFile(mode='w', suffix='.yaml', delete=False) as f:
         temp_path = f.name
-    
+
     try:
         data_io.export_data(temp_path, fmt='yaml')
-        
+
         # Import back
         imported_categories, imported_algorithms = data_io.import_data(temp_path)
-        
+
         # Verify categories match
         assert len(imported_categories) == len(categories), \
             f"Should have {len(categories)} categories, got {len(imported_categories)}"
-        
+
         for orig, imported in zip(categories, imported_categories):
-            assert orig.id == imported.id, f"Category ID should match"
-            assert orig.name == imported.name, f"Category name should match"
-            assert orig.name_en == imported.name_en, f"Category name_en should match"
-        
+            assert orig.id == imported.id, "Category ID should match"
+            assert orig.name == imported.name, "Category name should match"
+            assert orig.name_en == imported.name_en, "Category name_en should match"
+
         # Verify algorithms match
         assert len(imported_algorithms) == len(algorithms), \
             f"Should have {len(algorithms)} algorithms, got {len(imported_algorithms)}"
-        
+
         for orig, imported in zip(algorithms, imported_algorithms):
-            assert orig.id == imported.id, f"Algorithm ID should match"
-            assert orig.name == imported.name, f"Algorithm name should match"
-            assert orig.description == imported.description, f"Algorithm description should match"
-            assert orig.purpose == imported.purpose, f"Algorithm purpose should match"
-            assert orig.time_complexity == imported.time_complexity, f"Time complexity should match"
-            assert orig.category == imported.category, f"Category should match"
+            assert orig.id == imported.id, "Algorithm ID should match"
+            assert orig.name == imported.name, "Algorithm name should match"
+            assert orig.description == imported.description, "Algorithm description should match"
+            assert orig.purpose == imported.purpose, "Algorithm purpose should match"
+            assert orig.time_complexity == imported.time_complexity, "Time complexity should match"
+            assert orig.category == imported.category, "Category should match"
     finally:
         if os.path.exists(temp_path):
             os.unlink(temp_path)
@@ -148,36 +149,36 @@ def test_property_11_round_trip_yaml(data):
 def test_property_11_round_trip_json(data):
     """
     Feature: awesome-bioinfo-algorithms, Property 11: Data Import/Export Round-Trip (JSON)
-    
+
     For any valid algorithm registry, exporting to JSON and importing back
     SHALL produce an equivalent registry.
-    
+
     Validates: Requirements 6.4
     """
     categories, algorithms = data
-    
+
     registry = AlgorithmRegistry()
     registry.from_algorithms(algorithms)
-    
+
     category_manager = CategoryManager()
     category_manager.from_categories(categories)
-    
+
     data_io = DataIO(registry, category_manager)
-    
+
     # Export to JSON
     with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
         temp_path = f.name
-    
+
     try:
         data_io.export_data(temp_path, fmt='json')
-        
+
         # Import back
         imported_categories, imported_algorithms = data_io.import_data(temp_path)
-        
+
         # Verify counts match
         assert len(imported_categories) == len(categories)
         assert len(imported_algorithms) == len(algorithms)
-        
+
         # Verify all algorithm IDs are preserved
         orig_ids = {a.id for a in algorithms}
         imported_ids = {a.id for a in imported_algorithms}
@@ -192,16 +193,16 @@ def test_property_11_round_trip_json(data):
 def test_dict_round_trip(data):
     """Test round-trip through dictionary conversion."""
     categories, algorithms = data
-    
+
     # Export to dict
     exported = DataIO.export_to_dict(categories, algorithms)
-    
+
     # Import from dict
     imported_categories, imported_algorithms = DataIO.import_from_dict(exported)
-    
+
     # Verify
     assert len(imported_categories) == len(categories)
     assert len(imported_algorithms) == len(algorithms)
-    
+
     for orig, imported in zip(algorithms, imported_algorithms):
         assert orig == imported, f"Algorithm {orig.id} should equal imported version"

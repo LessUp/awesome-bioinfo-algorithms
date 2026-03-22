@@ -29,6 +29,7 @@ class AlgorithmRegistry:
         self._data_dir = data_dir
         self._algorithms: list[AlgorithmEntry] = []
         self._by_category: dict[str, list[AlgorithmEntry]] = {}
+        self._by_subcategory: dict[str, list[AlgorithmEntry]] = {}
         self._by_tag: dict[str, list[AlgorithmEntry]] = {}
         self._by_id: dict[str, AlgorithmEntry] = {}
         self._validator = Validator()
@@ -42,14 +43,17 @@ class AlgorithmRegistry:
         """
         self._algorithms = []
         self._by_category = {}
+        self._by_subcategory = {}
         self._by_tag = {}
         self._by_id = {}
 
         if not os.path.exists(self._data_dir):
             return []
 
-        yaml_files = glob.glob(os.path.join(self._data_dir, "*.yaml"))
-        yaml_files.extend(glob.glob(os.path.join(self._data_dir, "*.yml")))
+        yaml_files = sorted({
+            *glob.glob(os.path.join(self._data_dir, "*.yaml")),
+            *glob.glob(os.path.join(self._data_dir, "*.yml")),
+        })
 
         for yaml_file in yaml_files:
             self._load_file(yaml_file)
@@ -70,6 +74,9 @@ class AlgorithmRegistry:
 
     def _register_algorithm(self, algo: AlgorithmEntry):
         """Register an algorithm in all lookup structures."""
+        if algo.id in self._by_id:
+            raise ValueError(f"Duplicate algorithm ID: '{algo.id}'")
+
         self._algorithms.append(algo)
         self._by_id[algo.id] = algo
 
@@ -77,6 +84,12 @@ class AlgorithmRegistry:
         if algo.category not in self._by_category:
             self._by_category[algo.category] = []
         self._by_category[algo.category].append(algo)
+
+        # Register by subcategory
+        if algo.subcategory:
+            if algo.subcategory not in self._by_subcategory:
+                self._by_subcategory[algo.subcategory] = []
+            self._by_subcategory[algo.subcategory].append(algo)
 
         # Register by tags
         for tag in algo.tags:
@@ -107,6 +120,18 @@ class AlgorithmRegistry:
             List of algorithms with the tag
         """
         return self._by_tag.get(tag, []).copy()
+
+    def get_by_subcategory(self, subcategory_id: str) -> list[AlgorithmEntry]:
+        """Get all algorithms in a specific subcategory."""
+        return self._by_subcategory.get(subcategory_id, []).copy()
+
+    def get_direct_by_category(self, category_id: str) -> list[AlgorithmEntry]:
+        """Get algorithms that belong directly to a category without a subcategory."""
+        return [
+            algo
+            for algo in self._by_category.get(category_id, [])
+            if not algo.subcategory
+        ]
 
     def search(self, keyword: str) -> list[AlgorithmEntry]:
         """
@@ -173,6 +198,7 @@ class AlgorithmRegistry:
         """Load algorithms from a list of AlgorithmEntry objects."""
         self._algorithms = []
         self._by_category = {}
+        self._by_subcategory = {}
         self._by_tag = {}
         self._by_id = {}
 

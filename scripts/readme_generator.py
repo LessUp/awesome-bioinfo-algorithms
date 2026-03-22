@@ -98,7 +98,7 @@ class ReadmeGenerator:
 
                 # Add subcategories
                 for sub in category.subcategories:
-                    sub_algos = self._registry.get_by_category(sub.id)
+                    sub_algos = self._get_subcategory_algorithms(category.id, sub.id)
                     if sub_algos:
                         sub_title = f"{sub.name} ({sub.name_en})"
                         sub_anchor = self._generate_anchor(sub_title)
@@ -140,19 +140,23 @@ class ReadmeGenerator:
             Markdown formatted category section
         """
         lines = []
-        algos = self._registry.get_by_category(category.id)
+        direct_algos = self._registry.get_direct_by_category(category.id)
+        has_subcategory_content = any(
+            self._get_subcategory_algorithms(category.id, sub.id)
+            for sub in category.subcategories
+        )
 
-        if algos:
+        if direct_algos or has_subcategory_content:
             lines.append(f"## {category.name} ({category.name_en})")
             if category.description:
                 lines.append(f"\n{category.description}\n")
 
-            for algo in algos:
+            for algo in direct_algos:
                 lines.append(self.generate_algorithm_entry(algo))
 
         # Generate subcategory sections
         for sub in category.subcategories:
-            sub_algos = self._registry.get_by_category(sub.id)
+            sub_algos = self._get_subcategory_algorithms(category.id, sub.id)
             if sub_algos:
                 lines.append(f"\n### {sub.name} ({sub.name_en})")
                 if sub.description:
@@ -212,6 +216,14 @@ class ReadmeGenerator:
 
         lines.append("")
         return "\n".join(lines)
+
+    def _get_subcategory_algorithms(self, category_id: str, subcategory_id: str) -> list[AlgorithmEntry]:
+        """Return algorithms that match both the parent category and subcategory."""
+        return [
+            algo
+            for algo in self._registry.get_by_subcategory(subcategory_id)
+            if algo.category == category_id
+        ]
 
     def generate_statistics(self) -> str:
         """

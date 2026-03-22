@@ -2,9 +2,10 @@
 Property-based tests for data models.
 Feature: awesome-bioinfo-algorithms, Property 4: Optional Fields Storage
 """
-from hypothesis import given, settings, strategies as st, HealthCheck
-from scripts.schema import AlgorithmEntry, Category
+from hypothesis import HealthCheck, given, settings
+from hypothesis import strategies as st
 
+from scripts.schema import AlgorithmEntry, Category
 
 # Strategies for generating test data
 valid_id = st.text(
@@ -57,17 +58,17 @@ def algorithm_entry_strategy(draw):
 def test_property_4_optional_fields_storage(entry: AlgorithmEntry):
     """
     Feature: awesome-bioinfo-algorithms, Property 4: Optional Fields Storage
-    
+
     For any algorithm entry with optional fields (space_complexity, paper_url,
     implementation_url, related_tools, tags), storing and retrieving the entry
     SHALL preserve all optional field values exactly.
-    
+
     Validates: Requirements 2.2, 2.4
     """
     # Convert to dict and back
     entry_dict = entry.to_dict()
     restored_entry = AlgorithmEntry.from_dict(entry_dict)
-    
+
     # Verify all optional fields are preserved
     assert restored_entry.space_complexity == entry.space_complexity
     assert restored_entry.year == entry.year
@@ -76,7 +77,7 @@ def test_property_4_optional_fields_storage(entry: AlgorithmEntry):
     assert restored_entry.related_tools == entry.related_tools
     assert restored_entry.tags == entry.tags
     assert restored_entry.subcategory == entry.subcategory
-    
+
     # Verify complete equality
     assert restored_entry == entry
 
@@ -100,7 +101,7 @@ def test_category_round_trip(category: Category):
     """Test Category serialization round-trip."""
     category_dict = category.to_dict()
     restored = Category.from_dict(category_dict)
-    
+
     assert restored.id == category.id
     assert restored.name == category.name
     assert restored.name_en == category.name_en

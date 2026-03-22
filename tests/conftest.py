@@ -2,11 +2,12 @@
 Shared pytest fixtures for awesome-bioinfo-algorithms tests.
 """
 import os
+
 import pytest
 
-from scripts.schema import Category, AlgorithmEntry
 from scripts.algorithm_registry import AlgorithmRegistry
 from scripts.category_manager import CategoryManager
+from scripts.schema import AlgorithmEntry, Category
 
 
 @pytest.fixture

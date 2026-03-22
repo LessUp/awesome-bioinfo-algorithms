@@ -25,7 +25,7 @@
 algorithms:
   - id: algorithm-id          # 唯一标识符（小写字母、数字、连字符）
     name: Algorithm Name      # 算法名称
-    description: |            # 算法描述（50-200字）
+    description: |            # 算法描述（50-500字）
       算法的详细描述，包括基本原理、特点和适用场景。
     purpose: 主要用途          # 算法的主要用途
     time_complexity: O(n)     # 时间复杂度
@@ -44,22 +44,30 @@ algorithms:
 
 #### 2. 可用分类
 
-| 分类 ID | 中文名称 | English Name | 子分类 |
-|---------|----------|--------------|--------|
-| sequence-alignment | 序列比对 | Sequence Alignment | pairwise, multiple |
-| assembly | 序列组装 | Sequence Assembly | de-novo, reference-guided |
-| variant-calling | 变异检测 | Variant Calling | snv, structural |
-| expression-analysis | 基因表达分析 | Gene Expression Analysis | - |
-| protein-structure | 蛋白质结构预测 | Protein Structure Prediction | - |
-| phylogenetics | 系统发育分析 | Phylogenetics | - |
-| functional-annotation | 功能注释 | Functional Annotation | - |
-| data-compression | 数据压缩 | Data Compression | - |
+| 分类 ID | 中文名称 | English Name |
+|---------|----------|--------------|
+| sequence-alignment | 序列比对 | Sequence Alignment |
+| assembly | 序列组装 | Sequence Assembly |
+| variant-calling | 变异检测 | Variant Calling |
+| expression-analysis | 基因表达分析 | Gene Expression Analysis |
+| protein-structure | 蛋白质结构预测 | Protein Structure Prediction |
+| phylogenetics | 系统发育分析 | Phylogenetics |
+| functional-annotation | 功能注释 | Functional Annotation |
+| data-compression | 数据压缩 | Data Compression |
+| single-cell | 单细胞基因组学 | Single-Cell Genomics |
+| metagenomics | 宏基因组学 | Metagenomics |
+| epigenomics | 表观基因组学 | Epigenomics |
+| gene-prediction | 基因预测 | Gene Prediction |
+
+完整子分类列表请参考 `data/categories.yaml` 或 `templates/algorithm_template.yaml`。
 
 #### 3. 质量要求
 
-- ✅ 描述长度在 50-200 字之间
+- ✅ 描述长度在 50-500 字之间
 - ✅ 必须包含所有必填字段
-- ✅ 分类 ID 必须有效
+- ✅ 分类 ID 和子分类 ID 必须有效
+- ✅ `subcategory` 必须属于对应的 `category`
+- ✅ 算法 ID 在整个仓库范围内必须唯一
 - ✅ YAML 格式正确
 - ✅ 链接有效且可访问
 
@@ -74,8 +82,11 @@ pip install -e ".[dev]"
 # 运行测试
 python -m pytest tests/ -v
 
+# 校验数据
+python -m scripts validate
+
 # 生成 README 预览
-python scripts/generate_readme.py
+python -m scripts generate
 ```
 
 ### 其他贡献方式
@@ -114,7 +125,7 @@ Thank you for your interest in Awesome Bioinformatics Algorithms! We welcome all
 algorithms:
   - id: algorithm-id          # Unique identifier (lowercase, numbers, hyphens)
     name: Algorithm Name      # Algorithm name
-    description: |            # Description (50-200 characters)
+    description: |            # Description (50-500 characters)
       Detailed description including principles, features, and use cases.
     purpose: Main purpose     # Main purpose of the algorithm
     time_complexity: O(n)     # Time complexity
@@ -133,22 +144,30 @@ algorithms:
 
 #### 2. Available Categories
 
-| Category ID | Chinese Name | English Name | Subcategories |
-|-------------|--------------|--------------|---------------|
-| sequence-alignment | 序列比对 | Sequence Alignment | pairwise, multiple |
-| assembly | 序列组装 | Sequence Assembly | de-novo, reference-guided |
-| variant-calling | 变异检测 | Variant Calling | snv, structural |
-| expression-analysis | 基因表达分析 | Gene Expression Analysis | - |
-| protein-structure | 蛋白质结构预测 | Protein Structure Prediction | - |
-| phylogenetics | 系统发育分析 | Phylogenetics | - |
-| functional-annotation | 功能注释 | Functional Annotation | - |
-| data-compression | 数据压缩 | Data Compression | - |
+| Category ID | Chinese Name | English Name |
+|-------------|--------------|--------------|
+| sequence-alignment | 序列比对 | Sequence Alignment |
+| assembly | 序列组装 | Sequence Assembly |
+| variant-calling | 变异检测 | Variant Calling |
+| expression-analysis | 基因表达分析 | Gene Expression Analysis |
+| protein-structure | 蛋白质结构预测 | Protein Structure Prediction |
+| phylogenetics | 系统发育分析 | Phylogenetics |
+| functional-annotation | 功能注释 | Functional Annotation |
+| data-compression | 数据压缩 | Data Compression |
+| single-cell | 单细胞基因组学 | Single-Cell Genomics |
+| metagenomics | 宏基因组学 | Metagenomics |
+| epigenomics | 表观基因组学 | Epigenomics |
+| gene-prediction | 基因预测 | Gene Prediction |
+
+See `data/categories.yaml` or `templates/algorithm_template.yaml` for the full subcategory list.
 
 #### 3. Quality Requirements
 
-- ✅ Description length between 50-200 characters
+- ✅ Description length between 50-500 characters
 - ✅ All required fields must be included
-- ✅ Category ID must be valid
+- ✅ Category and subcategory IDs must be valid
+- ✅ `subcategory` must belong to the selected `category`
+- ✅ Algorithm IDs must be unique across the entire repository
 - ✅ Correct YAML format
 - ✅ Links must be valid and accessible
 
@@ -163,8 +182,11 @@ pip install -e ".[dev]"
 # Run tests
 python -m pytest tests/ -v
 
+# Validate data
+python -m scripts validate
+
 # Generate README preview
-python scripts/generate_readme.py
+python -m scripts generate
 ```
 
 ### Other Ways to Contribute
