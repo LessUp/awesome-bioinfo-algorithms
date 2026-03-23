@@ -12,6 +12,8 @@
 
 ## 说明
 
+本仓库内置的 Python 脚本主要用于仓库维护工作，例如数据校验、README 生成和统计汇总；它们默认依赖当前仓库中的 `data/` 与 `templates/` 目录运行。
+
 为了避免 `README.md` 与 `README.zh-CN.md` 长期重复维护导致内容漂移，中文 README 现在保留为轻量入口页：
 
 - 完整算法目录与统计：见 [README.md](README.md)
@@ -27,6 +29,8 @@
 git clone https://github.com/LessUp/awesome-bioinfo-algorithms.git
 cd awesome-bioinfo-algorithms
 pip install -e ".[dev]"
+
+# 以下命令需要在仓库根目录执行
 
 # 校验数据
 python -m scripts validate

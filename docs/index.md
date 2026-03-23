@@ -11,7 +11,7 @@ description: "Awesome Bioinformatics Algorithms — 生物信息学算法概要�
 🧬 生物信息学算法概要汇总 — 收集和整理常用的生物信息学算法，提供简要介绍、复杂度分析和相关资源链接。
 {: .fs-6 .fw-300 }
 
-完整统计和算法目录以仓库根目录自动生成的 `README.md` 为准，当前页面只展示摘要。
+完整统计、算法目录和最新 README 内容以仓库根目录自动生成的 `README.md` 为准；当前页面只保留导航入口，避免与自动生成内容长期漂移。
 {: .fs-4 .text-grey-dk-100 }
 
 [算法列表](https://github.com/LessUp/awesome-bioinfo-algorithms#%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9-sequence-alignment){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
@@ -20,32 +20,11 @@ description: "Awesome Bioinformatics Algorithms — 生物信息学算法概要�
 
 ---
 
-## 统计
+## 统计与算法目录
 
-| 指标 | 数值 |
-|:--|:--|
-| 📊 算法总数 | **54** |
-| 📁 分类数量 | **12** |
-| 🏷️ 标签数量 | **139** |
-
----
-
-## 算法分类
-
-| 分类 | 说明 |
-|:--|:--|
-| **序列比对** | Smith-Waterman、Needleman-Wunsch、BLAST、BWA、Minimap2 等 |
-| **序列组装** | De Bruijn Graph、SPAdes、Hifiasm、OLC 等 |
-| **变异检测** | GATK HaplotypeCaller、Delly、Manta、FreeBayes 等 |
-| **基因表达分析** | DESeq2、STAR、Kallisto 等 |
-| **蛋白质结构预测** | AlphaFold、Rosetta、ESMFold 等 |
-| **系统发育分析** | Neighbor-Joining、Maximum Likelihood、BEAST 等 |
-| **功能注释** | BLAST-based、HMMER、InterProScan 等 |
-| **数据压缩** | GZIP for FASTQ、CRAM 等 |
-| **单细胞基因组学** | Cell Ranger、Seurat、Scanpy、scVI 等 |
-| **宏基因组学** | Kraken2、MetaPhlAn、HUMAnN 等 |
-| **表观基因组学** | MACS2、Bismark、ChromHMM 等 |
-| **基因预测** | AUGUSTUS、Prodigal、BRAKER 等 |
+- 最新统计请查看仓库根目录的 [`README.md`](https://github.com/LessUp/awesome-bioinfo-algorithms/blob/master/README.md)
+- 最新分类与算法目录也以该 README 为准
+- 若您要贡献或校验数据，请优先参考 [开发指南]({% link DEVELOPMENT.md %}) 与 [贡献指南]({% link contributing.md %})
 
 ---
 
@@ -55,6 +34,8 @@ description: "Awesome Bioinformatics Algorithms — 生物信息学算法概要�
 git clone https://github.com/LessUp/awesome-bioinfo-algorithms.git
 cd awesome-bioinfo-algorithms
 pip install -e ".[dev]"
+
+# 以下命令需在仓库根目录执行
 
 # 生成 README
 python -m scripts generate

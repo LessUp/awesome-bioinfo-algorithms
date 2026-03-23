@@ -99,4 +99,4 @@ docs: update API reference
 
 ---
 
-完整贡献指南请参阅 [CONTRIBUTING.md](https://github.com/LessUp/awesome-bioinfo-algorithms/blob/main/CONTRIBUTING.md)。
+完整贡献指南请参阅 [CONTRIBUTING.md](https://github.com/LessUp/awesome-bioinfo-algorithms/blob/master/CONTRIBUTING.md)。

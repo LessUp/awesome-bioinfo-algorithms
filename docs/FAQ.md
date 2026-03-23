@@ -60,11 +60,11 @@ Descriptions must be between 50 and 500 characters. This ensures:
 
 ### What categories are available? / 有哪些可用的分类？
 
-The project currently has 12 top-level categories, including sequence alignment, assembly,
+The project includes multiple top-level categories such as sequence alignment, assembly,
 variant calling, expression analysis, protein structure, phylogenetics, functional annotation,
 data compression, single-cell genomics, metagenomics, epigenomics, and gene prediction.
 
-Check `data/categories.yaml` for the complete list including subcategories.
+Check `data/categories.yaml` for the current complete list, including subcategories.
 
 ---
 
@@ -83,9 +83,9 @@ pip install -e ".[dev]"
 # Run tests
 python -m pytest tests/
 
-# Run linting
-ruff check scripts/
-mypy scripts/
+# Run linting and type checks
+ruff check scripts/ tests/
+mypy scripts/ --ignore-missing-imports
 ```
 
 ### How do I run the tests? / 如何运行测试？
@@ -107,7 +107,7 @@ python -m pytest tests/test_validate.py
 python -m scripts generate
 ```
 
-This will regenerate `README.md` from the data in `data/` directory.
+This will regenerate `README.md` from the data in the repository `data/` directory and should be run from a repository checkout.
 
 ---
 
@@ -132,10 +132,10 @@ Use a YAML validator to check your files.
 
 ### Import errors / 导入错误
 
-Make sure you've installed the package:
+Make sure you're running the command from a repository checkout and have installed the local dependencies:
 
 ```bash
-pip install -e .
+pip install -e ".[dev]"
 ```
 
 ---

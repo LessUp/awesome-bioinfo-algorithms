@@ -5,14 +5,14 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "awesome-bioinfo-algorithms"
 version = "1.0.0"
-description = "A curated list of bioinformatics algorithms"
+description = "Repository-maintenance tooling and curated bioinformatics algorithm data"
 readme = "README.md"
 license = {text = "CC0-1.0"}
 requires-python = ">=3.9"
 authors = [
     {name = "LessUp"}
 ]
-keywords = ["bioinformatics", "algorithms", "awesome-list"]
+keywords = ["bioinformatics", "algorithms", "awesome-list", "repository-tooling"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Science/Research",
@@ -44,6 +44,10 @@ dev = [
 Homepage = "https://github.com/LessUp/awesome-bioinfo-algorithms"
 Repository = "https://github.com/LessUp/awesome-bioinfo-algorithms"
 Issues = "https://github.com/LessUp/awesome-bioinfo-algorithms/issues"
+
+# This project is maintained and executed from a repository checkout.
+# The Python configuration here exists to support local development,
+# validation, testing, and README generation for contributors.
 
 [tool.setuptools.packages.find]
 where = ["."]
