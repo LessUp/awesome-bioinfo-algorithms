@@ -12,7 +12,12 @@
 
 This project collects and organizes commonly used algorithms in bioinformatics, providing brief introductions, complexity analysis, and related resource links to help developers quickly understand and choose appropriate algorithms.
 
+The bundled Python commands are intended for repository maintenance workflows and should be run from a repository checkout with the local `data/` and `templates/` directories available.
+
 ## 🚀 快速开始 | Quick Start
+
+> 在仓库根目录执行以下命令。 Run the following commands from the repository root.
+
 
 ```bash
 git clone https://github.com/LessUp/awesome-bioinfo-algorithms.git

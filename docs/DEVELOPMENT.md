@@ -63,6 +63,9 @@ awesome-bioinfo-algorithms/
 
 ### 环境设置
 
+> 本项目的 Python 命令行入口主要服务于仓库维护流程，默认依赖当前仓库中的 `data/` 和 `templates/` 目录；请在仓库根目录运行相关命令。
+
+
 ```bash
 # 克隆仓库
 git clone https://github.com/LessUp/awesome-bioinfo-algorithms.git

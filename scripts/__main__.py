@@ -17,13 +17,36 @@ from .validate import Validator
 
 
 def get_base_dir() -> Path:
-    """Return the project root directory."""
+    """Return the project root directory for a repository checkout."""
     return Path(__file__).resolve().parent.parent
+
+
+def validate_repo_layout(base_dir: Path) -> list[str]:
+    """Return missing repository paths required by the maintenance CLI."""
+    required_paths = [
+        base_dir / 'data' / 'categories.yaml',
+        base_dir / 'data' / 'algorithms',
+        base_dir / 'templates' / 'readme_template.md',
+    ]
+    return [str(path) for path in required_paths if not path.exists()]
+
+
+def ensure_repo_layout() -> tuple[Path, list[str]]:
+    """Validate that commands are being run from a repository checkout."""
+    base_dir = get_base_dir()
+    return base_dir, validate_repo_layout(base_dir)
 
 
 def cmd_generate() -> int:
     """Generate README.md from algorithm data."""
-    base_dir = get_base_dir()
+    base_dir, missing_paths = ensure_repo_layout()
+    if missing_paths:
+        print("Error: This command must be run from an intact repository checkout.")
+        print("Missing required paths:")
+        for path in missing_paths:
+            print(f"  - {path}")
+        return 1
+
     data_dir = base_dir / 'data'
     categories_path = base_dir / 'data' / 'categories.yaml'
     algorithms_dir = base_dir / 'data' / 'algorithms'
@@ -74,7 +97,14 @@ def cmd_generate() -> int:
 
 def cmd_validate() -> int:
     """Validate all data files."""
-    base_dir = get_base_dir()
+    base_dir, missing_paths = ensure_repo_layout()
+    if missing_paths:
+        print("Error: This command must be run from an intact repository checkout.")
+        print("Missing required paths:")
+        for path in missing_paths:
+            print(f"  - {path}")
+        return 1
+
     data_dir = base_dir / 'data'
 
     print("Validating data files...")
@@ -101,7 +131,14 @@ def cmd_validate() -> int:
 
 def cmd_stats() -> int:
     """Show statistics about the algorithm registry."""
-    base_dir = get_base_dir()
+    base_dir, missing_paths = ensure_repo_layout()
+    if missing_paths:
+        print("Error: This command must be run from an intact repository checkout.")
+        print("Missing required paths:")
+        for path in missing_paths:
+            print(f"  - {path}")
+        return 1
+
     algorithms_dir = base_dir / 'data' / 'algorithms'
     categories_path = base_dir / 'data' / 'categories.yaml'
 

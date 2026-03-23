@@ -50,4 +50,4 @@ Latest
 
 ---
 
-完整变更日志请参阅 [CHANGELOG.md](https://github.com/LessUp/awesome-bioinfo-algorithms/blob/main/CHANGELOG.md)。
+完整变更日志请参阅 [CHANGELOG.md](https://github.com/LessUp/awesome-bioinfo-algorithms/blob/master/CHANGELOG.md)。

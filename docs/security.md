@@ -39,4 +39,4 @@ description: "漏洞报告与处理流程"
 
 ---
 
-完整安全策略请参阅 [SECURITY.md](https://github.com/LessUp/awesome-bioinfo-algorithms/blob/main/SECURITY.md)。
+完整安全策略请参阅 [SECURITY.md](https://github.com/LessUp/awesome-bioinfo-algorithms/blob/master/SECURITY.md)。
