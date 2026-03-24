@@ -1,13 +1,4 @@
-# Core dependencies
-PyYAML>=6.0
-
-# Testing
-hypothesis>=6.0
-pytest>=7.0
-pytest-cov>=4.0
-
-# Development
-ruff>=0.1.0
-mypy>=1.0
-pre-commit>=3.0
-types-PyYAML>=6.0
+# Convenience requirements file for contributors.
+# The dependency source of truth is pyproject.toml.
+# Use this file if you prefer: pip install -r requirements.txt
+-e .[dev]
