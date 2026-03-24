@@ -18,8 +18,11 @@ def test_validate_repo_layout_passes_in_repository_checkout(project_root):
         assert (cli.get_base_dir() / relative_path).exists(), f"Missing expected path: {relative_path}"
 
 
-def test_cli_commands_succeed_against_repository_data():
+def test_cli_commands_succeed_against_repository_data(tmp_path):
     """Repository CLI commands should succeed against the checked-out project data."""
+    output_path = tmp_path / 'README.md'
+
     assert cli.cmd_validate() == 0
     assert cli.cmd_stats() == 0
-    assert cli.cmd_generate() == 0
+    assert cli.cmd_generate(output_path=output_path) == 0
+    assert output_path.exists()

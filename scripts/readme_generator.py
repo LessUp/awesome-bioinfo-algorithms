@@ -59,7 +59,7 @@ class ReadmeGenerator:
 ## 统计
 
 - 📊 算法总数: {{ total_algorithms }}
-- 📁 分类数量: {{ total_categories }}
+- 📁 有算法的分类数: {{ total_categories }}
 - 🏷️ 标签数量: {{ total_tags }}
 
 ## 目录
@@ -235,7 +235,7 @@ class ReadmeGenerator:
         stats = self._registry.get_statistics()
         lines = [
             f"- 📊 算法总数: {stats.total_algorithms}",
-            f"- 📁 分类数量: {stats.total_categories}",
+            f"- 📁 有算法的分类数: {stats.total_categories}",
             f"- 🏷️ 标签数量: {stats.total_tags}",
         ]
         return "\n".join(lines)

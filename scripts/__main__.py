@@ -37,7 +37,7 @@ def ensure_repo_layout() -> tuple[Path, list[str]]:
     return base_dir, validate_repo_layout(base_dir)
 
 
-def cmd_generate() -> int:
+def cmd_generate(output_path: Path | None = None) -> int:
     """Generate README.md from algorithm data."""
     base_dir, missing_paths = ensure_repo_layout()
     if missing_paths:
@@ -51,7 +51,7 @@ def cmd_generate() -> int:
     categories_path = base_dir / 'data' / 'categories.yaml'
     algorithms_dir = base_dir / 'data' / 'algorithms'
     template_path = base_dir / 'templates' / 'readme_template.md'
-    output_path = base_dir / 'README.md'
+    output_path = output_path or (base_dir / 'README.md')
 
     print("Validating data files...")
     validator = Validator()
@@ -156,7 +156,7 @@ def cmd_stats() -> int:
     print("📊 Awesome Bioinformatics Algorithms - Statistics")
     print("=" * 50)
     print(f"  算法总数 (Total Algorithms): {stats.total_algorithms}")
-    print(f"  分类数量 (Categories):       {stats.total_categories}")
+    print(f"  有算法的分类数 (Categories with algorithms): {stats.total_categories}")
     print(f"  标签数量 (Tags):             {stats.total_tags}")
     print()
     print("📁 Algorithms per Category:")
