@@ -2,6 +2,8 @@
 Property-based tests for data completeness.
 Feature: project-enhancement
 """
+from pathlib import Path
+
 from hypothesis import HealthCheck, given, settings
 from hypothesis import strategies as st
 
@@ -9,11 +11,16 @@ from scripts.algorithm_registry import AlgorithmRegistry
 from scripts.category_manager import CategoryManager
 from scripts.validate import Validator
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+DATA_DIR = PROJECT_ROOT / 'data'
+ALGORITHMS_DIR = DATA_DIR / 'algorithms'
+CATEGORIES_PATH = DATA_DIR / 'categories.yaml'
+
 
 # Load actual data for testing
 def load_registry():
     """Load the actual algorithm registry."""
-    registry = AlgorithmRegistry('data/algorithms')
+    registry = AlgorithmRegistry(str(ALGORITHMS_DIR))
     registry.load_all()
     return registry
 
@@ -21,7 +28,7 @@ def load_registry():
 def load_categories():
     """Load the actual category manager."""
     cm = CategoryManager()
-    cm.load_categories('data/categories.yaml')
+    cm.load_categories(str(CATEGORIES_PATH))
     return cm
 
 
@@ -40,7 +47,7 @@ def test_property_1_algorithm_data_completeness(_):
     registry = load_registry()
     cm = load_categories()
     validator = Validator()
-    categories_result = validator.validate_categories_file('data/categories.yaml')
+    categories_result = validator.validate_categories_file(str(CATEGORIES_PATH))
     assert categories_result.is_valid, categories_result.errors
     valid_categories = cm.list_all_category_ids()
 

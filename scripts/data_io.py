@@ -12,6 +12,12 @@ from .algorithm_registry import AlgorithmRegistry
 from .category_manager import CategoryManager
 from .schema import AlgorithmEntry, Category
 
+YAML_DUMP_KWARGS = {
+    'allow_unicode': True,
+    'default_flow_style': False,
+    'sort_keys': False,
+}
+
 
 class DataIO:
     """Handles data import and export operations."""
@@ -38,7 +44,7 @@ class DataIO:
             if fmt.lower() == 'json':
                 json.dump(data, f, ensure_ascii=False, indent=2)
             else:
-                yaml.dump(data, f, allow_unicode=True, default_flow_style=False)
+                yaml.safe_dump(data, f, **YAML_DUMP_KWARGS)
 
     def import_data(self, input_path: str) -> tuple[list[Category], list[AlgorithmEntry]]:
         """
@@ -97,7 +103,7 @@ class DataIO:
             if fmt.lower() == 'json':
                 json.dump(data, f, ensure_ascii=False, indent=2)
             else:
-                yaml.dump(data, f, allow_unicode=True, default_flow_style=False)
+                yaml.safe_dump(data, f, **YAML_DUMP_KWARGS)
 
     def export_algorithms(self, output_path: str, fmt: str = "yaml") -> None:
         """Export only algorithms to a file."""
@@ -109,7 +115,7 @@ class DataIO:
             if fmt.lower() == 'json':
                 json.dump(data, f, ensure_ascii=False, indent=2)
             else:
-                yaml.dump(data, f, allow_unicode=True, default_flow_style=False)
+                yaml.safe_dump(data, f, **YAML_DUMP_KWARGS)
 
     @staticmethod
     def export_to_dict(categories: list[Category],

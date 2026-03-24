@@ -38,7 +38,7 @@ python -m scripts stats
 ## 📊 统计 | Statistics
 
 - 📊 算法总数 (Total Algorithms): **54**
-- 📁 分类数量 (Categories): **12**
+- 📁 有算法的分类数 (Categories with algorithms): **12**
 - 🏷️ 标签数量 (Tags): **139**
 
 ## 📑 目录 | Table of Contents
