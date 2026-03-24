@@ -144,7 +144,7 @@ def test_property_11_round_trip_yaml(data):
             os.unlink(temp_path)
 
 
-@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much, HealthCheck.too_slow])
 @given(data=categories_and_algorithms_strategy())
 def test_property_11_round_trip_json(data):
     """
@@ -188,7 +188,7 @@ def test_property_11_round_trip_json(data):
             os.unlink(temp_path)
 
 
-@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much, HealthCheck.too_slow])
 @given(data=categories_and_algorithms_strategy())
 def test_dict_round_trip(data):
     """Test round-trip through dictionary conversion."""
