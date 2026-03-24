@@ -25,7 +25,7 @@ awesome-bioinfo-algorithms/
 ├── LICENSE                      # 许可证
 ├── pyproject.toml               # 项目配置（主要）
 ├── .pre-commit-config.yaml      # 代码质量钩子
-├── requirements.txt             # 依赖清单（兼容/可选）
+├── requirements.txt             # 依赖安装快捷入口（指向 pyproject 配置）
 ├── data/
 │   ├── categories.yaml          # 分类定义
 │   └── algorithms/              # 算法数据文件
@@ -76,8 +76,11 @@ python -m venv venv
 source venv/bin/activate  # Linux/macOS
 # 或 venv\Scripts\activate  # Windows
 
-# 安装依赖（开发模式）
+# 安装依赖（开发模式，推荐）
 pip install -e ".[dev]"
+
+# 或使用 requirements 快捷入口
+# pip install -r requirements.txt
 ```
 
 ### 核心组件
@@ -181,7 +184,7 @@ awesome-bioinfo-algorithms/
 ├── LICENSE                      # License
 ├── pyproject.toml               # Project config (primary)
 ├── .pre-commit-config.yaml      # Pre-commit hooks
-├── requirements.txt             # Dependencies (legacy/optional)
+├── requirements.txt             # Convenience install entrypoint backed by pyproject
 ├── data/
 │   ├── categories.yaml          # Category definitions
 │   └── algorithms/              # Algorithm data files

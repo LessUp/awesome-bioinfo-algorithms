@@ -78,6 +78,7 @@ algorithms:
 ```bash
 # 安装依赖（开发模式）
 pip install -e ".[dev]"
+# 或：pip install -r requirements.txt
 
 # 运行测试
 python -m pytest tests/ -v
@@ -178,6 +179,7 @@ Before submitting, please run validation locally:
 ```bash
 # Install dependencies (dev mode)
 pip install -e ".[dev]"
+# Or: pip install -r requirements.txt
 
 # Run tests
 python -m pytest tests/ -v
