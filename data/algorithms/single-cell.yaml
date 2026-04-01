@@ -90,3 +90,272 @@ algorithms:
       - vae
       - batch-correction
       - probabilistic
+
+  - id: starsolo
+    name: STARsolo
+    description: |
+      基于 STAR 比对器扩展的单细胞 RNA-seq 预处理方法，可在一次流程中完成比对、细胞条码解析和 UMI 计数。
+      该工具兼具高速度与对 10x 等主流协议的兼容性，是 Cell Ranger 之外的重要开源替代方案。
+    purpose: 单细胞 RNA-seq 数据的快速比对与表达矩阵生成
+    time_complexity: O(n * g)
+    space_complexity: O(c * g)
+    year: 2021
+    category: single-cell
+    subcategory: sc-preprocessing
+    paper_url: https://doi.org/10.1093/gigascience/giab074
+    implementation_url: https://github.com/alexdobin/STAR
+    related_tools:
+      - Cell Ranger
+      - Alevin
+      - Kallisto-bustools
+    tags:
+      - preprocessing
+      - alignment
+      - umi
+      - open-source
+
+  - id: alevin
+    name: Alevin
+    description: |
+      基于轻量级映射与 UMI 去重策略的单细胞 RNA-seq 定量工具，可直接从 FASTQ 生成细胞和基因表达矩阵。
+      该方法速度快、内存占用低，并与 Salmon 生态紧密结合，是 droplet-based 单细胞预处理的重要开源方案。
+    purpose: 单细胞 RNA-seq 数据的快速定量与 UMI 计数
+    time_complexity: O(n * g)
+    space_complexity: O(c * g)
+    year: 2019
+    category: single-cell
+    subcategory: sc-preprocessing
+    paper_url: https://doi.org/10.1038/s41592-019-0465-8
+    implementation_url: https://github.com/COMBINE-lab/salmon
+    related_tools:
+      - STARsolo
+      - Cell Ranger
+      - Kallisto-bustools
+    tags:
+      - preprocessing
+      - umi
+      - lightweight-mapping
+      - quantification
+
+  - id: harmony
+    name: Harmony
+    description: |
+      面向多批次单细胞数据的整合方法，在低维嵌入空间中迭代校正批次效应并保留生物学信号。
+      该方法能与 Seurat、Scanpy 等分析流程无缝结合，是跨样本和跨平台单细胞整合分析的常用工具。
+    purpose: 多批次单细胞数据的批次校正与整合
+    time_complexity: O(c * k)
+    space_complexity: O(c * k)
+    year: 2019
+    category: single-cell
+    subcategory: sc-clustering
+    paper_url: https://doi.org/10.1038/s41592-019-0619-0
+    implementation_url: https://github.com/immunogenomics/harmony
+    related_tools:
+      - Seurat
+      - Scanpy
+      - scVI
+    tags:
+      - batch-correction
+      - integration
+      - embedding
+      - single-cell
+
+  - id: monocle3
+    name: Monocle 3
+    description: |
+      面向单细胞转录组的轨迹推断与细胞状态分析框架，可学习发育路径、伪时间顺序和分化分支结构。
+      该方法常用于研究细胞命运转换和动态生物过程，与聚类和降维分析形成互补的下游解释能力。
+    purpose: 单细胞数据的轨迹推断与伪时间分析
+    time_complexity: O(c * g)
+    space_complexity: O(c * g)
+    year: 2019
+    category: single-cell
+    subcategory: sc-clustering
+    paper_url: https://doi.org/10.1038/nbt.4402
+    implementation_url: https://github.com/cole-trapnell-lab/monocle3
+    related_tools:
+      - Seurat
+      - Scanpy
+      - Slingshot
+    tags:
+      - trajectory-inference
+      - pseudotime
+      - differentiation
+      - single-cell
+
+  - id: scvi-tools
+    name: scVI-tools
+    description: |
+      基于深度生成模型的单细胞组学分析框架，利用变分自编码器架构处理单细胞数据中的噪声和批次效应。
+      该工具集提供了多种模型变体支持聚类、注释和数据整合任务，是 scverse 生态中深度学习方法的核心实现。
+    purpose: 深度生成模型驱动的单细胞组学分析
+    time_complexity: O(c * g * e)
+    space_complexity: O(c * g)
+    year: 2023
+    category: single-cell
+    subcategory: sc-clustering
+    paper_url: https://doi.org/10.1038/s41587-021-01206-w
+    implementation_url: https://github.com/scverse/scvi-tools
+    related_tools:
+      - Scanpy
+      - Seurat
+      - scANVI
+    tags:
+      - variational-autoencoder
+      - deep-learning
+      - batch-correction
+      - probabilistic
+    difficulty: advanced
+    language:
+      - Python
+
+  - id: scanvi
+    name: scANVI
+    description: |
+      结合变分自编码器与半监督学习的单细胞数据注释方法，能利用少量已知标签对大量未标注细胞进行自动类型推断。
+      该方法在保留 scVI 批次校正能力的同时引入细胞类型信息，显著提升跨数据集注释的准确性和可解释性。
+    purpose: 基于半监督深度学习的单细胞类型注释
+    time_complexity: O(c * g * e)
+    space_complexity: O(c * g)
+    year: 2021
+    category: single-cell
+    subcategory: sc-clustering
+    paper_url: https://doi.org/10.1038/s41467-021-25548-w
+    related_tools:
+      - scVI
+      - CellTypist
+      - scArches
+    tags:
+      - semi-supervised
+      - annotation
+      - deep-learning
+      - vae
+    difficulty: advanced
+    language:
+      - Python
+
+  - id: scarches
+    name: scArches
+    description: |
+      基于模型手术的单细胞参考映射方法，能在预训练模型上直接整合新数据而无需从头再训练。
+      该方法通过结构化变分自编码器的参数转移实现高效的查询数据映射，支持增量学习和多参考场景。
+    purpose: 单细胞数据的参考映射与迁移学习
+    time_complexity: O(c * g * e)
+    space_complexity: O(c * g)
+    year: 2022
+    category: single-cell
+    subcategory: sc-clustering
+    paper_url: https://doi.org/10.1038/s41467-022-29299-4
+    related_tools:
+      - scVI
+      - scANVI
+      - Harmony
+    tags:
+      - reference-mapping
+      - transfer-learning
+      - surgery
+      - integration
+    difficulty: advanced
+    language:
+      - Python
+
+  - id: celltypist
+    name: CellTypist
+    description: |
+      基于逻辑回归模型的自动化细胞类型注释工具，使用大规模参考数据集快速推断未知单细胞样本的细胞类型。
+      该方法支持在线学习和多级注释，在免疫细胞分类等场景中具有较高的准确性和运行效率。
+    purpose: 基于逻辑回归的自动化细胞类型注释
+    time_complexity: O(c * g)
+    space_complexity: O(c * g)
+    year: 2022
+    category: single-cell
+    subcategory: sc-clustering
+    paper_url: https://doi.org/10.1016/j.immuni.2022.07.010
+    related_tools:
+      - scANVI
+      - scVI
+      - Seurat
+    tags:
+      - cell-type
+      - annotation
+      - logistic-regression
+      - reference-based
+    difficulty: intermediate
+    language:
+      - Python
+
+  - id: scenic
+    name: SCENIC
+    description: |
+      单细胞基因调控网络推断方法，通过整合共表达模块和转录因子结合基序信息识别细胞状态特异性调控关系。
+      该方法能从单细胞表达矩阵中自动发现活性转录因子及其调控靶基因，是研究细胞异质性调控机制的重要工具。
+    purpose: 单细胞基因调控网络推断与分析
+    time_complexity: O(c * g^2)
+    space_complexity: O(c * g)
+    year: 2020
+    category: single-cell
+    subcategory: sc-clustering
+    paper_url: https://doi.org/10.1038/nmeth.4463
+    related_tools:
+      - Scanpy
+      - Seurat
+      - GRNBoost
+    tags:
+      - regulatory-network
+      - transcription-factor
+      - grn
+      - gene-regulatory
+    difficulty: advanced
+    language:
+      - Python
+      - R
+
+  - id: kallisto-bustools
+    name: kallisto | bustools
+    description: |
+      基于伪比对的快速单细胞 RNA-seq 预处理流程，利用 kallisto 索引和 bustools 流式处理实现轻量级定量。
+      该方法内存占用极低，处理速度快，支持多种单细胞平台，是大规模单细胞数据预处理的高效替代方案。
+    purpose: 快速轻量的单细胞 RNA-seq 数据预处理
+    time_complexity: O(n * k)
+    space_complexity: O(g)
+    year: 2021
+    category: single-cell
+    subcategory: sc-preprocessing
+    paper_url: https://doi.org/10.1038/s41587-021-00870-2
+    related_tools:
+      - Cell Ranger
+      - STARsolo
+      - Alevin
+    tags:
+      - preprocessing
+      - pseudoalignment
+      - fast
+      - lightweight
+    difficulty: intermediate
+    language:
+      - C++
+
+  - id: alevin-fry
+    name: alevin-fry
+    description: |
+      基于轻量级比对的内存高效单细胞定量工具，通过简化伪比对和轻量级分辨算法大幅降低内存需求。
+      该方法在保持定量准确性的同时将内存占用降至传统方法的十分之一，适合在普通计算环境下处理大规模单细胞数据集。
+    purpose: 内存高效的单细胞 RNA-seq 定量
+    time_complexity: O(n * k)
+    space_complexity: O(g)
+    year: 2022
+    category: single-cell
+    subcategory: sc-preprocessing
+    paper_url: https://doi.org/10.1038/s41592-022-01408-3
+    related_tools:
+      - Alevin
+      - kallisto-bustools
+      - STARsolo
+    tags:
+      - quantification
+      - memory-efficient
+      - simpleaf
+      - frugal
+    difficulty: intermediate
+    language:
+      - Rust

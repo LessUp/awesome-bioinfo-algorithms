@@ -25,6 +25,10 @@ assignees: ''
 - [ ] phylogenetics (系统发育分析)
 - [ ] functional-annotation (功能注释)
 - [ ] data-compression (数据压缩)
+- [ ] single-cell (单细胞基因组学)
+- [ ] metagenomics (宏基因组学)
+- [ ] epigenomics (表观基因组学)
+- [ ] gene-prediction (基因预测)
 
 **子分类 / Subcategory:** (如适用 / if applicable)
 

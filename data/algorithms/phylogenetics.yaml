@@ -1,89 +1,282 @@
 algorithms:
-  - id: neighbor-joining
-    name: Neighbor-Joining
-    description: |
-      基于距离矩阵的系统发育树构建算法，通过迭代地合并最近邻节点来构建无根树。
-      该方法计算速度快，适合处理大规模数据集，是最常用的距离法建树算法之一。
-    purpose: 快速构建系统发育树
-    time_complexity: O(n^3)
-    space_complexity: O(n^2)
-    year: 1987
-    category: phylogenetics
-    subcategory: distance-method
-    paper_url: https://doi.org/10.1093/oxfordjournals.molbev.a040454
-    related_tools:
-      - MEGA
-      - PHYLIP
-      - RapidNJ
-    tags:
-      - distance-based
-      - tree-building
-      - classic
+- id: neighbor-joining
+  name: Neighbor-Joining
+  description: '基于距离矩阵的系统发育树构建算法，通过迭代地合并最近邻节点来构建无根树。
 
-  - id: maximum-likelihood
-    name: Maximum Likelihood Phylogeny
-    description: |
-      基于最大似然法的系统发育推断算法，通过优化进化模型参数来寻找最可能的树拓扑。
-      该方法统计学基础扎实，能够提供可靠的分支支持度评估。
-    purpose: 统计学方法构建系统发育树
-    time_complexity: O(n^2 * s * r)
-    space_complexity: O(n * s)
-    year: 2014
-    category: phylogenetics
-    subcategory: character-method
-    paper_url: https://doi.org/10.1093/sysbio/syq010
-    implementation_url: https://github.com/stamatak/standard-RAxML
-    related_tools:
-      - RAxML
-      - IQ-TREE
-      - PhyML
-    tags:
-      - maximum-likelihood
-      - statistical
-      - tree-building
+    该方法计算速度快，适合处理大规模数据集，是最常用的距离法建树算法之一。
 
-  - id: iq-tree
-    name: IQ-TREE
-    description: |
-      高效的最大似然系统发育推断工具，集成了自动模型选择（ModelFinder）和超快自展分析。
-      该方法在速度和准确性上优于传统 ML 工具，支持数千个分类单元的大规模建树。
-    purpose: 快速最大似然系统发育推断
-    time_complexity: O(n^2 * s)
-    space_complexity: O(n * s)
-    year: 2015
-    category: phylogenetics
-    subcategory: character-method
-    paper_url: https://doi.org/10.1093/molbev/msu300
-    implementation_url: https://github.com/iqtree/iqtree2
-    related_tools:
-      - RAxML-NG
-      - PhyML
-      - FastTree
-    tags:
-      - maximum-likelihood
-      - model-selection
-      - ultrafast-bootstrap
-      - scalable
+    '
+  purpose: 快速构建系统发育树
+  time_complexity: O(n^3)
+  space_complexity: O(n^2)
+  year: 1987
+  category: phylogenetics
+  subcategory: distance-method
+  paper_url: https://doi.org/10.1093/oxfordjournals.molbev.a040454
+  related_tools:
+  - MEGA
+  - PHYLIP
+  - RapidNJ
+  tags:
+  - distance-based
+  - tree-building
+  - classic
+- id: maximum-likelihood
+  name: Maximum Likelihood Phylogeny
+  description: '基于最大似然法的系统发育推断算法，通过优化进化模型参数来寻找最可能的树拓扑。
 
-  - id: bayesian-phylogeny
-    name: Bayesian Phylogenetic Inference
-    description: |
-      基于贝叶斯统计框架的系统发育推断方法，使用马尔可夫链蒙特卡洛采样估计后验概率分布。
-      该方法能同时估计树拓扑、分支长度和模型参数的不确定性，适合分子钟和分歧时间估计。
-    purpose: 贝叶斯框架的系统发育推断和分歧时间估计
-    time_complexity: O(n^2 * s * r)
-    space_complexity: O(n * s)
-    year: 2001
-    category: phylogenetics
-    subcategory: character-method
-    paper_url: https://doi.org/10.1093/bioinformatics/17.8.754
-    implementation_url: https://github.com/beast-dev/beast-mcmc
-    related_tools:
-      - MrBayes
-      - BEAST2
-      - RevBayes
-    tags:
-      - bayesian
-      - mcmc
-      - molecular-clock
-      - divergence-time
+    该方法统计学基础扎实，能够提供可靠的分支支持度评估。
+
+    '
+  purpose: 统计学方法构建系统发育树
+  time_complexity: O(n^2 * s * r)
+  space_complexity: O(n * s)
+  year: 2014
+  category: phylogenetics
+  subcategory: character-method
+  paper_url: https://doi.org/10.1093/sysbio/syq010
+  implementation_url: https://github.com/stamatak/standard-RAxML
+  related_tools:
+  - RAxML
+  - IQ-TREE
+  - PhyML
+  tags:
+  - maximum-likelihood
+  - statistical
+  - tree-building
+- id: iq-tree
+  name: IQ-TREE
+  description: '高效的最大似然系统发育推断工具，集成了自动模型选择（ModelFinder）和超快自展分析。
+
+    该方法在速度和准确性上优于传统 ML 工具，支持数千个分类单元的大规模建树。
+
+    '
+  purpose: 快速最大似然系统发育推断
+  time_complexity: O(n^2 * s)
+  space_complexity: O(n * s)
+  year: 2015
+  category: phylogenetics
+  subcategory: character-method
+  paper_url: https://doi.org/10.1093/molbev/msu300
+  implementation_url: https://github.com/iqtree/iqtree2
+  related_tools:
+  - RAxML-NG
+  - PhyML
+  - FastTree
+  tags:
+  - maximum-likelihood
+  - model-selection
+  - ultrafast-bootstrap
+  - scalable
+- id: bayesian-phylogeny
+  name: Bayesian Phylogenetic Inference
+  description: '基于贝叶斯统计框架的系统发育推断方法，使用马尔可夫链蒙特卡洛采样估计后验概率分布。
+
+    该方法能同时估计树拓扑、分支长度和模型参数的不确定性，适合分子钟和分歧时间估计。
+
+    '
+  purpose: 贝叶斯框架的系统发育推断和分歧时间估计
+  time_complexity: O(n^2 * s * r)
+  space_complexity: O(n * s)
+  year: 2001
+  category: phylogenetics
+  subcategory: character-method
+  paper_url: https://doi.org/10.1093/bioinformatics/17.8.754
+  implementation_url: https://github.com/beast-dev/beast-mcmc
+  related_tools:
+  - MrBayes
+  - BEAST2
+  - RevBayes
+  tags:
+  - bayesian
+  - mcmc
+  - molecular-clock
+  - divergence-time
+- id: fasttree
+  name: FastTree
+  description: '面向大规模多序列比对的近似最大似然建树工具，通过启发式搜索快速生成大规模系统发育树。
+
+    该方法在处理上万条序列时速度明显快于传统方法，是高通量进化分析和微生物组研究中的常用选择。
+
+    '
+  purpose: 大规模序列集合的快速近似最大似然建树
+  time_complexity: O(n * s * log n)
+  space_complexity: O(n * s)
+  year: 2010
+  category: phylogenetics
+  subcategory: distance-method
+  paper_url: https://doi.org/10.1371/journal.pone.0009490
+  implementation_url: https://github.com/morgannprice/FastTree
+  related_tools:
+  - IQ-TREE
+  - RAxML-NG
+  - PhyML
+  tags:
+  - tree-building
+  - approximate-likelihood
+  - scalable
+  - fast
+- id: raxml-ng
+  name: RAxML-NG
+  description: '新一代最大似然系统发育推断工具，在前代 RAxML 基础上大幅提升计算速度与并行效率。
+
+    支持超快自展分析和自动模型选择，适合处理包含数万条序列的大规模系统发育数据集。
+
+    '
+  purpose: 下一代高性能最大似然系统发育推断
+  time_complexity: O(n^2 * s * r)
+  space_complexity: O(n * s)
+  year: 2019
+  category: phylogenetics
+  subcategory: character-method
+  paper_url: https://doi.org/10.1093/bioinformatics/btz305
+  implementation_url: https://github.com/amkozlov/raxml-ng
+  related_tools:
+  - RAxML
+  - IQ-TREE
+  - PhyML
+  tags:
+  - maximum-likelihood
+  - scalable
+  - ultrafast-bootstrap
+  - model-selection
+- id: beast2
+  name: BEAST2
+  description: '灵活的贝叶斯系统发育推断与系统动力学分析平台，支持复杂分子钟模型和物种分化时间估计。
+
+    提供丰富的插件生态系统，可根据不同研究需求定制分析流程，广泛应用于病毒进化和流行病学研究。
+
+    '
+  purpose: 贝叶斯系统发育推断与系统动力学分析
+  time_complexity: O(n^2 * s * r)
+  space_complexity: O(n * s)
+  year: 2014
+  category: phylogenetics
+  subcategory: character-method
+  paper_url: https://doi.org/10.1093/molbev/mst024
+  implementation_url: https://github.com/CompEvol/beast2
+  related_tools:
+  - BEAST
+  - MrBayes
+  - RevBayes
+  tags:
+  - bayesian
+  - mcmc
+  - phylodynamics
+  - molecular-clock
+- id: mrbayes
+  name: MrBayes
+  description: '基于 Metropolis 耦合马尔可夫链蒙特卡洛的贝叶斯系统发育推断软件，是该领域最经典的工具之一。
+
+    支持多种核苷酸和氨基酸替换模型，能够高效采样后验分布并评估系统发育树的不确定性。
+
+    '
+  purpose: 经典贝叶斯系统发育推断
+  time_complexity: O(n^2 * s * r)
+  space_complexity: O(n * s)
+  year: 2012
+  category: phylogenetics
+  subcategory: character-method
+  paper_url: https://doi.org/10.1093/sysbio/sys029
+  implementation_url: https://github.com/NBISweden/MrBayes
+  related_tools:
+  - BEAST2
+  - RevBayes
+  tags:
+  - bayesian
+  - mcmc
+  - metropolis-coupled
+  - classic
+- id: astral
+  name: ASTRAL
+  description: '基于基因树汇总方法的物种树估计工具，通过寻找与输入基因树最兼容的物种树来解决不完全谱系分选问题。
+
+    在多物种溯祖模型下具有理论保证，是基因组尺度系统发育学研究中的标准方法之一。
+
+    '
+  purpose: 基于基因树汇总的物种树估计
+  time_complexity: O(n * m)
+  space_complexity: O(n * m)
+  year: 2018
+  category: phylogenetics
+  subcategory: character-method
+  paper_url: https://doi.org/10.1093/molbev/msx270
+  implementation_url: https://github.com/smirarab/ASTRAL
+  related_tools:
+  - ASTRAL-III
+  - ASTRID
+  - MP-EST
+  tags:
+  - species-tree
+  - summary-method
+  - coalescent
+  - gene-tree
+- id: iqtree2
+  name: IQ-TREE 2
+  description: '高效的最大似然系统发育推断工具最新版本，新增分区模型和混合模型支持以适应异质进化过程。
+
+    集成 ModelFinder 自动选择最优替代模型，在大规模基因组数据集上表现优异且内存效率高。
+
+    '
+  purpose: 支持分区与混合模型的高效最大似然推断
+  time_complexity: O(n^2 * s)
+  space_complexity: O(n * s)
+  year: 2020
+  category: phylogenetics
+  subcategory: character-method
+  paper_url: https://doi.org/10.1093/molbev/msaa015
+  implementation_url: https://github.com/iqtree/iqtree2
+  related_tools:
+  - RAxML-NG
+  - PhyML
+  - FastTree
+  tags:
+  - maximum-likelihood
+  - model-finder
+  - partition
+  - mixture-model
+- id: phyml
+  name: PhyML
+  description: 基于最大似然法的快速系统发育树构建工具，使用启发式搜索策略加速树拓扑的优化。该方法可自动选择最优的核苷酸或蛋白质替换模型。
+  purpose: 快速最大似然系统发育推断
+  time_complexity: O(n^2 * s)
+  space_complexity: O(n * s)
+  year: 2003
+  category: phylogenetics
+  subcategory: character-method
+  paper_url: https://doi.org/10.1093/nar/gkh368
+  related_tools:
+  - RAxML-NG
+  - IQ-TREE
+  - FastTree
+  tags:
+  - maximum-likelihood
+  - fast
+  - model-selection
+  - classic
+  difficulty: intermediate
+  language:
+  - C
+- id: revbayes
+  name: RevBayes
+  description: 灵活的贝叶斯系统发育推断平台，使用概率编程语言定义进化模型。该方法支持任意组合的树先验、分子钟模型和分化时间估计，是方法学研究的理想工具。
+  purpose: 灵活的贝叶斯系统发育推断平台
+  time_complexity: O(n^2 * s * r)
+  space_complexity: O(n * s)
+  year: 2016
+  category: phylogenetics
+  subcategory: character-method
+  paper_url: https://doi.org/10.1093/sysbio/syw021
+  implementation_url: https://github.com/revbayes/revbayes
+  related_tools:
+  - BEAST2
+  - MrBayes
+  - Bali-Phy
+  tags:
+  - bayesian
+  - probabilistic-programming
+  - flexible
+  - molecular-clock
+  difficulty: advanced
+  language:
+  - C++

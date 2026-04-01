@@ -1,0 +1,65 @@
+site_name: Awesome Bioinformatics Algorithms
+site_url: https://lessup.github.io/awesome-bioinfo-algorithms/
+site_description: "生物信息学算法概要汇总 | A curated list of bioinformatics algorithms"
+site_author: LessUp
+
+repo_url: https://github.com/LessUp/awesome-bioinfo-algorithms
+repo_name: awesome-bioinfo-algorithms
+
+theme:
+  name: material
+  language: zh
+  palette:
+    - scheme: default
+      primary: teal
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: teal
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.instant
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - toc.follow
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+  - attr_list
+  - md_in_html
+  - tables
+
+nav:
+  - Home: index.md
+  - Search: search.md
+  - Tags: tags.md
+  - Categories:
+    - categories/index.md
+  - Algorithms:
+    - algorithms/index.md
+  - About:
+    - about.md

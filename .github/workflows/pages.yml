@@ -1,15 +1,12 @@
-name: Deploy GitHub Pages
+name: Deploy GitHub Pages (MkDocs)
 
 on:
-  pull_request:
-    branches: [main, master]
-    paths:
-      - 'docs/**'
-      - '.github/workflows/pages.yml'
   push:
     branches: [main, master]
     paths:
-      - 'docs/**'
+      - 'data/**'
+      - 'mkdocs/**'
+      - 'scripts/**'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
@@ -27,25 +24,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            docs
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
+      - uses: actions/setup-python@v5
         with:
-          source: ./docs
-          destination: ./_site
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install -e ".[dev]"
+          pip install mkdocs-material
+
+      - name: Generate MkDocs pages
+        run: python scripts/generate_mkdocs.py
+
+      - name: Build MkDocs site
+        run: mkdocs build -f mkdocs/mkdocs.yml -d ./_site
 
       - name: Upload artifact
-        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
 
   deploy:
-    if: github.event_name != 'pull_request'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

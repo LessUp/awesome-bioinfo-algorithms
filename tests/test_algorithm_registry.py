@@ -2,6 +2,7 @@
 Property-based tests for AlgorithmRegistry.
 Feature: awesome-bioinfo-algorithms
 """
+import pytest
 from hypothesis import HealthCheck, given, settings
 from hypothesis import strategies as st
 
@@ -206,3 +207,252 @@ def test_subcategory_lookup_returns_matching_algorithms():
     assert [algo.id for algo in registry.get_by_subcategory('pairwise')] == ['smith-waterman']
     assert [algo.id for algo in registry.get_by_subcategory('multiple')] == ['mafft']
     assert registry.get_direct_by_category('sequence-alignment') == []
+
+
+
+def test_load_all_returns_empty_for_missing_directory(tmp_path):
+    """Loading from a missing data directory should return an empty registry."""
+    registry = AlgorithmRegistry(str(tmp_path / 'missing'))
+
+    assert registry.load_all() == []
+    assert registry.get_all_algorithms() == []
+
+
+
+def test_load_all_ignores_yaml_without_algorithms_key(tmp_path):
+    """Files without an algorithms key should be ignored cleanly."""
+    data_dir = tmp_path / 'algorithms'
+    data_dir.mkdir()
+    (data_dir / 'metadata.yaml').write_text('metadata: {}\n', encoding='utf-8')
+
+    registry = AlgorithmRegistry(str(data_dir))
+
+    assert registry.load_all() == []
+    assert registry.to_dict() == {'algorithms': []}
+
+
+
+def test_load_all_loads_yaml_and_yml_files(tmp_path):
+    """Both .yaml and .yml files should be loaded into indexes."""
+    data_dir = tmp_path / 'algorithms'
+    data_dir.mkdir()
+    (data_dir / 'first.yaml').write_text(
+        """algorithms:
+  - id: smith-waterman
+    name: Smith-Waterman
+    description: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    purpose: Local alignment
+    time_complexity: O(mn)
+    category: sequence-alignment
+    subcategory: pairwise
+    tags:
+      - alignment
+""",
+        encoding='utf-8',
+    )
+    (data_dir / 'second.yml').write_text(
+        """algorithms:
+  - id: blast
+    name: BLAST
+    description: BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+    purpose: Database search
+    time_complexity: O(mn)
+    category: sequence-alignment
+    tags:
+      - search
+""",
+        encoding='utf-8',
+    )
+
+    registry = AlgorithmRegistry(str(data_dir))
+    loaded = registry.load_all()
+
+    assert [algo.id for algo in loaded] == ['smith-waterman', 'blast']
+    assert [algo.id for algo in registry.get_by_subcategory('pairwise')] == ['smith-waterman']
+    assert [algo.id for algo in registry.get_direct_by_category('sequence-alignment')] == ['blast']
+
+
+
+def test_load_all_rejects_duplicate_ids_across_files(tmp_path):
+    """Duplicate IDs across files should raise ValueError."""
+    data_dir = tmp_path / 'algorithms'
+    data_dir.mkdir()
+    content = """algorithms:
+  - id: shared-id
+    name: Example
+    description: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    purpose: Example purpose
+    time_complexity: O(n)
+    category: sequence-alignment
+"""
+    (data_dir / 'first.yaml').write_text(content, encoding='utf-8')
+    (data_dir / 'second.yaml').write_text(content, encoding='utf-8')
+
+    registry = AlgorithmRegistry(str(data_dir))
+
+    with pytest.raises(ValueError, match="Duplicate algorithm ID"):
+        registry.load_all()
+
+
+
+def test_getters_return_defensive_copies():
+    """Lookup helpers should return copies so callers cannot mutate registry state."""
+    direct = AlgorithmEntry(
+        id='blast',
+        name='BLAST',
+        description='A' * 60,
+        purpose='Search',
+        time_complexity='O(mn)',
+        category='sequence-alignment',
+        tags=['search'],
+    )
+    tagged = AlgorithmEntry(
+        id='smith-waterman',
+        name='Smith-Waterman',
+        description='B' * 60,
+        purpose='Align',
+        time_complexity='O(mn)',
+        category='sequence-alignment',
+        subcategory='pairwise',
+        tags=['search', 'alignment'],
+    )
+    registry = AlgorithmRegistry()
+    registry.from_algorithms([direct, tagged])
+
+    by_category = registry.get_by_category('sequence-alignment')
+    by_tag = registry.get_by_tag('search')
+    all_algorithms = registry.get_all_algorithms()
+
+    by_category.clear()
+    by_tag.clear()
+    all_algorithms.clear()
+
+    assert len(registry.get_by_category('sequence-alignment')) == 2
+    assert len(registry.get_by_tag('search')) == 2
+    assert len(registry.get_all_algorithms()) == 2
+
+
+
+def test_get_all_tags_and_categories_reflect_loaded_indexes():
+    """Tag and category listings should reflect current registry indexes."""
+    direct = AlgorithmEntry(
+        id='blast',
+        name='BLAST',
+        description='A' * 60,
+        purpose='Search',
+        time_complexity='O(mn)',
+        category='sequence-alignment',
+        tags=['search'],
+    )
+    tagged = AlgorithmEntry(
+        id='spades',
+        name='SPAdes',
+        description='B' * 60,
+        purpose='Assemble',
+        time_complexity='O(n)',
+        category='assembly',
+        tags=['graph', 'search'],
+    )
+    registry = AlgorithmRegistry()
+    registry.from_algorithms([direct, tagged])
+
+    assert set(registry.get_all_categories()) == {'sequence-alignment', 'assembly'}
+    assert set(registry.get_all_tags()) == {'search', 'graph'}
+
+
+
+def test_validate_entry_delegates_to_validator_result():
+    """Entry validation should preserve validator output semantics."""
+    registry = AlgorithmRegistry()
+
+    result = registry.validate_entry({
+        'id': 'bad-entry',
+        'name': 'Bad Entry',
+        'description': 'too short',
+        'purpose': 'Testing',
+        'time_complexity': 'O(n)',
+        'category': 'sequence-alignment',
+    })
+
+    assert not result.is_valid
+    assert any('Description too short' in error for error in result.errors)
+
+
+
+def test_get_algorithm_returns_none_for_missing_id():
+    """Missing IDs should return None."""
+    registry = AlgorithmRegistry()
+
+    assert registry.get_algorithm('missing-id') is None
+
+
+
+def test_search_is_case_insensitive_for_name_description_and_tags():
+    """Search should match case-insensitively across name, description, and tags."""
+    blast = AlgorithmEntry(
+        id='blast',
+        name='BLAST',
+        description='Fast database search for protein sequences.' + 'A' * 30,
+        purpose='Search',
+        time_complexity='O(mn)',
+        category='sequence-alignment',
+        tags=['heuristic'],
+    )
+    smith = AlgorithmEntry(
+        id='smith-waterman',
+        name='Smith-Waterman',
+        description='Local alignment with dynamic programming.' + 'B' * 30,
+        purpose='Align',
+        time_complexity='O(mn)',
+        category='sequence-alignment',
+        tags=['Dynamic-Programming'],
+    )
+    registry = AlgorithmRegistry()
+    registry.from_algorithms([blast, smith])
+
+    assert [algo.id for algo in registry.search('blast')] == ['blast']
+    assert [algo.id for algo in registry.search('DATABASE')] == ['blast']
+    assert [algo.id for algo in registry.search('dynamic')] == ['smith-waterman']
+
+
+
+def test_from_algorithms_replaces_previous_state():
+    """Reloading from a new list should replace previous indexes."""
+    first = AlgorithmEntry(
+        id='blast',
+        name='BLAST',
+        description='A' * 60,
+        purpose='Search',
+        time_complexity='O(mn)',
+        category='sequence-alignment',
+        tags=['search'],
+    )
+    second = AlgorithmEntry(
+        id='spades',
+        name='SPAdes',
+        description='B' * 60,
+        purpose='Assemble',
+        time_complexity='O(n)',
+        category='assembly',
+        tags=['graph'],
+    )
+    registry = AlgorithmRegistry()
+    registry.from_algorithms([first])
+    registry.from_algorithms([second])
+
+    assert registry.get_algorithm('blast') is None
+    assert registry.get_algorithm('spades') is not None
+    assert registry.get_all_categories() == ['assembly']
+
+
+
+def test_statistics_and_to_dict_for_empty_registry():
+    """Empty registries should report zeroed statistics and an empty export payload."""
+    registry = AlgorithmRegistry()
+    stats = registry.get_statistics()
+
+    assert stats.total_algorithms == 0
+    assert stats.total_categories == 0
+    assert stats.total_tags == 0
+    assert stats.algorithms_by_category == {}
+    assert registry.to_dict() == {'algorithms': []}

@@ -166,3 +166,63 @@ categories:
         name: 原核基因预测
         name_en: Prokaryotic Gene Prediction
         description: 原核生物基因识别
+
+  - id: population-genetics
+    name: 群体遗传学
+    name_en: Population Genetics
+    description: 分析群体遗传结构和进化的算法
+    subcategories:
+      - id: pca-structure
+        name: 主成分与群体结构
+        name_en: PCA & Population Structure
+        description: 降维和群体结构推断方法
+      - id: gwas
+        name: 全基因组关联分析
+        name_en: Genome-Wide Association Study
+        description: 基因型与表型关联分析方法
+      - id: selection-signature
+        name: 选择信号检测
+        name_en: Selection Signature Detection
+        description: 检测自然选择留下的遗传信号
+
+  - id: spatial-omics
+    name: 空间组学
+    name_en: Spatial Omics
+    description: 保留空间信息的组学数据分析算法
+    subcategories:
+      - id: spatial-transcriptomics
+        name: 空间转录组学
+        name_en: Spatial Transcriptomics
+        description: 空间分辨的基因表达分析方法
+      - id: spatial-proteomics
+        name: 空间蛋白质组学
+        name_en: Spatial Proteomics
+        description: 空间分辨的蛋白质组分析方法
+
+  - id: graph-genomics
+    name: 图基因组学
+    name_en: Graph Genomics
+    description: 基于图结构表示和分析基因组的算法
+    subcategories:
+      - id: pangenome
+        name: 泛基因组
+        name_en: Pangenome
+        description: 构建和分析泛基因组图的方法
+      - id: variation-graph
+        name: 变异图
+        name_en: Variation Graph
+        description: 基于变异图的序列分析方法
+
+  - id: protein-language-model
+    name: 蛋白质语言模型
+    name_en: Protein Language Model
+    description: 基于大规模预训练模型的蛋白质分析算法
+    subcategories:
+      - id: protein-lm
+        name: 蛋白质语言模型预训练
+        name_en: Protein Language Model Pretraining
+        description: 蛋白质序列的语言模型和表征学习方法
+      - id: protein-function-prediction
+        name: 蛋白质功能预测
+        name_en: Protein Function Prediction
+        description: 基于语言模型的蛋白质功能和性质预测

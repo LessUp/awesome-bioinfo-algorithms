@@ -2,6 +2,7 @@
 Data validation for Awesome Bioinformatics Algorithms.
 Implements Validator class for algorithm and category validation.
 """
+
 import os
 import re
 from dataclasses import dataclass, field
@@ -9,10 +10,13 @@ from typing import Any, Optional
 
 import yaml
 
+from .schema import VALID_DIFFICULTIES, VALID_REFERENCE_TYPES
+
 
 @dataclass
 class ValidationResult:
     """Result of a validation operation."""
+
     is_valid: bool
     errors: list[str] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
@@ -26,7 +30,7 @@ class ValidationResult:
         """Add a warning message."""
         self.warnings.append(warning)
 
-    def merge(self, other: 'ValidationResult'):
+    def merge(self, other: "ValidationResult"):
         """Merge another validation result into this one."""
         if not other.is_valid:
             self.is_valid = False
@@ -37,21 +41,54 @@ class ValidationResult:
 class Validator:
     """Validates algorithm entries and categories."""
 
-    REQUIRED_ALGORITHM_FIELDS = ['id', 'name', 'description', 'purpose', 'time_complexity', 'category']
-    OPTIONAL_ALGORITHM_FIELDS = ['space_complexity', 'year', 'paper_url', 'implementation_url',
-                                  'related_tools', 'tags', 'subcategory']
-    REQUIRED_CATEGORY_FIELDS = ['id', 'name', 'name_en']
+    REQUIRED_ALGORITHM_FIELDS = [
+        "id",
+        "name",
+        "description",
+        "purpose",
+        "time_complexity",
+        "category",
+    ]
+    OPTIONAL_ALGORITHM_FIELDS = [
+        "space_complexity",
+        "year",
+        "paper_url",
+        "implementation_url",
+        "related_tools",
+        "tags",
+        "subcategory",
+        "difficulty",
+        "language",
+        "references",
+    ]
+    REQUIRED_CATEGORY_FIELDS = ["id", "name", "name_en"]
+    OPTIONAL_CATEGORY_FIELDS = ["description", "subcategories"]
+    CATEGORY_STRING_FIELDS = ["id", "name", "name_en", "description"]
+    ALGORITHM_STRING_FIELDS = [
+        "id",
+        "name",
+        "description",
+        "purpose",
+        "time_complexity",
+        "category",
+        "space_complexity",
+        "paper_url",
+        "implementation_url",
+        "subcategory",
+    ]
+    ALGORITHM_LIST_FIELDS = ["related_tools", "tags"]
 
     MIN_DESCRIPTION_LENGTH = 50
     MAX_DESCRIPTION_LENGTH = 500
 
     URL_PATTERN = re.compile(
-        r'^https?://'
-        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?|'
-        r'localhost|'
-        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
-        r'(?::\d+)?'
-        r'(?:/?|[/?]\S+)$', re.IGNORECASE
+        r"^https?://"
+        r"(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?|"
+        r"localhost|"
+        r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})"
+        r"(?::\d+)?"
+        r"(?:/?|[/?]\S+)$",
+        re.IGNORECASE,
     )
 
     def __init__(self, valid_categories: Optional[list[str]] = None):
@@ -71,18 +108,61 @@ class Validator:
         """
         result = ValidationResult(is_valid=True)
 
-        # Check required fields
+        allowed_fields = set(self.REQUIRED_ALGORITHM_FIELDS + self.OPTIONAL_ALGORITHM_FIELDS)
+        unknown_fields = sorted(
+            field_name for field_name in data if field_name not in allowed_fields
+        )
+        for field_name in unknown_fields:
+            result.add_error(f"Unknown field: '{field_name}'")
+
         for field_name in self.REQUIRED_ALGORITHM_FIELDS:
             if field_name not in data:
                 result.add_error(f"Missing required field: '{field_name}'")
-            elif not data[field_name]:
+                continue
+
+            value = data[field_name]
+            if field_name in self.ALGORITHM_STRING_FIELDS:
+                if not isinstance(value, str):
+                    result.add_error(
+                        f"Field '{field_name}' must be a string, got {type(value).__name__}"
+                    )
+                elif not value.strip():
+                    result.add_error(f"Required field '{field_name}' is empty")
+            elif not value:
                 result.add_error(f"Required field '{field_name}' is empty")
+
+        optional_string_fields = [
+            field_name
+            for field_name in self.ALGORITHM_STRING_FIELDS
+            if field_name not in self.REQUIRED_ALGORITHM_FIELDS
+        ]
+        for field_name in optional_string_fields:
+            if field_name in data and not isinstance(data[field_name], str):
+                result.add_error(
+                    f"Field '{field_name}' must be a string, got {type(data[field_name]).__name__}"
+                )
+
+        for field_name in self.ALGORITHM_LIST_FIELDS:
+            if field_name not in data:
+                continue
+
+            value = data[field_name]
+            if not isinstance(value, list):
+                result.add_error(f"Field '{field_name}' must be a list")
+                continue
+
+            for index, item in enumerate(value):
+                if not isinstance(item, str):
+                    result.add_error(
+                        f"Field '{field_name}' item {index} must be a string, got {type(item).__name__}"
+                    )
+                elif not item.strip():
+                    result.add_error(f"Field '{field_name}' item {index} cannot be empty")
 
         if not result.is_valid:
             return result
 
-        # Validate description length
-        description = data.get('description', '')
+        description = data.get("description", "")
         desc_length = len(description.strip())
         if desc_length < self.MIN_DESCRIPTION_LENGTH:
             result.add_error(
@@ -95,19 +175,15 @@ class Validator:
                 f"(maximum: {self.MAX_DESCRIPTION_LENGTH})"
             )
 
-        # Validate category exists (if we have a list of valid categories)
-        if self.valid_categories and data.get('category') not in self.valid_categories:
+        if self.valid_categories and data.get("category") not in self.valid_categories:
             result.add_error(
                 f"Invalid category: '{data.get('category')}'. "
                 f"Valid categories: {', '.join(self.valid_categories)}"
             )
 
-        # Validate subcategory exists and matches the parent category
-        subcategory = data.get('subcategory', '')
+        subcategory = data.get("subcategory", "")
         if subcategory:
-            if not isinstance(subcategory, str):
-                result.add_error("Field 'subcategory' must be a string")
-            elif self.category_parents:
+            if self.category_parents:
                 if subcategory not in self.category_parents:
                     result.add_error(f"Invalid subcategory: '{subcategory}'")
                 else:
@@ -116,29 +192,85 @@ class Validator:
                         result.add_error(
                             f"Invalid subcategory: '{subcategory}' is a top-level category"
                         )
-                    elif parent_category != data.get('category'):
+                    elif parent_category != data.get("category"):
                         result.add_error(
                             f"Subcategory '{subcategory}' does not belong to "
                             f"category '{data.get('category')}'"
                         )
 
-        # Validate year if provided
-        year = data.get('year', 0)
-        if year and (not isinstance(year, int) or year < 1950 or year > 2030):
-            result.add_warning(f"Suspicious year value: {year}")
+        year = data.get("year", 0)
+        if year:
+            if type(year) is not int:
+                result.add_warning(
+                    f"Field 'year' should be an integer, got {type(year).__name__}: {year}"
+                )
+            elif year < 1950 or year > 2030:
+                result.add_warning(f"Suspicious year value: {year}")
 
-        # Validate URLs if provided
-        for url_field in ['paper_url', 'implementation_url']:
-            url = data.get(url_field, '')
+        for url_field in ["paper_url", "implementation_url"]:
+            url = data.get(url_field, "")
             if url and not self.URL_PATTERN.match(url):
                 result.add_warning(f"Invalid URL format in '{url_field}': {url}")
 
-        # Validate tags and related_tools are lists
-        if 'tags' in data and not isinstance(data['tags'], list):
-            result.add_error("Field 'tags' must be a list")
+        difficulty = data.get("difficulty", "")
+        if difficulty:
+            if not isinstance(difficulty, str):
+                result.add_error(
+                    f"Field 'difficulty' must be a string, got {type(difficulty).__name__}"
+                )
+            elif difficulty not in VALID_DIFFICULTIES:
+                result.add_error(
+                    f"Invalid difficulty: '{difficulty}'. "
+                    f"Valid values: {', '.join(VALID_DIFFICULTIES)}"
+                )
 
-        if 'related_tools' in data and not isinstance(data['related_tools'], list):
-            result.add_error("Field 'related_tools' must be a list")
+        language = data.get("language", [])
+        if language:
+            if not isinstance(language, list):
+                result.add_error("Field 'language' must be a list")
+            else:
+                for i, item in enumerate(language):
+                    if not isinstance(item, str):
+                        result.add_error(
+                            f"Field 'language' item {i} must be a string, got {type(item).__name__}"
+                        )
+                    elif not item.strip():
+                        result.add_error(f"Field 'language' item {i} cannot be empty")
+
+        references = data.get("references", [])
+        if references:
+            if not isinstance(references, list):
+                result.add_error("Field 'references' must be a list")
+            else:
+                for i, ref in enumerate(references):
+                    if not isinstance(ref, dict):
+                        result.add_error(
+                            f"Field 'references' item {i} must be a mapping, "
+                            f"got {type(ref).__name__}"
+                        )
+                        continue
+                    if "url" not in ref:
+                        result.add_error(f"Field 'references' item {i} missing required 'url'")
+                    elif not isinstance(ref["url"], str) or not ref["url"].strip():
+                        result.add_error(
+                            f"Field 'references' item {i} 'url' must be a non-empty string"
+                        )
+                    elif not self.URL_PATTERN.match(ref["url"]):
+                        result.add_warning(f"Invalid URL in references item {i}: {ref['url']}")
+                    if "title" in ref and (
+                        not isinstance(ref["title"], str) or not ref["title"].strip()
+                    ):
+                        result.add_error(
+                            f"Field 'references' item {i} 'title' must be a non-empty string"
+                        )
+                    if "type" in ref:
+                        if not isinstance(ref["type"], str):
+                            result.add_error(f"Field 'references' item {i} 'type' must be a string")
+                        elif ref["type"] not in VALID_REFERENCE_TYPES:
+                            result.add_warning(
+                                f"Unknown reference type: '{ref['type']}'. "
+                                f"Valid types: {', '.join(VALID_REFERENCE_TYPES)}"
+                            )
 
         return result
 
@@ -154,19 +286,42 @@ class Validator:
         """
         result = ValidationResult(is_valid=True)
 
-        # Check required fields
+        allowed_fields = set(self.REQUIRED_CATEGORY_FIELDS + self.OPTIONAL_CATEGORY_FIELDS)
+        unknown_fields = sorted(
+            field_name for field_name in data if field_name not in allowed_fields
+        )
+        for field_name in unknown_fields:
+            result.add_error(f"Unknown field: '{field_name}'")
+
         for field_name in self.REQUIRED_CATEGORY_FIELDS:
             if field_name not in data:
                 result.add_error(f"Missing required field: '{field_name}'")
-            elif not data[field_name]:
+                continue
+
+            value = data[field_name]
+            if not isinstance(value, str):
+                result.add_error(
+                    f"Field '{field_name}' must be a string, got {type(value).__name__}"
+                )
+            elif not value.strip():
                 result.add_error(f"Required field '{field_name}' is empty")
 
-        # Validate subcategories if present
-        if 'subcategories' in data:
-            if not isinstance(data['subcategories'], list):
+        if "description" in data and not isinstance(data["description"], str):
+            result.add_error(
+                f"Field 'description' must be a string, got {type(data['description']).__name__}"
+            )
+
+        if "subcategories" in data:
+            if not isinstance(data["subcategories"], list):
                 result.add_error("Field 'subcategories' must be a list")
             else:
-                for i, sub in enumerate(data['subcategories']):
+                for i, sub in enumerate(data["subcategories"]):
+                    if not isinstance(sub, dict):
+                        result.add_error(
+                            f"Subcategory {i} must be a mapping, got {type(sub).__name__}"
+                        )
+                        continue
+
                     sub_result = self.validate_category(sub)
                     for error in sub_result.errors:
                         result.add_error(f"Subcategory {i}: {error}")
@@ -192,7 +347,7 @@ class Validator:
             return result, None
 
         try:
-            with open(file_path, encoding='utf-8') as f:
+            with open(file_path, encoding="utf-8") as f:
                 data = yaml.safe_load(f)
         except yaml.YAMLError as e:
             result.add_error(f"YAML parsing error: {str(e)}")
@@ -221,16 +376,16 @@ class Validator:
         if not result.is_valid:
             return result
 
-        if 'algorithms' not in data:
+        if "algorithms" not in data:
             result.add_error("Missing 'algorithms' key in file")
             return result
 
-        if not isinstance(data['algorithms'], list):
+        if not isinstance(data["algorithms"], list):
             result.add_error("'algorithms' must be a list")
             return result
 
         seen_ids = set()
-        for i, algo in enumerate(data['algorithms']):
+        for i, algo in enumerate(data["algorithms"]):
             algo_result = self.validate_algorithm(algo)
             for error in algo_result.errors:
                 result.add_error(f"Algorithm {i} ({algo.get('id', 'unknown')}): {error}")
@@ -238,7 +393,7 @@ class Validator:
                 result.add_warning(f"Algorithm {i} ({algo.get('id', 'unknown')}): {warning}")
 
             # Check for duplicate IDs
-            algo_id = algo.get('id')
+            algo_id = algo.get("id")
             if algo_id:
                 if algo_id in seen_ids:
                     result.add_error(f"Duplicate algorithm ID: '{algo_id}'")
@@ -260,25 +415,25 @@ class Validator:
         if not result.is_valid:
             return result
 
-        if 'categories' not in data:
+        if "categories" not in data:
             result.add_error("Missing 'categories' key in file")
             return result
 
-        if not isinstance(data['categories'], list):
+        if not isinstance(data["categories"], list):
             result.add_error("'categories' must be a list")
             return result
 
         self.valid_categories = []
         self.category_parents = {}
 
-        for i, cat in enumerate(data['categories']):
+        for i, cat in enumerate(data["categories"]):
             cat_result = self.validate_category(cat)
             for error in cat_result.errors:
                 result.add_error(f"Category {i} ({cat.get('id', 'unknown')}): {error}")
             for warning in cat_result.warnings:
                 result.add_warning(f"Category {i} ({cat.get('id', 'unknown')}): {warning}")
 
-        relationships = self._collect_category_relationships(data['categories'], result)
+        relationships = self._collect_category_relationships(data["categories"], result)
         if result.is_valid:
             self.category_parents = relationships
             self.valid_categories = list(relationships.keys())
@@ -300,17 +455,17 @@ class Validator:
         self.category_parents = {}
 
         # Validate categories file
-        categories_path = os.path.join(data_dir, 'categories.yaml')
+        categories_path = os.path.join(data_dir, "categories.yaml")
         if os.path.exists(categories_path):
             cat_result = self.validate_categories_file(categories_path)
             result.merge(cat_result)
 
         # Validate algorithm files
-        algorithms_dir = os.path.join(data_dir, 'algorithms')
+        algorithms_dir = os.path.join(data_dir, "algorithms")
         seen_ids: dict[str, str] = {}
         if os.path.exists(algorithms_dir):
             for filename in sorted(os.listdir(algorithms_dir)):
-                if filename.endswith('.yaml') or filename.endswith('.yml'):
+                if filename.endswith(".yaml") or filename.endswith(".yml"):
                     file_path = os.path.join(algorithms_dir, filename)
                     algo_result = self.validate_algorithms_file(file_path)
                     for error in algo_result.errors:
@@ -319,9 +474,9 @@ class Validator:
                         result.add_warning(f"{filename}: {warning}")
 
                     parse_result, data = self.validate_yaml_file(file_path)
-                    if parse_result.is_valid and isinstance(data.get('algorithms'), list):
-                        for algo in data['algorithms']:
-                            algo_id = algo.get('id')
+                    if parse_result.is_valid and isinstance(data.get("algorithms"), list):
+                        for algo in data["algorithms"]:
+                            algo_id = algo.get("id")
                             if not algo_id:
                                 continue
                             if algo_id in seen_ids:
@@ -346,7 +501,7 @@ class Validator:
             relationships = {}
 
         for category in categories:
-            category_id = category.get('id')
+            category_id = category.get("id")
             if not category_id:
                 continue
 
@@ -355,7 +510,7 @@ class Validator:
                 continue
 
             relationships[category_id] = parent_id
-            subcategories = category.get('subcategories', [])
+            subcategories = category.get("subcategories", [])
             if isinstance(subcategories, list):
                 self._collect_category_relationships(
                     subcategories,

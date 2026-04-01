@@ -67,3 +67,221 @@ algorithms:
       - evidence-based
       - automated
       - rna-seq
+
+  - id: maker
+    name: MAKER
+    description: |
+      面向真核基因组注释的整合式流水线，可结合 ab initio 预测、转录本证据和蛋白同源信息生成高质量基因模型。
+      该工具能够协调 AUGUSTUS、SNAP 等多个预测器，特别适合新测序物种的基因组注释与模型迭代优化。
+    purpose: 整合多源证据进行真核基因组注释
+    time_complexity: O(n * g)
+    space_complexity: O(n)
+    year: 2008
+    category: gene-prediction
+    subcategory: eukaryotic
+    paper_url: https://doi.org/10.1186/1471-2105-9-491
+    implementation_url: https://github.com/Yandell-Lab/maker
+    related_tools:
+      - AUGUSTUS
+      - SNAP
+      - BRAKER
+    tags:
+      - annotation-pipeline
+      - evidence-based
+      - eukaryotic
+      - genome-annotation
+
+  - id: genemark
+    name: GeneMark
+    description: |
+      GeneMark 系列方法使用概率模型识别编码区与非编码区信号，是基因预测领域最经典的算法家族之一。
+      该方法覆盖原核、真核和宏基因组场景，为后续注释流程提供可靠的开放阅读框和基因边界预测。
+    purpose: 基于统计模型进行基因结构与编码区预测
+    time_complexity: O(n)
+    space_complexity: O(n)
+    year: 1993
+    category: gene-prediction
+    subcategory: prokaryotic
+    paper_url: https://doi.org/10.1093/nar/21.23.5668
+    implementation_url: http://topaz.gatech.edu/GeneMark/
+    related_tools:
+      - AUGUSTUS
+      - BRAKER
+      - Prodigal
+    tags:
+      - hmm
+      - coding-potential
+      - gene-finding
+      - classic
+
+  - id: snap
+    name: SNAP
+    description: |
+      面向真核基因组的 ab initio 基因预测工具，使用半隐马尔可夫模型识别外显子、内含子和起止密码子等基因结构特征。
+      该方法训练灵活、运行高效，常与 MAKER 等注释流水线结合用于新基因组的自动化基因模型构建。
+    purpose: 基于半隐马尔可夫模型进行真核基因从头预测
+    time_complexity: O(n * s)
+    space_complexity: O(n)
+    year: 2004
+    category: gene-prediction
+    subcategory: eukaryotic
+    paper_url: https://doi.org/10.1186/1471-2105-5-59
+    implementation_url: https://github.com/KorfLab/SNAP
+    related_tools:
+      - AUGUSTUS
+      - MAKER
+      - BRAKER
+    tags:
+      - semi-hmm
+      - ab-initio
+      - eukaryotic
+      - gene-finding
+
+  - id: glimmer
+    name: GLIMMER
+    description: |
+      面向细菌和古菌基因组的编码区识别工具，使用插值马尔可夫模型高效发现开放阅读框和起始位点。
+      该方法是原核基因预测的经典方案之一，在完整基因组和草图组装中都具有良好的准确性和计算效率。
+    purpose: 原核基因组中的开放阅读框与基因边界预测
+    time_complexity: O(n)
+    space_complexity: O(n)
+    year: 1998
+    category: gene-prediction
+    subcategory: prokaryotic
+    paper_url: https://doi.org/10.1093/nar/26.2.544
+    implementation_url: https://ccb.jhu.edu/software/glimmer/
+    related_tools:
+      - Prodigal
+      - GeneMark
+      - FragGeneScan
+    tags:
+      - interpolated-markov-model
+      - prokaryotic
+      - gene-finding
+      - classic
+
+  - id: augustus-gp
+    name: AUGUSTUS
+    description: |
+      基于广义隐马尔可夫模型的真核基因从头预测工具，能准确预测基因结构包括外显子、内含子、UTR 和剪接位点。
+      该方法支持整合 RNA-seq 和同源蛋白等外部证据作为提示信息，显著提高新基因组注释的预测准确性。
+    purpose: 真核生物基因结构从头预测
+    time_complexity: O(n * s^2)
+    space_complexity: O(n * s)
+    year: 2005
+    category: gene-prediction
+    subcategory: eukaryotic
+    paper_url: https://doi.org/10.1093/nar/gki356
+    related_tools:
+      - GeneMark
+      - SNAP
+      - BRAKER
+    tags:
+      - gene-prediction
+      - eukaryotic
+      - hmm
+      - ab-initio
+    difficulty: intermediate
+    language:
+      - C++
+
+  - id: genemark-es
+    name: GeneMark-ES
+    description: |
+      自监督的真核和原核基因组基因预测工具，通过迭代训练概率模型自动识别编码区和基因边界。
+      该方法覆盖原核、真核和宏基因组等多种场景，是基因预测领域应用最广泛的算法家族之一。
+    purpose: 基于概率模型的多物种基因预测
+    time_complexity: O(n)
+    space_complexity: O(n)
+    year: 2005
+    category: gene-prediction
+    subcategory: prokaryotic
+    paper_url: https://doi.org/10.1093/nar/gki138
+    related_tools:
+      - AUGUSTUS
+      - Prodigal
+      - Glimmer
+    tags:
+      - gene-prediction
+      - hmm
+      - prokaryotic
+      - self-training
+    difficulty: intermediate
+    language:
+      - C
+
+  - id: prodigal-gp
+    name: Prodigal
+    description: |
+      高效的原核基因识别工具，使用动态规划和自训练策略自动学习物种特异性编码偏好性进行基因预测。
+      该方法无需外部训练数据即可准确预测蛋白编码基因，支持宏基因组模式处理混合物种组装数据。
+    purpose: 原核生物蛋白编码基因的快速从头预测
+    time_complexity: O(n)
+    space_complexity: O(n)
+    year: 2010
+    category: gene-prediction
+    subcategory: prokaryotic
+    paper_url: https://doi.org/10.1186/1471-2105-11-119
+    related_tools:
+      - GeneMark
+      - Glimmer
+      - FragGeneScan
+    tags:
+      - gene-prediction
+      - prokaryotic
+      - fast
+      - metagenome
+    difficulty: beginner
+    language:
+      - C
+
+  - id: glimmer-gp
+    name: Glimmer
+    description: |
+      基于插值马尔可夫模型的微生物基因发现工具，通过从训练序列中学习编码区统计特征高效识别开放阅读框。
+      该方法是原核基因预测领域的经典算法，在完整基因组和草图组装中都能提供可靠的基因边界和起始位点预测。
+    purpose: 原核基因组的开放阅读框和基因边界预测
+    time_complexity: O(n)
+    space_complexity: O(n)
+    year: 1998
+    category: gene-prediction
+    subcategory: prokaryotic
+    paper_url: https://doi.org/10.1093/nar/26.2.545
+    related_tools:
+      - Prodigal
+      - GeneMark
+      - FragGeneScan
+    tags:
+      - gene-prediction
+      - prokaryotic
+      - imm
+      - classic
+    difficulty: intermediate
+    language:
+      - C
+
+  - id: rnammer
+    name: RNAmmer
+    description: |
+      核糖体 RNA 基因预测工具，利用隐马尔可夫模型从基因组序列中精确识别 5S、16S 和 23S rRNA 基因及其前体。
+      该方法是微生物基因组注释流程中的重要组件，为系统发育分析和宏基因组分类提供必需的 rRNA 序列信息。
+    purpose: 基因组中核糖体 RNA 基因的精确预测
+    time_complexity: O(n * s)
+    space_complexity: O(n)
+    year: 2007
+    category: gene-prediction
+    subcategory: prokaryotic
+    paper_url: https://doi.org/10.1093/nar/gkm160
+    related_tools:
+      - Barrnap
+      - BLAST
+      - SILVA
+    tags:
+      - rrna
+      - gene-prediction
+      - hmm
+      - ribosomal
+    difficulty: intermediate
+    language:
+      - Perl
+      - C

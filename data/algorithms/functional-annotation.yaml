@@ -1,92 +1,286 @@
 algorithms:
-  - id: blast-annotation
-    name: BLAST-based Annotation
-    description: |
-      基于序列相似性的功能注释方法，通过与已知功能序列数据库比对来推断未知序列的功能。
-      该方法是最基础和广泛使用的功能注释策略，适用于各类生物序列的初步功能预测。
-    purpose: 基于序列相似性的功能预测
-    time_complexity: O(mn)
-    space_complexity: O(m)
-    year: 1990
-    category: functional-annotation
-    subcategory: homology-based
-    paper_url: https://doi.org/10.1016/S0022-2836(05)80360-2
-    implementation_url: https://blast.ncbi.nlm.nih.gov/
-    related_tools:
-      - BLAST+
-      - UniProt
-      - InterPro
-    tags:
-      - sequence-similarity
-      - database-search
-      - classic
-      - annotation
+- id: blast-annotation
+  name: BLAST-based Annotation
+  description: '基于序列相似性的功能注释方法，通过与已知功能序列数据库比对来推断未知序列的功能。
 
-  - id: hmmer
-    name: HMMER
-    description: |
-      基于隐马尔可夫模型的序列分析算法，使用概率模型检测远程同源序列和蛋白质结构域。
-      该方法比简单的序列比对更敏感，能够发现进化距离较远的同源关系。
-    purpose: 蛋白质结构域识别和远程同源检测
-    time_complexity: O(mn)
-    space_complexity: O(m)
-    year: 2011
-    category: functional-annotation
-    subcategory: domain-based
-    paper_url: https://doi.org/10.1371/journal.pcbi.1002195
-    implementation_url: http://hmmer.org/
-    related_tools:
-      - Pfam
-      - InterProScan
-      - SMART
-    tags:
-      - hmm
-      - domain-detection
-      - remote-homology
-      - probabilistic
+    该方法是最基础和广泛使用的功能注释策略，适用于各类生物序列的初步功能预测。
 
-  - id: interproscan
-    name: InterProScan
-    description: |
-      综合性蛋白质功能注释平台，整合多个签名数据库进行蛋白质结构域、家族和功能位点预测。
-      该工具统一了 Pfam、PROSITE、Gene3D 等十余个数据库的分析，提供一站式功能注释服务。
-    purpose: 多数据库整合的蛋白质功能注释
-    time_complexity: O(m * d)
-    space_complexity: O(m)
-    year: 2014
-    category: functional-annotation
-    subcategory: domain-based
-    paper_url: https://doi.org/10.1093/bioinformatics/btu031
-    implementation_url: https://github.com/ebi-pf-team/interproscan
-    related_tools:
-      - HMMER
-      - Pfam
-      - eggNOG-mapper
-    tags:
-      - multi-database
-      - domain-detection
-      - go-annotation
-      - comprehensive
+    '
+  purpose: 基于序列相似性的功能预测
+  time_complexity: O(mn)
+  space_complexity: O(m)
+  year: 1990
+  category: functional-annotation
+  subcategory: homology-based
+  paper_url: https://doi.org/10.1016/S0022-2836(05)80360-2
+  implementation_url: https://blast.ncbi.nlm.nih.gov/
+  related_tools:
+  - BLAST+
+  - UniProt
+  - InterPro
+  tags:
+  - sequence-similarity
+  - database-search
+  - classic
+  - annotation
+- id: hmmer
+  name: HMMER
+  description: '基于隐马尔可夫模型的序列分析算法，使用概率模型检测远程同源序列和蛋白质结构域。
 
-  - id: eggnog-mapper
-    name: eggNOG-mapper
-    description: |
-      基于直系同源群（eggNOG）数据库的快速功能注释工具，使用预计算的进化系统树提高注释准确性。
-      该方法能高效注释大规模蛋白质组数据，提供 GO、KEGG 和 COG 等多种功能分类。
-    purpose: 基于直系同源关系的快速功能注释
-    time_complexity: O(n * m)
-    space_complexity: O(m)
-    year: 2017
-    category: functional-annotation
-    subcategory: homology-based
-    paper_url: https://doi.org/10.1093/molbev/msx148
-    implementation_url: https://github.com/eggnogdb/eggnog-mapper
-    related_tools:
-      - InterProScan
-      - BLAST+
-      - KofamKOALA
-    tags:
-      - orthology
-      - go-annotation
-      - kegg
-      - fast
+    该方法比简单的序列比对更敏感，能够发现进化距离较远的同源关系。
+
+    '
+  purpose: 蛋白质结构域识别和远程同源检测
+  time_complexity: O(mn)
+  space_complexity: O(m)
+  year: 2011
+  category: functional-annotation
+  subcategory: domain-based
+  paper_url: https://doi.org/10.1371/journal.pcbi.1002195
+  implementation_url: http://hmmer.org/
+  related_tools:
+  - Pfam
+  - InterProScan
+  - SMART
+  tags:
+  - hmm
+  - domain-detection
+  - remote-homology
+  - probabilistic
+- id: interproscan
+  name: InterProScan
+  description: '综合性蛋白质功能注释平台，整合多个签名数据库进行蛋白质结构域、家族和功能位点预测。
+
+    该工具统一了 Pfam、PROSITE、Gene3D 等十余个数据库的分析，提供一站式功能注释服务。
+
+    '
+  purpose: 多数据库整合的蛋白质功能注释
+  time_complexity: O(m * d)
+  space_complexity: O(m)
+  year: 2014
+  category: functional-annotation
+  subcategory: domain-based
+  paper_url: https://doi.org/10.1093/bioinformatics/btu031
+  implementation_url: https://github.com/ebi-pf-team/interproscan
+  related_tools:
+  - HMMER
+  - Pfam
+  - eggNOG-mapper
+  tags:
+  - multi-database
+  - domain-detection
+  - go-annotation
+  - comprehensive
+- id: eggnog-mapper
+  name: eggNOG-mapper
+  description: '基于直系同源群（eggNOG）数据库的快速功能注释工具，使用预计算的进化系统树提高注释准确性。
+
+    该方法能高效注释大规模蛋白质组数据，提供 GO、KEGG 和 COG 等多种功能分类。
+
+    '
+  purpose: 基于直系同源关系的快速功能注释
+  time_complexity: O(n * m)
+  space_complexity: O(m)
+  year: 2017
+  category: functional-annotation
+  subcategory: homology-based
+  paper_url: https://doi.org/10.1093/molbev/msx148
+  implementation_url: https://github.com/eggnogdb/eggnog-mapper
+  related_tools:
+  - InterProScan
+  - BLAST+
+  - KofamKOALA
+  tags:
+  - orthology
+  - go-annotation
+  - kegg
+  - fast
+- id: kofamkoala
+  name: KofamKOALA
+  description: '基于 KEGG Ortholog 隐马尔可夫模型配置文件的功能注释方法，可为蛋白序列快速分配 KO 编号和代谢通路信息。
+
+    该工具在灵敏度与精确度之间取得平衡，适合微生物基因组和宏基因组数据的高通量功能注释。
+
+    '
+  purpose: 基于 KEGG Ortholog 模型进行蛋白功能与通路注释
+  time_complexity: O(n * m)
+  space_complexity: O(m)
+  year: 2020
+  category: functional-annotation
+  subcategory: homology-based
+  paper_url: https://doi.org/10.1093/bioinformatics/btz859
+  implementation_url: https://github.com/takaram/kofam_scan
+  related_tools:
+  - eggNOG-mapper
+  - InterProScan
+  - HMMER
+  tags:
+  - kegg
+  - orthology
+  - annotation
+  - pathway-analysis
+- id: pfam-scan
+  name: PfamScan
+  description: '基于 Pfam 蛋白家族数据库和 HMM profile 的结构域注释工具，可识别蛋白序列中的保守结构域与功能模块。
+
+    该方法常与 HMMER 联合使用，为蛋白功能推断、家族分类和结构域组合分析提供标准化结果。
+
+    '
+  purpose: 基于 Pfam profile 进行蛋白结构域识别与功能注释
+  time_complexity: O(mn)
+  space_complexity: O(m)
+  year: 2011
+  category: functional-annotation
+  subcategory: domain-based
+  paper_url: https://doi.org/10.1093/nar/gkr367
+  implementation_url: https://github.com/aziele/pfam_scan
+  related_tools:
+  - HMMER
+  - InterProScan
+  - SMART
+  tags:
+  - domain-detection
+  - pfam
+  - protein-family
+  - profile-hmm
+- id: orthofinder
+  name: OrthoFinder
+  description: '面向多物种蛋白组比较的直系同源推断工具，可自动构建 orthogroup 并辅助功能转移与基因家族进化分析。
+
+    该方法在大规模比较基因组研究中广泛应用，适合将功能注释扩展到非模式物种和新组装基因组。
+
+    '
+  purpose: 基于直系同源群推断进行跨物种功能注释与基因家族分析
+  time_complexity: O(n^2)
+  space_complexity: O(n^2)
+  year: 2019
+  category: functional-annotation
+  subcategory: homology-based
+  paper_url: https://doi.org/10.1186/s13059-019-1832-y
+  implementation_url: https://github.com/davidemms/OrthoFinder
+  related_tools:
+  - eggNOG-mapper
+  - BLAST+
+  - DIAMOND
+  tags:
+  - orthology
+  - comparative-genomics
+  - gene-family
+  - annotation
+- id: interpro
+  name: InterPro
+  description: '整合蛋白质家族与结构域的综合数据库，汇集 Pfam、CDD、SMART 等多个签名数据库的蛋白特征信息。
+
+    该数据库为蛋白质功能分类和结构域注释提供统一的标准资源，广泛应用于基因组注释和功能基因组研究。
+
+    '
+  purpose: 集成蛋白质家族与结构域签名数据库
+  time_complexity: O(m * d)
+  space_complexity: O(m)
+  year: 2014
+  category: functional-annotation
+  subcategory: domain-based
+  paper_url: https://doi.org/10.1093/nar/gkz961
+  related_tools:
+  - InterProScan
+  - Pfam
+  - HMMER
+  tags:
+  - database
+  - domain
+  - protein-family
+  - integrated
+- id: signalp
+  name: SignalP
+  description: '基于深度神经网络的信号肽预测工具，能够准确识别蛋白质 N 端的信号肽序列及其剪切位点。
+
+    该方法利用深度学习模型显著提升了信号肽预测的灵敏度和精确度，适用于分泌蛋白的高通量筛选。
+
+    '
+  purpose: 利用深度学习预测蛋白质信号肽及剪切位点
+  time_complexity: O(n)
+  space_complexity: O(n)
+  year: 2019
+  category: functional-annotation
+  subcategory: domain-based
+  paper_url: https://doi.org/10.1038/s41587-019-0036-z
+  related_tools:
+  - TMHMM
+  - Phobius
+  - DeepSig
+  tags:
+  - signal-peptide
+  - deep-learning
+  - secretion
+  - prediction
+- id: tmhmm
+  name: TMHMM
+  description: '基于隐马尔可夫模型的跨膜螺旋预测工具，可识别蛋白质序列中的跨膜区域及其拓扑结构。
+
+    该方法通过概率建模预测膜蛋白的跨膜螺旋数量和位置，是膜蛋白结构与功能研究的基础工具。
+
+    '
+  purpose: 使用隐马尔可夫模型预测蛋白质跨膜螺旋结构
+  time_complexity: O(n)
+  space_complexity: O(n)
+  year: 2001
+  category: functional-annotation
+  subcategory: domain-based
+  paper_url: https://doi.org/10.1016/S0022-2836(01)51020-X
+  related_tools:
+  - Phobius
+  - SignalP
+  - TOPCONS
+  tags:
+  - transmembrane
+  - hmm
+  - membrane-protein
+  - prediction
+- id: prokka
+  name: Prokka
+  description: '面向原核生物基因组的快速自动化注释工具，能够在短时间内完成细菌和古菌基因组的全面功能注释。
+
+    该工具整合了 Prodigal、BLAST+ 和 HMMER 等多个组件，为微生物基因组提供标准化的注释输出。
+
+    '
+  purpose: 快速自动化完成原核生物基因组功能注释
+  time_complexity: O(n)
+  space_complexity: O(n)
+  year: 2014
+  category: functional-annotation
+  subcategory: homology-based
+  paper_url: https://doi.org/10.1093/bioinformatics/btu153
+  implementation_url: https://github.com/tseemann/prokka
+  related_tools:
+  - Bakta
+  - Prodigal
+  - RAST
+  tags:
+  - prokaryotic
+  - annotation
+  - pipeline
+  - rapid
+- id: bakta
+  name: Bakta
+  description: '面向细菌基因组的快速标准化注释工具，提供高质量的基因预测和功能注释结果。
+
+    该工具整合了多个精选数据库，输出格式与 NCBI 和 ENA 标准兼容，适合大规模微生物基因组注释项目。
+
+    '
+  purpose: 细菌基因组的快速标准化功能注释
+  time_complexity: O(n)
+  space_complexity: O(n)
+  year: 2021
+  category: functional-annotation
+  subcategory: homology-based
+  paper_url: https://doi.org/10.1093/bioinformatics/btab123
+  implementation_url: https://github.com/oschwengers/bakta
+  related_tools:
+  - Prokka
+  - Prodigal
+  - PGAP
+  tags:
+  - prokaryotic
+  - annotation
+  - standardized
+  - database

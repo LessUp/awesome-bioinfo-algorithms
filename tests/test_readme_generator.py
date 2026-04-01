@@ -2,6 +2,8 @@
 Property-based tests for ReadmeGenerator.
 Feature: awesome-bioinfo-algorithms
 """
+from pathlib import Path
+
 from hypothesis import HealthCheck, given, settings
 from hypothesis import strategies as st
 
@@ -277,3 +279,60 @@ def test_subcategory_sections_and_toc_are_rendered():
     assert 'Pairwise Alignment' in toc
     assert '### 双序列比对 (Pairwise Alignment)' in section
     assert 'Smith-Waterman' in section
+
+
+
+def test_generated_readme_matches_repository_readme(project_root, loaded_registry, loaded_category_manager):
+    """Real repository data and template should reproduce the committed README exactly."""
+    template_path = Path(project_root) / 'templates' / 'readme_template.md'
+    expected_readme = (Path(project_root) / 'README.md').read_text(encoding='utf-8')
+
+    generator = ReadmeGenerator(loaded_registry, loaded_category_manager, str(template_path))
+    generated = generator.generate()
+
+    assert generated == expected_readme
+    assert '{{' not in generated
+
+
+
+def test_real_repository_toc_entries_match_rendered_sections(project_root, loaded_registry, loaded_category_manager):
+    """Real generated TOC entries should line up with rendered category and subcategory headings."""
+    template_path = Path(project_root) / 'templates' / 'readme_template.md'
+    generator = ReadmeGenerator(loaded_registry, loaded_category_manager, str(template_path))
+    readme = generator.generate()
+
+    for category in loaded_category_manager.list_all_categories():
+        category_algorithms = loaded_registry.get_by_category(category.id)
+        if not category_algorithms:
+            continue
+
+        category_title = f"{category.name} ({category.name_en})"
+        category_anchor = generator._generate_anchor(category_title)
+        assert f"- [{category_title}](#{category_anchor})" in readme
+        assert f"## {category_title}" in readme
+
+        for subcategory in category.subcategories:
+            sub_algorithms = [
+                algo for algo in loaded_registry.get_by_subcategory(subcategory.id)
+                if algo.category == category.id
+            ]
+            if not sub_algorithms:
+                continue
+
+            subcategory_title = f"{subcategory.name} ({subcategory.name_en})"
+            subcategory_anchor = generator._generate_anchor(subcategory_title)
+            assert f"  - [{subcategory_title}](#{subcategory_anchor})" in readme
+            assert f"### {subcategory_title}" in readme
+
+
+
+def test_save_writes_same_content_as_tracked_readme(tmp_path, project_root, loaded_registry, loaded_category_manager):
+    """save() should write the same content as the tracked repository README."""
+    template_path = Path(project_root) / 'templates' / 'readme_template.md'
+    expected_readme = (Path(project_root) / 'README.md').read_text(encoding='utf-8')
+    output_path = tmp_path / 'README.md'
+
+    generator = ReadmeGenerator(loaded_registry, loaded_category_manager, str(template_path))
+    generator.save(str(output_path))
+
+    assert output_path.read_text(encoding='utf-8') == expected_readme
