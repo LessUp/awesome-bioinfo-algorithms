@@ -1,137 +1,350 @@
 algorithms:
-  - id: de-bruijn-graph
-    name: De Bruijn Graph Assembly
-    description: |
-      基于 De Bruijn 图的序列组装算法，将测序读段分解为 k-mer，构建有向图进行组装。
-      该方法特别适合处理高通量测序产生的大量短读段，是现代基因组组装的核心方法。
-    purpose: 从短读段重建基因组序列
-    time_complexity: O(n)
-    space_complexity: O(k * 4^k)
-    year: 2001
-    category: assembly
-    subcategory: de-novo
-    paper_url: https://doi.org/10.1073/pnas.98.17.9748
-    implementation_url: https://github.com/voutcn/megahit
-    related_tools:
-      - SPAdes
-      - MEGAHIT
-      - Velvet
-    tags:
-      - graph-based
-      - k-mer
-      - de-novo
-      - short-read
+- id: de-bruijn-graph
+  name: De Bruijn Graph Assembly
+  description: '基于 De Bruijn 图的序列组装算法，将测序读段分解为 k-mer，构建有向图进行组装。
 
-  - id: spades
-    name: SPAdes
-    description: |
-      基于多尺度 De Bruijn 图的基因组组装工具，使用多个 k-mer 长度构建和合并组装图。
-      该方法在小基因组组装中表现优异，支持单细胞、宏基因组等多种测序数据的组装。
-    purpose: 小基因组和单细胞数据的高质量组装
-    time_complexity: O(n * k)
-    space_complexity: O(n)
-    year: 2012
-    category: assembly
-    subcategory: de-novo
-    paper_url: https://doi.org/10.1089/cmb.2012.0021
-    implementation_url: https://github.com/ablab/spades
-    related_tools:
-      - MEGAHIT
-      - Velvet
-      - IDBA-UD
-    tags:
-      - de-bruijn
-      - multi-kmer
-      - versatile
-      - single-cell
+    该方法特别适合处理高通量测序产生的大量短读段，是现代基因组组装的核心方法。
 
-  - id: hifiasm
-    name: Hifiasm
-    description: |
-      专为 PacBio HiFi 长读段设计的单倍型感知组装工具，利用高精度长读段实现染色体级别的组装。
-      该方法能够区分父本和母本单倍型，是当前最先进的基因组从头组装工具之一。
-    purpose: HiFi 长读段的高质量单倍型组装
-    time_complexity: O(n log n)
-    space_complexity: O(n)
-    year: 2021
-    category: assembly
-    subcategory: de-novo
-    paper_url: https://doi.org/10.1038/s41592-020-01056-5
-    implementation_url: https://github.com/chhylp123/hifiasm
-    related_tools:
-      - Canu
-      - Flye
-      - Verkko
-    tags:
-      - hifi
-      - haplotype-aware
-      - long-read
-      - chromosome-level
+    '
+  purpose: 从短读段重建基因组序列
+  time_complexity: O(n)
+  space_complexity: O(k * 4^k)
+  year: 2001
+  category: assembly
+  subcategory: de-novo
+  paper_url: https://doi.org/10.1073/pnas.98.17.9748
+  implementation_url: https://github.com/voutcn/megahit
+  related_tools:
+  - SPAdes
+  - MEGAHIT
+  - Velvet
+  tags:
+  - graph-based
+  - k-mer
+  - de-novo
+  - short-read
+- id: spades
+  name: SPAdes
+  description: '基于多尺度 De Bruijn 图的基因组组装工具，使用多个 k-mer 长度构建和合并组装图。
 
-  - id: reference-guided-assembly
-    name: Reference-Guided Assembly
-    description: |
-      基于参考基因组的序列组装方法，将测序读段先比对到参考序列上，再进行局部组装和变异检测。
-      该方法适合有近缘参考基因组的物种，组装速度快且资源消耗低，常用于重测序项目。
-    purpose: 基于参考序列的快速基因组组装
-    time_complexity: O(n log n)
-    space_complexity: O(n)
-    year: 2011
-    category: assembly
-    subcategory: reference-guided
-    paper_url: https://doi.org/10.1186/gb-2011-12-5-r42
-    implementation_url: https://github.com/ablab/ragout
-    related_tools:
-      - Ragout
-      - RaGOO
-      - RagTag
-    tags:
-      - reference-based
-      - scaffolding
-      - resequencing
-      - efficient
+    该方法在小基因组组装中表现优异，支持单细胞、宏基因组等多种测序数据的组装。
 
-  - id: overlap-layout-consensus
-    name: Overlap-Layout-Consensus (OLC)
-    description: |
-      经典的序列组装方法，通过三个步骤完成组装：计算读段间的重叠、构建布局图、生成一致序列。
-      该方法适合处理长读段数据，能够产生高质量的组装结果。
-    purpose: 长读段序列组装
-    time_complexity: O(n^2)
-    space_complexity: O(n^2)
-    year: 2010
-    category: assembly
-    subcategory: de-novo
-    paper_url: https://doi.org/10.1101/gr.101360.109
-    related_tools:
-      - Canu
-      - Flye
-      - Miniasm
-    tags:
-      - overlap
-      - long-read
-      - de-novo
-      - classic
+    '
+  purpose: 小基因组和单细胞数据的高质量组装
+  time_complexity: O(n * k)
+  space_complexity: O(n)
+  year: 2012
+  category: assembly
+  subcategory: de-novo
+  paper_url: https://doi.org/10.1089/cmb.2012.0021
+  implementation_url: https://github.com/ablab/spades
+  related_tools:
+  - MEGAHIT
+  - Velvet
+  - IDBA-UD
+  tags:
+  - de-bruijn
+  - multi-kmer
+  - versatile
+  - single-cell
+- id: hifiasm
+  name: Hifiasm
+  description: '专为 PacBio HiFi 长读段设计的单倍型感知组装工具，利用高精度长读段实现染色体级别的组装。
 
-  - id: flye
-    name: Flye
-    description: |
-      基于重复图的长读段从头组装工具，使用 A-Bruijn 图处理长读段中的重复序列。
-      该方法对 ONT 和 PacBio CLR 读段效果出色，能快速组装完整的微生物和中大型基因组。
-    purpose: 长读段快速从头组装
-    time_complexity: O(n log n)
-    space_complexity: O(n)
-    year: 2019
-    category: assembly
-    subcategory: de-novo
-    paper_url: https://doi.org/10.1038/s41587-019-0072-8
-    implementation_url: https://github.com/fenderglass/Flye
-    related_tools:
-      - Canu
-      - Hifiasm
-      - Miniasm
-    tags:
-      - repeat-graph
-      - long-read
-      - ont
-      - fast
+    该方法能够区分父本和母本单倍型，是当前最先进的基因组从头组装工具之一。
+
+    '
+  purpose: HiFi 长读段的高质量单倍型组装
+  time_complexity: O(n log n)
+  space_complexity: O(n)
+  year: 2021
+  category: assembly
+  subcategory: de-novo
+  paper_url: https://doi.org/10.1038/s41592-020-01056-5
+  implementation_url: https://github.com/chhylp123/hifiasm
+  related_tools:
+  - Canu
+  - Flye
+  - Verkko
+  tags:
+  - hifi
+  - haplotype-aware
+  - long-read
+  - chromosome-level
+- id: reference-guided-assembly
+  name: Reference-Guided Assembly
+  description: '基于参考基因组的序列组装方法，将测序读段先比对到参考序列上，再进行局部组装和变异检测。
+
+    该方法适合有近缘参考基因组的物种，组装速度快且资源消耗低，常用于重测序项目。
+
+    '
+  purpose: 基于参考序列的快速基因组组装
+  time_complexity: O(n log n)
+  space_complexity: O(n)
+  year: 2011
+  category: assembly
+  subcategory: reference-guided
+  paper_url: https://doi.org/10.1186/gb-2011-12-5-r42
+  implementation_url: https://github.com/ablab/ragout
+  related_tools:
+  - Ragout
+  - RaGOO
+  - RagTag
+  tags:
+  - reference-based
+  - scaffolding
+  - resequencing
+  - efficient
+- id: overlap-layout-consensus
+  name: Overlap-Layout-Consensus (OLC)
+  description: '经典的序列组装方法，通过三个步骤完成组装：计算读段间的重叠、构建布局图、生成一致序列。
+
+    该方法适合处理长读段数据，能够产生高质量的组装结果。
+
+    '
+  purpose: 长读段序列组装
+  time_complexity: O(n^2)
+  space_complexity: O(n^2)
+  year: 2010
+  category: assembly
+  subcategory: de-novo
+  paper_url: https://doi.org/10.1101/gr.101360.109
+  related_tools:
+  - Canu
+  - Flye
+  - Miniasm
+  tags:
+  - overlap
+  - long-read
+  - de-novo
+  - classic
+- id: flye
+  name: Flye
+  description: '基于重复图的长读段从头组装工具，使用 A-Bruijn 图处理长读段中的重复序列。
+
+    该方法对 ONT 和 PacBio CLR 读段效果出色，能快速组装完整的微生物和中大型基因组。
+
+    '
+  purpose: 长读段快速从头组装
+  time_complexity: O(n log n)
+  space_complexity: O(n)
+  year: 2019
+  category: assembly
+  subcategory: de-novo
+  paper_url: https://doi.org/10.1038/s41587-019-0072-8
+  implementation_url: https://github.com/fenderglass/Flye
+  related_tools:
+  - Canu
+  - Hifiasm
+  - Miniasm
+  tags:
+  - repeat-graph
+  - long-read
+  - ont
+  - fast
+- id: ragtag
+  name: RagTag
+  description: '基于参考基因组进行 scaffold 排序、定向和纠错的组装改进工具，常用于提升草图组装的连续性和完整度。
+
+    该方法能够快速将 contig 锚定到近缘参考序列，为植物和动物基因组装配提供高效的参考引导整理能力。
+
+    '
+  purpose: 基于参考基因组改进 scaffold 排序与定向
+  time_complexity: O(n log n)
+  space_complexity: O(n)
+  year: 2022
+  category: assembly
+  subcategory: reference-guided
+  paper_url: https://doi.org/10.1186/s13059-022-02823-7
+  implementation_url: https://github.com/malonge/RagTag
+  related_tools:
+  - Ragout
+  - RaGOO
+  - Minimap2
+  tags:
+  - reference-based
+  - scaffolding
+  - assembly-polishing
+  - genome-finishing
+- id: verkko
+  name: Verkko
+  description: '端粒到端粒级别的基因组组装工具，整合 PacBio HiFi 高精度长读段和 ONT 超长读段实现完整基因组组装。
+
+    该方法能够填补参考基因组中的间隙，产生无间隙的端粒到端粒组装结果，是目前最完整的组装策略之一。
+
+    '
+  purpose: 整合 HiFi 和 ONT 数据实现端粒到端粒组装
+  time_complexity: O(n log n)
+  space_complexity: O(n)
+  year: 2023
+  category: assembly
+  subcategory: de-novo
+  paper_url: https://doi.org/10.1038/s41587-023-01662-6
+  implementation_url: https://github.com/marbl/verkko
+  related_tools:
+  - Hifiasm
+  - HiCanu
+  - Flye
+  tags:
+  - t2t
+  - hybrid
+  - hifi
+  - telomere-to-telomere
+  difficulty: advanced
+  language:
+  - C++
+- id: shasta
+  name: Shasta
+  description: '基于游程编码的超快速长读段组装工具，使用 run-length 编码压缩序列数据以加速组装过程。
+
+    该方法专为 Oxford Nanopore 长读段设计，能够在极短时间内完成大规模基因组的从头组装。
+
+    '
+  purpose: 超快速长读段基因组组装
+  time_complexity: O(n)
+  space_complexity: O(n)
+  year: 2020
+  category: assembly
+  subcategory: de-novo
+  paper_url: https://doi.org/10.1038/s41587-020-0503-6
+  implementation_url: https://github.com/chanzuckerberg/shasta
+  related_tools:
+  - Flye
+  - Canu
+  - Miniasm
+  tags:
+  - long-read
+  - fast
+  - run-length
+  - ont
+  difficulty: intermediate
+  language:
+  - C++
+- id: wtdbg2
+  name: Wtdbg2
+  description: '基于模糊 de Bruijn 图的长读段组装工具，通过模糊边和模糊节点降低图的复杂度以加速组装。
+
+    该方法对 Oxford Nanopore 和 PacBio 长读段均有良好支持，组装速度极快且内存占用低。
+
+    '
+  purpose: 快速长读段从头组装
+  time_complexity: O(n)
+  space_complexity: O(n)
+  year: 2019
+  category: assembly
+  subcategory: de-novo
+  paper_url: https://doi.org/10.1038/s41592-019-0669-3
+  implementation_url: https://github.com/ruanjue/wtdbg2
+  related_tools:
+  - Flye
+  - Miniasm
+  - Canu
+  tags:
+  - long-read
+  - fuzzy-bruijn
+  - fast
+  - nanopore
+  difficulty: intermediate
+  language:
+  - C
+- id: canu
+  name: Canu
+  description: '针对单分子长读段设计的从头组装工具，通过纠错、修剪和组装三个阶段处理高噪声长读段数据。
+
+    该方法支持 PacBio 和 Oxford Nanopore 测序数据，能够产生高质量的连续组装序列。
+
+    '
+  purpose: 单分子长读段纠错与组装
+  time_complexity: O(n^2)
+  space_complexity: O(n)
+  year: 2017
+  category: assembly
+  subcategory: de-novo
+  paper_url: https://doi.org/10.1101/gr.215087.116
+  implementation_url: https://github.com/marbl/canu
+  related_tools:
+  - Flye
+  - Hifiasm
+  - Miniasm
+  tags:
+  - long-read
+  - pacbio
+  - ont
+  - error-correction
+  difficulty: advanced
+  language:
+  - Java
+- id: masurca
+  name: MaSuRCA
+  description: '马里兰超级读段组装器，整合短读段和长读段数据进行混合组装，利用超级读段压缩降低计算复杂度。
+
+    该方法支持多种测序平台数据的混合组装，适用于各类基因组的从头组装项目。
+
+    '
+  purpose: 混合测序数据的超级读段组装
+  time_complexity: O(n log n)
+  space_complexity: O(n)
+  year: 2013
+  category: assembly
+  subcategory: de-novo
+  paper_url: https://doi.org/10.1093/bioinformatics/btt476
+  implementation_url: https://github.com/alekseyzimin/masurca
+  related_tools:
+  - SPAdes
+  - SOAPdenovo2
+  - AllPaths-LG
+  tags:
+  - hybrid
+  - super-read
+  - de-novo
+  - versatile
+  difficulty: intermediate
+  language:
+  - C++
+- id: unicycler
+  name: Unicycler
+  description: 基于 SPAdes 和 miniasm 的混合组装工具，先用短读段构建骨架图，再用长读段解决重复区域。该方法对细菌基因组的组装质量极高，可产生完整的环形染色体序列。
+  purpose: 细菌基因组的高质量混合组装
+  time_complexity: O(n log n)
+  space_complexity: O(n)
+  year: 2017
+  category: assembly
+  subcategory: de-novo
+  paper_url: https://doi.org/10.1371/journal.pcbi.1005595
+  implementation_url: https://github.com/rrwick/Unicycler
+  related_tools:
+  - SPAdes
+  - Flye
+  - MaSuRCA
+  tags:
+  - hybrid
+  - bacterial
+  - circular
+  - short-read-first
+  difficulty: intermediate
+  language:
+  - Python
+  - C++
+- id: quast
+  name: QUAST
+  description: 基因组组装质量评估工具，计算 contig N50、scaffold N50、错配率和完整性等指标。该工具支持无参考和有参考的评估，是组装结果评价的标准工具。
+  purpose: 基因组组装质量的综合评估
+  time_complexity: O(n * r)
+  space_complexity: O(n)
+  year: 2013
+  category: assembly
+  subcategory: de-novo
+  paper_url: https://doi.org/10.1093/bioinformatics/btt086
+  implementation_url: https://github.com/ablab/quast
+  related_tools:
+  - BUSCO
+  - Merqury
+  - Inspector
+  tags:
+  - quality-assessment
+  - n50
+  - assembly-evaluation
+  - standard
+  difficulty: beginner
+  language:
+  - Python

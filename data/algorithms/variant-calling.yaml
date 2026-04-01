@@ -135,3 +135,185 @@ algorithms:
       - graph-assembly
       - clinical
       - fast
+
+  - id: sniffles2
+    name: Sniffles2
+    description: |
+      面向长读段测序数据的结构变异检测工具，结合断点信号和覆盖度变化识别插入、缺失、倒位等复杂事件。
+      该方法对 PacBio 和 ONT 数据均有良好表现，适合群体水平与单样本的长读段结构变异分析。
+    purpose: 基于长读段数据进行高精度结构变异检测
+    time_complexity: O(n * c)
+    space_complexity: O(n)
+    year: 2023
+    category: variant-calling
+    subcategory: structural
+    paper_url: https://doi.org/10.1038/s41587-023-01743-3
+    implementation_url: https://github.com/fritzsedlazeck/Sniffles
+    related_tools:
+      - Delly
+      - Manta
+      - cuteSV
+    tags:
+      - structural-variant
+      - long-read
+      - breakpoint
+      - population-scale
+
+  - id: mutect2
+    name: MuTect2
+    description: |
+      GATK 中的体细胞变异检测工具，通过贝叶斯统计模型同时检测肿瘤样本中的体细胞 SNP 和小型 Indel。
+      该方法利用匹配的正常组织样本进行背景噪声去除，广泛应用于癌症基因组学研究与临床肿瘤检测。
+    purpose: 检测体细胞 SNP 和小型 Indel 变异
+    time_complexity: O(n * r)
+    space_complexity: O(r)
+    year: 2013
+    category: variant-calling
+    subcategory: snv
+    paper_url: https://doi.org/10.1101/gr.169185.113
+    implementation_url: https://github.com/broadinstitute/gatk
+    related_tools:
+      - GATK
+      - Strelka2
+      - VarScan2
+    tags:
+      - somatic
+      - cancer
+      - gatk
+      - snp
+
+  - id: clair3
+    name: Clair3
+    description: |
+      面向长读段测序数据的生殖系小型变异检测工具，结合堆叠图像和全比对两阶段深度学习模型进行变异分类。
+      该方法对 Nanopore 和 PacBio 数据均有出色表现，具有极高的准确率和良好的计算效率。
+    purpose: 基于长读段数据进行高精度生殖系变异检测
+    time_complexity: O(n * r)
+    space_complexity: O(r)
+    year: 2022
+    category: variant-calling
+    subcategory: snv
+    paper_url: https://doi.org/10.1038/s41587-021-01138-7
+    implementation_url: https://github.com/HKU-BAL/Clair3
+    related_tools:
+      - DeepVariant
+      - PEPPER-Margin-DeepVariant
+      - Medaka
+    tags:
+      - long-read
+      - nanopore
+      - pacbio
+      - germline
+
+  - id: deep-somatic
+    name: DeepSomatic
+    description: |
+      基于深度学习的体细胞变异检测工具，利用神经网络从长读段比对数据中识别肿瘤特异性突变。
+      该方法支持多种测序平台，能够检测复杂突变模式，适用于癌症基因组研究中的高灵敏度变异发现。
+    purpose: 基于深度学习的体细胞变异检测
+    time_complexity: O(n * r)
+    space_complexity: O(r)
+    year: 2024
+    category: variant-calling
+    subcategory: snv
+    paper_url: https://doi.org/10.1101/2024.07.02.601671
+    implementation_url: ""
+    related_tools:
+      - MuTect2
+      - DeepVariant
+      - Strelka2
+    tags:
+      - deep-learning
+      - somatic
+      - cancer
+      - long-read
+
+  - id: octopus
+    name: Octopus
+    description: |
+      基于贝叶斯统计框架的单倍型感知变异检测工具，能够同时对生殖系和体细胞变异进行联合建模与推断。
+      该方法支持多样本联合分析，具有极高的变异检测灵敏度和特异性，适用于复杂基因组研究。
+    purpose: 贝叶斯单倍型感知的变异检测与联合推断
+    time_complexity: O(n * h)
+    space_complexity: O(h)
+    year: 2021
+    category: variant-calling
+    subcategory: snv
+    paper_url: https://doi.org/10.1038/s41587-020-0711-0
+    implementation_url: https://github.com/luntergroup/octopus
+    related_tools:
+      - FreeBayes
+      - GATK HaplotypeCaller
+      - Strelka2
+    tags:
+      - bayesian
+      - haplotype
+      - germline-somatic
+      - multi-sample
+
+  - id: gridss
+    name: GRIDSS
+    description: |
+      基于断裂端组装的基因组重排识别算法，通过局部组装和 split-read 信号精确定位结构变异断点。
+      该方法具有极高的灵敏度和特异性，能够检测复杂结构变异事件，是结构变异检测领域的重要工具。
+    purpose: 基于断裂端组装检测基因组结构变异
+    time_complexity: O(n * c)
+    space_complexity: O(n)
+    year: 2017
+    category: variant-calling
+    subcategory: structural
+    paper_url: https://doi.org/10.1186/s13059-021-02422-y
+    implementation_url: https://github.com/PapenfussLab/gridss
+    related_tools:
+      - Delly
+      - Manta
+      - LUMPY
+    tags:
+      - structural-variant
+      - breakend
+      - assembly-based
+
+  - id: cutesv
+    name: cuteSV
+    description: |
+      面向长读段测序数据的结构变异检测工具，通过对不同变异类型信号的聚类分析识别基因组变异。
+      该方法对插入、缺失、倒位和易位等变异类型均有良好检测效果，适用于 Nanopore 和 PacBio 数据分析。
+    purpose: 基于长读段数据通过信号聚类检测结构变异
+    time_complexity: O(n * c)
+    space_complexity: O(n)
+    year: 2020
+    category: variant-calling
+    subcategory: structural
+    paper_url: https://doi.org/10.1038/s41592-020-01047-6
+    implementation_url: https://github.com/tjiangHIT/cuteSV
+    related_tools:
+      - Sniffles2
+      - Delly
+      - Manta
+    tags:
+      - structural-variant
+      - long-read
+      - clustering
+      - nanopore
+
+  - id: svaba
+    name: SvABA
+    description: |
+      基于局部组装的结构变异和体细胞突变检测工具，能够同时识别生殖系和体细胞的结构变异事件。
+      该方法通过断点图和单倍型组装精确定位变异断点，适用于癌症基因组学中的复杂变异检测。
+    purpose: 基于局部组装的结构变异和体细胞突变检测
+    time_complexity: O(n * c)
+    space_complexity: O(c)
+    year: 2016
+    category: variant-calling
+    subcategory: structural
+    paper_url: https://doi.org/10.1038/nmeth.4139
+    implementation_url: https://github.com/walaj/svaba
+    related_tools:
+      - Manta
+      - GRIDSS
+      - Delly
+    tags:
+      - structural-variant
+      - somatic
+      - assembly-based

@@ -113,3 +113,164 @@ algorithms:
       - quantification
       - rna-seq
       - fast
+
+  - id: sleuth
+    name: Sleuth
+    description: |
+      基于 bootstrap 估计的差异表达分析工具，与 kallisto 配合使用以量化转录本水平的表达变异。
+      该方法利用 bootstrap 技术估计技术噪声并分离生物学变异，适合转录本级别的差异表达检测。
+    purpose: 基于 bootstrap 估计的转录本级别差异表达分析
+    time_complexity: O(n * g)
+    space_complexity: O(g)
+    year: 2017
+    category: expression-analysis
+    subcategory: differential-expression
+    paper_url: https://doi.org/10.1186/s13059-017-1218-3
+    implementation_url: https://github.com/pachterlab/sleuth
+    related_tools:
+      - DESeq2
+      - edgeR
+      - Kallisto
+    tags:
+      - differential-expression
+      - bootstrap
+      - rna-seq
+      - transcript-level
+
+  - id: limma-voom
+    name: limma-voom
+    description: |
+      将线性模型和精度权重应用于 RNA-seq 数据的差异表达分析方法，继承了 limma 在芯片数据中的优势。
+      该方法通过 voom 转换为每个观测值分配精度权重，使得线性建模框架能够适用于计数数据。
+    purpose: 基于线性模型和精度权重的 RNA-seq 差异表达分析
+    time_complexity: O(n * g)
+    space_complexity: O(g)
+    year: 2014
+    category: expression-analysis
+    subcategory: differential-expression
+    paper_url: https://doi.org/10.1186/gb-2014-15-2-r29
+    related_tools:
+      - DESeq2
+      - edgeR
+      - limma
+    tags:
+      - differential-expression
+      - precision-weight
+      - linear-model
+      - bioconductor
+
+  - id: noiseq
+    name: NOISeq
+    description: |
+      非参数的差异表达分析工具，通过模拟噪声分布来识别显著差异表达的基因。
+      该方法不依赖于数据分布的假设，能够有效处理低重复样本和无重复实验设计的 RNA-seq 数据。
+    purpose: 非参数差异表达分析
+    time_complexity: O(n * g)
+    space_complexity: O(g)
+    year: 2015
+    category: expression-analysis
+    subcategory: differential-expression
+    paper_url: https://doi.org/10.1038/nmeth.3053
+    tags:
+      - differential-expression
+      - non-parametric
+      - noiseq
+      - rna-seq
+
+  - id: stringtie
+    name: StringTie
+    description: |
+      高效的转录本组装和丰度估计工具，使用网络流算法从 RNA-seq 比对结果中重构转录本结构。
+      该方法能够准确组装新的转录本异构体并估计其表达量，是转录组分析流程中的核心组件。
+    purpose: 转录本组装与丰度估计
+    time_complexity: O(n)
+    space_complexity: O(g)
+    year: 2015
+    category: expression-analysis
+    subcategory: quantification
+    paper_url: https://doi.org/10.1038/nbt.3122
+    implementation_url: https://github.com/gpertea/stringtie
+    related_tools:
+      - STAR
+      - HISAT2
+      - Cufflinks
+    tags:
+      - transcript-assembly
+      - quantification
+      - rna-seq
+      - splice-aware
+
+  - id: rsem
+    name: RSEM
+    description: |
+      基于参考转录组的转录本定量工具，使用期望最大化算法估计转录本丰度。
+      该方法能够处理多重比对读段并提供转录本和基因水平的表达量估计，适合需要高精度定量的场景。
+    purpose: 基于参考的转录本定量
+    time_complexity: O(n * t)
+    space_complexity: O(t)
+    year: 2011
+    category: expression-analysis
+    subcategory: quantification
+    paper_url: https://doi.org/10.1186/1471-2105-12-323
+    implementation_url: https://github.com/deweylab/RSEM
+    related_tools:
+      - Salmon
+      - Kallisto
+      - Sailfish
+    tags:
+      - quantification
+      - expectation-maximization
+      - rna-seq
+      - reference-based
+
+  - id: ballgown
+    name: Ballgown
+    description: |
+      基于 FPKM 值的转录本差异表达分析工具，使用线性模型和统计检验检测条件间
+      的表达差异。该方法与 StringTie 流程紧密集成，提供转录本和外显子水平的
+      差异分析功能。
+    purpose: 基于 FPKM 的转录本差异表达分析
+    time_complexity: O(n * g)
+    space_complexity: O(g)
+    year: 2014
+    category: expression-analysis
+    subcategory: differential-expression
+    paper_url: https://doi.org/10.1186/s13059-014-0556-x
+    related_tools:
+      - DESeq2
+      - StringTie
+      - Cufflinks
+    tags:
+      - differential-expression
+      - fpkm
+      - transcript-level
+      - linear-model
+    difficulty: intermediate
+    language:
+      - R
+
+  - id: tximport
+    name: tximport
+    description: |
+      从轻量级比对工具的输出导入转录本定量结果并汇总到基因水平的工具。该方法
+      使用偏移量校正来处理转录本长度变化对基因水平定量的影响，是 Salmon/Kallisto
+      与 DESeq2/edgeR 之间的桥梁工具。
+    purpose: 转录本定量结果导入和基因水平汇总
+    time_complexity: O(n * t)
+    space_complexity: O(g)
+    year: 2016
+    category: expression-analysis
+    subcategory: quantification
+    paper_url: https://doi.org/10.12688/f1000research.7563.1
+    related_tools:
+      - Salmon
+      - Kallisto
+      - DESeq2
+    tags:
+      - import
+      - summarization
+      - offset-correction
+      - bioconductor
+    difficulty: beginner
+    language:
+      - R

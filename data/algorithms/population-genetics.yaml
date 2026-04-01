@@ -1,0 +1,319 @@
+algorithms:
+  - id: pca-population
+    name: PCA for Population Structure
+    description: |
+      主成分分析在群体遗传学中的应用，通过降维将高维基因型数据投影到低维空间，
+      揭示群体的遗传结构和祖源成分。该方法计算高效，是探索群体结构的标准工具。
+    purpose: 群体遗传结构的降维可视化和祖源推断
+    time_complexity: O(n * m * k)
+    space_complexity: O(n * m)
+    year: 2006
+    category: population-genetics
+    subcategory: pca-structure
+    paper_url: https://doi.org/10.1038/ng1847
+    implementation_url: https://github.com/chrchang/plink-ng
+    related_tools:
+      - EIGENSOFT
+      - PLINK
+      - smartpca
+    tags:
+      - pca
+      - population-structure
+      - ancestry
+      - dimensionality-reduction
+    difficulty: beginner
+    language:
+      - C
+      - R
+
+  - id: admixture
+    name: ADMIXTURE
+    description: |
+      基于最大似然估计的群体遗传结构推断工具，使用交替最小化算法加速计算，
+      在大规模数据集上比 STRUCTURE 快数十倍。该方法可推断个体的祖源成分比例，
+      适用于群体遗传学和人类遗传学研究。
+    purpose: 快速推断群体祖源成分比例
+    time_complexity: O(n * m * k)
+    space_complexity: O(n * m)
+    year: 2009
+    category: population-genetics
+    subcategory: pca-structure
+    paper_url: https://doi.org/10.1146/annurev-genom-090210-110729
+    implementation_url: https://github.com/alexandr1223/ancestry
+    related_tools:
+      - STRUCTURE
+      - fastSTRUCTURE
+      - frappe
+    tags:
+      - ancestry
+      - maximum-likelihood
+      - population-structure
+      - fast
+    difficulty: intermediate
+    language:
+      - C++
+
+  - id: structure-algorithm
+    name: STRUCTURE
+    description: |
+      经典的贝叶斯群体结构推断方法，使用马尔可夫链蒙特卡洛采样估计个体的群体
+      分配概率和祖源比例。该方法可处理混合群体和复杂群体结构，是群体遗传学的
+      基准方法。
+    purpose: 贝叶斯群体结构推断和祖源分配
+    time_complexity: O(n * m * k * g)
+    space_complexity: O(n * k)
+    year: 2000
+    category: population-genetics
+    subcategory: pca-structure
+    paper_url: https://doi.org/10.1534/genetics.103.020701
+    related_tools:
+      - ADMIXTURE
+      - fastSTRUCTURE
+      - InStruct
+    tags:
+      - bayesian
+      - mcmc
+      - population-structure
+      - classic
+    difficulty: intermediate
+    language:
+      - C
+
+  - id: plink-gwas
+    name: PLINK
+    description: |
+      全基因组关联分析的综合工具集，提供基因型数据管理、质量控制、关联分析、
+      群体分层校正和多基因风险评分等功能。该工具是遗传学数据分析的标准平台，
+      支持大规模基因组数据的高效处理。
+    purpose: 全基因组关联分析和基因组数据管理
+    time_complexity: O(n * m)
+    space_complexity: O(n * m)
+    year: 2007
+    category: population-genetics
+    subcategory: gwas
+    paper_url: https://doi.org/10.1086/519795
+    implementation_url: https://github.com/chrchang/plink-ng
+    related_tools:
+      - BOLT-LMM
+      - SAIGE
+      - GCTA
+    tags:
+      - gwas
+      - association
+      - qc
+      - standard
+    difficulty: beginner
+    language:
+      - C++
+
+  - id: bolt-lmm
+    name: BOLT-LMM
+    description: |
+      基于线性混合模型的大规模全基因组关联分析工具，使用高效的统计方法校正
+      群体分层和亲缘关系。该方法可处理数十万样本的关联分析，是大规模生物银行
+      数据分析的首选工具。
+    purpose: 大规模线性混合模型关联分析
+    time_complexity: O(n * m)
+    space_complexity: O(n * m)
+    year: 2015
+    category: population-genetics
+    subcategory: gwas
+    paper_url: https://doi.org/10.1038/ng.3190
+    implementation_url: https://github.com/broadinstitute/bolt
+    related_tools:
+      - GCTA
+      - SAIGE
+      - REGENIE
+    tags:
+      - lmm
+      - gwas
+      - scalable
+      - biobank
+    difficulty: intermediate
+    language:
+      - C++
+
+  - id: saige
+    name: SAIGE
+    description: |
+      针对不平衡表型的大规模关联分析工具，使用混合模型和 saddleback 近似方法
+      校正群体结构。该方法特别适合罕见变异和稀有表型的关联分析。
+    purpose: 处理不平衡表型的大规模关联分析
+    time_complexity: O(n * m)
+    space_complexity: O(n * m)
+    year: 2018
+    category: population-genetics
+    subcategory: gwas
+    paper_url: https://doi.org/10.1038/s41588-018-0184-y
+    implementation_url: https://github.com/saige
+    related_tools:
+      - BOLT-LMM
+      - REGENIE
+      - PLINK
+    tags:
+      - gwas
+      - mixed-model
+      - rare-variant
+      - unbalanced
+    difficulty: intermediate
+    language:
+      - R
+      - C++
+
+  - id: regenie
+    name: REGENIE
+    description: |
+      两阶段回归框架的大规模关联分析工具，先用全基因组回归预测个体的基因背景，
+      再进行逐位点的关联检验。该方法计算效率极高，适用于百万级别的生物银行数据。
+    purpose: 两阶段大规模全基因组关联分析
+    time_complexity: O(n * m)
+    space_complexity: O(n * m)
+    year: 2021
+    category: population-genetics
+    subcategory: gwas
+    paper_url: https://doi.org/10.1038/s41588-021-00870-7
+    implementation_url: https://github.com/rgcgithub/regenie
+    related_tools:
+      - BOLT-LMM
+      - SAIGE
+      - GCTA
+    tags:
+      - gwas
+      - scalable
+      - two-stage
+      - biobank
+    difficulty: intermediate
+    language:
+      - C++
+
+  - id: tajimas-d
+    name: Tajima's D
+    description: |
+      经典的中性检验统计量，通过比较核苷酸多样性与分离位点数来检测群体是否
+      偏离中性进化假设。负值提示正选择或群体扩张，正值提示平衡选择或群体收缩。
+    purpose: 检测群体是否偏离中性进化
+    time_complexity: O(n * L)
+    space_complexity: O(L)
+    year: 1989
+    category: population-genetics
+    subcategory: selection-signature
+    paper_url: https://doi.org/10.1093/oxfordjournals.molbev.a040563
+    related_tools:
+      - VCFtools
+      - popgenome
+      - scikit-allel
+    tags:
+      - neutrality-test
+      - selection
+      - classic
+      - population-genetics
+    difficulty: beginner
+    language:
+      - R
+      - Python
+
+  - id: selscan
+    name: Selscan
+    description: |
+      高效的选择信号扫描工具，实现基于单倍型的 iHS 和 XP-EHH 等经典选择检验
+      统计量。该方法可检测正在进行或近期完成的正选择事件。
+    purpose: 基于单倍型的选择信号检测
+    time_complexity: O(n * m)
+    space_complexity: O(n * m)
+    year: 2014
+    category: population-genetics
+    subcategory: selection-signature
+    paper_url: https://doi.org/10.1093/bioinformatics/btu514
+    implementation_url: https://github.com/szpiech/selscan
+    related_tools:
+      - SweeD
+      - hapbin
+      - CMS
+    tags:
+      - selection
+      - haplotype
+      - ihs
+      - xp-ehh
+    difficulty: intermediate
+    language:
+      - C++
+
+  - id: hapflk
+    name: HapFLK
+    description: |
+      基于单倍型和 FLD 统计量的选择信号检测方法，利用群体间的遗传分化信息检测
+      选择事件。该方法对局部适应的选择信号检测灵敏度高，适用于多群体比较研究。
+    purpose: 多群体间的选择信号检测
+    time_complexity: O(n * m * K)
+    space_complexity: O(m * K)
+    year: 2013
+    category: population-genetics
+    subcategory: selection-signature
+    paper_url: https://doi.org/10.1371/journal.pgen.1003911
+    implementation_url: https://github.com/popgenmethods/hapflk
+    related_tools:
+      - Selscan
+      - SweeD
+      - PCAdapt
+    tags:
+      - selection
+      - haplotype
+      - population-differentiation
+      - fld
+    difficulty: advanced
+    language:
+      - Python
+      - Fortran
+
+  - id: pcadapt
+    name: PCAdapt
+    description: |
+      基于主成分分析的离群值检测方法，用于识别对群体结构有异常贡献的受选择位点。
+      该方法无需预先定义群体标签，可自动检测局部适应的遗传标记。
+    purpose: 基于 PCA 的选择信号和离群值检测
+    time_complexity: O(n * m * k)
+    space_complexity: O(n * m)
+    year: 2016
+    category: population-genetics
+    subcategory: selection-signature
+    paper_url: https://doi.org/10.1093/molbev/msw055
+    implementation_url: https://github.com/bcm-uga/pcadapt
+    related_tools:
+      - BayeScan
+      - OutFLANK
+      - Selscan
+    tags:
+      - selection
+      - pca
+      - outlier-detection
+      - local-adaptation
+    difficulty: intermediate
+    language:
+      - R
+      - C++
+
+  - id: bayescan
+    name: BayeScan
+    description: |
+      基于贝叶斯方法的群体分化 Fst 离群值检测工具，通过分解 Fst 为群体特异性和
+      位点特异性两部分来识别受选择的位点。该方法可控制假阳性率，适用于基因组扫描。
+    purpose: 贝叶斯 Fst 离群值检测识别选择位点
+    time_complexity: O(m * k * n)
+    space_complexity: O(m * k)
+    year: 2008
+    category: population-genetics
+    subcategory: selection-signature
+    paper_url: https://doi.org/10.1093/molbev/msn067
+    related_tools:
+      - PCAdapt
+      - OutFLANK
+      - BayEnv
+    tags:
+      - selection
+      - bayesian
+      - fst
+      - outlier-detection
+    difficulty: intermediate
+    language:
+      - C++
+      - Pascal

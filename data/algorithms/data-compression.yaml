@@ -1,68 +1,244 @@
 algorithms:
-  - id: gzip-fastq
-    name: GZIP for FASTQ
-    description: |
-      基于 DEFLATE 算法的通用数据压缩方法，广泛用于压缩 FASTQ 格式的测序数据。
-      该方法压缩比适中，兼容性好，是生物信息学数据存储的标准压缩格式。
-    purpose: 测序数据的通用压缩
-    time_complexity: O(n)
-    space_complexity: O(1)
-    year: 1992
-    category: data-compression
-    subcategory: general-compression
-    paper_url: https://doi.org/10.17487/RFC1952
-    related_tools:
-      - gzip
-      - pigz
-      - bgzip
-    tags:
-      - lossless
-      - general-purpose
-      - standard
-      - fastq
+- id: gzip-fastq
+  name: GZIP for FASTQ
+  description: '基于 DEFLATE 算法的通用数据压缩方法，广泛用于压缩 FASTQ 格式的测序数据。
 
-  - id: cram
-    name: CRAM
-    description: |
-      专为比对数据设计的参考序列压缩格式，通过存储与参考序列的差异实现高压缩比。
-      该方法可将 BAM 文件压缩至原大小的 40-60%，是大规模测序项目的首选存储格式。
-    purpose: 比对数据的高效压缩存储
-    time_complexity: O(n)
-    space_complexity: O(r)
-    year: 2011
-    category: data-compression
-    subcategory: specialized-compression
-    paper_url: https://doi.org/10.1093/nar/gkq1373
-    implementation_url: https://github.com/samtools/htslib
-    related_tools:
-      - samtools
-      - htslib
-      - cramtools
-    tags:
-      - reference-based
-      - alignment
-      - bam
-      - efficient
+    该方法压缩比适中，兼容性好，是生物信息学数据存储的标准压缩格式。
 
-  - id: genozip
-    name: Genozip
-    description: |
-      专为基因组数据设计的高性能压缩工具，支持 FASTQ、BAM、VCF 等多种格式的无损压缩。
-      该方法利用基因组数据的特殊结构实现远超通用压缩的压缩比，支持随机访问和加密。
-    purpose: 基因组数据的高压缩比无损压缩
-    time_complexity: O(n)
-    space_complexity: O(1)
-    year: 2021
-    category: data-compression
-    subcategory: specialized-compression
-    paper_url: https://doi.org/10.1093/bioinformatics/btab102
-    implementation_url: https://github.com/divonlan/genozip
-    related_tools:
-      - gzip
-      - CRAM
-      - Spring
-    tags:
-      - multi-format
-      - high-ratio
-      - random-access
-      - encryption
+    '
+  purpose: 测序数据的通用压缩
+  time_complexity: O(n)
+  space_complexity: O(1)
+  year: 1992
+  category: data-compression
+  subcategory: general-compression
+  paper_url: https://doi.org/10.17487/RFC1952
+  related_tools:
+  - gzip
+  - pigz
+  - bgzip
+  tags:
+  - lossless
+  - general-purpose
+  - standard
+  - fastq
+- id: cram
+  name: CRAM
+  description: '专为比对数据设计的参考序列压缩格式，通过存储与参考序列的差异实现高压缩比。
+
+    该方法可将 BAM 文件压缩至原大小的 40-60%，是大规模测序项目的首选存储格式。
+
+    '
+  purpose: 比对数据的高效压缩存储
+  time_complexity: O(n)
+  space_complexity: O(r)
+  year: 2011
+  category: data-compression
+  subcategory: specialized-compression
+  paper_url: https://doi.org/10.1093/nar/gkq1373
+  implementation_url: https://github.com/samtools/htslib
+  related_tools:
+  - samtools
+  - htslib
+  - cramtools
+  tags:
+  - reference-based
+  - alignment
+  - bam
+  - efficient
+- id: genozip
+  name: Genozip
+  description: '专为基因组数据设计的高性能压缩工具，支持 FASTQ、BAM、VCF 等多种格式的无损压缩。
+
+    该方法利用基因组数据的特殊结构实现远超通用压缩的压缩比，支持随机访问和加密。
+
+    '
+  purpose: 基因组数据的高压缩比无损压缩
+  time_complexity: O(n)
+  space_complexity: O(1)
+  year: 2021
+  category: data-compression
+  subcategory: specialized-compression
+  paper_url: https://doi.org/10.1093/bioinformatics/btab102
+  implementation_url: https://github.com/divonlan/genozip
+  related_tools:
+  - gzip
+  - CRAM
+  - Spring
+  tags:
+  - multi-format
+  - high-ratio
+  - random-access
+  - encryption
+- id: bgzip-tabix
+  name: BGZF and Tabix
+  description: '面向基因组区间文件的块压缩与随机索引方案，可对 VCF、BED 和 GFF 等文本格式实现按区域快速访问。
+
+    该方法是群体遗传学和变异分析工作流中的事实标准，使大规模文本数据在保持压缩的同时仍便于检索。
+
+    '
+  purpose: 对基因组区间文件进行块压缩与随机区域访问
+  time_complexity: O(n)
+  space_complexity: O(1)
+  year: 2011
+  category: data-compression
+  subcategory: general-compression
+  paper_url: https://doi.org/10.1093/bioinformatics/btq671
+  implementation_url: https://github.com/samtools/htslib
+  related_tools:
+  - gzip
+  - CRAM
+  - htslib
+  tags:
+  - block-compression
+  - indexing
+  - random-access
+  - genomics
+- id: spring
+  name: SPRING
+  description: '专为 FASTQ 读段设计的无损压缩方法，通过重排序、基于参考的编码思想和质量值建模获得高压缩比。
+
+    该方法在大规模测序项目中能显著降低存储成本，是 FASTQ 专用压缩领域的重要代表工具。
+
+    '
+  purpose: FASTQ 读段及质量值的高比率无损压缩
+  time_complexity: O(n)
+  space_complexity: O(n)
+  year: 2019
+  category: data-compression
+  subcategory: specialized-compression
+  paper_url: https://doi.org/10.1093/bioinformatics/btz526
+  implementation_url: https://github.com/shubhamchandak94/SPRING
+  related_tools:
+  - Genozip
+  - gzip
+  - fqzcomp
+  tags:
+  - fastq
+  - specialized-compression
+  - high-ratio
+  - lossless
+- id: dsrc
+  name: DSRC
+  description: '面向 FASTQ 文件的专用压缩算法，分别针对序列、质量值和标识符设计编码策略以提升压缩效率。
+
+    该方法兼顾压缩速度和压缩率，适合高通量测序中心对海量原始读段数据进行归档与传输。
+
+    '
+  purpose: FASTQ 数据的高速专用无损压缩
+  time_complexity: O(n)
+  space_complexity: O(1)
+  year: 2013
+  category: data-compression
+  subcategory: specialized-compression
+  paper_url: https://doi.org/10.1093/bioinformatics/btt214
+  implementation_url: https://github.com/refresh-bio/DSRC
+  related_tools:
+  - SPRING
+  - Genozip
+  - gzip
+  tags:
+  - fastq
+  - specialized-compression
+  - archival
+  - fast
+- id: fqzcomp
+  name: fqzcomp
+  description: '专门针对 FASTQ 质量分数设计的压缩算法，通过对质量值进行上下文建模和算术编码实现高效压缩。
+
+    该方法支持流式处理，在保持解码速度的同时能将质量分数压缩至原始大小的极小比例，是 FASTQ 压缩领域的经典工具。
+
+    '
+  purpose: FASTQ 质量分数的高效无损压缩
+  time_complexity: O(n)
+  space_complexity: O(1)
+  year: 2014
+  category: data-compression
+  subcategory: specialized-compression
+  paper_url: https://doi.org/10.1093/bioinformatics/btu537
+  related_tools:
+  - SPRING
+  - Genozip
+  - DSRC
+  tags:
+  - fastq
+  - quality-score
+  - lossless
+  - streaming
+  difficulty: intermediate
+  language:
+  - C
+- id: spring-compress
+  name: SPRING Compress
+  description: '针对大规模 FASTQ 数据集开发的重排序压缩工具，通过读段排序和参考序列编码实现极高的压缩比。
+
+    该方法能够处理海量测序数据，在百万级乃至亿级读段规模下仍保持高效的压缩性能和可接受的运行时间。
+
+    '
+  purpose: 大规模 FASTQ 数据集的高比率重排序压缩
+  time_complexity: O(n log n)
+  space_complexity: O(n)
+  year: 2020
+  category: data-compression
+  subcategory: specialized-compression
+  paper_url: https://doi.org/10.1093/bioinformatics/btaa044
+  implementation_url: https://github.com/shubhamchandak94/spring
+  related_tools:
+  - SPRING
+  - fqzcomp
+  - Genozip
+  tags:
+  - fastq
+  - reordering
+  - high-ratio
+  - scalable
+  difficulty: intermediate
+  language:
+  - C++
+- id: mango
+  name: MANGO
+  description: '基于上下文建模的参考基因组无关序列压缩方法，通过学习序列局部统计特征实现基因组数据的高效压缩。
+
+    该方法无需参考基因组即可达到优秀的压缩比，适用于新物种或参考基因组不可用的场景。
+
+    '
+  purpose: 无需参考基因组的基因组序列压缩
+  time_complexity: O(n)
+  space_complexity: O(n)
+  year: 2018
+  category: data-compression
+  subcategory: specialized-compression
+  paper_url: https://doi.org/10.1038/s41467-018-05612-6
+  related_tools:
+  - Genozip
+  - CRAM
+  - gzip
+  tags:
+  - reference-free
+  - genome-compression
+  - context-modeling
+  difficulty: advanced
+  language:
+  - C++
+- id: orione
+  name: Orione
+  description: 利用参考辅助压缩的 FASTQ 和 SAM 格式压缩工具，将读段比对到参考序列后仅存储差异信息。该方法在有高质量参考基因组时压缩效果极佳。
+  purpose: 参考辅助的 FASTQ/SAM 压缩
+  time_complexity: O(n)
+  space_complexity: O(1)
+  year: 2015
+  category: data-compression
+  subcategory: specialized-compression
+  paper_url: https://doi.org/10.1109/DCC.2015.45
+  related_tools:
+  - CRAM
+  - Genozip
+  - Spring
+  tags:
+  - reference-assisted
+  - fastq
+  - sam
+  - archival
+  difficulty: intermediate
+  language:
+  - C

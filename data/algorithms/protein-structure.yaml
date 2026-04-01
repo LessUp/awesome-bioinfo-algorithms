@@ -67,3 +67,251 @@ algorithms:
       - monte-carlo
       - protein-design
       - classic
+
+  - id: rosettafold
+    name: RoseTTAFold
+    description: |
+      基于三轨注意力网络的蛋白质结构预测方法，同时建模序列、距离图和三维坐标之间的信息传递。
+      该方法在较低计算成本下实现了接近 AlphaFold 的预测精度，推动了结构预测模型的快速普及。
+    purpose: 基于多轨神经网络的高精度蛋白质结构预测
+    time_complexity: O(n^2)
+    space_complexity: O(n^2)
+    year: 2021
+    category: protein-structure
+    subcategory: ab-initio
+    paper_url: https://doi.org/10.1126/science.abj8754
+    implementation_url: https://github.com/RosettaCommons/RoseTTAFold
+    related_tools:
+      - AlphaFold
+      - ESMFold
+      - trRosetta
+    tags:
+      - deep-learning
+      - three-track
+      - structure-prediction
+      - accurate
+
+  - id: modeller
+    name: MODELLER
+    description: |
+      经典的同源建模工具，基于空间约束满足原理从已知模板结构推断目标蛋白的三维构象。
+      该方法在模板可用时能够快速构建可靠模型，广泛用于结构生物学、突变分析和蛋白功能研究。
+    purpose: 基于模板结构进行蛋白质同源建模
+    time_complexity: O(n^2)
+    space_complexity: O(n^2)
+    year: 1993
+    category: protein-structure
+    subcategory: template-based
+    paper_url: https://doi.org/10.1002/jcc.540140211
+    implementation_url: https://salilab.org/modeller/
+    related_tools:
+      - Rosetta
+      - I-TASSER
+      - SWISS-MODEL
+    tags:
+      - homology-modeling
+      - template-based
+      - comparative-modeling
+      - classic
+
+  - id: omegafold
+    name: OmegaFold
+    description: |
+      基于蛋白质语言模型和端到端几何建模的结构预测方法，可直接从单条氨基酸序列快速推断三维构象。
+      该方法无需多序列比对即可获得具有竞争力的预测精度，适合大规模蛋白质结构筛查和快速注释场景。
+    purpose: 基于单序列语言模型进行快速蛋白质结构预测
+    time_complexity: O(n^2)
+    space_complexity: O(n^2)
+    year: 2022
+    category: protein-structure
+    subcategory: ab-initio
+    paper_url: https://doi.org/10.1101/2022.07.21.500999
+    implementation_url: https://github.com/HeliXonProtein/OmegaFold
+    related_tools:
+      - ESMFold
+      - AlphaFold
+      - RoseTTAFold
+    tags:
+      - language-model
+      - single-sequence
+      - structure-prediction
+      - fast
+
+  - id: i-tasser
+    name: I-TASSER
+    description: |
+      结合 threading、片段组装和结构精修的蛋白质结构预测方法，可在模板信息有限时构建较高质量的三维模型。
+      该方法长期在结构预测评测中表现稳定，并常用于结构功能注释、结合位点推断和蛋白互作研究。
+    purpose: 结合 threading 与组装策略进行蛋白质结构建模
+    time_complexity: O(n^3)
+    space_complexity: O(n^2)
+    year: 2008
+    category: protein-structure
+    subcategory: template-based
+    paper_url: https://doi.org/10.1186/1471-2105-9-40
+    implementation_url: https://zhanggroup.org/I-TASSER/
+    related_tools:
+      - MODELLER
+      - Rosetta
+      - Phyre2
+    tags:
+      - threading
+      - template-based
+      - fragment-assembly
+      - structure-refinement
+
+  - id: alphafold3
+    name: AlphaFold3
+    description: |
+      由 DeepMind 推出的新一代结构预测模型，不仅能预测蛋白质结构，还能预测核酸、小分子、离子等生物分子复合体的三维结构。
+      该方法采用扩散生成模型替代坐标精修，大幅扩展了可预测的分子类型，在药物设计和分子对接场景中表现出色。
+    purpose: 统一预测蛋白质及生物分子复合体三维结构
+    time_complexity: O(n^2)
+    space_complexity: O(n^2)
+    year: 2024
+    category: protein-structure
+    subcategory: ab-initio
+    paper_url: https://doi.org/10.1038/s41586-024-07487-w
+    implementation_url: https://github.com/google-deepmind/alphafold3
+    related_tools:
+      - AlphaFold
+      - ESMFold
+      - RoseTTAFold
+    tags:
+      - deep-learning
+      - structure-prediction
+      - multi-modal
+      - diffusion
+
+  - id: openfold
+    name: OpenFold
+    description: |
+      AlphaFold2 的开源可训练复现版本，完整保留了原始模型的训练流程与推理能力，支持从头训练和微调。
+      该工具由 AlQuraishi 实验室开发，促进了结构预测方法的可复现性和社区研究，广泛用于教学和方法改进。
+    purpose: 开源可训练的 AlphaFold2 复现框架
+    time_complexity: O(n^2)
+    space_complexity: O(n^2)
+    year: 2022
+    category: protein-structure
+    subcategory: ab-initio
+    paper_url: https://doi.org/10.1038/s41467-023-41843-w
+    implementation_url: https://github.com/aqlaboratory/openfold
+    related_tools:
+      - AlphaFold
+      - ESMFold
+    tags:
+      - open-source
+      - trainable
+      - structure-prediction
+      - pytorch
+
+  - id: colabfold
+    name: ColabFold
+    description: |
+      通过集成 MMseqs2 进行快速多序列比对搜索，显著加速 AlphaFold 和 RoseTTAFold 的推理流程。
+      该工具提供 Google Colab 接口使得普通研究者无需高性能计算资源即可进行蛋白质结构预测，降低了使用门槛。
+    purpose: 加速并简化 AlphaFold 蛋白质结构预测流程
+    time_complexity: O(n^2)
+    space_complexity: O(n^2)
+    year: 2022
+    category: protein-structure
+    subcategory: ab-initio
+    paper_url: https://doi.org/10.1038/s41592-022-01488-1
+    implementation_url: https://github.com/sokrypton/ColabFold
+    related_tools:
+      - AlphaFold
+      - MMseqs2
+      - RoseTTAFold
+    tags:
+      - fast
+      - msa
+      - colab
+      - accessible
+
+  - id: chai-1
+    name: Chai-1
+    description: |
+      由 Chai Discovery 开发的多模态生物分子结构预测模型，支持蛋白质、核酸和小分子复合体的联合结构预测。
+      该模型采用开放权重发布策略，适用于药物靶点发现和先导化合物优化，为药物研发提供了新的开源工具。
+    purpose: 多模态生物分子结构预测与药物发现
+    time_complexity: O(n^2)
+    space_complexity: O(n^2)
+    year: 2024
+    category: protein-structure
+    subcategory: ab-initio
+    paper_url: https://doi.org/10.48550/arXiv.2410.17155
+    related_tools:
+      - AlphaFold3
+      - Boltz-1
+    tags:
+      - structure-prediction
+      - multi-modal
+      - drug-discovery
+      - open-weight
+
+  - id: boltz-1
+    name: Boltz-1
+    description: |
+      开源的生物分子结构预测模型，采用扩散模型架构对蛋白质及核酸复合体进行端到端的三维结构推断。
+      该方法完全开源且权重公开，支持社区自由使用和二次开发，为学术研究和工业应用提供了高效的结构预测方案。
+    purpose: 开源端到端生物分子结构预测
+    time_complexity: O(n^2)
+    space_complexity: O(n^2)
+    year: 2024
+    category: protein-structure
+    subcategory: ab-initio
+    paper_url: https://doi.org/10.48550/arXiv.2411.02833
+    implementation_url: https://github.com/jwohlwend/boltz
+    related_tools:
+      - AlphaFold3
+      - Chai-1
+    tags:
+      - structure-prediction
+      - open-source
+      - diffusion
+      - biomolecular
+
+  - id: foldseek
+    name: Foldseek
+    description: |
+      超高速蛋白质结构搜索工具，通过将三维结构编码为一维的 3Di 字母序列实现比传统方法快数万倍的结构相似性搜索。
+      该工具支持对大型结构数据库进行快速检索，是蛋白质功能注释、同源发现和结构聚类的重要利器。
+    purpose: 超快速蛋白质三维结构相似性搜索
+    time_complexity: O(n)
+    space_complexity: O(n)
+    year: 2023
+    category: protein-structure
+    subcategory: template-based
+    paper_url: https://doi.org/10.1038/s41587-023-01773-x
+    implementation_url: https://github.com/steineggerlab/foldseek
+    related_tools:
+      - TM-align
+      - DALI
+      - MMseqs2
+    tags:
+      - structure-search
+      - fast
+      - 3Di
+      - structural-alignment
+
+  - id: tm-align
+    name: TM-align
+    description: |
+      经典的蛋白质结构比对工具，通过动态规划和 TM-score 打分实现两两蛋白质三维结构的精确对齐与相似性评估。
+      该方法对长度差异和序列差异较大的蛋白也能提供可靠的结构比对结果，被广泛引用为结构比较的基准方法。
+    purpose: 蛋白质三维结构比对与相似性评估
+    time_complexity: O(n^3)
+    space_complexity: O(n^2)
+    year: 2005
+    category: protein-structure
+    subcategory: template-based
+    paper_url: https://doi.org/10.1093/nar/gki524
+    related_tools:
+      - DALI
+      - Foldseek
+      - CE
+    tags:
+      - structure-alignment
+      - rmsd
+      - classic
+      - comparison

@@ -1,226 +1,462 @@
 algorithms:
-  - id: smith-waterman
-    name: Smith-Waterman
-    description: |
-      经典的局部序列比对算法，使用动态规划方法找出两条序列之间相似性最高的局部区域。
-      该算法保证找到最优的局部比对结果，适用于检测序列中的保守区域和功能域。
-    purpose: 局部序列比对，寻找序列间的相似区域
-    time_complexity: O(mn)
-    space_complexity: O(mn)
-    year: 1981
-    category: sequence-alignment
-    subcategory: pairwise
-    paper_url: https://doi.org/10.1016/0022-2836(81)90087-5
-    implementation_url: https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library
-    related_tools:
-      - BLAST
-      - FASTA
-      - SSEARCH
-    tags:
-      - dynamic-programming
-      - local-alignment
-      - classic
+- id: smith-waterman
+  name: Smith-Waterman
+  description: '经典的局部序列比对算法，使用动态规划方法找出两条序列之间相似性最高的局部区域。
 
-  - id: needleman-wunsch
-    name: Needleman-Wunsch
-    description: |
-      全局序列比对的经典算法，使用动态规划对两条完整序列进行端到端比对。
-      该算法找出最优的全局对齐方案，适用于比较相似长度的同源序列。
-    purpose: 全局序列比对
-    time_complexity: O(mn)
-    space_complexity: O(mn)
-    year: 1970
-    category: sequence-alignment
-    subcategory: pairwise
-    paper_url: https://doi.org/10.1016/0022-2836(70)90057-4
-    related_tools:
-      - EMBOSS needle
-      - Clustal
-    tags:
-      - dynamic-programming
-      - global-alignment
-      - classic
+    该算法保证找到最优的局部比对结果，适用于检测序列中的保守区域和功能域。
 
-  - id: blast
-    name: BLAST
-    description: |
-      基本局部比对搜索工具，通过启发式算法在大型序列数据库中快速检索相似序列。
-      该方法牺牲少量敏感性换取数量级的速度提升，是生物信息学中使用最广泛的工具之一。
-    purpose: 快速数据库序列相似性搜索
-    time_complexity: O(mn)
-    space_complexity: O(mn)
-    year: 1990
-    category: sequence-alignment
-    subcategory: pairwise
-    paper_url: https://doi.org/10.1016/S0022-2836(05)80360-2
-    implementation_url: https://blast.ncbi.nlm.nih.gov/
-    related_tools:
-      - BLAST+
-      - DIAMOND
-      - MMseqs2
-    tags:
-      - heuristic
-      - database-search
-      - classic
-      - fast
+    '
+  purpose: 局部序列比对，寻找序列间的相似区域
+  time_complexity: O(mn)
+  space_complexity: O(mn)
+  year: 1981
+  category: sequence-alignment
+  subcategory: pairwise
+  paper_url: https://doi.org/10.1016/0022-2836(81)90087-5
+  implementation_url: https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library
+  related_tools:
+  - BLAST
+  - FASTA
+  - SSEARCH
+  tags:
+  - dynamic-programming
+  - local-alignment
+  - classic
+- id: needleman-wunsch
+  name: Needleman-Wunsch
+  description: '全局序列比对的经典算法，使用动态规划对两条完整序列进行端到端比对。
 
-  - id: bowtie2
-    name: Bowtie2
-    description: |
-      基于 FM 索引的超快速短读段比对工具，支持局部比对和端到端比对模式。
-      该方法使用全文本分钟索引实现亚线性时间比对，是短读段比对的标准工具之一。
-    purpose: 短读段快速比对到参考基因组
-    time_complexity: O(n)
-    space_complexity: O(n)
-    year: 2012
-    category: sequence-alignment
-    subcategory: pairwise
-    paper_url: https://doi.org/10.1038/nmeth.1923
-    implementation_url: https://github.com/BenLangmead/bowtie2
-    related_tools:
-      - BWA
-      - HISAT2
-      - Minimap2
-    tags:
-      - fm-index
-      - short-read
-      - fast
-      - high-throughput
+    该算法找出最优的全局对齐方案，适用于比较相似长度的同源序列。
 
-  - id: clustal-omega
-    name: Clustal Omega
-    description: |
-      高性能的多序列比对工具，使用 mBed 引导树和 HHalign 算法实现快速准确的多序列比对。
-      该方法能够在合理时间内处理数千条序列的比对任务，是多序列比对领域的标准工具。
-    purpose: 大规模多序列比对
-    time_complexity: O(n * L^2)
-    space_complexity: O(n * L)
-    year: 2011
-    category: sequence-alignment
-    subcategory: multiple
-    paper_url: https://doi.org/10.1038/msb.2011.75
-    implementation_url: http://www.clustal.org/omega/
-    related_tools:
-      - ClustalW
-      - T-Coffee
-      - MAFFT
-    tags:
-      - multiple-alignment
-      - guide-tree
-      - progressive
-      - scalable
+    '
+  purpose: 全局序列比对
+  time_complexity: O(mn)
+  space_complexity: O(mn)
+  year: 1970
+  category: sequence-alignment
+  subcategory: pairwise
+  paper_url: https://doi.org/10.1016/0022-2836(70)90057-4
+  related_tools:
+  - EMBOSS needle
+  - Clustal
+  tags:
+  - dynamic-programming
+  - global-alignment
+  - classic
+- id: blast
+  name: BLAST
+  description: '基本局部比对搜索工具，通过启发式算法在大型序列数据库中快速检索相似序列。
 
-  - id: muscle
-    name: MUSCLE
-    description: |
-      基于迭代优化的多序列比对算法，通过多轮渐进比对和精化步骤提高比对质量。
-      该方法在速度和准确性之间取得了良好平衡，适用于中等规模的序列集合。
-    purpose: 高精度多序列比对
-    time_complexity: O(n^2 * L)
-    space_complexity: O(n * L)
-    year: 2004
-    category: sequence-alignment
-    subcategory: multiple
-    paper_url: https://doi.org/10.1093/nar/gkh340
-    implementation_url: https://github.com/rcedgar/muscle
-    related_tools:
-      - MAFFT
-      - Clustal Omega
-      - PROBCONS
-    tags:
-      - multiple-alignment
-      - iterative
-      - refinement
-      - classic
+    该方法牺牲少量敏感性换取数量级的速度提升，是生物信息学中使用最广泛的工具之一。
 
-  - id: mafft
-    name: MAFFT
-    description: |
-      基于快速傅里叶变换的多序列比对工具，使用 FFT 加速同源区域检测和比对优化。
-      该方法提供多种比对策略，能高效处理从数十到数万条序列的比对任务。
-    purpose: 高效多序列比对
-    time_complexity: O(n * L * log L)
-    space_complexity: O(n * L)
-    year: 2002
-    category: sequence-alignment
-    subcategory: multiple
-    paper_url: https://doi.org/10.1093/nar/gkf436
-    implementation_url: https://github.com/GSLBiotech/mafft
-    related_tools:
-      - MUSCLE
-      - Clustal Omega
-      - T-Coffee
-    tags:
-      - fft
-      - multiple-alignment
-      - scalable
-      - versatile
+    '
+  purpose: 快速数据库序列相似性搜索
+  time_complexity: O(mn)
+  space_complexity: O(mn)
+  year: 1990
+  category: sequence-alignment
+  subcategory: pairwise
+  paper_url: https://doi.org/10.1016/S0022-2836(05)80360-2
+  implementation_url: https://blast.ncbi.nlm.nih.gov/
+  related_tools:
+  - BLAST+
+  - DIAMOND
+  - MMseqs2
+  tags:
+  - heuristic
+  - database-search
+  - classic
+  - fast
+- id: bowtie2
+  name: Bowtie2
+  description: '基于 FM 索引的超快速短读段比对工具，支持局部比对和端到端比对模式。
 
-  - id: minimap2
-    name: Minimap2
-    description: |
-      通用的序列比对工具，支持长读段（PacBio/ONT）和短读段的快速比对。
-      该方法使用最小化子（minimizer）索引实现超快速比对，是长读段数据分析的首选工具。
-    purpose: 长读段和短读段的通用快速比对
-    time_complexity: O(n)
-    space_complexity: O(n)
-    year: 2018
-    category: sequence-alignment
-    subcategory: pairwise
-    paper_url: https://doi.org/10.1093/bioinformatics/bty191
-    implementation_url: https://github.com/lh3/minimap2
-    related_tools:
-      - BWA
-      - NGMLR
-      - Winnowmap
-    tags:
-      - minimizer
-      - long-read
-      - versatile
-      - fast
+    该方法使用全文本分钟索引实现亚线性时间比对，是短读段比对的标准工具之一。
 
-  - id: bwt-alignment
-    name: Burrows-Wheeler Transform Alignment
-    description: |
-      基于 Burrows-Wheeler 变换的序列比对算法，通过构建 BWT 索引实现快速的短读段比对。
-      该方法在保持高准确性的同时大幅提升比对速度，是现代测序数据分析的核心算法。
-    purpose: 高通量测序数据的快速比对
-    time_complexity: O(n)
-    space_complexity: O(n)
-    year: 2009
-    category: sequence-alignment
-    subcategory: pairwise
-    paper_url: https://doi.org/10.1093/bioinformatics/btp324
-    implementation_url: https://github.com/lh3/bwa
-    related_tools:
-      - BWA
-      - Bowtie
-      - HISAT2
-    tags:
-      - bwt
-      - indexing
-      - short-read
-      - high-throughput
+    '
+  purpose: 短读段快速比对到参考基因组
+  time_complexity: O(n)
+  space_complexity: O(n)
+  year: 2012
+  category: sequence-alignment
+  subcategory: pairwise
+  paper_url: https://doi.org/10.1038/nmeth.1923
+  implementation_url: https://github.com/BenLangmead/bowtie2
+  related_tools:
+  - BWA
+  - HISAT2
+  - Minimap2
+  tags:
+  - fm-index
+  - short-read
+  - fast
+  - high-throughput
+- id: clustal-omega
+  name: Clustal Omega
+  description: '高性能的多序列比对工具，使用 mBed 引导树和 HHalign 算法实现快速准确的多序列比对。
 
-  - id: hisat2
-    name: HISAT2
-    description: |
-      基于层次化 FM 索引的剪接感知比对工具，使用全局和局部索引相结合的策略进行 RNA-seq 比对。
-      该方法内存占用低、速度快，能准确处理剪接比对，适用于 RNA-seq 和基因组比对。
-    purpose: 低内存、高速的剪接感知比对
-    time_complexity: O(n)
-    space_complexity: O(n)
-    year: 2015
-    category: sequence-alignment
-    subcategory: pairwise
-    paper_url: https://doi.org/10.1038/nmeth.3317
-    implementation_url: https://github.com/DaehwanKimLab/hisat2
-    related_tools:
-      - STAR
-      - TopHat2
-      - BWA
-    tags:
-      - fm-index
-      - splice-aware
-      - rna-seq
-      - low-memory
+    该方法能够在合理时间内处理数千条序列的比对任务，是多序列比对领域的标准工具。
+
+    '
+  purpose: 大规模多序列比对
+  time_complexity: O(n * L^2)
+  space_complexity: O(n * L)
+  year: 2011
+  category: sequence-alignment
+  subcategory: multiple
+  paper_url: https://doi.org/10.1038/msb.2011.75
+  implementation_url: http://www.clustal.org/omega/
+  related_tools:
+  - ClustalW
+  - T-Coffee
+  - MAFFT
+  tags:
+  - multiple-alignment
+  - guide-tree
+  - progressive
+  - scalable
+- id: muscle
+  name: MUSCLE
+  description: '基于迭代优化的多序列比对算法，通过多轮渐进比对和精化步骤提高比对质量。
+
+    该方法在速度和准确性之间取得了良好平衡，适用于中等规模的序列集合。
+
+    '
+  purpose: 高精度多序列比对
+  time_complexity: O(n^2 * L)
+  space_complexity: O(n * L)
+  year: 2004
+  category: sequence-alignment
+  subcategory: multiple
+  paper_url: https://doi.org/10.1093/nar/gkh340
+  implementation_url: https://github.com/rcedgar/muscle
+  related_tools:
+  - MAFFT
+  - Clustal Omega
+  - PROBCONS
+  tags:
+  - multiple-alignment
+  - iterative
+  - refinement
+  - classic
+- id: mafft
+  name: MAFFT
+  description: '基于快速傅里叶变换的多序列比对工具，使用 FFT 加速同源区域检测和比对优化。
+
+    该方法提供多种比对策略，能高效处理从数十到数万条序列的比对任务。
+
+    '
+  purpose: 高效多序列比对
+  time_complexity: O(n * L * log L)
+  space_complexity: O(n * L)
+  year: 2002
+  category: sequence-alignment
+  subcategory: multiple
+  paper_url: https://doi.org/10.1093/nar/gkf436
+  implementation_url: https://github.com/GSLBiotech/mafft
+  related_tools:
+  - MUSCLE
+  - Clustal Omega
+  - T-Coffee
+  tags:
+  - fft
+  - multiple-alignment
+  - scalable
+  - versatile
+- id: minimap2
+  name: Minimap2
+  description: '通用的序列比对工具，支持长读段（PacBio/ONT）和短读段的快速比对。
+
+    该方法使用最小化子（minimizer）索引实现超快速比对，是长读段数据分析的首选工具。
+
+    '
+  purpose: 长读段和短读段的通用快速比对
+  time_complexity: O(n)
+  space_complexity: O(n)
+  year: 2018
+  category: sequence-alignment
+  subcategory: pairwise
+  paper_url: https://doi.org/10.1093/bioinformatics/bty191
+  implementation_url: https://github.com/lh3/minimap2
+  related_tools:
+  - BWA
+  - NGMLR
+  - Winnowmap
+  tags:
+  - minimizer
+  - long-read
+  - versatile
+  - fast
+- id: bwt-alignment
+  name: Burrows-Wheeler Transform Alignment
+  description: '基于 Burrows-Wheeler 变换的序列比对算法，通过构建 BWT 索引实现快速的短读段比对。
+
+    该方法在保持高准确性的同时大幅提升比对速度，是现代测序数据分析的核心算法。
+
+    '
+  purpose: 高通量测序数据的快速比对
+  time_complexity: O(n)
+  space_complexity: O(n)
+  year: 2009
+  category: sequence-alignment
+  subcategory: pairwise
+  paper_url: https://doi.org/10.1093/bioinformatics/btp324
+  implementation_url: https://github.com/lh3/bwa
+  related_tools:
+  - BWA
+  - Bowtie
+  - HISAT2
+  tags:
+  - bwt
+  - indexing
+  - short-read
+  - high-throughput
+- id: hisat2
+  name: HISAT2
+  description: '基于层次化 FM 索引的剪接感知比对工具，使用全局和局部索引相结合的策略进行 RNA-seq 比对。
+
+    该方法内存占用低、速度快，能准确处理剪接比对，适用于 RNA-seq 和基因组比对。
+
+    '
+  purpose: 低内存、高速的剪接感知比对
+  time_complexity: O(n)
+  space_complexity: O(n)
+  year: 2015
+  category: sequence-alignment
+  subcategory: pairwise
+  paper_url: https://doi.org/10.1038/nmeth.3317
+  implementation_url: https://github.com/DaehwanKimLab/hisat2
+  related_tools:
+  - STAR
+  - TopHat2
+  - BWA
+  tags:
+  - fm-index
+  - splice-aware
+  - rna-seq
+  - low-memory
+- id: diamond
+  name: DIAMOND
+  description: '基于双索引策略的超快速蛋白质和核苷酸序列比对工具，比 BLAST 快数万倍。
+
+    该方法在保持高灵敏度的同时大幅提升搜索速度，适用于大规模宏基因组学和蛋白质组学分析。
+
+    '
+  purpose: 超快速蛋白质和核苷酸序列比对
+  time_complexity: O(mn)
+  space_complexity: O(m + n)
+  year: 2015
+  category: sequence-alignment
+  subcategory: pairwise
+  paper_url: https://doi.org/10.1038/nmeth.3176
+  implementation_url: https://github.com/bbuchfink/diamond
+  related_tools:
+  - BLAST
+  - MMseqs2
+  - RAPSearch2
+  tags:
+  - heuristic
+  - protein-alignment
+  - fast
+  - ultra-fast
+  difficulty: intermediate
+  language:
+  - C++
+- id: mmseqs2
+  name: MMseqs2
+  description: '超快速序列搜索和聚类工具，利用多阶段搜索策略实现大规模序列数据库的高效比对和聚类。
+
+    该方法支持蛋白质和核苷酸序列的敏感搜索，适用于宏基因组学、蛋白质组学等大数据量分析场景。
+
+    '
+  purpose: 超快速序列搜索和聚类
+  time_complexity: O(mn)
+  space_complexity: O(m + n)
+  year: 2017
+  category: sequence-alignment
+  subcategory: pairwise
+  paper_url: https://doi.org/10.1038/nbt.3988
+  implementation_url: https://github.com/soedinglab/MMseqs2
+  related_tools:
+  - BLAST
+  - DIAMOND
+  - Linclust
+  tags:
+  - clustering
+  - search
+  - fast
+  - scalable
+  difficulty: intermediate
+  language:
+  - C++
+- id: lastz
+  name: LASTZ
+  description: '专为全基因组比对设计的成对比对工具，能够高效处理大规模基因组间的比对任务。
+
+    该方法采用种子扩展策略和得分矩阵，在基因组进化分析和保守区域检测中广泛应用。
+
+    '
+  purpose: 成对全基因组比对
+  time_complexity: O(n^2)
+  space_complexity: O(n)
+  year: 2004
+  category: sequence-alignment
+  subcategory: pairwise
+  paper_url: https://doi.org/10.1101/gr.087106.108
+  implementation_url: https://github.com/lastz/lastz
+  related_tools:
+  - MUMmer
+  - Minimap2
+  - Gepard
+  tags:
+  - genome-alignment
+  - whole-genome
+  - classic
+  difficulty: intermediate
+  language:
+  - C
+- id: kalign
+  name: Kalign
+  description: '基于 Wu-Manber 字符串匹配算法的快速多序列比对工具，利用序列间的成对距离构建引导树。
+
+    该方法在保持较高比对质量的同时具有极快的运行速度，特别适用于大规模序列集合的快速比对。
+
+    '
+  purpose: 快速多序列比对
+  time_complexity: O(n^2 * L)
+  space_complexity: O(n * L)
+  year: 2005
+  category: sequence-alignment
+  subcategory: multiple
+  paper_url: https://doi.org/10.1093/bioinformatics/bti060
+  implementation_url: https://github.com/Timozer/Kalign
+  related_tools:
+  - MAFFT
+  - MUSCLE
+  - Clustal Omega
+  tags:
+  - multiple-alignment
+  - fast
+  - wu-manber
+  difficulty: intermediate
+  language:
+  - C
+  - C++
+- id: poa
+  name: POA
+  description: '部分顺序比对算法，将多序列比对问题转化为偏序图上的比对问题，避免了传统渐进方法的线性顺序限制。
+
+    该方法通过构建和合并部分顺序图来表示序列集合，适用于含有插入缺失变异的复杂序列家族比对。
+
+    '
+  purpose: 基于偏序图的多序列比对
+  time_complexity: O(n^2 * L^2)
+  space_complexity: O(n * L^2)
+  year: 2002
+  category: sequence-alignment
+  subcategory: multiple
+  paper_url: https://doi.org/10.1093/bioinformatics/18.3.452
+  related_tools:
+  - MAFFT
+  - MUSCLE
+  - T-Coffee
+  tags:
+  - multiple-alignment
+  - partial-order
+  - graph-based
+  difficulty: advanced
+  language:
+  - C
+- id: exonerate
+  name: Exonerate
+  description: 通用的序列比对工具，支持多种比对模型（ungapped、affine、gapped）和启发式加速策略。该方法可快速搜索大型序列数据库，是功能注释和同源推断的常用工具。
+  purpose: 通用序列比对和数据库搜索
+  time_complexity: O(mn)
+  space_complexity: O(m)
+  year: 2005
+  category: sequence-alignment
+  subcategory: pairwise
+  paper_url: https://doi.org/10.1186/1471-2105-6-31
+  implementation_url: https://github.com/nickloman/exonerate
+  related_tools:
+  - BLAST
+  - FASTA
+  - SSEARCH
+  tags:
+  - pairwise
+  - database-search
+  - versatile
+  - heuristic
+  difficulty: intermediate
+  language:
+  - C
+- id: parasail
+  name: parasail
+  description: 基于 SIMD 指令集的并行序列比对库，使用 Smith-Waterman、Needleman-Wunsch 等算法的向量化实现。该方法在现代
+    CPU 上实现了极高的比对吞吐量。
+  purpose: SIMD 向量化的并行序列比对
+  time_complexity: O(mn / w)
+  space_complexity: O(m)
+  year: 2016
+  category: sequence-alignment
+  subcategory: pairwise
+  paper_url: https://doi.org/10.1186/s12859-016-0930-z
+  implementation_url: https://github.com/jeffdaily/parasail
+  related_tools:
+  - SWIPE
+  - SSEARCH
+  - KSW
+  tags:
+  - simd
+  - parallel
+  - vectorized
+  - high-throughput
+  difficulty: advanced
+  language:
+  - C
+- id: edlib
+  name: Edlib
+  description: 基于 Myers 位并行算法的快速编辑距离计算工具，支持前缀、后缀和全长比对模式。该方法在计算编辑距离和比对方面速度极快，是序列相似度估计的高效选择。
+  purpose: 快速编辑距离和序列比对
+  time_complexity: O(mn / w)
+  space_complexity: O(m)
+  year: 2017
+  category: sequence-alignment
+  subcategory: pairwise
+  paper_url: https://doi.org/10.1093/bioinformatics/btx780
+  implementation_url: https://github.com/Martinsos/edlib
+  related_tools:
+  - parasail
+  - SeqAn
+  - Biopython
+  tags:
+  - edit-distance
+  - bit-parallel
+  - fast
+  - myers
+  difficulty: intermediate
+  language:
+  - C++
+- id: wfa2
+  name: WFA2-lib
+  description: 基于波前比对算法的超快速序列比对库，利用序列相似性自适应地调整计算复杂度。该方法在高相似度序列比对中比传统方法快数个数量级。
+  purpose: 波前算法的自适应超快速序列比对
+  time_complexity: O(ns)
+  space_complexity: O(s)
+  year: 2023
+  category: sequence-alignment
+  subcategory: pairwise
+  paper_url: https://doi.org/10.1093/bioinformatics/btad074
+  implementation_url: https://github.com/smarco/WFA2-lib
+  related_tools:
+  - Edlib
+  - parasail
+  - KSW
+  tags:
+  - wavefront
+  - adaptive
+  - ultra-fast
+  - high-similarity
+  difficulty: advanced
+  language:
+  - C

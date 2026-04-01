@@ -2,6 +2,7 @@
 README Generator for Awesome Bioinformatics Algorithms.
 Generates formatted README.md from algorithm data.
 """
+
 import os
 import re
 
@@ -13,9 +14,12 @@ from .schema import AlgorithmEntry, Category
 class ReadmeGenerator:
     """Generates README.md from algorithm registry and categories."""
 
-    def __init__(self, registry: AlgorithmRegistry,
-                 category_manager: CategoryManager,
-                 template_path: str = "templates/readme_template.md"):
+    def __init__(
+        self,
+        registry: AlgorithmRegistry,
+        category_manager: CategoryManager,
+        template_path: str = "templates/readme_template.md",
+    ):
         self._registry = registry
         self._category_manager = category_manager
         self._template_path = template_path
@@ -44,7 +48,7 @@ class ReadmeGenerator:
     def _load_template(self) -> str:
         """Load the README template file."""
         if os.path.exists(self._template_path):
-            with open(self._template_path, encoding='utf-8') as f:
+            with open(self._template_path, encoding="utf-8") as f:
                 return f.read()
         return self._default_template()
 
@@ -120,13 +124,13 @@ class ReadmeGenerator:
         # Convert to lowercase
         anchor = text.lower()
         # Replace spaces with hyphens
-        anchor = anchor.replace(' ', '-')
+        anchor = anchor.replace(" ", "-")
         # Remove special characters except hyphens and alphanumeric
-        anchor = re.sub(r'[^\w\u4e00-\u9fff-]', '', anchor)
+        anchor = re.sub(r"[^\w\u4e00-\u9fff-]", "", anchor)
         # Remove consecutive hyphens
-        anchor = re.sub(r'-+', '-', anchor)
+        anchor = re.sub(r"-+", "-", anchor)
         # Remove leading/trailing hyphens
-        anchor = anchor.strip('-')
+        anchor = anchor.strip("-")
         return anchor
 
     def generate_category_section(self, category: Category) -> str:
@@ -142,8 +146,7 @@ class ReadmeGenerator:
         lines = []
         direct_algos = self._registry.get_direct_by_category(category.id)
         has_subcategory_content = any(
-            self._get_subcategory_algorithms(category.id, sub.id)
-            for sub in category.subcategories
+            self._get_subcategory_algorithms(category.id, sub.id) for sub in category.subcategories
         )
 
         if direct_algos or has_subcategory_content:
@@ -214,10 +217,35 @@ class ReadmeGenerator:
             tags = " ".join([f"`{tag}`" for tag in algo.tags])
             lines.append(f"**标签**: {tags}")
 
+        # Difficulty
+        if algo.difficulty:
+            difficulty_labels = {
+                "beginner": "入门 (Beginner)",
+                "intermediate": "进阶 (Intermediate)",
+                "advanced": "高级 (Advanced)",
+            }
+            label = difficulty_labels.get(algo.difficulty, algo.difficulty)
+            lines.append(f"**难度**: {label}")
+
+        # Implementation languages
+        if algo.language:
+            langs = ", ".join(algo.language)
+            lines.append(f"**实现语言**: {langs}")
+
+        # Extended references
+        if algo.references:
+            lines.append("**扩展资料**:")
+            for ref in algo.references:
+                title = ref.title or ref.url
+                ref_type = f" [{ref.type}]" if ref.type else ""
+                lines.append(f"  - [{title}]({ref.url}){ref_type}")
+
         lines.append("")
         return "\n".join(lines)
 
-    def _get_subcategory_algorithms(self, category_id: str, subcategory_id: str) -> list[AlgorithmEntry]:
+    def _get_subcategory_algorithms(
+        self, category_id: str, subcategory_id: str
+    ) -> list[AlgorithmEntry]:
         """Return algorithms that match both the parent category and subcategory."""
         return [
             algo
@@ -260,5 +288,5 @@ class ReadmeGenerator:
             output_path: Path to save the README file
         """
         content = self.generate()
-        with open(output_path, 'w', encoding='utf-8') as f:
+        with open(output_path, "w", encoding="utf-8") as f:
             f.write(content)

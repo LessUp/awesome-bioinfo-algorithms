@@ -3,10 +3,15 @@
 CLI entry point for Awesome Bioinformatics Algorithms scripts.
 
 Usage:
-    python -m scripts generate    # Generate README.md
-    python -m scripts validate    # Validate all data files
-    python -m scripts stats       # Show statistics
+    python -m scripts generate              # Generate README.md
+    python -m scripts validate              # Validate all data files
+    python -m scripts stats                 # Show statistics
+    python -m scripts search [options]      # Search algorithms
+    python -m scripts info <id>             # Show algorithm details
+    python -m scripts compare <id1> <id2>   # Compare two algorithms
+    python -m scripts export [options]      # Export data to JSON/CSV
 """
+
 import sys
 from pathlib import Path
 
@@ -24,9 +29,9 @@ def get_base_dir() -> Path:
 def validate_repo_layout(base_dir: Path) -> list[str]:
     """Return missing repository paths required by the maintenance CLI."""
     required_paths = [
-        base_dir / 'data' / 'categories.yaml',
-        base_dir / 'data' / 'algorithms',
-        base_dir / 'templates' / 'readme_template.md',
+        base_dir / "data" / "categories.yaml",
+        base_dir / "data" / "algorithms",
+        base_dir / "templates" / "readme_template.md",
     ]
     return [str(path) for path in required_paths if not path.exists()]
 
@@ -35,6 +40,20 @@ def ensure_repo_layout() -> tuple[Path, list[str]]:
     """Validate that commands are being run from a repository checkout."""
     base_dir = get_base_dir()
     return base_dir, validate_repo_layout(base_dir)
+
+
+def _load_registry_and_categories(base_dir: Path) -> tuple[AlgorithmRegistry, CategoryManager]:
+    """Load and return an initialized registry and category manager."""
+    algorithms_dir = base_dir / "data" / "algorithms"
+    categories_path = base_dir / "data" / "categories.yaml"
+
+    category_manager = CategoryManager()
+    category_manager.load_categories(str(categories_path))
+
+    registry = AlgorithmRegistry(str(algorithms_dir))
+    registry.load_all()
+
+    return registry, category_manager
 
 
 def cmd_generate(output_path: Path | None = None) -> int:
@@ -47,17 +66,19 @@ def cmd_generate(output_path: Path | None = None) -> int:
             print(f"  - {path}")
         return 1
 
-    data_dir = base_dir / 'data'
-    categories_path = base_dir / 'data' / 'categories.yaml'
-    algorithms_dir = base_dir / 'data' / 'algorithms'
-    template_path = base_dir / 'templates' / 'readme_template.md'
-    output_path = output_path or (base_dir / 'README.md')
+    data_dir = base_dir / "data"
+    categories_path = base_dir / "data" / "categories.yaml"
+    algorithms_dir = base_dir / "data" / "algorithms"
+    template_path = base_dir / "templates" / "readme_template.md"
+    output_path = output_path or (base_dir / "README.md")
 
     print("Validating data files...")
     validator = Validator()
     validation_result = validator.validate_all(str(data_dir))
     if validation_result.errors:
-        print(f"  Error: Cannot generate README with {len(validation_result.errors)} validation error(s).")
+        print(
+            f"  Error: Cannot generate README with {len(validation_result.errors)} validation error(s)."
+        )
         for error in validation_result.errors:
             print(f"    - {error}")
         return 1
@@ -105,7 +126,7 @@ def cmd_validate() -> int:
             print(f"  - {path}")
         return 1
 
-    data_dir = base_dir / 'data'
+    data_dir = base_dir / "data"
 
     print("Validating data files...")
     validator = Validator()
@@ -139,18 +160,7 @@ def cmd_stats() -> int:
             print(f"  - {path}")
         return 1
 
-    algorithms_dir = base_dir / 'data' / 'algorithms'
-    categories_path = base_dir / 'data' / 'categories.yaml'
-
-    category_manager = CategoryManager()
-    category_manager.load_categories(str(categories_path))
-
-    registry = AlgorithmRegistry(str(algorithms_dir))
-    try:
-        registry.load_all()
-    except ValueError as exc:
-        print(f"Error: {exc}")
-        return 1
+    registry, category_manager = _load_registry_and_categories(base_dir)
     stats = registry.get_statistics()
 
     print("📊 Awesome Bioinformatics Algorithms - Statistics")
@@ -168,27 +178,137 @@ def cmd_stats() -> int:
     return 0
 
 
+def cmd_search_cli() -> int:
+    """CLI wrapper for the search command."""
+    from .search import cmd_search
+
+    base_dir, missing_paths = ensure_repo_layout()
+    if missing_paths:
+        print("Error: must run from repository checkout.")
+        return 1
+
+    registry, category_manager = _load_registry_and_categories(base_dir)
+
+    args = sys.argv[2:]
+    keyword = tag = category = difficulty = ""
+    i = 0
+    while i < len(args):
+        if args[i] == "--keyword" and i + 1 < len(args):
+            keyword = args[i + 1]
+            i += 2
+        elif args[i] == "--tag" and i + 1 < len(args):
+            tag = args[i + 1]
+            i += 2
+        elif args[i] == "--category" and i + 1 < len(args):
+            category = args[i + 1]
+            i += 2
+        elif args[i] == "--difficulty" and i + 1 < len(args):
+            difficulty = args[i + 1]
+            i += 2
+        else:
+            if not args[i].startswith("--") and not keyword:
+                keyword = args[i]
+            i += 1
+
+    return cmd_search(registry, category_manager, keyword, tag, category, difficulty)
+
+
+def cmd_info_cli() -> int:
+    """CLI wrapper for the info command."""
+    from .info_cmd import cmd_info
+
+    base_dir, missing_paths = ensure_repo_layout()
+    if missing_paths:
+        print("Error: must run from repository checkout.")
+        return 1
+
+    if len(sys.argv) < 3:
+        print("Usage: python -m scripts info <algorithm-id>")
+        return 1
+
+    registry, category_manager = _load_registry_and_categories(base_dir)
+    return cmd_info(registry, category_manager, sys.argv[2])
+
+
+def cmd_compare_cli() -> int:
+    """CLI wrapper for the compare command."""
+    from .compare import cmd_compare
+
+    base_dir, missing_paths = ensure_repo_layout()
+    if missing_paths:
+        print("Error: must run from repository checkout.")
+        return 1
+
+    if len(sys.argv) < 4:
+        print("Usage: python -m scripts compare <id1> <id2>")
+        return 1
+
+    registry, category_manager = _load_registry_and_categories(base_dir)
+    return cmd_compare(registry, category_manager, sys.argv[2], sys.argv[3])
+
+
+def cmd_export_cli() -> int:
+    """CLI wrapper for the export command."""
+    from .export_cmd import cmd_export
+
+    base_dir, missing_paths = ensure_repo_layout()
+    if missing_paths:
+        print("Error: must run from repository checkout.")
+        return 1
+
+    registry, category_manager = _load_registry_and_categories(base_dir)
+
+    fmt = "json"
+    output = ""
+    args = sys.argv[2:]
+    i = 0
+    while i < len(args):
+        if args[i] == "--format" and i + 1 < len(args):
+            fmt = args[i + 1]
+            i += 2
+        elif args[i] == "--output" and i + 1 < len(args):
+            output = args[i + 1]
+            i += 2
+        else:
+            i += 1
+
+    return cmd_export(registry, category_manager, fmt, output)
+
+
 COMMANDS = {
-    'generate': cmd_generate,
-    'validate': cmd_validate,
-    'stats': cmd_stats,
+    "generate": cmd_generate,
+    "validate": cmd_validate,
+    "stats": cmd_stats,
+    "search": cmd_search_cli,
+    "info": cmd_info_cli,
+    "compare": cmd_compare_cli,
+    "export": cmd_export_cli,
+}
+
+COMMAND_HELP = {
+    "generate": "Generate README.md from algorithm data",
+    "validate": "Validate all YAML data files",
+    "stats": "Show algorithm statistics",
+    "search": "Search algorithms (keyword, tag, category, difficulty)",
+    "info": "Show detailed info about an algorithm",
+    "compare": "Compare two algorithms side by side",
+    "export": "Export algorithms to JSON or CSV",
 }
 
 
 def main() -> int:
-    if len(sys.argv) < 2:
-        print("Usage: python -m scripts <command>")
-        print(f"Commands: {', '.join(COMMANDS.keys())}")
+    if len(sys.argv) < 2 or sys.argv[1] not in COMMANDS:
+        if len(sys.argv) >= 2:
+            print(f"Unknown command: {sys.argv[1]}")
+        print("Usage: python -m scripts <command> [options]")
+        print()
+        print("Commands:")
+        for cmd, desc in COMMAND_HELP.items():
+            print(f"  {cmd:<12} {desc}")
         return 1
 
-    command = sys.argv[1]
-    if command not in COMMANDS:
-        print(f"Unknown command: {command}")
-        print(f"Commands: {', '.join(COMMANDS.keys())}")
-        return 1
-
-    return COMMANDS[command]()
+    return COMMANDS[sys.argv[1]]()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())

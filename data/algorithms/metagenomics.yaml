@@ -1,69 +1,352 @@
 algorithms:
-  - id: kraken2
-    name: Kraken2
-    description: |
-      基于 k-mer 精确匹配的超快速物种分类工具，使用紧凑哈希表在数分钟内完成宏基因组样本的物种鉴定。
-      该方法速度极快且准确性高，支持自定义参考数据库，是宏基因组物种分类的首选工具。
-    purpose: 基于 k-mer 的超快速宏基因组物种分类
-    time_complexity: O(n * k)
-    space_complexity: O(d)
-    year: 2019
-    category: metagenomics
-    subcategory: taxonomic-profiling
-    paper_url: https://doi.org/10.1186/s13059-019-1891-0
-    implementation_url: https://github.com/DerrickWood/kraken2
-    related_tools:
-      - Bracken
-      - Centrifuge
-      - CLARK
-    tags:
-      - k-mer
-      - classification
-      - fast
-      - taxonomic
+- id: kraken2
+  name: Kraken2
+  description: '基于 k-mer 精确匹配的超快速物种分类工具，使用紧凑哈希表在数分钟内完成宏基因组样本的物种鉴定。
 
-  - id: metaphlan
-    name: MetaPhlAn
-    description: |
-      基于标记基因的宏基因组物种组成分析工具，使用物种特异性标记序列精确量化微生物丰度。
-      该方法无需组装即可获得准确的物种丰度信息，内存占用低，适合大规模样本分析。
-    purpose: 基于标记基因的微生物组成和丰度定量
-    time_complexity: O(n * m)
-    space_complexity: O(m)
-    year: 2012
-    category: metagenomics
-    subcategory: taxonomic-profiling
-    paper_url: https://doi.org/10.1038/nmeth.2066
-    implementation_url: https://github.com/biobakery/MetaPhlAn
-    related_tools:
-      - Kraken2
-      - mOTUs
-      - HUMAnN
-    tags:
-      - marker-gene
-      - abundance
-      - low-memory
-      - species-level
+    该方法速度极快且准确性高，支持自定义参考数据库，是宏基因组物种分类的首选工具。
 
-  - id: humann
-    name: HUMAnN
-    description: |
-      宏基因组功能分析流水线，将测序读段映射到基因家族和代谢通路，量化微生物群落的功能潜力。
-      该方法整合了物种分类和功能注释，能同时提供群落水平和物种水平的功能组成。
-    purpose: 宏基因组功能组成和代谢通路分析
-    time_complexity: O(n * d)
-    space_complexity: O(d)
-    year: 2014
-    category: metagenomics
-    subcategory: functional-profiling
-    paper_url: https://doi.org/10.1371/journal.pcbi.1002358
-    implementation_url: https://github.com/biobakery/humann
-    related_tools:
-      - MetaPhlAn
-      - KEGG
-      - eggNOG-mapper
-    tags:
-      - pathway-analysis
-      - gene-family
-      - functional
-      - pipeline
+    '
+  purpose: 基于 k-mer 的超快速宏基因组物种分类
+  time_complexity: O(n * k)
+  space_complexity: O(d)
+  year: 2019
+  category: metagenomics
+  subcategory: taxonomic-profiling
+  paper_url: https://doi.org/10.1186/s13059-019-1891-0
+  implementation_url: https://github.com/DerrickWood/kraken2
+  related_tools:
+  - Bracken
+  - Centrifuge
+  - CLARK
+  tags:
+  - k-mer
+  - classification
+  - fast
+  - taxonomic
+- id: metaphlan
+  name: MetaPhlAn
+  description: '基于标记基因的宏基因组物种组成分析工具，使用物种特异性标记序列精确量化微生物丰度。
+
+    该方法无需组装即可获得准确的物种丰度信息，内存占用低，适合大规模样本分析。
+
+    '
+  purpose: 基于标记基因的微生物组成和丰度定量
+  time_complexity: O(n * m)
+  space_complexity: O(m)
+  year: 2012
+  category: metagenomics
+  subcategory: taxonomic-profiling
+  paper_url: https://doi.org/10.1038/nmeth.2066
+  implementation_url: https://github.com/biobakery/MetaPhlAn
+  related_tools:
+  - Kraken2
+  - mOTUs
+  - HUMAnN
+  tags:
+  - marker-gene
+  - abundance
+  - low-memory
+  - species-level
+- id: humann
+  name: HUMAnN
+  description: '宏基因组功能分析流水线，将测序读段映射到基因家族和代谢通路，量化微生物群落的功能潜力。
+
+    该方法整合了物种分类和功能注释，能同时提供群落水平和物种水平的功能组成。
+
+    '
+  purpose: 宏基因组功能组成和代谢通路分析
+  time_complexity: O(n * d)
+  space_complexity: O(d)
+  year: 2014
+  category: metagenomics
+  subcategory: functional-profiling
+  paper_url: https://doi.org/10.1371/journal.pcbi.1002358
+  implementation_url: https://github.com/biobakery/humann
+  related_tools:
+  - MetaPhlAn
+  - KEGG
+  - eggNOG-mapper
+  tags:
+  - pathway-analysis
+  - gene-family
+  - functional
+  - pipeline
+- id: centrifuge
+  name: Centrifuge
+  description: '面向宏基因组样本的快速分类方法，利用压缩索引在大规模参考数据库上进行高效序列归类。
+
+    该工具兼顾速度和内存占用，适合在复杂微生物群落中进行物种鉴定和未知样本初筛。
+
+    '
+  purpose: 大规模参考库上的快速宏基因组物种分类
+  time_complexity: O(n * log d)
+  space_complexity: O(d)
+  year: 2016
+  category: metagenomics
+  subcategory: taxonomic-profiling
+  paper_url: https://doi.org/10.1101/gr.210641.116
+  implementation_url: https://github.com/DaehwanKimLab/centrifuge
+  related_tools:
+  - Kraken2
+  - Kaiju
+  - CLARK
+  tags:
+  - classification
+  - compressed-index
+  - low-memory
+  - taxonomic
+- id: metabat2
+  name: MetaBAT 2
+  description: '基于 tetranucleotide 频率和覆盖度信息的宏基因组 binning 工具，用于从混合组装结果中恢复微生物基因组。
+
+    该方法在精度和召回率之间取得良好平衡，是构建 MAGs 流程中最常用的自动分箱工具之一。
+
+    '
+  purpose: 从宏基因组组装结果中进行自动分箱和基因组恢复
+  time_complexity: O(n * c)
+  space_complexity: O(n)
+  year: 2019
+  category: metagenomics
+  subcategory: functional-profiling
+  paper_url: https://doi.org/10.7717/peerj.7359
+  implementation_url: https://bitbucket.org/berkeleylab/metabat/src/master/
+  related_tools:
+  - MaxBin 2
+  - CONCOCT
+  - CheckM
+  tags:
+  - binning
+  - mags
+  - coverage
+  - tetranucleotide
+- id: kaiju
+  name: Kaiju
+  description: '基于蛋白水平比对的宏基因组分类工具，通过在翻译后的读段与参考蛋白数据库之间搜索最大精确匹配来提高远缘物种识别能力。
+
+    该方法对进化距离较远或核苷酸保守性较低的样本更敏感，常用于复杂环境样本的分类分析。
+
+    '
+  purpose: 基于蛋白水平匹配提升宏基因组物种分类灵敏度
+  time_complexity: O(n * log d)
+  space_complexity: O(d)
+  year: 2016
+  category: metagenomics
+  subcategory: taxonomic-profiling
+  paper_url: https://doi.org/10.1038/ncomms11257
+  implementation_url: https://github.com/bioinformatics-centre/kaiju
+  related_tools:
+  - Kraken2
+  - Centrifuge
+  - DIAMOND
+  tags:
+  - protein-level
+  - classification
+  - sensitive
+  - taxonomic
+- id: maxbin2
+  name: MaxBin 2
+  description: '利用覆盖度和组成偏好信息的自动分箱方法，通过期望最大化算法从宏基因组组装序列中恢复单个微生物基因组。
+
+    该工具在低丰度菌群和复杂环境样本中表现稳健，是宏基因组 binning 与 MAG 构建中的经典方法之一。
+
+    '
+  purpose: 基于覆盖度与组成特征进行宏基因组自动分箱
+  time_complexity: O(n * c)
+  space_complexity: O(n)
+  year: 2016
+  category: metagenomics
+  subcategory: functional-profiling
+  paper_url: https://doi.org/10.1093/bioinformatics/btv638
+  implementation_url: https://sourceforge.net/projects/maxbin2/
+  related_tools:
+  - MetaBAT 2
+  - CONCOCT
+  - CheckM
+  tags:
+  - binning
+  - expectation-maximization
+  - mags
+  - metagenome
+- id: humann3
+  name: HUMAnN 3
+  description: '宏基因组功能谱分析流水线，通过整合物种分类和泛基因组映射实现基因家族和代谢通路的定量分析。
+
+    该方法采用两阶段策略先进行物种丰度估计再进行功能注释，能同时提供群落和物种水平的功能组成信息。
+
+    '
+  purpose: 宏基因组功能谱和代谢通路的定量分析
+  time_complexity: O(n * d)
+  space_complexity: O(d)
+  year: 2018
+  category: metagenomics
+  subcategory: functional-profiling
+  paper_url: https://doi.org/10.1038/s41592-018-0176-y
+  related_tools:
+  - MetaPhlAn
+  - KEGG
+  - eggNOG-mapper
+  tags:
+  - functional-profiling
+  - pathway
+  - gene-families
+  - metabolic
+  difficulty: intermediate
+  language:
+  - Python
+- id: motus
+  name: mOTUs
+  description: '基于通用标记基因的微生物物种定量方法，利用核糖体蛋白基因的保守区域进行物种鉴定和丰度估计。
+
+    该方法不依赖完整参考基因组即可实现跨样品可比的物种水平定量，在海洋和肠道微生物组研究中被广泛采用。
+
+    '
+  purpose: 基于通用标记基因的微生物物种定量
+  time_complexity: O(n * m)
+  space_complexity: O(m)
+  year: 2017
+  category: metagenomics
+  subcategory: taxonomic-profiling
+  paper_url: https://doi.org/10.1186/s40168-017-0357-4
+  related_tools:
+  - MetaPhlAn
+  - Kraken2
+  - QIIME2
+  tags:
+  - marker-gene
+  - profiling
+  - universal
+  - species-level
+  difficulty: intermediate
+  language:
+  - Python
+  - C
+- id: qiime2
+  name: QIIME 2
+  description: '微生物组生物信息学综合分析平台，提供从原始序列处理到多样性分析和功能注释的完整可重复分析流程。
+
+    该平台支持扩增子和宏基因组数据，集成了序列质控、分类、聚类和统计分析等多种功能模块。
+
+    '
+  purpose: 微生物组数据的综合分析平台
+  time_complexity: O(n * d)
+  space_complexity: O(n)
+  year: 2019
+  category: metagenomics
+  subcategory: taxonomic-profiling
+  paper_url: https://doi.org/10.1038/s41587-019-0209-9
+  related_tools:
+  - mothur
+  - MetaPhlAn
+  - Kraken2
+  tags:
+  - pipeline
+  - microbiome
+  - diversity
+  - amplicon
+  difficulty: beginner
+  language:
+  - Python
+- id: bracken
+  name: Bracken
+  description: '基于贝叶斯统计框架的物种丰度估计方法，在 Kraken 分类结果基础上利用 k-mer 分布特征校正物种级丰度。
+
+    该方法通过概率模型将读段重新分配到各分类层级，显著提高物种丰度估计的准确性，是 Kraken 流程的重要补充。
+
+    '
+  purpose: 基于贝叶斯方法的 Kraken 物种丰度校正
+  time_complexity: O(n)
+  space_complexity: O(d)
+  year: 2017
+  category: metagenomics
+  subcategory: taxonomic-profiling
+  paper_url: https://doi.org/10.7717/peerj-cs.116
+  related_tools:
+  - Kraken2
+  - MetaPhlAn
+  - Centrifuge
+  tags:
+  - abundance-estimation
+  - bayesian
+  - kraken
+  - species-level
+  difficulty: intermediate
+  language:
+  - Python
+- id: metaphlan4
+  name: MetaPhlAn 4
+  description: '基于进化枝特异性标记基因的增强型物种定量工具，通过扩展标记基因数据库和改进比对策略提升分类灵敏度。
+
+    该方法在 MetaPhlAn 基础上新增了病毒和古菌标记基因支持，提供更全面的微生物群落组成分析能力。
+
+    '
+  purpose: 基于增强标记基因的微生物群落定量
+  time_complexity: O(n * m)
+  space_complexity: O(m)
+  year: 2023
+  category: metagenomics
+  subcategory: taxonomic-profiling
+  paper_url: https://doi.org/10.1038/s41587-023-01688-0
+  related_tools:
+  - Kraken2
+  - mOTUs
+  - Bracken
+  tags:
+  - marker-gene
+  - profiling
+  - enhanced
+  - clade-specific
+  difficulty: intermediate
+  language:
+  - Python
+- id: metabat2-binning
+  name: MetaBAT 2
+  description: '利用四核苷酸频率和覆盖度信息的自适应宏基因组分箱方法，通过概率模型将组装重叠群聚类为微生物基因组单元。
+
+    该方法在精度和召回率之间实现了良好平衡，支持深度和浅层测序数据，是环境微生物学研究中 MAG 构建的主力工具。
+
+    '
+  purpose: 自适应宏基因组重叠群分箱与基因组恢复
+  time_complexity: O(n * c)
+  space_complexity: O(n)
+  year: 2019
+  category: metagenomics
+  subcategory: taxonomic-profiling
+  paper_url: https://doi.org/10.1186/s13059-019-1893-y
+  related_tools:
+  - MaxBin 2
+  - CONCOCT
+  - DAS Tool
+  tags:
+  - binning
+  - metagenome
+  - adaptive
+  - contig
+  difficulty: intermediate
+  language:
+  - C++
+- id: metapost
+  name: metaPOST
+  description: '宏基因组组装后处理与精修工具，通过整合覆盖度一致性和连接图信息检测并纠正组装中的错误和嵌合体重叠群。
+
+    该方法能显著提升宏基因组组装的质量指标，减少假阳性重叠群对下游分析的干扰。
+
+    '
+  purpose: 宏基因组组装结果的后处理与质量提升
+  time_complexity: O(n * c)
+  space_complexity: O(n)
+  year: 2021
+  category: metagenomics
+  subcategory: functional-profiling
+  paper_url: https://doi.org/10.1038/s41592-021-01159-7
+  related_tools:
+  - MetaBAT 2
+  - CheckM
+  - DAS Tool
+  tags:
+  - post-processing
+  - refinement
+  - assembly
+  - quality
+  difficulty: advanced
+  language:
+  - Python

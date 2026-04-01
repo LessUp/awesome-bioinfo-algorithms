@@ -67,3 +67,223 @@ algorithms:
       - chromatin-state
       - histone
       - annotation
+
+  - id: hmmratac
+    name: HMMRATAC
+    description: |
+      专为 ATAC-seq 设计的开放染色质识别算法，使用隐马尔可夫模型整合不同片段长度信号进行峰值检测。
+      该方法能同时刻画核小体缺失区与周围核小体结构，在开放染色质分析中具有较高分辨率和稳健性。
+    purpose: 基于 ATAC-seq 信号识别开放染色质区域
+    time_complexity: O(n)
+    space_complexity: O(n)
+    year: 2019
+    category: epigenomics
+    subcategory: chip-seq
+    paper_url: https://doi.org/10.1093/nar/gkz533
+    implementation_url: https://github.com/LiuLabUB/HMMRATAC
+    related_tools:
+      - MACS2
+      - Genrich
+      - ATACseqQC
+    tags:
+      - atac-seq
+      - hmm
+      - peak-calling
+      - open-chromatin
+
+  - id: methylkit
+    name: methylKit
+    description: |
+      面向高通量甲基化测序的分析工具包，支持甲基化位点过滤、差异甲基化分析和功能区域注释。
+      该方法适合 RRBS 和全基因组亚硫酸氢盐测序数据，广泛用于比较不同样本间的 DNA 甲基化变化。
+    purpose: 高通量甲基化测序数据的差异分析与注释
+    time_complexity: O(n * s)
+    space_complexity: O(n)
+    year: 2012
+    category: epigenomics
+    subcategory: methylation
+    paper_url: https://doi.org/10.1186/1471-2105-13-87
+    implementation_url: https://github.com/al2na/methylKit
+    related_tools:
+      - Bismark
+      - DSS
+      - bsseq
+    tags:
+      - methylation
+      - differential-analysis
+      - rrbs
+      - bisulfite-seq
+
+  - id: dss
+    name: DSS
+    description: |
+      基于贝塔二项分布层次模型的差异甲基化分析方法，可在生物学重复之间稳健估计离散度并检测 DMR。
+      该方法适用于全基因组和靶向亚硫酸氢盐测序数据，是比较不同条件甲基化变化的常用统计框架。
+    purpose: 基于层次统计模型检测差异甲基化位点和区域
+    time_complexity: O(n * s)
+    space_complexity: O(n)
+    year: 2014
+    category: epigenomics
+    subcategory: methylation
+    paper_url: https://doi.org/10.1093/biostatistics/kxu022
+    implementation_url: https://bioconductor.org/packages/DSS/
+    related_tools:
+      - methylKit
+      - bsseq
+      - Bismark
+    tags:
+      - methylation
+      - beta-binomial
+      - dmr
+      - statistical
+
+  - id: bismark-bs
+    name: Bismark
+    description: |
+      亚硫酸氢盐测序数据的比对和甲基化分析工具，通过 C-to-T 转换双链比对策略处理亚硫酸氢盐转化后的序列。
+      该方法能同时鉴定 CpG、CHG 和 CHH 位点的甲基化状态，并提供详细的甲基化水平定量报告。
+    purpose: 亚硫酸氢盐测序数据的比对和甲基化定量
+    time_complexity: O(n * g)
+    space_complexity: O(g)
+    year: 2011
+    category: epigenomics
+    subcategory: methylation
+    paper_url: https://doi.org/10.1093/bioinformatics/btr167
+    related_tools:
+      - BSseeker2
+      - methylKit
+      - bwa-meth
+    tags:
+      - bisulfite
+      - methylation
+      - alignment
+      - epigenetics
+    difficulty: intermediate
+    language:
+      - Perl
+
+  - id: macs3
+    name: MACS2
+    description: |
+      基于模型的 ChIP-seq 数据分析工具，使用泊松分布和局部偏差校正策略精确识别蛋白质-DNA 相互作用的峰值区域。
+      该方法支持窄峰和宽峰检测，能有效处理不同信噪比的 ChIP-seq 数据，是表观基因组学峰值检测的行业标准。
+    purpose: ChIP-seq 数据的模型驱动峰值检测
+    time_complexity: O(n)
+    space_complexity: O(n)
+    year: 2012
+    category: epigenomics
+    subcategory: chip-seq
+    paper_url: https://doi.org/10.1186/gb-2012-13-9-r76
+    related_tools:
+      - HOMER
+      - Genrich
+      - SICER
+    tags:
+      - chip-seq
+      - peak-calling
+      - model-based
+      - fragment
+    difficulty: beginner
+    language:
+      - Python
+
+  - id: genrich-chip
+    name: Genrich
+    description: |
+      快速的基因组富集检测工具，通过信号与对照样本的比较在 ChIP-seq 和 ATAC-seq 数据中识别显著富集区域。
+      该方法运行速度极快，支持多组生物学重复的合并分析，适用于大规模表观基因组学筛选项目。
+    purpose: ChIP-seq 和 ATAC-seq 数据的快速富集检测
+    time_complexity: O(n)
+    space_complexity: O(n)
+    year: 2019
+    category: epigenomics
+    subcategory: chip-seq
+    paper_url: https://arxiv.org/abs/1901.09818
+    related_tools:
+      - MACS2
+      - HMMRATAC
+      - SICER
+    tags:
+      - chip-seq
+      - peak-calling
+      - fast
+      - atac-seq
+    difficulty: intermediate
+    language:
+      - C
+
+  - id: homer-chip
+    name: HOMER
+    description: |
+      综合性 ChIP-seq 数据分析平台，集成峰值检测、从头基序发现和已知基序富集分析等多种功能模块。
+      该方法在转录因子结合位点鉴定和基序分析方面表现突出，支持多种表观基因组学实验设计的下游解析。
+    purpose: ChIP-seq 数据分析与转录因子基序发现
+    time_complexity: O(n * m)
+    space_complexity: O(n)
+    year: 2010
+    category: epigenomics
+    subcategory: chip-seq
+    paper_url: https://doi.org/10.1016/S0022-2836(02)00917-8
+    related_tools:
+      - MACS2
+      - MEME
+      - ChromHMM
+    tags:
+      - motif-discovery
+      - chip-seq
+      - transcription-factor
+      - de-novo
+    difficulty: intermediate
+    language:
+      - Perl
+      - C++
+
+  - id: diffbind
+    name: DiffBind
+    description: |
+      基于统计学框架的 ChIP-seq 差异结合分析工具，通过整合多组样本的峰值和读段计数检测条件间的显著结合变化。
+      该方法支持 DESeq2 和 edgeR 等主流差异分析引擎，能有效控制批次效应和混杂因素。
+    purpose: ChIP-seq 样本间的差异结合位点检测
+    time_complexity: O(n * s)
+    space_complexity: O(n)
+    year: 2011
+    category: epigenomics
+    subcategory: chip-seq
+    paper_url: https://doi.org/10.1093/bioinformatics/btp340
+    related_tools:
+      - DESeq2
+      - edgeR
+      - MACS2
+    tags:
+      - differential-binding
+      - chip-seq
+      - differential-analysis
+      - statistical
+    difficulty: intermediate
+    language:
+      - R
+
+  - id: methylkit-bs
+    name: methylKit
+    description: |
+      高通量甲基化测序数据分析的 Bioconductor 工具包，支持甲基化位点注释、差异分析和功能区域聚合统计。
+      该方法兼容 RRBS 和 WGBS 数据设计，提供灵活的覆盖度过滤和滑动窗口分析功能，是比较不同条件下甲基化变化的常用工具。
+    purpose: 高通量甲基化测序数据的差异分析与功能注释
+    time_complexity: O(n * s)
+    space_complexity: O(n)
+    year: 2012
+    category: epigenomics
+    subcategory: methylation
+    paper_url: https://doi.org/10.1186/gb-2012-13-10-r87
+    related_tools:
+      - Bismark
+      - DSS
+      - bsseq
+    tags:
+      - methylation
+      - bisulfite
+      - differential
+      - bioconductor
+    difficulty: intermediate
+    language:
+      - R

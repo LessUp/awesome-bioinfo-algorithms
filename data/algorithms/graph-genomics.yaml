@@ -1,0 +1,239 @@
+algorithms:
+  - id: minigraph
+    name: Minigraph
+    description: |
+      基于 minimizer 的图基因组构建和比对工具，可将多个基因组组装整合为一个
+      保留结构变异的图结构。该方法支持线性序列到图的高效比对，是泛基因组
+      分析的核心工具。
+    purpose: 构建泛基因组图和图上比对
+    time_complexity: O(n log n)
+    space_complexity: O(n)
+    year: 2020
+    category: graph-genomics
+    subcategory: pangenome
+    paper_url: https://doi.org/10.1093/bioinformatics/btaa743
+    implementation_url: https://github.com/lh3/minigraph
+    related_tools:
+      - vg
+      - Minimap2
+      - PGGB
+    tags:
+      - pangenome
+      - graph-alignment
+      - minimizer
+      - structural-variant
+    difficulty: advanced
+    language:
+      - C++
+
+  - id: hifibd
+    name: HiFiBD
+    description: |
+      专为 PacBio HiFi 数据设计的泛基因组图分型方法，利用图结构中的变异信息
+      提高低频变异的检测灵敏度。该方法可直接在泛基因组图上进行比对和分型。
+    purpose: 泛基因组图上的 HiFi 数据分型
+    time_complexity: O(n * d)
+    space_complexity: O(n)
+    year: 2022
+    category: graph-genomics
+    subcategory: variation-graph
+    paper_url: https://doi.org/10.1038/s41587-022-01347-y
+    related_tools:
+      - VG
+      - Minigraph
+      - GraphAligner
+    tags:
+      - variation-graph
+      - hifi
+      - genotyping
+      - pangenome
+    difficulty: advanced
+    language:
+      - C++
+
+  - id: panvc
+    name: PanVC
+    description: |
+      基于泛基因组图的变异检测流程，将比对、变异检测和分型步骤整合到图框架中。
+      该方法可减少参考基因组偏差，提高结构区域的变异检测准确性。
+    purpose: 基于泛基因组图的端到端变异检测
+    time_complexity: O(n * m)
+    space_complexity: O(n)
+    year: 2023
+    category: graph-genomics
+    subcategory: variation-graph
+    paper_url: https://doi.org/10.1186/s13059-023-03029-1
+    related_tools:
+      - VG
+      - Minigraph
+      - GATK
+    tags:
+      - pangenome
+      - variant-calling
+      - genotyping
+      - pipeline
+    difficulty: advanced
+    language:
+      - C++
+      - Python
+
+  - id: cactus
+    name: Cactus
+    description: |
+      基于祖先引导的全基因组比对和泛基因组图构建方法，使用 progressive cactus
+      算法处理多物种间的共线性关系。该方法可构建大规模的全基因组比对和泛基因组
+      参考图。
+    purpose: 多物种全基因组比对和泛基因组构建
+    time_complexity: O(n^2 * k)
+    space_complexity: O(n * k)
+    year: 2011
+    category: graph-genomics
+    subcategory: pangenome
+    paper_url: https://doi.org/10.1101/gr.123356.111
+    implementation_url: https://github.com/ComparativeGenomicsToolkit/cactus
+    related_tools:
+      - Minigraph
+      - PGGB
+      - Mauve
+    tags:
+      - pangenome
+      - alignment
+      - progressive
+      - multi-species
+    difficulty: advanced
+    language:
+      - C
+      - Python
+
+  - id: vg-toolkit
+    name: VG (Variation Graph)
+    description: |
+      基于变异图的基因组分析工具包，将基因组序列和群体变异编码为有向图结构，
+      支持图上的序列比对和变异检测。该方法可处理参考基因组偏差，提供更公平
+      的比对和变异调用。
+    purpose: 基于变异图的序列比对和变异检测
+    time_complexity: O(n log n)
+    space_complexity: O(n)
+    year: 2017
+    category: graph-genomics
+    subcategory: variation-graph
+    paper_url: https://doi.org/10.1038/nbt.3820
+    implementation_url: https://github.com/vgteam/vg
+    related_tools:
+      - Minigraph
+      - GCSA2
+      - GraphAligner
+    tags:
+      - variation-graph
+      - alignment
+      - variant-calling
+      - pangenome
+    difficulty: advanced
+    language:
+      - C++
+
+  - id: gcsa2
+    name: GCSA2
+    description: |
+      基于广义压缩后缀数组的图索引方法，将变异图上的所有路径编码为可搜索的
+      索引结构，支持高效的 k-mer 搜索和精确匹配。该方法是 VG 工具包的核心
+      索引引擎。
+    purpose: 变异图的高效 k-mer 索引
+    time_complexity: O(n)
+    space_complexity: O(n)
+    year: 2017
+    category: graph-genomics
+    subcategory: variation-graph
+    paper_url: https://doi.org/10.1093/bioinformatics/btw513
+    implementation_url: https://github.com/jltsiren/gcsa2
+    related_tools:
+      - VG
+      - Minigraph
+      - GraphAligner
+    tags:
+      - indexing
+      - k-mer
+      - compressed-suffix-array
+      - variation-graph
+    difficulty: advanced
+    language:
+      - C++
+
+  - id: graph-aligner
+    name: GraphAligner
+    description: |
+      专为泛基因组图设计的长读段比对工具，使用种子扩展和动态规划在变异图上
+      进行精确的序列比对。该方法可处理复杂的图拓扑结构，对长读段数据的
+      比对效果优于线性比对器。
+    purpose: 泛基因组图上的长读段比对
+    time_complexity: O(n * d)
+    space_complexity: O(n)
+    year: 2019
+    category: graph-genomics
+    subcategory: variation-graph
+    paper_url: https://doi.org/10.1093/bioinformatics/btz161
+    implementation_url: https://github.com/maickrau/GraphAligner
+    related_tools:
+      - VG
+      - Minimap2
+      - vg-deconstruct
+    tags:
+      - graph-alignment
+      - long-read
+      - variation-graph
+      - seed-extend
+    difficulty: advanced
+    language:
+      - C++
+
+  - id: odgi
+    name: odgi
+    description: |
+      泛基因组图的优化工具包，提供图的压缩存储、遍历、去环化、分块和可视化
+      功能。该方法支持对大规模泛基因组图进行高效操作和分析。
+    purpose: 泛基因组图的存储、操作和可视化
+    time_complexity: O(n)
+    space_complexity: O(n)
+    year: 2020
+    category: graph-genomics
+    subcategory: pangenome
+    paper_url: https://doi.org/10.1093/bioinformatics/btaa767
+    implementation_url: https://github.com/pangenome/odgi
+    related_tools:
+      - PGGB
+      - VG
+      - seqwish
+    tags:
+      - pangenome
+      - graph-operations
+      - visualization
+      - sorting
+    difficulty: intermediate
+    language:
+      - C++
+
+  - id: seqwish
+    name: seqwish
+    description: |
+      从全对全比对结果构建无损变异图的工具，将比对中的所有对齐关系编码为
+      图结构。该方法是 PGGB 工作流的核心组件，保证不丢失任何序列和比对信息。
+    purpose: 从比对结果构建无损变异图
+    time_complexity: O(n^2)
+    space_complexity: O(n^2)
+    year: 2020
+    category: graph-genomics
+    subcategory: pangenome
+    paper_url: https://doi.org/10.1093/bioinformatics/btaa767
+    implementation_url: https://github.com/ekg/seqwish
+    related_tools:
+      - PGGB
+      - odgi
+      - Minigraph
+    tags:
+      - pangenome
+      - graph-construction
+      - alignment-to-graph
+      - lossless
+    difficulty: advanced
+    language:
+      - C++

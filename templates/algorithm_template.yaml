@@ -20,12 +20,20 @@ algorithms:
     subcategory: pairwise               # 子分类ID（可选）/ Subcategory ID (optional)
     paper_url: https://doi.org/...      # 原始论文链接（可选）/ Original paper URL (optional)
     implementation_url: https://...     # 参考实现链接（可选）/ Reference implementation URL (optional)
+    difficulty: beginner                # 难度: beginner/intermediate/advanced（可选）
+    language:                           # 实现语言（可选）/ Implementation languages (optional)
+      - Python
+      - C++
     related_tools:                      # 相关工具（可选）/ Related tools (optional)
       - Tool1
       - Tool2
     tags:                               # 标签（可选）/ Tags (optional)
       - tag1
       - tag2
+    references:                         # 扩展资料（可选）/ Extended references (optional)
+      - url: https://...
+        title: "Tutorial: ..."
+        type: tutorial                  # tutorial/blog/video/book/documentation/slides
 
 # 可用分类 / Available Categories:
 # - sequence-alignment (序列比对)

@@ -2,8 +2,10 @@
 Property-based tests for Validator class.
 Feature: awesome-bioinfo-algorithms
 """
+
 from pathlib import Path
 
+import pytest
 from hypothesis import HealthCheck, given, settings
 from hypothesis import strategies as st
 
@@ -11,9 +13,8 @@ from scripts.validate import Validator
 
 # Strategies for generating test data
 valid_id = st.text(
-    alphabet=st.sampled_from('abcdefghijklmnopqrstuvwxyz-_0123456789'),
-    min_size=1, max_size=50
-).filter(lambda x: x and not x.startswith('-'))
+    alphabet=st.sampled_from("abcdefghijklmnopqrstuvwxyz-_0123456789"), min_size=1, max_size=50
+).filter(lambda x: x and not x.startswith("-"))
 
 valid_name = st.text(min_size=1, max_size=100).filter(lambda x: x.strip())
 
@@ -31,12 +32,12 @@ long_description = st.text(min_size=501, max_size=600)
 def valid_algorithm_data(draw):
     """Generate valid algorithm data dictionary."""
     return {
-        'id': draw(valid_id),
-        'name': draw(valid_name),
-        'description': draw(valid_description),
-        'purpose': draw(st.text(min_size=5, max_size=100).filter(lambda x: x.strip())),
-        'time_complexity': draw(st.sampled_from(['O(n)', 'O(n^2)', 'O(mn)', 'O(n log n)', 'O(1)'])),
-        'category': draw(valid_id),
+        "id": draw(valid_id),
+        "name": draw(valid_name),
+        "description": draw(valid_description),
+        "purpose": draw(st.text(min_size=5, max_size=100).filter(lambda x: x.strip())),
+        "time_complexity": draw(st.sampled_from(["O(n)", "O(n^2)", "O(mn)", "O(n log n)", "O(1)"])),
+        "category": draw(valid_id),
     }
 
 
@@ -58,7 +59,11 @@ def algorithm_data_empty_field(draw, field_to_empty: str):
 
 # Property 3: Required Fields Validation
 @settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
-@given(field_name=st.sampled_from(['id', 'name', 'description', 'purpose', 'time_complexity', 'category']))
+@given(
+    field_name=st.sampled_from(
+        ["id", "name", "description", "purpose", "time_complexity", "category"]
+    )
+)
 def test_property_3_missing_required_field(field_name: str):
     """
     Feature: awesome-bioinfo-algorithms, Property 3: Required Fields Validation
@@ -72,24 +77,29 @@ def test_property_3_missing_required_field(field_name: str):
 
     # Create valid data then remove the field
     data = {
-        'id': 'test-algo',
-        'name': 'Test Algorithm',
-        'description': 'A' * 60,  # Valid length
-        'purpose': 'Testing',
-        'time_complexity': 'O(n)',
-        'category': 'test-category',
+        "id": "test-algo",
+        "name": "Test Algorithm",
+        "description": "A" * 60,  # Valid length
+        "purpose": "Testing",
+        "time_complexity": "O(n)",
+        "category": "test-category",
     }
     del data[field_name]
 
     result = validator.validate_algorithm(data)
 
     assert not result.is_valid, f"Should reject when '{field_name}' is missing"
-    assert any(field_name in error for error in result.errors), \
+    assert any(field_name in error for error in result.errors), (
         f"Error should mention missing field '{field_name}'"
+    )
 
 
 @settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
-@given(field_name=st.sampled_from(['id', 'name', 'description', 'purpose', 'time_complexity', 'category']))
+@given(
+    field_name=st.sampled_from(
+        ["id", "name", "description", "purpose", "time_complexity", "category"]
+    )
+)
 def test_property_3_empty_required_field(field_name: str):
     """
     Feature: awesome-bioinfo-algorithms, Property 3: Required Fields Validation
@@ -103,28 +113,31 @@ def test_property_3_empty_required_field(field_name: str):
 
     # Create valid data then empty the field
     data = {
-        'id': 'test-algo',
-        'name': 'Test Algorithm',
-        'description': 'A' * 60,
-        'purpose': 'Testing',
-        'time_complexity': 'O(n)',
-        'category': 'test-category',
+        "id": "test-algo",
+        "name": "Test Algorithm",
+        "description": "A" * 60,
+        "purpose": "Testing",
+        "time_complexity": "O(n)",
+        "category": "test-category",
     }
     data[field_name] = ""
 
     result = validator.validate_algorithm(data)
 
     assert not result.is_valid, f"Should reject when '{field_name}' is empty"
-    assert any(field_name in error for error in result.errors), \
+    assert any(field_name in error for error in result.errors), (
         f"Error should mention empty field '{field_name}'"
+    )
 
 
 # Property 7: Validation Error Specificity
 @settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(
     missing_fields=st.lists(
-        st.sampled_from(['id', 'name', 'description', 'purpose', 'time_complexity', 'category']),
-        min_size=1, max_size=3, unique=True
+        st.sampled_from(["id", "name", "description", "purpose", "time_complexity", "category"]),
+        min_size=1,
+        max_size=3,
+        unique=True,
     )
 )
 def test_property_7_error_specificity_missing_fields(missing_fields):
@@ -140,12 +153,12 @@ def test_property_7_error_specificity_missing_fields(missing_fields):
 
     # Create data with multiple missing fields
     data = {
-        'id': 'test-algo',
-        'name': 'Test Algorithm',
-        'description': 'A' * 60,
-        'purpose': 'Testing',
-        'time_complexity': 'O(n)',
-        'category': 'test-category',
+        "id": "test-algo",
+        "name": "Test Algorithm",
+        "description": "A" * 60,
+        "purpose": "Testing",
+        "time_complexity": "O(n)",
+        "category": "test-category",
     }
     for field in missing_fields:
         del data[field]
@@ -155,8 +168,9 @@ def test_property_7_error_specificity_missing_fields(missing_fields):
     assert not result.is_valid
     # Each missing field should be mentioned in errors
     for field in missing_fields:
-        assert any(field in error for error in result.errors), \
+        assert any(field in error for error in result.errors), (
             f"Error should specifically mention '{field}'"
+        )
 
 
 @settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
@@ -173,21 +187,21 @@ def test_property_7_error_specificity_short_description(desc_length):
     validator = Validator()
 
     data = {
-        'id': 'test-algo',
-        'name': 'Test Algorithm',
-        'description': 'A' * desc_length,
-        'purpose': 'Testing',
-        'time_complexity': 'O(n)',
-        'category': 'test-category',
+        "id": "test-algo",
+        "name": "Test Algorithm",
+        "description": "A" * desc_length,
+        "purpose": "Testing",
+        "time_complexity": "O(n)",
+        "category": "test-category",
     }
 
     result = validator.validate_algorithm(data)
 
     if desc_length < 50:
         assert not result.is_valid
-        assert any('short' in error.lower() or 'description' in error.lower()
-                   for error in result.errors), \
-            "Error should mention description length issue"
+        assert any(
+            "short" in error.lower() or "description" in error.lower() for error in result.errors
+        ), "Error should mention description length issue"
 
 
 @settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
@@ -204,20 +218,20 @@ def test_property_7_error_specificity_long_description(desc_length):
     validator = Validator()
 
     data = {
-        'id': 'test-algo',
-        'name': 'Test Algorithm',
-        'description': 'A' * desc_length,
-        'purpose': 'Testing',
-        'time_complexity': 'O(n)',
-        'category': 'test-category',
+        "id": "test-algo",
+        "name": "Test Algorithm",
+        "description": "A" * desc_length,
+        "purpose": "Testing",
+        "time_complexity": "O(n)",
+        "category": "test-category",
     }
 
     result = validator.validate_algorithm(data)
 
     assert not result.is_valid
-    assert any('long' in error.lower() or 'description' in error.lower()
-               for error in result.errors), \
-        "Error should mention description length issue"
+    assert any(
+        "long" in error.lower() or "description" in error.lower() for error in result.errors
+    ), "Error should mention description length issue"
 
 
 # Property 10: Data Format Validation
@@ -235,7 +249,7 @@ def test_property_10_valid_data_passes(data):
     result = validator.validate_algorithm(data)
 
     # Valid data should pass (unless description length is wrong)
-    desc_len = len(data['description'].strip())
+    desc_len = len(data["description"].strip())
     if 50 <= desc_len <= 500:
         assert result.is_valid, f"Valid data should pass validation. Errors: {result.errors}"
 
@@ -245,7 +259,9 @@ def test_property_10_valid_data_passes(data):
     tags_value=st.one_of(
         st.text(min_size=1, max_size=20),  # String instead of list
         st.integers(),  # Integer instead of list
-        st.dictionaries(st.text(max_size=5), st.text(max_size=5), max_size=2)  # Dict instead of list
+        st.dictionaries(
+            st.text(max_size=5), st.text(max_size=5), max_size=2
+        ),  # Dict instead of list
     )
 )
 def test_property_10_invalid_tags_format(tags_value):
@@ -259,33 +275,44 @@ def test_property_10_invalid_tags_format(tags_value):
     validator = Validator()
 
     data = {
-        'id': 'test-algo',
-        'name': 'Test Algorithm',
-        'description': 'A' * 60,
-        'purpose': 'Testing',
-        'time_complexity': 'O(n)',
-        'category': 'test-category',
-        'tags': tags_value,
+        "id": "test-algo",
+        "name": "Test Algorithm",
+        "description": "A" * 60,
+        "purpose": "Testing",
+        "time_complexity": "O(n)",
+        "category": "test-category",
+        "tags": tags_value,
     }
 
     result = validator.validate_algorithm(data)
 
     assert not result.is_valid
-    assert any('tags' in error.lower() for error in result.errors), \
+    assert any("tags" in error.lower() for error in result.errors), (
         "Error should mention 'tags' field"
+    )
 
 
-# Category validation tests
+def build_valid_category(**overrides):
+    """Build a valid category payload for validator tests."""
+    data = {
+        "id": "test-cat",
+        "name": "测试分类",
+        "name_en": "Test Category",
+    }
+    data.update(overrides)
+    return data
+
+
 @settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
-@given(field_name=st.sampled_from(['id', 'name', 'name_en']))
+@given(field_name=st.sampled_from(["id", "name", "name_en"]))
 def test_category_missing_required_field(field_name: str):
     """Test that missing required category fields are detected."""
     validator = Validator()
 
     data = {
-        'id': 'test-cat',
-        'name': '测试分类',
-        'name_en': 'Test Category',
+        "id": "test-cat",
+        "name": "测试分类",
+        "name_en": "Test Category",
     }
     del data[field_name]
 
@@ -295,52 +322,452 @@ def test_category_missing_required_field(field_name: str):
     assert any(field_name in error for error in result.errors)
 
 
-def test_subcategory_must_exist_and_match_parent_category():
+def test_unknown_category_field_is_rejected():
+    """Unexpected category fields should be rejected to catch typos."""
+    validator = Validator()
+
+    result = validator.validate_category(build_valid_category(display_name="Alias"))
+
+    assert not result.is_valid
+    assert "Unknown field: 'display_name'" in result.errors
+
+
+@pytest.mark.parametrize("field_name", ["id", "name", "name_en"])
+def test_category_required_string_field_requires_string_type(field_name: str):
+    """Required category fields should reject non-string values."""
+    validator = Validator()
+
+    result = validator.validate_category(build_valid_category(**{field_name: 123}))
+
+    assert not result.is_valid
+    assert any(field_name in error and "must be a string" in error for error in result.errors)
+
+
+@pytest.mark.parametrize("field_name", ["id", "name", "name_en"])
+def test_category_required_whitespace_only_string_is_rejected(field_name: str):
+    """Whitespace-only required category fields should count as empty."""
+    validator = Validator()
+
+    result = validator.validate_category(build_valid_category(**{field_name: "   "}))
+
+    assert not result.is_valid
+    assert any(field_name in error and "empty" in error.lower() for error in result.errors)
+
+
+def test_category_description_requires_string_type():
+    """Optional category description should be a string when present."""
+    validator = Validator()
+
+    result = validator.validate_category(build_valid_category(description=["not-a-string"]))
+
+    assert not result.is_valid
+    assert any("Field 'description' must be a string" in error for error in result.errors)
+
+
+def test_subcategory_items_must_be_mappings():
+    """Subcategory lists should only contain mapping objects."""
+    validator = Validator()
+
+    result = validator.validate_category(build_valid_category(subcategories=["pairwise"]))
+
+    assert not result.is_valid
+    assert any("must be a mapping" in error for error in result.errors)
+
     """Test that subcategory validation enforces parent-child relationships."""
     validator = Validator(
-        valid_categories=['sequence-alignment', 'assembly', 'pairwise'],
+        valid_categories=["sequence-alignment", "assembly", "pairwise"],
     )
     validator.category_parents = {
-        'sequence-alignment': None,
-        'assembly': None,
-        'pairwise': 'sequence-alignment',
+        "sequence-alignment": None,
+        "assembly": None,
+        "pairwise": "sequence-alignment",
     }
 
     valid_data = {
-        'id': 'smith-waterman',
-        'name': 'Smith-Waterman',
-        'description': 'A' * 60,
-        'purpose': 'Local alignment',
-        'time_complexity': 'O(mn)',
-        'category': 'sequence-alignment',
-        'subcategory': 'pairwise',
+        "id": "smith-waterman",
+        "name": "Smith-Waterman",
+        "description": "A" * 60,
+        "purpose": "Local alignment",
+        "time_complexity": "O(mn)",
+        "category": "sequence-alignment",
+        "subcategory": "pairwise",
     }
     assert validator.validate_algorithm(valid_data).is_valid
 
-    wrong_parent = dict(valid_data, category='assembly')
+    wrong_parent = dict(valid_data, category="assembly")
     wrong_parent_result = validator.validate_algorithm(wrong_parent)
     assert not wrong_parent_result.is_valid
-    assert any('does not belong' in error for error in wrong_parent_result.errors)
+    assert any("does not belong" in error for error in wrong_parent_result.errors)
 
-    invalid_subcategory = dict(valid_data, subcategory='multiple')
+    invalid_subcategory = dict(valid_data, subcategory="multiple")
     invalid_subcategory_result = validator.validate_algorithm(invalid_subcategory)
     assert not invalid_subcategory_result.is_valid
-    assert any('Invalid subcategory' in error for error in invalid_subcategory_result.errors)
+    assert any("Invalid subcategory" in error for error in invalid_subcategory_result.errors)
+
+
+def build_valid_algorithm(**overrides):
+    """Build a valid algorithm payload for validator tests."""
+    data = {
+        "id": "test-algo",
+        "name": "Test Algorithm",
+        "description": "A" * 60,
+        "purpose": "Testing validator behavior",
+        "time_complexity": "O(n)",
+        "category": "test-category",
+    }
+    data.update(overrides)
+    return data
+
+
+def test_unknown_algorithm_field_is_rejected():
+    """Unexpected fields should be rejected to catch typos."""
+    validator = Validator()
+
+    result = validator.validate_algorithm(build_valid_algorithm(time_compexity="O(n)"))
+
+    assert not result.is_valid
+    assert "Unknown field: 'time_compexity'" in result.errors
+
+
+@pytest.mark.parametrize(
+    "field_name", ["id", "name", "description", "purpose", "time_complexity", "category"]
+)
+def test_required_whitespace_only_string_is_rejected(field_name: str):
+    """Whitespace-only required string fields should count as empty."""
+    validator = Validator()
+
+    result = validator.validate_algorithm(build_valid_algorithm(**{field_name: "   "}))
+
+    assert not result.is_valid
+    assert any(field_name in error and "empty" in error.lower() for error in result.errors)
+
+
+@pytest.mark.parametrize(
+    "field_name", ["id", "name", "description", "purpose", "time_complexity", "category"]
+)
+def test_required_string_field_requires_string_type(field_name: str):
+    """Required textual fields should reject non-string values."""
+    validator = Validator()
+
+    result = validator.validate_algorithm(build_valid_algorithm(**{field_name: 123}))
+
+    assert not result.is_valid
+    assert any(field_name in error and "must be a string" in error for error in result.errors)
+
+
+@pytest.mark.parametrize(
+    "field_name", ["space_complexity", "subcategory", "paper_url", "implementation_url"]
+)
+def test_optional_string_field_requires_string_type(field_name: str):
+    """Optional textual fields should reject non-string values when present."""
+    validator = Validator()
+
+    result = validator.validate_algorithm(build_valid_algorithm(**{field_name: ["not-a-string"]}))
+
+    assert not result.is_valid
+    assert any(field_name in error and "must be a string" in error for error in result.errors)
+
+
+@pytest.mark.parametrize("field_name", ["tags", "related_tools"])
+def test_list_field_items_must_be_non_empty_strings(field_name: str):
+    """List-valued metadata fields should only contain non-empty strings."""
+    validator = Validator()
+
+    non_string_result = validator.validate_algorithm(
+        build_valid_algorithm(**{field_name: ["valid", 1]})
+    )
+    empty_string_result = validator.validate_algorithm(
+        build_valid_algorithm(**{field_name: ["valid", "   "]})
+    )
+
+    assert not non_string_result.is_valid
+    assert any(
+        field_name in error and "must be a string" in error for error in non_string_result.errors
+    )
+
+    assert not empty_string_result.is_valid
+    assert any(
+        field_name in error and "cannot be empty" in error for error in empty_string_result.errors
+    )
+
+
+def test_non_integer_year_remains_warning():
+    """Non-integer year values should warn without failing validation."""
+    validator = Validator()
+
+    result = validator.validate_algorithm(build_valid_algorithm(year="1998"))
+
+    assert result.is_valid
+    assert not result.errors
+    assert any("Field 'year' should be an integer" in warning for warning in result.warnings)
+
+
+def test_invalid_url_remains_warning():
+    """Invalid URL syntax should warn without failing validation."""
+    validator = Validator()
+
+    result = validator.validate_algorithm(build_valid_algorithm(paper_url="not-a-url"))
+
+    assert result.is_valid
+    assert not result.errors
+    assert any("Invalid URL format in 'paper_url'" in warning for warning in result.warnings)
+
+
+def test_out_of_range_year_remains_warning():
+    """Out-of-range years should remain warnings for compatibility."""
+    validator = Validator()
+
+    result = validator.validate_algorithm(build_valid_algorithm(year=2045))
+
+    assert result.is_valid
+    assert not result.errors
+    assert any("Suspicious year value: 2045" in warning for warning in result.warnings)
+
+
+def test_validate_yaml_file_reports_missing_file(tmp_path: Path):
+    """Missing YAML files should produce a file-not-found validation error."""
+    validator = Validator()
+
+    result, data = validator.validate_yaml_file(str(tmp_path / "missing.yaml"))
+
+    assert not result.is_valid
+    assert data is None
+    assert any("File not found" in error for error in result.errors)
+
+
+def test_validate_yaml_file_reports_empty_document(tmp_path: Path):
+    """Empty YAML documents should be rejected."""
+    file_path = tmp_path / "empty.yaml"
+    file_path.write_text("", encoding="utf-8")
+    validator = Validator()
+
+    result, data = validator.validate_yaml_file(str(file_path))
+
+    assert not result.is_valid
+    assert data is None
+    assert "Empty YAML file" in result.errors
+
+
+def test_validate_yaml_file_reports_yaml_parse_error(tmp_path: Path):
+    """Malformed YAML should be surfaced as a parsing error."""
+    file_path = tmp_path / "broken.yaml"
+    file_path.write_text("categories: [\n", encoding="utf-8")
+    validator = Validator()
+
+    result, data = validator.validate_yaml_file(str(file_path))
+
+    assert not result.is_valid
+    assert data is None
+    assert any("YAML parsing error" in error for error in result.errors)
+
+
+def test_validate_algorithms_file_requires_algorithms_key(tmp_path: Path):
+    """Algorithm files without an algorithms key should fail validation."""
+    file_path = tmp_path / "algorithms.yaml"
+    file_path.write_text("metadata: {}\n", encoding="utf-8")
+    validator = Validator()
+
+    result = validator.validate_algorithms_file(str(file_path))
+
+    assert not result.is_valid
+    assert "Missing 'algorithms' key in file" in result.errors
+
+
+def test_validate_algorithms_file_requires_algorithms_list(tmp_path: Path):
+    """Algorithm files should require algorithms to be a list."""
+    file_path = tmp_path / "algorithms.yaml"
+    file_path.write_text("algorithms: {}\n", encoding="utf-8")
+    validator = Validator()
+
+    result = validator.validate_algorithms_file(str(file_path))
+
+    assert not result.is_valid
+    assert "'algorithms' must be a list" in result.errors
+
+
+def test_validate_algorithms_file_reports_entry_warnings_and_duplicate_ids(tmp_path: Path):
+    """Algorithm file validation should surface warnings and duplicate IDs within a file."""
+    file_path = tmp_path / "algorithms.yaml"
+    file_path.write_text(
+        """algorithms:
+  - id: shared-id
+    name: Example One
+    description: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    purpose: Example purpose
+    time_complexity: O(n)
+    category: sequence-alignment
+    year: '1998'
+  - id: shared-id
+    name: Example Two
+    description: BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+    purpose: Example purpose
+    time_complexity: O(n)
+    category: sequence-alignment
+    paper_url: not-a-url
+""",
+        encoding="utf-8",
+    )
+    validator = Validator()
+
+    result = validator.validate_algorithms_file(str(file_path))
+
+    assert not result.is_valid
+    assert any("Duplicate algorithm ID: 'shared-id'" in error for error in result.errors)
+    assert any("Field 'year' should be an integer" in warning for warning in result.warnings)
+    assert any("Invalid URL format in 'paper_url'" in warning for warning in result.warnings)
+
+
+def test_validate_categories_file_requires_categories_key(tmp_path: Path):
+    """Category files without a categories key should fail validation."""
+    file_path = tmp_path / "categories.yaml"
+    file_path.write_text("metadata: {}\n", encoding="utf-8")
+    validator = Validator()
+
+    result = validator.validate_categories_file(str(file_path))
+
+    assert not result.is_valid
+    assert "Missing 'categories' key in file" in result.errors
+
+
+def test_validate_categories_file_requires_categories_list(tmp_path: Path):
+    """Category files should require categories to be a list."""
+    file_path = tmp_path / "categories.yaml"
+    file_path.write_text("categories: {}\n", encoding="utf-8")
+    validator = Validator()
+
+    result = validator.validate_categories_file(str(file_path))
+
+    assert not result.is_valid
+    assert "'categories' must be a list" in result.errors
+
+
+def test_validate_categories_file_collects_relationships(tmp_path: Path):
+    """Valid category files should populate validator category relationship state."""
+    file_path = tmp_path / "categories.yaml"
+    file_path.write_text(
+        """categories:
+  - id: sequence-alignment
+    name: 序列比对
+    name_en: Sequence Alignment
+    subcategories:
+      - id: pairwise
+        name: 双序列比对
+        name_en: Pairwise Alignment
+""",
+        encoding="utf-8",
+    )
+    validator = Validator()
+
+    result = validator.validate_categories_file(str(file_path))
+
+    assert result.is_valid
+    assert validator.category_parents == {
+        "sequence-alignment": None,
+        "pairwise": "sequence-alignment",
+    }
+    assert set(validator.valid_categories) == {"sequence-alignment", "pairwise"}
+
+
+def test_validate_categories_file_reports_duplicate_category_ids(tmp_path: Path):
+    """Duplicate category IDs should be rejected while preserving category-state reset."""
+    file_path = tmp_path / "categories.yaml"
+    file_path.write_text(
+        """categories:
+  - id: duplicated
+    name: One
+    name_en: One
+  - id: duplicated
+    name: Two
+    name_en: Two
+""",
+        encoding="utf-8",
+    )
+    validator = Validator()
+
+    result = validator.validate_categories_file(str(file_path))
+
+    assert not result.is_valid
+    assert any("Duplicate category ID: 'duplicated'" in error for error in result.errors)
+    assert validator.category_parents == {}
+    assert validator.valid_categories == []
+
+
+def test_collect_category_relationships_skips_categories_without_ids():
+    """Relationship collection should ignore category objects missing ids."""
+    validator = Validator()
+    result = validator.validate_category(build_valid_category())
+
+    relationships = validator._collect_category_relationships(
+        [
+            {"name": "Missing ID", "name_en": "Missing ID"},
+            {"id": "sequence-alignment", "name": "序列比对", "name_en": "Sequence Alignment"},
+        ],
+        result,
+    )
+
+    assert relationships == {"sequence-alignment": None}
+
+
+def test_validate_all_merges_category_and_algorithm_errors(tmp_path: Path):
+    """validate_all should aggregate errors and warnings across category and algorithm files."""
+    data_dir = tmp_path / "data"
+    algorithms_dir = data_dir / "algorithms"
+    algorithms_dir.mkdir(parents=True)
+
+    (data_dir / "categories.yaml").write_text(
+        """categories:
+  - id: duplicated
+    name: One
+    name_en: One
+  - id: duplicated
+    name: Two
+    name_en: Two
+""",
+        encoding="utf-8",
+    )
+    (algorithms_dir / "entries.yaml").write_text(
+        """algorithms:
+  - id: repeated
+    name: Example One
+    description: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    purpose: Example purpose
+    time_complexity: O(n)
+    category: duplicated
+    paper_url: not-a-url
+  - id: repeated
+    name: Example Two
+    description: BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+    purpose: Example purpose
+    time_complexity: O(n)
+    category: duplicated
+""",
+        encoding="utf-8",
+    )
+    validator = Validator()
+
+    result = validator.validate_all(str(data_dir))
+
+    assert not result.is_valid
+    assert any("Duplicate category ID: 'duplicated'" in error for error in result.errors)
+    assert any(
+        "entries.yaml: Duplicate algorithm ID: 'repeated'" in error for error in result.errors
+    )
+    assert any("Invalid URL format in 'paper_url'" in warning for warning in result.warnings)
 
 
 def test_validate_all_rejects_duplicate_ids_across_files(tmp_path: Path):
     """Test that duplicate algorithm IDs across files are rejected."""
-    data_dir = tmp_path / 'data'
-    algorithms_dir = data_dir / 'algorithms'
+    data_dir = tmp_path / "data"
+    algorithms_dir = data_dir / "algorithms"
     algorithms_dir.mkdir(parents=True)
 
-    (data_dir / 'categories.yaml').write_text(
+    (data_dir / "categories.yaml").write_text(
         """categories:
   - id: sequence-alignment
     name: Sequence Alignment
     name_en: Sequence Alignment
 """,
-        encoding='utf-8',
+        encoding="utf-8",
     )
 
     algorithm_body = """algorithms:
@@ -351,11 +778,162 @@ def test_validate_all_rejects_duplicate_ids_across_files(tmp_path: Path):
     time_complexity: O(n)
     category: sequence-alignment
 """
-    (algorithms_dir / 'first.yaml').write_text(algorithm_body, encoding='utf-8')
-    (algorithms_dir / 'second.yaml').write_text(algorithm_body, encoding='utf-8')
+    (algorithms_dir / "first.yaml").write_text(algorithm_body, encoding="utf-8")
+    (algorithms_dir / "second.yaml").write_text(algorithm_body, encoding="utf-8")
 
     validator = Validator()
     result = validator.validate_all(str(data_dir))
 
     assert not result.is_valid
-    assert any('Duplicate algorithm ID across files' in error for error in result.errors)
+    assert any("Duplicate algorithm ID across files" in error for error in result.errors)
+
+
+def test_validate_all_without_data_files_is_valid(tmp_path: Path):
+    """Absent categories and algorithms directories should produce a clean valid result."""
+    validator = Validator()
+
+    result = validator.validate_all(str(tmp_path / "data"))
+
+    assert result.is_valid
+    assert result.errors == []
+    assert result.warnings == []
+
+
+# --- New field validation tests ---
+
+
+def _make_algo(**overrides):
+    """Helper to create a valid algorithm dict with optional overrides."""
+    base = {
+        "id": "test-algo",
+        "name": "Test Algo",
+        "description": "A" * 60,
+        "purpose": "testing",
+        "time_complexity": "O(n)",
+        "category": "test-cat",
+    }
+    base.update(overrides)
+    return base
+
+
+def test_valid_difficulty_accepted():
+    """Valid difficulty values should pass validation."""
+    validator = Validator()
+    for diff in ["beginner", "intermediate", "advanced"]:
+        result = validator.validate_algorithm(_make_algo(difficulty=diff))
+        assert result.is_valid, f"difficulty='{diff}' should be valid"
+
+
+def test_invalid_difficulty_rejected():
+    """Invalid difficulty value should produce an error."""
+    validator = Validator()
+    result = validator.validate_algorithm(_make_algo(difficulty="expert"))
+    assert not result.is_valid
+    assert any("Invalid difficulty" in e for e in result.errors)
+
+
+def test_difficulty_requires_string_type():
+    """Non-string difficulty should produce an error."""
+    validator = Validator()
+    result = validator.validate_algorithm(_make_algo(difficulty=123))
+    assert not result.is_valid
+    assert any("'difficulty' must be a string" in e for e in result.errors)
+
+
+def test_valid_language_accepted():
+    """Valid language list should pass validation."""
+    validator = Validator()
+    result = validator.validate_algorithm(_make_algo(language=["Python", "C++"]))
+    assert result.is_valid
+
+
+def test_language_requires_list():
+    """Non-list language should produce an error."""
+    validator = Validator()
+    result = validator.validate_algorithm(_make_algo(language="Python"))
+    assert not result.is_valid
+    assert any("'language' must be a list" in e for e in result.errors)
+
+
+def test_language_items_must_be_strings():
+    """Non-string language items should produce an error."""
+    validator = Validator()
+    result = validator.validate_algorithm(_make_algo(language=[123]))
+    assert not result.is_valid
+    assert any("must be a string" in e for e in result.errors)
+
+
+def test_language_items_cannot_be_empty():
+    """Empty language items should produce an error."""
+    validator = Validator()
+    result = validator.validate_algorithm(_make_algo(language=[""]))
+    assert not result.is_valid
+    assert any("cannot be empty" in e for e in result.errors)
+
+
+def test_valid_references_accepted():
+    """Valid references should pass validation."""
+    validator = Validator()
+    refs = [{"url": "https://example.com", "title": "Tutorial", "type": "tutorial"}]
+    result = validator.validate_algorithm(_make_algo(references=refs))
+    assert result.is_valid
+
+
+def test_references_requires_list():
+    """Non-list references should produce an error."""
+    validator = Validator()
+    result = validator.validate_algorithm(_make_algo(references="https://example.com"))
+    assert not result.is_valid
+    assert any("'references' must be a list" in e for e in result.errors)
+
+
+def test_references_items_must_be_mappings():
+    """Non-dict reference items should produce an error."""
+    validator = Validator()
+    result = validator.validate_algorithm(_make_algo(references=["https://example.com"]))
+    assert not result.is_valid
+    assert any("must be a mapping" in e for e in result.errors)
+
+
+def test_references_must_have_url():
+    """References without url should produce an error."""
+    validator = Validator()
+    result = validator.validate_algorithm(_make_algo(references=[{"title": "No URL"}]))
+    assert not result.is_valid
+    assert any("missing required 'url'" in e for e in result.errors)
+
+
+def test_references_url_must_be_non_empty_string():
+    """References with empty url should produce an error."""
+    validator = Validator()
+    result = validator.validate_algorithm(_make_algo(references=[{"url": ""}]))
+    assert not result.is_valid
+    assert any("'url' must be a non-empty string" in e for e in result.errors)
+
+
+def test_references_invalid_url_produces_warning():
+    """References with invalid URL format should produce a warning."""
+    validator = Validator()
+    result = validator.validate_algorithm(_make_algo(references=[{"url": "not-a-url"}]))
+    assert result.is_valid
+    assert any("Invalid URL in references" in w for w in result.warnings)
+
+
+def test_references_unknown_type_produces_warning():
+    """Unknown reference type should produce a warning."""
+    validator = Validator()
+    result = validator.validate_algorithm(
+        _make_algo(references=[{"url": "https://example.com", "type": "podcast"}])
+    )
+    assert result.is_valid
+    assert any("Unknown reference type" in w for w in result.warnings)
+
+
+def test_references_title_must_be_non_empty_string():
+    """Empty title in references should produce an error."""
+    validator = Validator()
+    result = validator.validate_algorithm(
+        _make_algo(references=[{"url": "https://example.com", "title": ""}])
+    )
+    assert not result.is_valid
+    assert any("'title' must be a non-empty string" in e for e in result.errors)

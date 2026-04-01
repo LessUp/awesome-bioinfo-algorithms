@@ -1,0 +1,266 @@
+algorithms:
+  - id: seurat-v5-spatial
+    name: Seurat Spatial
+    description: |
+      Seurat 框架的空间转录组分析模块，提供空间表达数据的标准化、降维、
+      空间聚类和空间可变基因检测。该方法整合了图像信息和表达数据，可发现
+      组织的空间表达模式。
+    purpose: 空间转录组数据的整合分析
+    time_complexity: O(c * g)
+    space_complexity: O(c * g)
+    year: 2021
+    category: spatial-omics
+    subcategory: spatial-transcriptomics
+    paper_url: https://doi.org/10.1016/j.cell.2021.04.048
+    implementation_url: https://github.com/satijalab/seurat
+    related_tools:
+      - Scanpy
+      - Giotto
+      - SPARK
+    tags:
+      - spatial
+      - clustering
+      - integration
+      - multi-modal
+    difficulty: intermediate
+    language:
+      - Python
+
+  - id: giotto-suite
+    name: Giotto Suite
+    description: |
+      综合性空间组学分析框架，支持 Visium、MERFISH、SLIDE-seq 等多种平台的数据
+      分析。提供空间聚类、空间基因集富集、细胞通讯推断和交互式可视化等功能。
+    purpose: 多平台空间组学综合分析框架
+    time_complexity: O(c * g)
+    space_complexity: O(c * g)
+    year: 2021
+    category: spatial-omics
+    subcategory: spatial-transcriptomics
+    paper_url: https://doi.org/10.1038/s41467-021-24778-8
+    implementation_url: https://github.com/drieslab/Giotto
+    related_tools:
+      - Seurat
+      - Scanpy
+      - Squidpy
+    tags:
+      - spatial
+      - multi-platform
+      - comprehensive
+      - interactive
+    difficulty: intermediate
+    language:
+      - R
+      - Python
+
+  - id: cellchat
+    name: CellChat
+    description: |
+      基于配体-受体相互作用数据库推断细胞间通讯的方法，可从单细胞或空间转录组
+      数据中识别显著的细胞通讯通路。该方法整合了信号通路信息，提供通讯网络的
+      可视化和功能推断。
+    purpose: 基于配体-受体互作的细胞通讯推断
+    time_complexity: O(c^2 * g)
+    space_complexity: O(c^2)
+    year: 2021
+    category: spatial-omics
+    subcategory: spatial-proteomics
+    paper_url: https://doi.org/10.1038/s41467-021-21246-9
+    implementation_url: https://github.com/sqjin/CellChat
+    related_tools:
+      - CellPhoneDB
+      - NicheNet
+      - squidpy
+    tags:
+      - cell-communication
+      - ligand-receptor
+      - signaling
+      - network
+    difficulty: intermediate
+    language:
+      - R
+
+  - id: squidpy
+    name: Squidpy
+    description: |
+      专注于空间组学数据分析的 Python 工具包，提供空间邻域图构建、空间富集分析、
+      细胞通讯推断和图像分析等功能。该工具与 Scanpy 深度集成，支持多种空间平台。
+    purpose: 空间组学数据的图分析和图像整合
+    time_complexity: O(c * g)
+    space_complexity: O(c * g)
+    year: 2021
+    category: spatial-omics
+    subcategory: spatial-transcriptomics
+    paper_url: https://doi.org/10.1038/s41592-021-01358-2
+    implementation_url: https://github.com/scverse/squidpy
+    related_tools:
+      - Scanpy
+      - Giotto
+      - stLearn
+    tags:
+      - spatial
+      - graph-analysis
+      - cell-interaction
+      - image-analysis
+    difficulty: intermediate
+    language:
+      - Python
+
+  - id: spark
+    name: SPARK
+    description: |
+      基于广义线性混合模型的空间可变基因检测方法，通过建模空间表达模式的
+      零膨胀和过度离散特征来识别空间相关表达的基因。该方法统计学基础扎实，
+      假阳性控制良好。
+    purpose: 统计学方法检测空间可变基因
+    time_complexity: O(g * n^2)
+    space_complexity: O(n^2)
+    year: 2019
+    category: spatial-omics
+    subcategory: spatial-transcriptomics
+    paper_url: https://doi.org/10.1038/s41467-019-13318-4
+    implementation_url: https://github.com/xzhoulab/SPARK
+    related_tools:
+      - SpatialDE
+      - trendsceek
+      - SPARK-X
+    tags:
+      - spatial
+      - spatially-variable-gene
+      - statistical
+      - glm
+    difficulty: intermediate
+    language:
+      - R
+
+  - id: spark-x
+    name: SPARK-X
+    description: |
+      SPARK 的快速版本，基于非参数协方差函数检验检测空间可变基因。该方法
+      无需分布假设，计算效率显著优于 SPARK，适用于大规模空间转录组数据。
+    purpose: 快速非参数空间可变基因检测
+    time_complexity: O(g * n)
+    space_complexity: O(n)
+    year: 2021
+    category: spatial-omics
+    subcategory: spatial-transcriptomics
+    paper_url: https://doi.org/10.1186/s13059-021-02404-0
+    implementation_url: https://github.com/xzhoulab/SPARK
+    related_tools:
+      - SPARK
+      - SpatialDE
+      - MERINGUE
+    tags:
+      - spatial
+      - fast
+      - non-parametric
+      - scalable
+    difficulty: intermediate
+    language:
+      - R
+
+  - id: spatialde
+    name: SpatialDE
+    description: |
+      基于高斯过程回归的空间可变基因检测方法，通过拟合空间表达的协方差函数
+      来检测基因表达是否具有空间模式。该方法可同时识别周期性和非周期性的
+      空间表达模式。
+    purpose: 高斯过程方法检测空间表达模式
+    time_complexity: O(g * n^2)
+    space_complexity: O(n^2)
+    year: 2018
+    category: spatial-omics
+    subcategory: spatial-transcriptomics
+    paper_url: https://doi.org/10.1038/nmeth.4636
+    implementation_url: https://github.com/Teichlab/SpatialDE
+    related_tools:
+      - SPARK
+      - trendsceek
+      - merfish
+    tags:
+      - spatial
+      - gaussian-process
+      - pattern-detection
+      - probabilistic
+    difficulty: advanced
+    language:
+      - Python
+
+  - id: stlearn
+    name: stLearn
+    description: |
+      整合空间距离、组织学图像和基因表达信息的空间转录组分析方法，通过空间
+      距离权重和图像特征增强聚类和轨迹推断的准确性。
+    purpose: 整合组织图像的空间转录组分析
+    time_complexity: O(c * g)
+    space_complexity: O(c * g)
+    year: 2021
+    category: spatial-omics
+    subcategory: spatial-transcriptomics
+    paper_url: https://doi.org/10.1038/s41467-021-21961-3
+    implementation_url: https://github.com/BiomedicalMachineLearning/stLearn
+    related_tools:
+      - Squidpy
+      - Giotto
+      - Seurat
+    tags:
+      - spatial
+      - image-integration
+      - trajectory
+      - clustering
+    difficulty: intermediate
+    language:
+      - Python
+
+  - id: cellpose
+    name: Cellpose
+    description: |
+      基于深度学习的细胞分割算法，使用 U-Net 架构自动检测图像中的细胞边界。
+      该方法提供预训练模型，支持多种细胞类型和成像模式，是空间蛋白质组学
+      图像分析的基础工具。
+    purpose: 基于深度学习的细胞图像分割
+    time_complexity: O(p)
+    space_complexity: O(p)
+    year: 2020
+    category: spatial-omics
+    subcategory: spatial-proteomics
+    paper_url: https://doi.org/10.1038/s41592-020-01018-z
+    implementation_url: https://github.com/MouseLand/cellpose
+    related_tools:
+      - Stardist
+      - Mesmer
+      - CellProfiler
+    tags:
+      - segmentation
+      - deep-learning
+      - cell-detection
+      - imaging
+    difficulty: intermediate
+    language:
+      - Python
+
+  - id: stardist
+    name: StarDist
+    description: |
+      基于星形凸多边形的细胞核和细胞分割方法，使用深度学习预测每个像素到
+      边界的距离。该方法对密集排列的细胞核分割效果优异，常用于组织切片图像分析。
+    purpose: 基于星形凸多边形的细胞分割
+    time_complexity: O(p)
+    space_complexity: O(p)
+    year: 2018
+    category: spatial-omics
+    subcategory: spatial-proteomics
+    paper_url: https://doi.org/10.1007/978-3-030-00934-2_30
+    implementation_url: https://github.com/stardist/stardist
+    related_tools:
+      - Cellpose
+      - Mesmer
+      - Ilastik
+    tags:
+      - segmentation
+      - deep-learning
+      - cell-nuclei
+      - star-convex
+    difficulty: intermediate
+    language:
+      - Python

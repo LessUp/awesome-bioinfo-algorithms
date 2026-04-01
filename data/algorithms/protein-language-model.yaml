@@ -1,0 +1,270 @@
+algorithms:
+  - id: esm2
+    name: ESM-2
+    description: |
+      Meta AI 开发的蛋白质语言模型，使用 Transformer 架构在数亿条蛋白质序列上
+      预训练。该模型学习到的表征包含丰富的进化和结构信息，可用于下游任务
+      如接触预测、功能预测和结构推断。
+    purpose: 基于 Transformer 的蛋白质序列表征学习
+    time_complexity: O(n^2 * d)
+    space_complexity: O(n^2)
+    year: 2022
+    category: protein-language-model
+    subcategory: protein-lm
+    paper_url: https://doi.org/10.1126/science.ade2574
+    implementation_url: https://github.com/facebookresearch/esm
+    related_tools:
+      - ProtTrans
+      - Ankh
+      - ProGen
+    tags:
+      - language-model
+      - transformer
+      - representation-learning
+      - pretrained
+    difficulty: intermediate
+    language:
+      - Python
+
+  - id: esm-fold
+    name: ESMFold
+    description: |
+      基于 ESM-2 语言模型的端到端蛋白质结构预测方法，无需多序列比对即可从
+      单条氨基酸序列直接预测三维结构。该方法推理速度比 AlphaFold 快一个数量级，
+      适合大规模蛋白质组的结构预测。
+    purpose: 基于语言模型的快速端到端结构预测
+    time_complexity: O(n^2)
+    space_complexity: O(n^2)
+    year: 2023
+    category: protein-language-model
+    subcategory: protein-function-prediction
+    paper_url: https://doi.org/10.1126/science.ade2574
+    implementation_url: https://github.com/facebookresearch/esm
+    related_tools:
+      - AlphaFold
+      - OmegaFold
+      - RoseTTAFold
+    tags:
+      - structure-prediction
+      - single-sequence
+      - fast
+      - language-model
+    difficulty: intermediate
+    language:
+      - Python
+
+  - id: prottrans
+    name: ProtTrans
+    description: |
+      基于多种 Transformer 架构（T5、BERT、XLNet 等）的蛋白质语言模型集合，
+      在 UniRef 和 BFD 等大规模数据库上预训练。该模型可生成高质量的蛋白质
+      序列表征，支持迁移学习用于各种下游任务。
+    purpose: 多架构蛋白质语言模型预训练表征
+    time_complexity: O(n^2 * d)
+    space_complexity: O(n^2)
+    year: 2021
+    category: protein-language-model
+    subcategory: protein-lm
+    paper_url: https://doi.org/10.1073/pnas.2103670118
+    implementation_url: https://github.com/agemagician/ProtTrans
+    related_tools:
+      - ESM-2
+      - Ankh
+      - ProtGPT2
+    tags:
+      - language-model
+      - transfer-learning
+      - representation-learning
+      - t5
+    difficulty: intermediate
+    language:
+      - Python
+
+  - id: protein-mpnn
+    name: ProteinMPNN
+    description: |
+      基于消息传递神经网络的蛋白质序列设计方法，从给定的蛋白质骨架结构出发
+      设计满足该结构的氨基酸序列。该方法在序列恢复率和实验成功率上大幅优于
+      传统的 Rosetta 设计方法。
+    purpose: 基于图神经网络的蛋白质序列设计
+    time_complexity: O(n^2 * d)
+    space_complexity: O(n^2)
+    year: 2022
+    category: protein-language-model
+    subcategory: protein-function-prediction
+    paper_url: https://doi.org/10.1126/science.add2187
+    implementation_url: https://github.com/dauparas/ProteinMPNN
+    related_tools:
+      - Rosetta
+      - RFdiffusion
+      - ESM
+    tags:
+      - protein-design
+      - inverse-folding
+      - graph-neural-network
+      - sequence-design
+    difficulty: advanced
+    language:
+      - Python
+
+  - id: rf-diffusion
+    name: RFdiffusion
+    description: |
+      基于扩散模型的蛋白质结构生成方法，可从随机噪声逐步去噪生成全新的蛋白质
+      骨架结构。该方法支持条件生成（如指定结合位点），是蛋白质从头设计的
+      突破性工具。
+    purpose: 基于扩散模型的蛋白质结构从头生成
+    time_complexity: O(n^2 * T)
+    space_complexity: O(n^2)
+    year: 2023
+    category: protein-language-model
+    subcategory: protein-function-prediction
+    paper_url: https://doi.org/10.1038/s41586-023-06415-8
+    implementation_url: https://github.com/RosettaCommons/RFdiffusion
+    related_tools:
+      - ProteinMPNN
+      - RoseTTAFold
+      - Chroma
+    tags:
+      - diffusion-model
+      - protein-design
+      - structure-generation
+      - de-novo
+    difficulty: advanced
+    language:
+      - Python
+
+  - id: proteinbert
+    name: ProtBERT
+    description: |
+      基于 BERT 架构的蛋白质语言模型，在 UniRef100 上预训练，学习氨基酸序列
+      的上下文相关表征。该模型可用于蛋白质家族分类、亚细胞定位预测和
+      翻译后修饰位点预测等任务。
+    purpose: 基于 BERT 的蛋白质序列表征学习
+    time_complexity: O(n^2 * d)
+    space_complexity: O(n^2)
+    year: 2020
+    category: protein-language-model
+    subcategory: protein-lm
+    paper_url: https://doi.org/10.1109/TCBB.2021.3095196
+    implementation_url: https://github.com/agemagician/ProtTrans
+    related_tools:
+      - ESM-2
+      - ProtTrans
+      - UniRep
+    tags:
+      - language-model
+      - bert
+      - sequence-embedding
+      - pretrained
+    difficulty: intermediate
+    language:
+      - Python
+
+  - id: ankh
+    name: Ankh
+    description: |
+      基于 T5 架构优化的蛋白质语言模型，使用更高效的预训练策略和数据增强
+      方法，在多个下游任务上达到与 ESM-2 相当的性能。该模型参数量更小，
+      推理效率更高。
+    purpose: 高效轻量的蛋白质语言模型
+    time_complexity: O(n^2 * d)
+    space_complexity: O(n^2)
+    year: 2023
+    category: protein-language-model
+    subcategory: protein-lm
+    paper_url: https://doi.org/10.48550/arXiv.2301.06568
+    implementation_url: https://github.com/agemagician/Ankh
+    related_tools:
+      - ESM-2
+      - ProtTrans
+      - ProtBERT
+    tags:
+      - language-model
+      - lightweight
+      - efficient
+      - t5-architecture
+    difficulty: intermediate
+    language:
+      - Python
+
+  - id: progen
+    name: ProGen
+    description: |
+      基于条件语言模型的蛋白质序列生成方法，可按指定的功能标签和结构条件
+      生成具有目标属性的新蛋白质序列。该方法生成的序列具有天然蛋白的特性，
+      可通过实验验证其功能。
+    purpose: 条件可控的蛋白质序列生成
+    time_complexity: O(n^2 * d)
+    space_complexity: O(n^2)
+    year: 2020
+    category: protein-language-model
+    subcategory: protein-function-prediction
+    paper_url: https://doi.org/10.1101/2020.03.07.982272
+    implementation_url: https://github.com/salesforce/progen
+    related_tools:
+      - ProteinMPNN
+      - RFdiffusion
+      - ESM
+    tags:
+      - generative
+      - protein-design
+      - conditional-generation
+      - transformer
+    difficulty: advanced
+    language:
+      - Python
+
+  - id: deep-sea
+    name: DeepSEA
+    description: |
+      基于深度卷积神经网络的 DNA 序列功能预测方法，直接从序列预测染色质特征
+      和变异的功能效应。该方法开创了基于深度学习的序列功能预测领域，是
+      基因组学深度学习的经典模型。
+    purpose: 基于深度学习的 DNA 序列功能预测
+    time_complexity: O(n * d)
+    space_complexity: O(d)
+    year: 2015
+    category: protein-language-model
+    subcategory: protein-function-prediction
+    paper_url: https://doi.org/10.1038/nmeth.3547
+    implementation_url: https://github.com/FunctionLab/DeepSEA
+    related_tools:
+      - Basset
+      - DanQ
+      - Enformer
+    tags:
+      - deep-learning
+      - functional-prediction
+      - chromatin
+      - variant-effect
+    difficulty: intermediate
+    language:
+      - Python
+
+  - id: esm-variant
+    name: ESM-1v
+    description: |
+      基于 ESM 框架的蛋白质变异效应预测方法，利用语言模型的似然度评估
+      氨基酸替换对蛋白质功能的影响。该方法无需训练即可在零样本模式下预测
+      致病性变异，性能接近实验测量。
+    purpose: 基于语言模型的蛋白质变异效应零样本预测
+    time_complexity: O(n^2 * d)
+    space_complexity: O(n^2)
+    year: 2021
+    category: protein-language-model
+    subcategory: protein-function-prediction
+    paper_url: https://doi.org/10.1101/2021.07.09.450648
+    implementation_url: https://github.com/facebookresearch/esm
+    related_tools:
+      - EVE
+      - AlphaMissense
+      - PolyPhen
+    tags:
+      - variant-effect
+      - zero-shot
+      - pathogenicity
+      - language-model
+    difficulty: intermediate
+    language:
+      - Python
