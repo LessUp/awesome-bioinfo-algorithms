@@ -27,6 +27,9 @@ jobs:
       - name: Install dependencies
         run: pip install -e ".[dev]"
 
+      - name: Run ruff format check
+        run: ruff format --check scripts/ tests/
+
       - name: Run ruff
         run: ruff check scripts/ tests/
 
@@ -75,7 +78,12 @@ jobs:
         run: |
           python -m scripts validate
           python -m scripts stats
+          python -m scripts search smith
+          python -m scripts info smith-waterman
+          python -m scripts compare smith-waterman needleman-wunsch
+          python -m scripts export --format json > /tmp/algorithms.json
+          python -m scripts mkdocs
           python -m scripts generate
 
-      - name: Verify README is up to date
-        run: git diff --exit-code -- README.md
+      - name: Verify generated outputs are up to date
+        run: git diff --exit-code -- README.md mkdocs/docs/

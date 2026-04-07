@@ -10,12 +10,26 @@ from pathlib import Path
 
 import yaml
 
+DOC_SOURCE_FILES = {
+    "api.md": "API.md",
+    "faq.md": "FAQ.md",
+    "development.md": "DEVELOPMENT.md",
+    "contributing.md": "contributing.md",
+    "security.md": "security.md",
+}
+
+DOC_STATIC_FILES = {
+    "changelog.md": "CHANGELOG.md",
+    "code-of-conduct.md": "CODE_OF_CONDUCT.md",
+    "security-policy.md": "SECURITY.md",
+}
+
 
 def get_base_dir() -> Path:
     return Path(__file__).resolve().parent.parent
 
 
-def load_data(base_dir: Path) -> tuple[dict, list[dict]]:
+def load_data(base_dir: Path) -> tuple[list[dict], list[dict]]:
     """Load categories and algorithms from YAML files."""
     categories_path = base_dir / "data" / "categories.yaml"
     with open(categories_path, encoding="utf-8") as f:
@@ -66,6 +80,37 @@ def write_file(path: Path, content: str):
         f.write(content)
 
 
+def read_text(path: Path) -> str:
+    with open(path, encoding="utf-8") as f:
+        return f.read()
+
+
+def strip_front_matter(content: str) -> str:
+    if not content.startswith("---\n"):
+        return content
+
+    closing = content.find("\n---\n", 4)
+    if closing == -1:
+        return content
+
+    return content[closing + 5 :]
+
+
+def prepare_docs_content(content: str) -> str:
+    return strip_front_matter(content).replace("../CONTRIBUTING.md", "contributing.md")
+
+
+def copy_docs_pages(base_dir: Path, mkdocs_dir: Path):
+    docs_dir = base_dir / "docs"
+    for target_name, source_name in DOC_SOURCE_FILES.items():
+        content = prepare_docs_content(read_text(docs_dir / source_name))
+        write_file(mkdocs_dir / target_name, content)
+
+    for target_name, source_name in DOC_STATIC_FILES.items():
+        content = read_text(base_dir / source_name)
+        write_file(mkdocs_dir / target_name, content)
+
+
 def generate_index(
     categories: list[dict], algorithms: list[dict], cat_map: dict, by_cat: dict
 ) -> str:
@@ -73,8 +118,8 @@ def generate_index(
     total = len(algorithms)
     cats_with_algo = len(by_cat)
     all_tags = set()
-    for a in algorithms:
-        all_tags.update(a.get("tags", []))
+    for algorithm in algorithms:
+        all_tags.update(algorithm.get("tags", []))
 
     lines = [
         "# Awesome Bioinformatics Algorithms",
@@ -165,7 +210,7 @@ def generate_algo_page(algo: dict, cat_map: dict) -> str:
     if algo.get("tags"):
         lines.append("## Tags")
         lines.append("")
-        lines.append(" ".join(f"`{t}`" for t in algo["tags"]))
+        lines.append(" ".join(f"`{tag}`" for tag in algo["tags"]))
         lines.append("")
 
     if algo.get("references"):
@@ -191,29 +236,28 @@ def generate_category_page(cat: dict, algos: list[dict], cat_map: dict) -> str:
         lines.append("")
 
     for sub in cat.get("subcategories", []):
-        sub_algos = [a for a in algos if a.get("subcategory") == sub["id"]]
+        sub_algos = [algo for algo in algos if algo.get("subcategory") == sub["id"]]
         if sub_algos:
             lines.append(f"## {sub['name']} ({sub.get('name_en', '')})")
             lines.append("")
             if sub.get("description"):
                 lines.append(sub["description"])
                 lines.append("")
-            for a in sub_algos:
-                year = f" ({a['year']})" if a.get("year") else ""
-                diff = f" [{a['difficulty']}]" if a.get("difficulty") else ""
-                lines.append(f"- [{a['name']}{year}](../algorithms/{a['id']}.md){diff}")
-                if a.get("purpose"):
-                    lines.append(f"  {a['purpose']}")
+            for algo in sub_algos:
+                year = f" ({algo['year']})" if algo.get("year") else ""
+                diff = f" [{algo['difficulty']}]" if algo.get("difficulty") else ""
+                lines.append(f"- [{algo['name']}{year}](../algorithms/{algo['id']}.md){diff}")
+                if algo.get("purpose"):
+                    lines.append(f"  {algo['purpose']}")
             lines.append("")
 
-    # Algorithms without subcategory
-    direct = [a for a in algos if not a.get("subcategory")]
+    direct = [algo for algo in algos if not algo.get("subcategory")]
     if direct:
         lines.append("## Other")
         lines.append("")
-        for a in direct:
-            year = f" ({a['year']})" if a.get("year") else ""
-            lines.append(f"- [{a['name']}{year}](../algorithms/{a['id']}.md)")
+        for algo in direct:
+            year = f" ({algo['year']})" if algo.get("year") else ""
+            lines.append(f"- [{algo['name']}{year}](../algorithms/{algo['id']}.md)")
         lines.append("")
 
     return "\n".join(lines)
@@ -231,9 +275,9 @@ def generate_tags_page(by_tag: dict) -> str:
         algos = by_tag[tag]
         lines.append(f"## `{tag}` ({len(algos)})")
         lines.append("")
-        for a in algos:
-            year = f" ({a['year']})" if a.get("year") else ""
-            lines.append(f"- [{a['name']}{year}](algorithms/{a['id']}.md)")
+        for algo in algos:
+            year = f" ({algo['year']})" if algo.get("year") else ""
+            lines.append(f"- [{algo['name']}{year}](algorithms/{algo['id']}.md)")
         lines.append("")
     return "\n".join(lines)
 
@@ -250,7 +294,7 @@ Use the built-in search (top bar) to find algorithms by name, description, or ta
 You can also search from the command line:
 
 ```bash
-python -m scripts search "dynamic programming"
+python -m scripts search \"dynamic programming\"
 python -m scripts search --tag fast
 python -m scripts search --category sequence-alignment
 python -m scripts search --difficulty beginner
@@ -281,13 +325,59 @@ This project collects and organizes commonly used algorithms in bioinformatics.
 ## Links
 
 - [GitHub Repository](https://github.com/LessUp/awesome-bioinfo-algorithms)
-- [Contributing Guide](https://github.com/LessUp/awesome-bioinfo-algorithms/blob/main/CONTRIBUTING.md)
-- [Changelog](https://github.com/LessUp/awesome-bioinfo-algorithms/blob/main/CHANGELOG.md)
+- [Contributing Guide](https://github.com/LessUp/awesome-bioinfo-algorithms/blob/master/CONTRIBUTING.md)
+- [Changelog](https://github.com/LessUp/awesome-bioinfo-algorithms/blob/master/CHANGELOG.md)
 """
 
 
-def main():
-    base_dir = get_base_dir()
+def write_generated_pages(
+    base_dir: Path,
+    mkdocs_dir: Path,
+    categories: list[dict],
+    algorithms: list[dict],
+    cat_map: dict[str, dict],
+    by_cat: dict[str, list[dict]],
+    by_tag: dict[str, list[dict]],
+):
+    write_file(mkdocs_dir / "index.md", generate_index(categories, algorithms, cat_map, by_cat))
+
+    for algo in algorithms:
+        write_file(
+            mkdocs_dir / "algorithms" / f"{algo['id']}.md",
+            generate_algo_page(algo, cat_map),
+        )
+
+    for cat in categories:
+        algos = by_cat.get(cat["id"], [])
+        if algos:
+            write_file(
+                mkdocs_dir / "categories" / f"{cat['id']}.md",
+                generate_category_page(cat, algos, cat_map),
+            )
+
+    cat_index_lines = ["# All Categories", ""]
+    for cat in categories:
+        count = len(by_cat.get(cat["id"], []))
+        if count:
+            cat_index_lines.append(
+                f"- [{cat['name']} ({cat['name_en']})]({cat['id']}.md) — {count} algorithms"
+            )
+    write_file(mkdocs_dir / "categories" / "index.md", "\n".join(cat_index_lines) + "\n")
+
+    algo_index_lines = ["# All Algorithms", "", f"共 {len(algorithms)} 个算法。", ""]
+    for algo in sorted(algorithms, key=lambda entry: entry.get("name", "")):
+        year = f" ({algo['year']})" if algo.get("year") else ""
+        algo_index_lines.append(f"- [{algo['name']}{year}]({algo['id']}.md)")
+    write_file(mkdocs_dir / "algorithms" / "index.md", "\n".join(algo_index_lines) + "\n")
+
+    write_file(mkdocs_dir / "tags.md", generate_tags_page(by_tag))
+    write_file(mkdocs_dir / "search.md", generate_search_page())
+    write_file(mkdocs_dir / "about.md", generate_about_page())
+    copy_docs_pages(base_dir, mkdocs_dir)
+
+
+def main(base_dir: Path | None = None) -> int:
+    base_dir = base_dir or get_base_dir()
     mkdocs_dir = base_dir / "mkdocs" / "docs"
 
     print("Loading data...")
@@ -298,52 +388,14 @@ def main():
     print(f"  {len(algorithms)} algorithms, {len(categories)} categories, {len(by_tag)} tags")
 
     print("Generating pages...")
-
-    # Index
-    write_file(mkdocs_dir / "index.md", generate_index(categories, algorithms, cat_map, by_cat))
-
-    # Algorithm pages
-    for algo in algorithms:
-        write_file(
-            mkdocs_dir / "algorithms" / f"{algo['id']}.md", generate_algo_page(algo, cat_map)
-        )
-
-    # Category pages
-    for cat in categories:
-        algos = by_cat.get(cat["id"], [])
-        if algos:
-            write_file(
-                mkdocs_dir / "categories" / f"{cat['id']}.md",
-                generate_category_page(cat, algos, cat_map),
-            )
-
-    # Categories index
-    cat_index_lines = ["# All Categories", ""]
-    for cat in categories:
-        count = len(by_cat.get(cat["id"], []))
-        if count:
-            cat_index_lines.append(
-                f"- [{cat['name']} ({cat['name_en']})]({cat['id']}.md) — {count} algorithms"
-            )
-    write_file(mkdocs_dir / "categories" / "index.md", "\n".join(cat_index_lines) + "\n")
-
-    # Algorithms index
-    algo_index_lines = ["# All Algorithms", "", f"共 {len(algorithms)} 个算法。", ""]
-    for algo in sorted(algorithms, key=lambda a: a.get("name", "")):
-        year = f" ({algo['year']})" if algo.get("year") else ""
-        algo_index_lines.append(f"- [{algo['name']}{year}]({algo['id']}.md)")
-    write_file(mkdocs_dir / "algorithms" / "index.md", "\n".join(algo_index_lines) + "\n")
-
-    # Tags, Search, About
-    write_file(mkdocs_dir / "tags.md", generate_tags_page(by_tag))
-    write_file(mkdocs_dir / "search.md", generate_search_page())
-    write_file(mkdocs_dir / "about.md", generate_about_page())
+    write_generated_pages(base_dir, mkdocs_dir, categories, algorithms, cat_map, by_cat, by_tag)
 
     print(f"  Generated {len(algorithms)} algorithm pages")
-    print(f"  Generated {len([c for c in categories if by_cat.get(c['id'])])} category pages")
-    print("  Generated tags, search, about, index pages")
-    print("\nDone! Run 'mkdocs serve' from mkdocs/ to preview.")
+    print(f"  Generated {len([cat for cat in categories if by_cat.get(cat['id'])])} category pages")
+    print("  Generated tags, search, about, and documentation pages")
+    print("\nDone! Run 'mkdocs serve -f mkdocs/mkdocs.yml' to preview.")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

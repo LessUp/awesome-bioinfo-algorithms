@@ -2,6 +2,7 @@
 Property-based tests for data completeness.
 Feature: project-enhancement
 """
+
 from pathlib import Path
 
 from hypothesis import HealthCheck, given, settings
@@ -12,9 +13,9 @@ from scripts.category_manager import CategoryManager
 from scripts.validate import Validator
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = PROJECT_ROOT / 'data'
-ALGORITHMS_DIR = DATA_DIR / 'algorithms'
-CATEGORIES_PATH = DATA_DIR / 'categories.yaml'
+DATA_DIR = PROJECT_ROOT / "data"
+ALGORITHMS_DIR = DATA_DIR / "algorithms"
+CATEGORIES_PATH = DATA_DIR / "categories.yaml"
 
 
 # Load actual data for testing
@@ -58,15 +59,12 @@ def test_property_1_algorithm_data_completeness(_):
         algo_dict = algo.to_dict()
         result = validator.validate_algorithm(algo_dict)
 
-        assert result.is_valid, (
-            f"Algorithm '{algo.id}' failed validation: {result.errors}"
-        )
+        assert result.is_valid, f"Algorithm '{algo.id}' failed validation: {result.errors}"
 
         # Verify description length
         desc_len = len(algo.description.strip())
         assert 50 <= desc_len <= 500, (
-            f"Algorithm '{algo.id}' description length {desc_len} "
-            f"not in range [50, 500]"
+            f"Algorithm '{algo.id}' description length {desc_len} not in range [50, 500]"
         )
 
         # Verify category exists
@@ -104,18 +102,13 @@ def test_all_algorithms_have_required_fields():
     """Test that all algorithms have all required fields populated."""
     registry = load_registry()
 
-    required_fields = ['id', 'name', 'description', 'purpose',
-                       'time_complexity', 'category']
+    required_fields = ["id", "name", "description", "purpose", "time_complexity", "category"]
 
     for algo in registry.get_all_algorithms():
         algo_dict = algo.to_dict()
         for field in required_fields:
-            assert field in algo_dict, (
-                f"Algorithm '{algo.id}' missing required field '{field}'"
-            )
-            assert algo_dict[field], (
-                f"Algorithm '{algo.id}' has empty required field '{field}'"
-            )
+            assert field in algo_dict, f"Algorithm '{algo.id}' missing required field '{field}'"
+            assert algo_dict[field], f"Algorithm '{algo.id}' has empty required field '{field}'"
 
 
 def test_no_duplicate_algorithm_ids():
@@ -124,7 +117,5 @@ def test_no_duplicate_algorithm_ids():
 
     seen_ids = set()
     for algo in registry.get_all_algorithms():
-        assert algo.id not in seen_ids, (
-            f"Duplicate algorithm ID found: '{algo.id}'"
-        )
+        assert algo.id not in seen_ids, f"Duplicate algorithm ID found: '{algo.id}'"
         seen_ids.add(algo.id)

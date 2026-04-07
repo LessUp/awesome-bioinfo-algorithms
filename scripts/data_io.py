@@ -2,6 +2,7 @@
 Data Import/Export for Awesome Bioinformatics Algorithms.
 Handles importing and exporting algorithm data in YAML and JSON formats.
 """
+
 import json
 import os
 from typing import Optional
@@ -13,17 +14,20 @@ from .category_manager import CategoryManager
 from .schema import AlgorithmEntry, Category
 
 YAML_DUMP_KWARGS = {
-    'allow_unicode': True,
-    'default_flow_style': False,
-    'sort_keys': False,
+    "allow_unicode": True,
+    "default_flow_style": False,
+    "sort_keys": False,
 }
 
 
 class DataIO:
     """Handles data import and export operations."""
 
-    def __init__(self, registry: Optional[AlgorithmRegistry] = None,
-                 category_manager: Optional[CategoryManager] = None):
+    def __init__(
+        self,
+        registry: Optional[AlgorithmRegistry] = None,
+        category_manager: Optional[CategoryManager] = None,
+    ):
         self._registry = registry or AlgorithmRegistry()
         self._category_manager = category_manager or CategoryManager()
 
@@ -36,12 +40,12 @@ class DataIO:
             fmt: Export format ('yaml' or 'json')
         """
         data = {
-            'categories': [cat.to_dict() for cat in self._category_manager.list_all_categories()],
-            'algorithms': [algo.to_dict() for algo in self._registry.get_all_algorithms()]
+            "categories": [cat.to_dict() for cat in self._category_manager.list_all_categories()],
+            "algorithms": [algo.to_dict() for algo in self._registry.get_all_algorithms()],
         }
 
-        with open(output_path, 'w', encoding='utf-8') as f:
-            if fmt.lower() == 'json':
+        with open(output_path, "w", encoding="utf-8") as f:
+            if fmt.lower() == "json":
                 json.dump(data, f, ensure_ascii=False, indent=2)
             else:
                 yaml.safe_dump(data, f, **YAML_DUMP_KWARGS)
@@ -59,8 +63,8 @@ class DataIO:
         if not os.path.exists(input_path):
             raise FileNotFoundError(f"Data file not found: {input_path}")
 
-        with open(input_path, encoding='utf-8') as f:
-            if input_path.endswith('.json'):
+        with open(input_path, encoding="utf-8") as f:
+            if input_path.endswith(".json"):
                 data = json.load(f)
             else:
                 data = yaml.safe_load(f)
@@ -69,10 +73,10 @@ class DataIO:
         algorithms = []
 
         if data:
-            if 'categories' in data:
-                categories = [Category.from_dict(cat) for cat in data['categories']]
-            if 'algorithms' in data:
-                algorithms = [AlgorithmEntry.from_dict(algo) for algo in data['algorithms']]
+            if "categories" in data:
+                categories = [Category.from_dict(cat) for cat in data["categories"]]
+            if "algorithms" in data:
+                algorithms = [AlgorithmEntry.from_dict(algo) for algo in data["algorithms"]]
 
         return categories, algorithms
 
@@ -96,30 +100,27 @@ class DataIO:
     def export_categories(self, output_path: str, fmt: str = "yaml") -> None:
         """Export only categories to a file."""
         data = {
-            'categories': [cat.to_dict() for cat in self._category_manager.list_all_categories()]
+            "categories": [cat.to_dict() for cat in self._category_manager.list_all_categories()]
         }
 
-        with open(output_path, 'w', encoding='utf-8') as f:
-            if fmt.lower() == 'json':
+        with open(output_path, "w", encoding="utf-8") as f:
+            if fmt.lower() == "json":
                 json.dump(data, f, ensure_ascii=False, indent=2)
             else:
                 yaml.safe_dump(data, f, **YAML_DUMP_KWARGS)
 
     def export_algorithms(self, output_path: str, fmt: str = "yaml") -> None:
         """Export only algorithms to a file."""
-        data = {
-            'algorithms': [algo.to_dict() for algo in self._registry.get_all_algorithms()]
-        }
+        data = {"algorithms": [algo.to_dict() for algo in self._registry.get_all_algorithms()]}
 
-        with open(output_path, 'w', encoding='utf-8') as f:
-            if fmt.lower() == 'json':
+        with open(output_path, "w", encoding="utf-8") as f:
+            if fmt.lower() == "json":
                 json.dump(data, f, ensure_ascii=False, indent=2)
             else:
                 yaml.safe_dump(data, f, **YAML_DUMP_KWARGS)
 
     @staticmethod
-    def export_to_dict(categories: list[Category],
-                       algorithms: list[AlgorithmEntry]) -> dict:
+    def export_to_dict(categories: list[Category], algorithms: list[AlgorithmEntry]) -> dict:
         """
         Convert categories and algorithms to a dictionary.
 
@@ -131,8 +132,8 @@ class DataIO:
             Dictionary representation
         """
         return {
-            'categories': [cat.to_dict() for cat in categories],
-            'algorithms': [algo.to_dict() for algo in algorithms]
+            "categories": [cat.to_dict() for cat in categories],
+            "algorithms": [algo.to_dict() for algo in algorithms],
         }
 
     @staticmethod
@@ -150,9 +151,9 @@ class DataIO:
         algorithms = []
 
         if data:
-            if 'categories' in data:
-                categories = [Category.from_dict(cat) for cat in data['categories']]
-            if 'algorithms' in data:
-                algorithms = [AlgorithmEntry.from_dict(algo) for algo in data['algorithms']]
+            if "categories" in data:
+                categories = [Category.from_dict(cat) for cat in data["categories"]]
+            if "algorithms" in data:
+                algorithms = [AlgorithmEntry.from_dict(algo) for algo in data["algorithms"]]
 
         return categories, algorithms

@@ -58,8 +58,17 @@ nav:
   - Search: search.md
   - Tags: tags.md
   - Categories:
-    - categories/index.md
+    - Overview: categories/index.md
   - Algorithms:
-    - algorithms/index.md
-  - About:
-    - about.md
+    - Overview: algorithms/index.md
+  - Guides:
+    - API: api.md
+    - FAQ: faq.md
+    - Development: development.md
+    - Contributing: contributing.md
+  - Project:
+    - About: about.md
+    - Changelog: changelog.md
+    - Code of Conduct: code-of-conduct.md
+    - Security Guide: security.md
+    - Security Policy: security-policy.md

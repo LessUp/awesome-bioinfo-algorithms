@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Backward-compatible wrapper around `python -m scripts generate`."""
+
 import sys
 
 from .__main__ import cmd_generate
@@ -10,5 +11,5 @@ def main() -> int:
     return cmd_generate()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())
