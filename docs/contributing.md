@@ -67,6 +67,10 @@ algorithms:
 | metagenomics | 宏基因组学 | Metagenomics |
 | epigenomics | 表观基因组学 | Epigenomics |
 | gene-prediction | 基因预测 | Gene Prediction |
+| population-genetics | 群体遗传学 | Population Genetics |
+| spatial-omics | 空间组学 | Spatial Omics |
+| graph-genomics | 图基因组学 | Graph Genomics |
+| protein-language-model | 蛋白质语言模型 | Protein Language Model |
 
 ## 质量要求
 
@@ -77,14 +81,17 @@ algorithms:
 - ✅ 算法 ID 在整个仓库范围内必须唯一
 - ✅ YAML 格式正确
 - ✅ 链接有效且可访问
+- ✅ `difficulty` 如填写，必须为 `beginner` / `intermediate` / `advanced`
+- ✅ `references[*].type` 如填写，必须为 `tutorial` / `blog` / `video` / `book` / `documentation` / `slides`
 
 ## 本地验证
 
 ```bash
 pip install -e ".[dev]"
 python -m pytest tests/ -v
-python -m scripts generate
 python -m scripts validate
+python -m scripts mkdocs
+python -m scripts generate
 ```
 
 ## 提交规范
