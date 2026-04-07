@@ -2,6 +2,7 @@
 Algorithm Registry for Awesome Bioinformatics Algorithms.
 Manages loading, searching, and organizing algorithm entries.
 """
+
 import glob
 import os
 from dataclasses import dataclass
@@ -16,6 +17,7 @@ from .validate import ValidationResult, Validator
 @dataclass
 class RegistryStats:
     """Statistics about the algorithm registry."""
+
     total_algorithms: int
     total_categories: int
     total_tags: int
@@ -50,10 +52,12 @@ class AlgorithmRegistry:
         if not os.path.exists(self._data_dir):
             return []
 
-        yaml_files = sorted({
-            *glob.glob(os.path.join(self._data_dir, "*.yaml")),
-            *glob.glob(os.path.join(self._data_dir, "*.yml")),
-        })
+        yaml_files = sorted(
+            {
+                *glob.glob(os.path.join(self._data_dir, "*.yaml")),
+                *glob.glob(os.path.join(self._data_dir, "*.yml")),
+            }
+        )
 
         for yaml_file in yaml_files:
             self._load_file(yaml_file)
@@ -62,13 +66,13 @@ class AlgorithmRegistry:
 
     def _load_file(self, path: str):
         """Load algorithms from a single YAML file."""
-        with open(path, encoding='utf-8') as f:
+        with open(path, encoding="utf-8") as f:
             data = yaml.safe_load(f)
 
-        if not data or 'algorithms' not in data:
+        if not data or "algorithms" not in data:
             return
 
-        for algo_data in data['algorithms']:
+        for algo_data in data["algorithms"]:
             algo = AlgorithmEntry.from_dict(algo_data)
             self._register_algorithm(algo)
 
@@ -127,11 +131,7 @@ class AlgorithmRegistry:
 
     def get_direct_by_category(self, category_id: str) -> list[AlgorithmEntry]:
         """Get algorithms that belong directly to a category without a subcategory."""
-        return [
-            algo
-            for algo in self._by_category.get(category_id, [])
-            if not algo.subcategory
-        ]
+        return [algo for algo in self._by_category.get(category_id, []) if not algo.subcategory]
 
     def search(self, keyword: str) -> list[AlgorithmEntry]:
         """
@@ -147,9 +147,11 @@ class AlgorithmRegistry:
         results = []
 
         for algo in self._algorithms:
-            if (keyword_lower in algo.name.lower() or
-                keyword_lower in algo.description.lower() or
-                any(keyword_lower in tag.lower() for tag in algo.tags)):
+            if (
+                keyword_lower in algo.name.lower()
+                or keyword_lower in algo.description.lower()
+                or any(keyword_lower in tag.lower() for tag in algo.tags)
+            ):
                 results.append(algo)
 
         return results
@@ -177,9 +179,7 @@ class AlgorithmRegistry:
             total_algorithms=len(self._algorithms),
             total_categories=len(self._by_category),
             total_tags=len(all_tags),
-            algorithms_by_category={
-                cat: len(algos) for cat, algos in self._by_category.items()
-            }
+            algorithms_by_category={cat: len(algos) for cat, algos in self._by_category.items()},
         )
 
     def get_all_algorithms(self) -> list[AlgorithmEntry]:
@@ -207,6 +207,4 @@ class AlgorithmRegistry:
 
     def to_dict(self) -> dict:
         """Convert all algorithms to dictionary for serialization."""
-        return {
-            'algorithms': [algo.to_dict() for algo in self._algorithms]
-        }
+        return {"algorithms": [algo.to_dict() for algo in self._algorithms]}

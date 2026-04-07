@@ -2,6 +2,7 @@
 Property-based tests for Data Import/Export.
 Feature: awesome-bioinfo-algorithms, Property 11: Data Import/Export Round-Trip
 """
+
 import json
 import os
 import tempfile
@@ -18,22 +19,25 @@ from scripts.schema import AlgorithmEntry, Category
 
 # Strategies for generating test data - using ASCII-safe characters for YAML round-trip
 valid_id = st.text(
-    alphabet=st.sampled_from('abcdefghijklmnopqrstuvwxyz0123456789'),
-    min_size=1, max_size=20
+    alphabet=st.sampled_from("abcdefghijklmnopqrstuvwxyz0123456789"), min_size=1, max_size=20
 ).filter(lambda x: x and x[0].isalpha())
 
 # Use ASCII-safe characters to avoid YAML Unicode normalization issues
 valid_name = st.text(
-    alphabet=st.sampled_from('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -_'),
-    min_size=1, max_size=30
+    alphabet=st.sampled_from("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -_"),
+    min_size=1,
+    max_size=30,
 ).filter(lambda x: x.strip())
 
 valid_description = st.text(
-    alphabet=st.sampled_from('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .,!?-_'),
-    min_size=50, max_size=200
+    alphabet=st.sampled_from(
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .,!?-_"
+    ),
+    min_size=50,
+    max_size=200,
 ).filter(lambda x: len(x.strip()) >= 50)
 
-valid_complexity = st.sampled_from(['O(1)', 'O(n)', 'O(n^2)', 'O(mn)', 'O(log n)'])
+valid_complexity = st.sampled_from(["O(1)", "O(n)", "O(n^2)", "O(mn)", "O(log n)"])
 
 
 @st.composite
@@ -62,7 +66,7 @@ def categories_and_algorithms_strategy(draw):
             name_en=draw(valid_name),
             description=draw(st.text(min_size=0, max_size=100)),
             subcategories=[],
-            parent_id=None
+            parent_id=None,
         )
         categories.append(cat)
 
@@ -77,13 +81,15 @@ def categories_and_algorithms_strategy(draw):
                 purpose=draw(valid_name),
                 time_complexity=draw(valid_complexity),
                 category=cat_id,
-                space_complexity=draw(st.one_of(st.just(''), valid_complexity)),
+                space_complexity=draw(st.one_of(st.just(""), valid_complexity)),
                 year=draw(st.one_of(st.just(0), st.integers(min_value=1970, max_value=2025))),
-                paper_url=draw(st.one_of(st.just(''), st.just('https://example.com/paper'))),
-                implementation_url=draw(st.one_of(st.just(''), st.just('https://github.com/example'))),
+                paper_url=draw(st.one_of(st.just(""), st.just("https://example.com/paper"))),
+                implementation_url=draw(
+                    st.one_of(st.just(""), st.just("https://github.com/example"))
+                ),
                 related_tools=draw(st.lists(valid_name, min_size=0, max_size=3)),
                 tags=draw(st.lists(valid_id, min_size=0, max_size=3, unique=True)),
-                subcategory=draw(st.one_of(st.just(''), valid_id)),
+                subcategory=draw(st.one_of(st.just(""), valid_id)),
             )
             algorithms.append(algo)
 
@@ -113,18 +119,19 @@ def test_property_11_round_trip_yaml(data):
     data_io = DataIO(registry, category_manager)
 
     # Export to YAML
-    with tempfile.NamedTemporaryFile(mode='w', suffix='.yaml', delete=False) as f:
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as f:
         temp_path = f.name
 
     try:
-        data_io.export_data(temp_path, fmt='yaml')
+        data_io.export_data(temp_path, fmt="yaml")
 
         # Import back
         imported_categories, imported_algorithms = data_io.import_data(temp_path)
 
         # Verify categories match
-        assert len(imported_categories) == len(categories), \
+        assert len(imported_categories) == len(categories), (
             f"Should have {len(categories)} categories, got {len(imported_categories)}"
+        )
 
         for orig, imported in zip(categories, imported_categories):
             assert orig.id == imported.id, "Category ID should match"
@@ -132,8 +139,9 @@ def test_property_11_round_trip_yaml(data):
             assert orig.name_en == imported.name_en, "Category name_en should match"
 
         # Verify algorithms match
-        assert len(imported_algorithms) == len(algorithms), \
+        assert len(imported_algorithms) == len(algorithms), (
             f"Should have {len(algorithms)} algorithms, got {len(imported_algorithms)}"
+        )
 
         for orig, imported in zip(algorithms, imported_algorithms):
             assert orig.id == imported.id, "Algorithm ID should match"
@@ -147,7 +155,9 @@ def test_property_11_round_trip_yaml(data):
             os.unlink(temp_path)
 
 
-@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much, HealthCheck.too_slow])
+@settings(
+    max_examples=100, suppress_health_check=[HealthCheck.filter_too_much, HealthCheck.too_slow]
+)
 @given(data=categories_and_algorithms_strategy())
 def test_property_11_round_trip_json(data):
     """
@@ -169,11 +179,11 @@ def test_property_11_round_trip_json(data):
     data_io = DataIO(registry, category_manager)
 
     # Export to JSON
-    with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
         temp_path = f.name
 
     try:
-        data_io.export_data(temp_path, fmt='json')
+        data_io.export_data(temp_path, fmt="json")
 
         # Import back
         imported_categories, imported_algorithms = data_io.import_data(temp_path)
@@ -191,7 +201,9 @@ def test_property_11_round_trip_json(data):
             os.unlink(temp_path)
 
 
-@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much, HealthCheck.too_slow])
+@settings(
+    max_examples=100, suppress_health_check=[HealthCheck.filter_too_much, HealthCheck.too_slow]
+)
 @given(data=categories_and_algorithms_strategy())
 def test_dict_round_trip(data):
     """Test round-trip through dictionary conversion."""
@@ -211,40 +223,37 @@ def test_dict_round_trip(data):
         assert orig == imported, f"Algorithm {orig.id} should equal imported version"
 
 
-
 def test_import_data_raises_for_missing_file(tmp_path):
     """Importing from a missing file should raise FileNotFoundError."""
     data_io = DataIO()
 
     with pytest.raises(FileNotFoundError):
-        data_io.import_data(str(tmp_path / 'missing.yaml'))
-
+        data_io.import_data(str(tmp_path / "missing.yaml"))
 
 
 def test_import_data_supports_yaml_without_optional_sections(tmp_path):
     """Import should allow files that contain only one of the supported top-level sections."""
-    input_path = tmp_path / 'categories-only.yaml'
+    input_path = tmp_path / "categories-only.yaml"
     input_path.write_text(
         """categories:
   - id: sequence-alignment
     name: 序列比对
     name_en: Sequence Alignment
 """,
-        encoding='utf-8',
+        encoding="utf-8",
     )
 
     categories, algorithms = DataIO().import_data(str(input_path))
 
     assert len(categories) == 1
-    assert categories[0].id == 'sequence-alignment'
+    assert categories[0].id == "sequence-alignment"
     assert algorithms == []
-
 
 
 def test_import_data_returns_empty_lists_for_empty_yaml_document(tmp_path):
     """An empty YAML document should import as no categories and no algorithms."""
-    input_path = tmp_path / 'empty.yaml'
-    input_path.write_text('', encoding='utf-8')
+    input_path = tmp_path / "empty.yaml"
+    input_path.write_text("", encoding="utf-8")
 
     categories, algorithms = DataIO().import_data(str(input_path))
 
@@ -252,78 +261,85 @@ def test_import_data_returns_empty_lists_for_empty_yaml_document(tmp_path):
     assert algorithms == []
 
 
-
 def test_import_and_load_populates_registry_and_category_manager(tmp_path):
     """import_and_load should populate and return the managed registry objects."""
-    input_path = tmp_path / 'snapshot.json'
-    input_path.write_text(json.dumps({
-        'categories': [
+    input_path = tmp_path / "snapshot.json"
+    input_path.write_text(
+        json.dumps(
             {
-                'id': 'sequence-alignment',
-                'name': '序列比对',
-                'name_en': 'Sequence Alignment',
-            }
-        ],
-        'algorithms': [
-            {
-                'id': 'smith-waterman',
-                'name': 'Smith-Waterman',
-                'description': 'A' * 60,
-                'purpose': 'Local alignment',
-                'time_complexity': 'O(mn)',
-                'category': 'sequence-alignment',
-            }
-        ],
-    }, ensure_ascii=False, indent=2), encoding='utf-8')
+                "categories": [
+                    {
+                        "id": "sequence-alignment",
+                        "name": "序列比对",
+                        "name_en": "Sequence Alignment",
+                    }
+                ],
+                "algorithms": [
+                    {
+                        "id": "smith-waterman",
+                        "name": "Smith-Waterman",
+                        "description": "A" * 60,
+                        "purpose": "Local alignment",
+                        "time_complexity": "O(mn)",
+                        "category": "sequence-alignment",
+                    }
+                ],
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
 
     data_io = DataIO()
     category_manager, registry = data_io.import_and_load(str(input_path))
 
-    assert category_manager.get_category('sequence-alignment') is not None
-    assert registry.get_algorithm('smith-waterman') is not None
+    assert category_manager.get_category("sequence-alignment") is not None
+    assert registry.get_algorithm("smith-waterman") is not None
 
 
-
-def test_export_categories_writes_only_categories_section(tmp_path, sample_category, sample_algorithm):
+def test_export_categories_writes_only_categories_section(
+    tmp_path, sample_category, sample_algorithm
+):
     """Category-only export should not include algorithms."""
     registry = AlgorithmRegistry()
     registry.from_algorithms([sample_algorithm])
     category_manager = CategoryManager()
     category_manager.from_categories([sample_category])
-    output_path = tmp_path / 'categories.yaml'
+    output_path = tmp_path / "categories.yaml"
 
-    DataIO(registry, category_manager).export_categories(str(output_path), fmt='yaml')
-    exported = yaml.safe_load(output_path.read_text(encoding='utf-8'))
+    DataIO(registry, category_manager).export_categories(str(output_path), fmt="yaml")
+    exported = yaml.safe_load(output_path.read_text(encoding="utf-8"))
 
-    assert 'categories' in exported
-    assert 'algorithms' not in exported
-    assert exported['categories'][0]['id'] == 'sequence-alignment'
+    assert "categories" in exported
+    assert "algorithms" not in exported
+    assert exported["categories"][0]["id"] == "sequence-alignment"
 
 
-
-def test_export_algorithms_writes_only_algorithms_section_as_json(tmp_path, sample_category, sample_algorithm):
+def test_export_algorithms_writes_only_algorithms_section_as_json(
+    tmp_path, sample_category, sample_algorithm
+):
     """Algorithm-only export should not include categories."""
     registry = AlgorithmRegistry()
     registry.from_algorithms([sample_algorithm])
     category_manager = CategoryManager()
     category_manager.from_categories([sample_category])
-    output_path = tmp_path / 'algorithms.json'
+    output_path = tmp_path / "algorithms.json"
 
-    DataIO(registry, category_manager).export_algorithms(str(output_path), fmt='json')
-    exported = json.loads(output_path.read_text(encoding='utf-8'))
+    DataIO(registry, category_manager).export_algorithms(str(output_path), fmt="json")
+    exported = json.loads(output_path.read_text(encoding="utf-8"))
 
-    assert 'algorithms' in exported
-    assert 'categories' not in exported
-    assert exported['algorithms'][0]['id'] == 'smith-waterman'
-
+    assert "algorithms" in exported
+    assert "categories" not in exported
+    assert exported["algorithms"][0]["id"] == "smith-waterman"
 
 
 def test_import_from_dict_handles_missing_sections():
     """Dictionary import should tolerate absent categories or algorithms keys."""
-    categories, algorithms = DataIO.import_from_dict({'categories': []})
+    categories, algorithms = DataIO.import_from_dict({"categories": []})
     assert categories == []
     assert algorithms == []
 
-    categories, algorithms = DataIO.import_from_dict({'algorithms': []})
+    categories, algorithms = DataIO.import_from_dict({"algorithms": []})
     assert categories == []
     assert algorithms == []

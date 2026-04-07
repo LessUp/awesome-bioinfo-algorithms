@@ -3,15 +3,17 @@
 CLI entry point for Awesome Bioinformatics Algorithms scripts.
 
 Usage:
-    python -m scripts generate              # Generate README.md
-    python -m scripts validate              # Validate all data files
-    python -m scripts stats                 # Show statistics
-    python -m scripts search [options]      # Search algorithms
-    python -m scripts info <id>             # Show algorithm details
-    python -m scripts compare <id1> <id2>   # Compare two algorithms
-    python -m scripts export [options]      # Export data to JSON/CSV
+    python -m scripts generate                     # Generate README.md
+    python -m scripts validate                     # Validate all data files
+    python -m scripts stats                        # Show statistics
+    python -m scripts search [options]             # Search algorithms
+    python -m scripts info <id>                    # Show algorithm details
+    python -m scripts compare <id1> <id2>          # Compare two algorithms
+    python -m scripts export [options]             # Export data to JSON/CSV
+    python -m scripts mkdocs                       # Generate MkDocs pages
 """
 
+import argparse
 import sys
 from pathlib import Path
 
@@ -42,6 +44,14 @@ def ensure_repo_layout() -> tuple[Path, list[str]]:
     return base_dir, validate_repo_layout(base_dir)
 
 
+def _print_repo_layout_error(missing_paths: list[str]) -> int:
+    print("Error: This command must be run from an intact repository checkout.")
+    print("Missing required paths:")
+    for path in missing_paths:
+        print(f"  - {path}")
+    return 1
+
+
 def _load_registry_and_categories(base_dir: Path) -> tuple[AlgorithmRegistry, CategoryManager]:
     """Load and return an initialized registry and category manager."""
     algorithms_dir = base_dir / "data" / "algorithms"
@@ -60,11 +70,7 @@ def cmd_generate(output_path: Path | None = None) -> int:
     """Generate README.md from algorithm data."""
     base_dir, missing_paths = ensure_repo_layout()
     if missing_paths:
-        print("Error: This command must be run from an intact repository checkout.")
-        print("Missing required paths:")
-        for path in missing_paths:
-            print(f"  - {path}")
-        return 1
+        return _print_repo_layout_error(missing_paths)
 
     data_dir = base_dir / "data"
     categories_path = base_dir / "data" / "categories.yaml"
@@ -120,11 +126,7 @@ def cmd_validate() -> int:
     """Validate all data files."""
     base_dir, missing_paths = ensure_repo_layout()
     if missing_paths:
-        print("Error: This command must be run from an intact repository checkout.")
-        print("Missing required paths:")
-        for path in missing_paths:
-            print(f"  - {path}")
-        return 1
+        return _print_repo_layout_error(missing_paths)
 
     data_dir = base_dir / "data"
 
@@ -145,20 +147,16 @@ def cmd_validate() -> int:
     if result.is_valid:
         print("\n✅ All data files are valid!")
         return 0
-    else:
-        print("\n❌ Validation failed.")
-        return 1
+
+    print("\n❌ Validation failed.")
+    return 1
 
 
 def cmd_stats() -> int:
     """Show statistics about the algorithm registry."""
     base_dir, missing_paths = ensure_repo_layout()
     if missing_paths:
-        print("Error: This command must be run from an intact repository checkout.")
-        print("Missing required paths:")
-        for path in missing_paths:
-            print(f"  - {path}")
-        return 1
+        return _print_repo_layout_error(missing_paths)
 
     registry, category_manager = _load_registry_and_categories(base_dir)
     stats = registry.get_statistics()
@@ -178,136 +176,148 @@ def cmd_stats() -> int:
     return 0
 
 
-def cmd_search_cli() -> int:
+def cmd_search_cli(
+    *,
+    keyword: str = "",
+    tag: str = "",
+    category: str = "",
+    difficulty: str = "",
+) -> int:
     """CLI wrapper for the search command."""
     from .search import cmd_search
 
     base_dir, missing_paths = ensure_repo_layout()
     if missing_paths:
-        print("Error: must run from repository checkout.")
-        return 1
+        return _print_repo_layout_error(missing_paths)
 
     registry, category_manager = _load_registry_and_categories(base_dir)
-
-    args = sys.argv[2:]
-    keyword = tag = category = difficulty = ""
-    i = 0
-    while i < len(args):
-        if args[i] == "--keyword" and i + 1 < len(args):
-            keyword = args[i + 1]
-            i += 2
-        elif args[i] == "--tag" and i + 1 < len(args):
-            tag = args[i + 1]
-            i += 2
-        elif args[i] == "--category" and i + 1 < len(args):
-            category = args[i + 1]
-            i += 2
-        elif args[i] == "--difficulty" and i + 1 < len(args):
-            difficulty = args[i + 1]
-            i += 2
-        else:
-            if not args[i].startswith("--") and not keyword:
-                keyword = args[i]
-            i += 1
-
     return cmd_search(registry, category_manager, keyword, tag, category, difficulty)
 
 
-def cmd_info_cli() -> int:
+def cmd_info_cli(algo_id: str) -> int:
     """CLI wrapper for the info command."""
     from .info_cmd import cmd_info
 
     base_dir, missing_paths = ensure_repo_layout()
     if missing_paths:
-        print("Error: must run from repository checkout.")
-        return 1
-
-    if len(sys.argv) < 3:
-        print("Usage: python -m scripts info <algorithm-id>")
-        return 1
+        return _print_repo_layout_error(missing_paths)
 
     registry, category_manager = _load_registry_and_categories(base_dir)
-    return cmd_info(registry, category_manager, sys.argv[2])
+    return cmd_info(registry, category_manager, algo_id)
 
 
-def cmd_compare_cli() -> int:
+def cmd_compare_cli(id1: str, id2: str) -> int:
     """CLI wrapper for the compare command."""
     from .compare import cmd_compare
 
     base_dir, missing_paths = ensure_repo_layout()
     if missing_paths:
-        print("Error: must run from repository checkout.")
-        return 1
-
-    if len(sys.argv) < 4:
-        print("Usage: python -m scripts compare <id1> <id2>")
-        return 1
+        return _print_repo_layout_error(missing_paths)
 
     registry, category_manager = _load_registry_and_categories(base_dir)
-    return cmd_compare(registry, category_manager, sys.argv[2], sys.argv[3])
+    return cmd_compare(registry, category_manager, id1, id2)
 
 
-def cmd_export_cli() -> int:
+def cmd_export_cli(*, fmt: str = "json", output: str = "") -> int:
     """CLI wrapper for the export command."""
     from .export_cmd import cmd_export
 
     base_dir, missing_paths = ensure_repo_layout()
     if missing_paths:
-        print("Error: must run from repository checkout.")
-        return 1
+        return _print_repo_layout_error(missing_paths)
 
     registry, category_manager = _load_registry_and_categories(base_dir)
-
-    fmt = "json"
-    output = ""
-    args = sys.argv[2:]
-    i = 0
-    while i < len(args):
-        if args[i] == "--format" and i + 1 < len(args):
-            fmt = args[i + 1]
-            i += 2
-        elif args[i] == "--output" and i + 1 < len(args):
-            output = args[i + 1]
-            i += 2
-        else:
-            i += 1
-
     return cmd_export(registry, category_manager, fmt, output)
 
 
-COMMANDS = {
-    "generate": cmd_generate,
-    "validate": cmd_validate,
-    "stats": cmd_stats,
-    "search": cmd_search_cli,
-    "info": cmd_info_cli,
-    "compare": cmd_compare_cli,
-    "export": cmd_export_cli,
-}
+def cmd_mkdocs() -> int:
+    """Generate MkDocs pages."""
+    from .generate_mkdocs import main as generate_mkdocs_main
 
-COMMAND_HELP = {
-    "generate": "Generate README.md from algorithm data",
-    "validate": "Validate all YAML data files",
-    "stats": "Show algorithm statistics",
-    "search": "Search algorithms (keyword, tag, category, difficulty)",
-    "info": "Show detailed info about an algorithm",
-    "compare": "Compare two algorithms side by side",
-    "export": "Export algorithms to JSON or CSV",
-}
+    base_dir, missing_paths = ensure_repo_layout()
+    if missing_paths:
+        return _print_repo_layout_error(missing_paths)
+
+    return generate_mkdocs_main(base_dir)
 
 
-def main() -> int:
-    if len(sys.argv) < 2 or sys.argv[1] not in COMMANDS:
-        if len(sys.argv) >= 2:
-            print(f"Unknown command: {sys.argv[1]}")
-        print("Usage: python -m scripts <command> [options]")
-        print()
-        print("Commands:")
-        for cmd, desc in COMMAND_HELP.items():
-            print(f"  {cmd:<12} {desc}")
-        return 1
+def build_parser() -> argparse.ArgumentParser:
+    """Build the top-level CLI parser."""
+    parser = argparse.ArgumentParser(prog="python -m scripts")
+    subparsers = parser.add_subparsers(dest="command")
 
-    return COMMANDS[sys.argv[1]]()
+    generate_parser = subparsers.add_parser(
+        "generate", help="Generate README.md from algorithm data"
+    )
+    generate_parser.add_argument("--output", type=Path, help="Write README output to a custom path")
+
+    subparsers.add_parser("validate", help="Validate all YAML data files")
+    subparsers.add_parser("stats", help="Show algorithm statistics")
+
+    search_parser = subparsers.add_parser(
+        "search", help="Search algorithms (keyword, tag, category, difficulty)"
+    )
+    search_parser.add_argument("keyword", nargs="?", default="", help="Keyword to search for")
+    search_parser.add_argument(
+        "--keyword", dest="keyword_flag", default="", help="Keyword to search for"
+    )
+    search_parser.add_argument("--tag", default="", help="Filter by tag")
+    search_parser.add_argument(
+        "--category", default="", help="Filter by category or subcategory ID"
+    )
+    search_parser.add_argument(
+        "--difficulty",
+        default="",
+        help="Filter by difficulty (beginner/intermediate/advanced)",
+    )
+
+    info_parser = subparsers.add_parser("info", help="Show detailed info about an algorithm")
+    info_parser.add_argument("algo_id", help="Algorithm ID or fuzzy keyword")
+
+    compare_parser = subparsers.add_parser("compare", help="Compare two algorithms side by side")
+    compare_parser.add_argument("id1", help="First algorithm ID or fuzzy keyword")
+    compare_parser.add_argument("id2", help="Second algorithm ID or fuzzy keyword")
+
+    export_parser = subparsers.add_parser("export", help="Export algorithms to JSON or CSV")
+    export_parser.add_argument(
+        "--format", dest="fmt", default="json", help="Export format: json or csv"
+    )
+    export_parser.add_argument("--output", default="", help="Write export output to a file")
+
+    subparsers.add_parser("mkdocs", help="Generate MkDocs pages")
+
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = build_parser()
+    args = parser.parse_args(argv)
+
+    if args.command == "generate":
+        return cmd_generate(output_path=args.output)
+    if args.command == "validate":
+        return cmd_validate()
+    if args.command == "stats":
+        return cmd_stats()
+    if args.command == "search":
+        keyword = args.keyword_flag or args.keyword
+        return cmd_search_cli(
+            keyword=keyword,
+            tag=args.tag,
+            category=args.category,
+            difficulty=args.difficulty,
+        )
+    if args.command == "info":
+        return cmd_info_cli(args.algo_id)
+    if args.command == "compare":
+        return cmd_compare_cli(args.id1, args.id2)
+    if args.command == "export":
+        return cmd_export_cli(fmt=args.fmt, output=args.output)
+    if args.command == "mkdocs":
+        return cmd_mkdocs()
+
+    parser.print_help()
+    return 1
 
 
 if __name__ == "__main__":

@@ -2,6 +2,7 @@
 Category Manager for Awesome Bioinformatics Algorithms.
 Manages algorithm categories and subcategories.
 """
+
 import os
 from typing import Optional
 
@@ -30,16 +31,16 @@ class CategoryManager:
         if not os.path.exists(path):
             raise FileNotFoundError(f"Categories file not found: {path}")
 
-        with open(path, encoding='utf-8') as f:
+        with open(path, encoding="utf-8") as f:
             data = yaml.safe_load(f)
 
-        if not data or 'categories' not in data:
+        if not data or "categories" not in data:
             return []
 
         self._categories = []
         self._category_map = {}
 
-        for cat_data in data['categories']:
+        for cat_data in data["categories"]:
             category = Category.from_dict(cat_data)
             self._categories.append(category)
             self._register_category(category)
@@ -118,9 +119,7 @@ class CategoryManager:
 
     def to_dict(self) -> dict:
         """Convert all categories to dictionary for serialization."""
-        return {
-            'categories': [cat.to_dict() for cat in self._categories]
-        }
+        return {"categories": [cat.to_dict() for cat in self._categories]}
 
     def from_categories(self, categories: list[Category]):
         """Load categories from a list of Category objects."""

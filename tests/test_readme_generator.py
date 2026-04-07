@@ -2,6 +2,7 @@
 Property-based tests for ReadmeGenerator.
 Feature: awesome-bioinfo-algorithms
 """
+
 from pathlib import Path
 
 from hypothesis import HealthCheck, given, settings
@@ -14,15 +15,14 @@ from scripts.schema import AlgorithmEntry, Category
 
 # Strategies for generating test data
 valid_id = st.text(
-    alphabet=st.sampled_from('abcdefghijklmnopqrstuvwxyz0123456789'),
-    min_size=1, max_size=20
+    alphabet=st.sampled_from("abcdefghijklmnopqrstuvwxyz0123456789"), min_size=1, max_size=20
 ).filter(lambda x: x and x[0].isalpha())
 
 valid_name = st.text(min_size=1, max_size=30).filter(lambda x: x.strip())
 
 valid_description = st.text(min_size=50, max_size=200).filter(lambda x: len(x.strip()) >= 50)
 
-valid_complexity = st.sampled_from(['O(1)', 'O(n)', 'O(n^2)', 'O(mn)', 'O(log n)'])
+valid_complexity = st.sampled_from(["O(1)", "O(n)", "O(n^2)", "O(mn)", "O(log n)"])
 
 
 @st.composite
@@ -34,7 +34,7 @@ def category_with_id_strategy(draw, cat_id: str):
         name_en=draw(valid_name),
         description=draw(st.text(min_size=0, max_size=100)),
         subcategories=[],
-        parent_id=None
+        parent_id=None,
     )
 
 
@@ -78,7 +78,7 @@ def registry_with_categories_strategy(draw):
             name_en=draw(valid_name),
             description=draw(st.text(min_size=0, max_size=100)),
             subcategories=[],
-            parent_id=None
+            parent_id=None,
         )
         categories.append(cat)
 
@@ -127,8 +127,9 @@ def test_property_6_toc_completeness(data):
         algos_in_cat = registry.get_by_category(category.id)
         if algos_in_cat:
             # Category should be in TOC
-            assert category.name in toc, \
+            assert category.name in toc, (
                 f"Category '{category.name}' with {len(algos_in_cat)} algorithms should be in TOC"
+            )
 
 
 @settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
@@ -156,14 +157,12 @@ def test_property_5_markdown_output_consistency(data):
         output = generator.generate_algorithm_entry(algo)
 
         # Verify required fields are present
-        assert algo.name in output, \
-            f"Algorithm name '{algo.name}' should be in output"
-        assert algo.description.strip() in output, \
-            "Algorithm description should be in output"
-        assert algo.purpose in output, \
-            f"Algorithm purpose '{algo.purpose}' should be in output"
-        assert algo.time_complexity in output, \
+        assert algo.name in output, f"Algorithm name '{algo.name}' should be in output"
+        assert algo.description.strip() in output, "Algorithm description should be in output"
+        assert algo.purpose in output, f"Algorithm purpose '{algo.purpose}' should be in output"
+        assert algo.time_complexity in output, (
             f"Time complexity '{algo.time_complexity}' should be in output"
+        )
 
         # Verify consistent format markers
         assert "**用途**:" in output, "Purpose should have consistent label"
@@ -197,20 +196,18 @@ def test_property_9_anchor_link_validity(data):
             anchor = generator._generate_anchor(category.name)
 
             # Anchor should be lowercase
-            assert anchor == anchor.lower(), \
-                f"Anchor '{anchor}' should be lowercase"
+            assert anchor == anchor.lower(), f"Anchor '{anchor}' should be lowercase"
 
             # Anchor should not have spaces
-            assert ' ' not in anchor, \
-                f"Anchor '{anchor}' should not contain spaces"
+            assert " " not in anchor, f"Anchor '{anchor}' should not contain spaces"
 
             # Anchor should not start or end with hyphen
-            assert not anchor.startswith('-') and not anchor.endswith('-'), \
+            assert not anchor.startswith("-") and not anchor.endswith("-"), (
                 f"Anchor '{anchor}' should not start or end with hyphen"
+            )
 
             # Anchor should not have consecutive hyphens
-            assert '--' not in anchor, \
-                f"Anchor '{anchor}' should not have consecutive hyphens"
+            assert "--" not in anchor, f"Anchor '{anchor}' should not have consecutive hyphens"
 
 
 @settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
@@ -241,29 +238,29 @@ def test_full_readme_generation(data):
 def test_subcategory_sections_and_toc_are_rendered():
     """Test that subcategories appear in the TOC and content sections."""
     pairwise = Category(
-        id='pairwise',
-        name='双序列比对',
-        name_en='Pairwise Alignment',
-        description='两条序列之间的比对算法',
+        id="pairwise",
+        name="双序列比对",
+        name_en="Pairwise Alignment",
+        description="两条序列之间的比对算法",
         subcategories=[],
-        parent_id='sequence-alignment',
+        parent_id="sequence-alignment",
     )
     category = Category(
-        id='sequence-alignment',
-        name='序列比对',
-        name_en='Sequence Alignment',
-        description='用于比较和对齐生物序列的算法',
+        id="sequence-alignment",
+        name="序列比对",
+        name_en="Sequence Alignment",
+        description="用于比较和对齐生物序列的算法",
         subcategories=[pairwise],
         parent_id=None,
     )
     algorithm = AlgorithmEntry(
-        id='smith-waterman',
-        name='Smith-Waterman',
-        description='A' * 60,
-        purpose='局部序列比对',
-        time_complexity='O(mn)',
-        category='sequence-alignment',
-        subcategory='pairwise',
+        id="smith-waterman",
+        name="Smith-Waterman",
+        description="A" * 60,
+        purpose="局部序列比对",
+        time_complexity="O(mn)",
+        category="sequence-alignment",
+        subcategory="pairwise",
     )
 
     registry = AlgorithmRegistry()
@@ -276,28 +273,30 @@ def test_subcategory_sections_and_toc_are_rendered():
     toc = generator.generate_toc()
     section = generator.generate_category_section(category)
 
-    assert 'Pairwise Alignment' in toc
-    assert '### 双序列比对 (Pairwise Alignment)' in section
-    assert 'Smith-Waterman' in section
+    assert "Pairwise Alignment" in toc
+    assert "### 双序列比对 (Pairwise Alignment)" in section
+    assert "Smith-Waterman" in section
 
 
-
-def test_generated_readme_matches_repository_readme(project_root, loaded_registry, loaded_category_manager):
+def test_generated_readme_matches_repository_readme(
+    project_root, loaded_registry, loaded_category_manager
+):
     """Real repository data and template should reproduce the committed README exactly."""
-    template_path = Path(project_root) / 'templates' / 'readme_template.md'
-    expected_readme = (Path(project_root) / 'README.md').read_text(encoding='utf-8')
+    template_path = Path(project_root) / "templates" / "readme_template.md"
+    expected_readme = (Path(project_root) / "README.md").read_text(encoding="utf-8")
 
     generator = ReadmeGenerator(loaded_registry, loaded_category_manager, str(template_path))
     generated = generator.generate()
 
     assert generated == expected_readme
-    assert '{{' not in generated
+    assert "{{" not in generated
 
 
-
-def test_real_repository_toc_entries_match_rendered_sections(project_root, loaded_registry, loaded_category_manager):
+def test_real_repository_toc_entries_match_rendered_sections(
+    project_root, loaded_registry, loaded_category_manager
+):
     """Real generated TOC entries should line up with rendered category and subcategory headings."""
-    template_path = Path(project_root) / 'templates' / 'readme_template.md'
+    template_path = Path(project_root) / "templates" / "readme_template.md"
     generator = ReadmeGenerator(loaded_registry, loaded_category_manager, str(template_path))
     readme = generator.generate()
 
@@ -313,7 +312,8 @@ def test_real_repository_toc_entries_match_rendered_sections(project_root, loade
 
         for subcategory in category.subcategories:
             sub_algorithms = [
-                algo for algo in loaded_registry.get_by_subcategory(subcategory.id)
+                algo
+                for algo in loaded_registry.get_by_subcategory(subcategory.id)
                 if algo.category == category.id
             ]
             if not sub_algorithms:
@@ -325,14 +325,15 @@ def test_real_repository_toc_entries_match_rendered_sections(project_root, loade
             assert f"### {subcategory_title}" in readme
 
 
-
-def test_save_writes_same_content_as_tracked_readme(tmp_path, project_root, loaded_registry, loaded_category_manager):
+def test_save_writes_same_content_as_tracked_readme(
+    tmp_path, project_root, loaded_registry, loaded_category_manager
+):
     """save() should write the same content as the tracked repository README."""
-    template_path = Path(project_root) / 'templates' / 'readme_template.md'
-    expected_readme = (Path(project_root) / 'README.md').read_text(encoding='utf-8')
-    output_path = tmp_path / 'README.md'
+    template_path = Path(project_root) / "templates" / "readme_template.md"
+    expected_readme = (Path(project_root) / "README.md").read_text(encoding="utf-8")
+    output_path = tmp_path / "README.md"
 
     generator = ReadmeGenerator(loaded_registry, loaded_category_manager, str(template_path))
     generator.save(str(output_path))
 
-    assert output_path.read_text(encoding='utf-8') == expected_readme
+    assert output_path.read_text(encoding="utf-8") == expected_readme

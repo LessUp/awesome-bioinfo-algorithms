@@ -1,6 +1,6 @@
 """Tests for the generate_readme compatibility wrapper."""
-import scripts.generate_readme as generate_readme
 
+import scripts.generate_readme as generate_readme
 
 
 def test_main_delegates_to_cmd_generate(monkeypatch):
@@ -8,10 +8,10 @@ def test_main_delegates_to_cmd_generate(monkeypatch):
     called = []
 
     def fake_cmd_generate() -> int:
-        called.append('generate')
+        called.append("generate")
         return 5
 
-    monkeypatch.setattr(generate_readme, 'cmd_generate', fake_cmd_generate)
+    monkeypatch.setattr(generate_readme, "cmd_generate", fake_cmd_generate)
 
     assert generate_readme.main() == 5
-    assert called == ['generate']
+    assert called == ["generate"]
