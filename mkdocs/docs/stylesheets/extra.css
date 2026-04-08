@@ -1,0 +1,103 @@
+.md-grid {
+  max-width: 80rem;
+}
+
+.aba-stats-grid,
+.aba-card-grid,
+.aba-category-grid,
+.aba-latest-grid {
+  display: grid;
+  gap: 1rem;
+  margin: 1.25rem 0 2rem;
+}
+
+.aba-stats-grid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.aba-card-grid,
+.aba-category-grid,
+.aba-latest-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.aba-stat-card,
+.aba-value-card,
+.aba-category-card,
+.aba-latest-card {
+  display: block;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.9rem;
+  background: var(--md-default-bg-color);
+  box-shadow: var(--md-shadow-z1);
+}
+
+.aba-stat-card span,
+.aba-category-card span,
+.aba-latest-card span {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--md-primary-fg-color);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.aba-stat-card strong {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-size: 1.9rem;
+  line-height: 1.1;
+}
+
+.aba-stat-card p,
+.aba-value-card p,
+.aba-category-card p,
+.aba-latest-card p {
+  margin: 0;
+  color: var(--md-default-fg-color--light);
+}
+
+.aba-value-card h3,
+.aba-category-card strong,
+.aba-latest-card strong {
+  display: block;
+  margin-bottom: 0.45rem;
+  color: var(--md-default-fg-color);
+  font-size: 1.02rem;
+  line-height: 1.35;
+}
+
+.aba-category-card,
+.aba-latest-card {
+  text-decoration: none;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.aba-category-card:hover,
+.aba-latest-card:hover {
+  border-color: var(--md-primary-fg-color);
+  box-shadow: var(--md-shadow-z2);
+  transform: translateY(-2px);
+}
+
+.aba-category-card em,
+.aba-latest-card em {
+  display: block;
+  margin-top: 0.7rem;
+  color: var(--md-accent-fg-color);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.md-typeset .md-button {
+  margin-right: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+@media screen and (max-width: 76.1875em) {
+  .md-grid {
+    max-width: 100%;
+  }
+}

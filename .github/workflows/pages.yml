@@ -5,8 +5,13 @@ on:
     branches: [main, master]
     paths:
       - 'data/**'
+      - 'docs/**'
       - 'mkdocs/**'
       - 'scripts/**'
+      - 'CHANGELOG.md'
+      - 'CODE_OF_CONDUCT.md'
+      - 'SECURITY.md'
+      - 'pyproject.toml'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
