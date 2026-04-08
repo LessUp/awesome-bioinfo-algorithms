@@ -108,6 +108,20 @@ def test_generate_mkdocs_creates_expected_pages(project_root, tmp_path):
     assert (temp_root / "mkdocs" / "docs" / "development.md").exists()
     assert (temp_root / "mkdocs" / "docs" / "code-of-conduct.md").exists()
 
+    index_content = (temp_root / "mkdocs" / "docs" / "index.md").read_text(encoding="utf-8")
+    search_content = (temp_root / "mkdocs" / "docs" / "search.md").read_text(encoding="utf-8")
+    about_content = (temp_root / "mkdocs" / "docs" / "about.md").read_text(encoding="utf-8")
+    category_index_content = (temp_root / "mkdocs" / "docs" / "categories" / "index.md").read_text(encoding="utf-8")
+    algorithm_index_content = (temp_root / "mkdocs" / "docs" / "algorithms" / "index.md").read_text(encoding="utf-8")
+
+    assert "导航、检索、发现与快速浏览" in index_content
+    assert "aba-stats-grid" in index_content
+    assert "按研究方向快速进入" in index_content
+    assert "这个站点最适合承担“快速定位与发现”的角色" in search_content
+    assert "仓库里最有价值的资产" in about_content
+    assert "# 分类总览" in category_index_content
+    assert "# 全部算法" in algorithm_index_content
+
 
 def test_main_dispatches_new_cli_commands(monkeypatch):
     called = []

@@ -25,6 +25,7 @@ theme:
   features:
     - navigation.tabs
     - navigation.sections
+    - navigation.indexes
     - navigation.expand
     - navigation.top
     - navigation.instant
@@ -53,22 +54,25 @@ markdown_extensions:
   - md_in_html
   - tables
 
+extra_css:
+  - stylesheets/extra.css
+
 nav:
-  - Home: index.md
-  - Search: search.md
-  - Tags: tags.md
-  - Categories:
-    - Overview: categories/index.md
-  - Algorithms:
-    - Overview: algorithms/index.md
-  - Guides:
-    - API: api.md
-    - FAQ: faq.md
-    - Development: development.md
-    - Contributing: contributing.md
-  - Project:
-    - About: about.md
-    - Changelog: changelog.md
-    - Code of Conduct: code-of-conduct.md
-    - Security Guide: security.md
-    - Security Policy: security-policy.md
+  - 首页: index.md
+  - 检索: search.md
+  - 标签: tags.md
+  - 分类:
+    - 分类总览: categories/index.md
+  - 算法:
+    - 全部算法: algorithms/index.md
+  - 指南:
+    - API 文档: api.md
+    - 常见问题: faq.md
+    - 开发指南: development.md
+    - 贡献指南: contributing.md
+  - 项目:
+    - 关于项目: about.md
+    - 变更日志: changelog.md
+    - 行为准则: code-of-conduct.md
+    - 安全指南: security.md
+    - 安全策略: security-policy.md
