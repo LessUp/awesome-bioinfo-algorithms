@@ -6,24 +6,11 @@ Usage:
     python scripts/generate_mkdocs.py
 """
 
-from collections import Counter
+import re
+import shutil
 from pathlib import Path
 
 import yaml
-
-DOC_SOURCE_FILES = {
-    "api.md": "API.md",
-    "faq.md": "FAQ.md",
-    "development.md": "DEVELOPMENT.md",
-    "contributing.md": "contributing.md",
-    "security.md": "security.md",
-}
-
-DOC_STATIC_FILES = {
-    "changelog.md": "CHANGELOG.md",
-    "code-of-conduct.md": "CODE_OF_CONDUCT.md",
-    "security-policy.md": "SECURITY.md",
-}
 
 
 def get_base_dir() -> Path:
@@ -81,396 +68,379 @@ def write_file(path: Path, content: str):
         f.write(content)
 
 
-def read_text(path: Path) -> str:
-    with open(path, encoding="utf-8") as f:
-        return f.read()
+def trim_text(value: str, limit: int = 80) -> str:
+    normalized = " ".join(value.split())
+    if len(normalized) <= limit:
+        return normalized
+    return normalized[: limit - 1].rstrip() + "…"
 
 
-def strip_front_matter(content: str) -> str:
-    if not content.startswith("---\n"):
-        return content
-
-    closing = content.find("\n---\n", 4)
-    if closing == -1:
-        return content
-
-    return content[closing + 5 :]
-
-
-def prepare_docs_content(content: str) -> str:
-    return strip_front_matter(content).replace("../CONTRIBUTING.md", "contributing.md")
-
-
-def copy_docs_pages(base_dir: Path, mkdocs_dir: Path):
-    docs_dir = base_dir / "docs"
-    for target_name, source_name in DOC_SOURCE_FILES.items():
-        content = prepare_docs_content(read_text(docs_dir / source_name))
-        write_file(mkdocs_dir / target_name, content)
-
-    for target_name, source_name in DOC_STATIC_FILES.items():
-        content = read_text(base_dir / source_name)
-        write_file(mkdocs_dir / target_name, content)
-
+# ---------------------------------------------------------------------------
+# Index (landing page) — inline HTML in markdown
+# ---------------------------------------------------------------------------
 
 def generate_index(
-    categories: list[dict], algorithms: list[dict], cat_map: dict, by_cat: dict
+    categories: list[dict],
+    algorithms: list[dict],
+    cat_map: dict,
+    by_cat: dict,
+    by_tag: dict,
 ) -> str:
-    """Generate home page."""
+    """Generate the landing page as inline HTML in index.md."""
     total = len(algorithms)
-    cats_with_algo = len(by_cat)
     all_tags = set()
-    difficulty_counts: Counter[str] = Counter()
-    language_counts: Counter[str] = Counter()
     with_paper = 0
-    with_implementation = 0
-    with_tools = 0
+    with_impl = 0
 
-    def trim_text(value: str, limit: int = 84) -> str:
-        normalized = " ".join(value.split())
-        if len(normalized) <= limit:
-            return normalized
-        return normalized[: limit - 1].rstrip() + "…"
-
-    for algorithm in algorithms:
-        all_tags.update(algorithm.get("tags", []))
-        difficulty_counts[algorithm.get("difficulty", "unspecified")] += 1
-        language_counts.update(algorithm.get("language", []))
-        if algorithm.get("paper_url"):
+    for algo in algorithms:
+        all_tags.update(algo.get("tags", []))
+        if algo.get("paper_url"):
             with_paper += 1
-        if algorithm.get("implementation_url"):
-            with_implementation += 1
-        if algorithm.get("related_tools"):
-            with_tools += 1
+        if algo.get("implementation_url"):
+            with_impl += 1
 
-    top_categories = sorted(
-        (
-            (len(by_cat.get(cat["id"], [])), cat)
-            for cat in categories
-            if len(by_cat.get(cat["id"], [])) > 0
-        ),
-        key=lambda item: (-item[0], item[1].get("name_en", "")),
-    )[:8]
-    latest_algorithms = sorted(
-        [algorithm for algorithm in algorithms if algorithm.get("year")],
-        key=lambda entry: (entry.get("year", 0), entry.get("name", "")),
+    cats_with_algo = [cat for cat in categories if by_cat.get(cat["id"])]
+
+    # Build categories HTML
+    cat_cards = []
+    for cat in categories:
+        count = len(by_cat.get(cat["id"], []))
+        if count == 0:
+            continue
+        cat_cards.append(
+            f'<a class="aba-cat-card" href="categories/{cat["id"]}/">'
+            f'<div class="aba-cat-name">{cat["name"]}</div>'
+            f'<div class="aba-cat-name-en">{cat.get("name_en", "")}</div>'
+            f'<div class="aba-cat-desc">{trim_text(cat.get("description", ""), 60)}</div>'
+            f'<div class="aba-cat-count">{count} 个算法 →</div>'
+            f"</a>"
+        )
+
+    # Build latest algorithms HTML
+    latest = sorted(
+        [a for a in algorithms if a.get("year")],
+        key=lambda e: (e.get("year", 0), e.get("name", "")),
         reverse=True,
-    )[:6]
-    top_languages = ", ".join(
-        f"{language} {count}" for language, count in language_counts.most_common(4)
-    )
-    difficulty_summary = " / ".join(
-        f"{label} {difficulty_counts[key]}"
-        for key, label in [
-            ("beginner", "入门"),
-            ("intermediate", "进阶"),
-            ("advanced", "高级"),
-            ("unspecified", "未标注"),
-        ]
-        if difficulty_counts.get(key)
-    )
+    )[:8]
+    algo_cards = []
+    for algo in latest:
+        cat_info = cat_map.get(algo.get("category", ""), {})
+        cat_label = cat_info.get("name", algo.get("category", ""))
+        summary = trim_text(algo.get("purpose") or algo.get("description", ""), 70)
+        algo_cards.append(
+            f'<a class="aba-algo-card" href="algorithms/{algo["id"]}/">'
+            f'<div class="aba-algo-meta">{algo["year"]} · {cat_label}</div>'
+            f'<div class="aba-algo-name">{algo["name"]}</div>'
+            f'<div class="aba-algo-desc">{summary}</div>'
+            f"</a>"
+        )
 
     lines = [
         "---",
         "hide:",
+        "  - navigation",
         "  - toc",
         "---",
         "",
-        "# Awesome Bioinformatics Algorithms",
+        # Hero
+        '<div class="aba-hero" markdown>',
         "",
-        "> 把仓库中最有价值的部分——结构化算法条目、分类体系、标签索引、论文与实现链接——组织成适合网页浏览的知识入口。",
+        "# :dna: Awesome Bioinformatics Algorithms",
         "",
-        "这个站点不再把 GitHub Pages 当作一张窄版 README 镜像，而是专门承担 **导航、检索、发现与快速浏览** 的角色；仓库本身仍然是权威数据源和贡献入口。",
+        f"生物信息学算法结构化知识库 — 收录 **{total}** 个算法，覆盖 **{len(cats_with_algo)}** 个研究方向",
         "",
-        "[浏览全部算法](algorithms/){ .md-button .md-button--primary }",
-        "[按分类浏览](categories/){ .md-button }",
-        "[按标签筛选](tags/){ .md-button }",
-        "[查看 GitHub 仓库](https://github.com/LessUp/awesome-bioinfo-algorithms){ .md-button }",
+        '[浏览全部算法](algorithms/){ .md-button .md-button--primary }',
+        '[按分类浏览](categories/){ .md-button }',
+        '[按标签筛选](tags/){ .md-button }',
         "",
-        '<div class="aba-stats-grid">',
-        f'<div class="aba-stat-card"><span>算法条目</span><strong>{total}</strong><p>覆盖经典方法到 2024 年前沿模型。</p></div>',
-        f'<div class="aba-stat-card"><span>有效分类</span><strong>{cats_with_algo}</strong><p>按研究任务组织，适合从问题域进入。</p></div>',
-        f'<div class="aba-stat-card"><span>标签索引</span><strong>{len(all_tags)}</strong><p>可从技术关键词与方法特征快速聚合。</p></div>',
-        f'<div class="aba-stat-card"><span>实现入口</span><strong>{with_implementation}</strong><p>大部分算法都提供了工具或代码链接。</p></div>',
         "</div>",
         "",
-        "## 这个站点能提供什么价值",
-        "",
-        '<div class="aba-card-grid">',
-        '<div class="aba-value-card"><h3>结构化数据而不是散乱链接</h3><p>每个算法条目都尽量统一整理了描述、用途、时间复杂度、空间复杂度、论文、实现与标签，适合横向比较。</p></div>',
-        '<div class="aba-value-card"><h3>从研究任务快速进入</h3><p>分类页按生物信息学问题域组织内容，避免在长文档里盲目滚动查找。</p></div>',
-        '<div class="aba-value-card"><h3>支持发现而不只是查找</h3><p>标签索引、全量算法页和最新方向快照让你更容易发现相近方法、替代工具和新趋势。</p></div>',
-        '<div class="aba-value-card"><h3>仓库与页面各司其职</h3><p>GitHub 仓库负责维护、协作与数据源；Pages 负责展示、导航与检索，不再重复堆叠 README 内容。</p></div>',
+        # Stats bar
+        '<div class="aba-stats">',
+        f'<div class="aba-stats-item"><strong>{total}</strong><span>算法条目</span></div>',
+        f'<div class="aba-stats-item"><strong>{len(cats_with_algo)}</strong><span>研究方向</span></div>',
+        f'<div class="aba-stats-item"><strong>{len(all_tags)}</strong><span>标签索引</span></div>',
+        f'<div class="aba-stats-item"><strong>{with_paper}</strong><span>论文链接</span></div>',
+        f'<div class="aba-stats-item"><strong>{with_impl}</strong><span>代码实现</span></div>',
         "</div>",
         "",
-        "## 按研究方向快速进入",
+        # Categories section
+        '<div class="aba-section" markdown>',
         "",
-        '<div class="aba-category-grid">',
-    ]
-    for count, cat in top_categories:
-        lines.append(
-            f'<a class="aba-category-card" href="categories/{cat["id"]}/">'
-            f'<span>{cat["name"]}</span>'
-            f'<strong>{cat["name_en"]}</strong>'
-            f'<p>{trim_text(cat.get("description", ""))}</p>'
-            f'<em>{count} 个算法</em></a>'
-        )
-    lines += [
+        "## 研究方向",
+        "",
+        "按生物信息学问题域组织，快速定位感兴趣的算法类别",
+        "{ .aba-subtitle }",
+        "",
+        '<div class="aba-cat-grid">',
+        *cat_cards,
         "</div>",
         "",
-        "## 数据覆盖情况",
+        "</div>",
         "",
-        f"- 论文链接：**{with_paper}/{total}**",
-        f"- 实现入口：**{with_implementation}/{total}**",
-        f"- 相关工具：**{with_tools}/{total}**",
-        f"- 难度分布：**{difficulty_summary}**",
-        f"- 常见实现语言：**{top_languages or '未标注'}**",
+        '<hr class="aba-divider">',
         "",
-        "## 近期方向快照",
+        # Latest section
+        '<div class="aba-section" markdown>',
+        "",
+        "## 最新收录",
+        "",
+        "近年发表的前沿算法与工具",
+        "{ .aba-subtitle }",
         "",
         '<div class="aba-latest-grid">',
-    ]
-    for algorithm in latest_algorithms:
-        category = cat_map.get(algorithm.get("category", ""), {})
-        summary = algorithm.get("purpose") or algorithm.get("description", "")
-        lines.append(
-            f'<a class="aba-latest-card" href="algorithms/{algorithm["id"]}/">'
-            f'<span>{algorithm["year"]} · {category.get("name", algorithm.get("category", ""))}</span>'
-            f'<strong>{algorithm["name"]}</strong>'
-            f'<p>{trim_text(summary)}</p>'
-            "<em>查看条目</em></a>"
-        )
-    lines += [
+        *algo_cards,
         "</div>",
         "",
-        "## 建议的使用方式",
-        "",
-        "- 想先建立全局认知：从 [分类总览](categories/) 开始",
-        "- 想做技术路线筛选：先看 [标签索引](tags/)",
-        "- 想直接检索名称、用途或关键词：使用顶部搜索框，或参考 [检索页](search/)",
-        "- 想贡献或修订条目：前往 [贡献指南](contributing/) 与 [开发文档](development/)",
+        "</div>",
         "",
     ]
+
     return "\n".join(lines)
 
 
+# ---------------------------------------------------------------------------
+# Algorithm detail page
+# ---------------------------------------------------------------------------
+
 def generate_algo_page(algo: dict, cat_map: dict) -> str:
-    """Generate a single algorithm page."""
+    """Generate a single algorithm detail page."""
     cat = cat_map.get(algo.get("category", ""), {})
-    cat_name = cat.get("name_en", algo.get("category", ""))
-    sub_name = ""
+    cat_name = cat.get("name", algo.get("category", ""))
+    cat_name_en = cat.get("name_en", "")
+    cat_id = algo.get("category", "")
     sub = cat_map.get(algo.get("subcategory", ""), {})
-    if sub:
-        sub_name = sub.get("name_en", "")
+    sub_name = sub.get("name", "")
 
     difficulty_labels = {
-        "beginner": "Beginner",
-        "intermediate": "Intermediate",
-        "advanced": "Advanced",
+        "beginner": ":material-signal-cellular-1: 入门",
+        "intermediate": ":material-signal-cellular-2: 进阶",
+        "advanced": ":material-signal-cellular-3: 高级",
     }
 
-    lines = [
-        f"# {algo['name']}",
-        "",
-    ]
+    lines = [f"# {algo['name']}", ""]
+
+    # Metadata badges line
+    badges = []
     if algo.get("year"):
-        lines.append(f"**Year:** {algo['year']}")
-    lines.append(f"**Category:** {cat_name}")
+        badges.append(f"**{algo['year']}**")
+    if cat_name:
+        badges.append(f"[{cat_name}](../categories/{cat_id}.md)")
     if sub_name:
-        lines.append(f"**Subcategory:** {sub_name}")
+        badges.append(sub_name)
     if algo.get("difficulty"):
-        lines.append(
-            f"**Difficulty:** {difficulty_labels.get(algo['difficulty'], algo['difficulty'])}"
-        )
+        badges.append(difficulty_labels.get(algo["difficulty"], algo["difficulty"]))
     if algo.get("language"):
-        lines.append(f"**Language:** {', '.join(algo['language'])}")
-    lines.append("")
+        badges.append(" / ".join(algo["language"]))
+    if badges:
+        lines.append(" · ".join(badges))
+        lines.append("")
 
-    lines.append("## Description")
-    lines.append("")
-    lines.append(algo.get("description", "").strip())
-    lines.append("")
+    # Description
+    desc = algo.get("description", "").strip()
+    if desc:
+        lines.append(desc)
+        lines.append("")
 
-    lines.append("## Details")
-    lines.append("")
-    lines.append("| Field | Value |")
-    lines.append("|-------|-------|")
-    lines.append(f"| Purpose | {algo.get('purpose', '-')} |")
-    lines.append(f"| Time Complexity | {algo.get('time_complexity', '-')} |")
-    lines.append(f"| Space Complexity | {algo.get('space_complexity', '-')} |")
+    # Core info table
+    lines.append("| 属性 | 值 |")
+    lines.append("|:-----|:---|")
+    if algo.get("purpose"):
+        lines.append(f"| **用途** | {algo['purpose']} |")
+    if algo.get("time_complexity"):
+        lines.append(f"| **时间复杂度** | `{algo['time_complexity']}` |")
+    if algo.get("space_complexity"):
+        lines.append(f"| **空间复杂度** | `{algo['space_complexity']}` |")
     if algo.get("paper_url"):
-        lines.append(f"| Paper | [{algo['paper_url']}]({algo['paper_url']}) |")
+        url = algo["paper_url"]
+        lines.append(f"| **论文** | [{url}]({url}) |")
     if algo.get("implementation_url"):
-        lines.append(
-            f"| Implementation | [{algo['implementation_url']}]({algo['implementation_url']}) |"
-        )
+        url = algo["implementation_url"]
+        lines.append(f"| **实现** | [{url}]({url}) |")
     lines.append("")
 
+    # Related tools
     if algo.get("related_tools"):
-        lines.append("## Related Tools")
-        lines.append("")
-        for tool in algo["related_tools"]:
-            lines.append(f"- {tool}")
+        lines.append("**相关工具：** " + " · ".join(algo["related_tools"]))
         lines.append("")
 
+    # Tags
     if algo.get("tags"):
-        lines.append("## Tags")
-        lines.append("")
-        lines.append(" ".join(f"`{tag}`" for tag in algo["tags"]))
+        lines.append("**标签：** " + " ".join(f"`{t}`" for t in algo["tags"]))
         lines.append("")
 
+    # References
     if algo.get("references"):
-        lines.append("## References")
+        lines.append("## 参考资料")
         lines.append("")
         for ref in algo["references"]:
             title = ref.get("title") or ref.get("url", "")
-            ref_type = f" [{ref['type']}]" if ref.get("type") else ""
+            ref_type = f" *{ref['type']}*" if ref.get("type") else ""
             lines.append(f"- [{title}]({ref['url']}){ref_type}")
         lines.append("")
 
     return "\n".join(lines)
 
 
+# ---------------------------------------------------------------------------
+# Category pages
+# ---------------------------------------------------------------------------
+
 def generate_category_page(cat: dict, algos: list[dict], cat_map: dict) -> str:
-    """Generate a category page listing all algorithms."""
+    """Generate a category page with subcategory sections."""
     lines = [
-        f"# {cat['name']} ({cat.get('name_en', '')})",
+        f"# {cat['name']}",
+        f"### {cat.get('name_en', '')}",
         "",
     ]
     if cat.get("description"):
-        lines.append(cat["description"])
+        lines.append(f"> {cat['description']}")
         lines.append("")
+
+    lines.append(f"共收录 **{len(algos)}** 个算法。")
+    lines.append("")
 
     for sub in cat.get("subcategories", []):
-        sub_algos = [algo for algo in algos if algo.get("subcategory") == sub["id"]]
-        if sub_algos:
-            lines.append(f"## {sub['name']} ({sub.get('name_en', '')})")
-            lines.append("")
-            if sub.get("description"):
-                lines.append(sub["description"])
-                lines.append("")
-            for algo in sub_algos:
-                year = f" ({algo['year']})" if algo.get("year") else ""
-                diff = f" [{algo['difficulty']}]" if algo.get("difficulty") else ""
-                lines.append(f"- [{algo['name']}{year}](../algorithms/{algo['id']}.md){diff}")
-                if algo.get("purpose"):
-                    lines.append(f"  {algo['purpose']}")
+        sub_algos = sorted(
+            [a for a in algos if a.get("subcategory") == sub["id"]],
+            key=lambda a: (a.get("year") or 0, a.get("name", "")),
+            reverse=True,
+        )
+        if not sub_algos:
+            continue
+        lines.append(f"## {sub['name']} ({sub.get('name_en', '')})")
+        lines.append("")
+        if sub.get("description"):
+            lines.append(f"*{sub['description']}*")
             lines.append("")
 
-    direct = [algo for algo in algos if not algo.get("subcategory")]
-    if direct:
-        lines.append("## Other")
+        # Table format for better readability
+        lines.append("| 算法 | 年份 | 用途 | 难度 |")
+        lines.append("|:-----|:----:|:-----|:----:|")
+        for algo in sub_algos:
+            name_link = f"[{algo['name']}](../algorithms/{algo['id']}.md)"
+            year = str(algo.get("year", "-"))
+            purpose = trim_text(algo.get("purpose", "-"), 50)
+            diff_map = {"beginner": "入门", "intermediate": "进阶", "advanced": "高级"}
+            diff = diff_map.get(algo.get("difficulty", ""), "-")
+            lines.append(f"| {name_link} | {year} | {purpose} | {diff} |")
         lines.append("")
+
+    # Algorithms without subcategory
+    direct = sorted(
+        [a for a in algos if not a.get("subcategory")],
+        key=lambda a: (a.get("year") or 0, a.get("name", "")),
+        reverse=True,
+    )
+    if direct:
+        lines.append("## 其他")
+        lines.append("")
+        lines.append("| 算法 | 年份 | 用途 |")
+        lines.append("|:-----|:----:|:-----|")
         for algo in direct:
-            year = f" ({algo['year']})" if algo.get("year") else ""
-            lines.append(f"- [{algo['name']}{year}](../algorithms/{algo['id']}.md)")
+            name_link = f"[{algo['name']}](../algorithms/{algo['id']}.md)"
+            year = str(algo.get("year", "-"))
+            purpose = trim_text(algo.get("purpose", "-"), 50)
+            lines.append(f"| {name_link} | {year} | {purpose} |")
         lines.append("")
 
     return "\n".join(lines)
 
 
-def generate_tags_page(by_tag: dict) -> str:
-    """Generate tags index page."""
+def generate_category_index(categories: list[dict], by_cat: dict) -> str:
+    """Generate category overview page."""
+    cats_with_algo = [(cat, len(by_cat.get(cat["id"], []))) for cat in categories if by_cat.get(cat["id"])]
+
     lines = [
-        "---",
-        "hide:",
-        "  - toc",
-        "---",
+        "# 分类总览",
         "",
+        f"共 **{len(cats_with_algo)}** 个研究方向，按算法数量排序。",
+        "",
+        "| 分类 | 英文名 | 算法数 | 简介 |",
+        "|:-----|:-------|:------:|:-----|",
+    ]
+    for cat, count in sorted(cats_with_algo, key=lambda x: -x[1]):
+        link = f"[{cat['name']}]({cat['id']}.md)"
+        lines.append(
+            f"| {link} | {cat.get('name_en', '')} | {count} | {trim_text(cat.get('description', ''), 40)} |"
+        )
+    lines.append("")
+    return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------------
+# Tags page
+# ---------------------------------------------------------------------------
+
+def generate_tags_page(by_tag: dict) -> str:
+    """Generate tags index page with tag cloud feel."""
+    sorted_tags = sorted(by_tag.items(), key=lambda x: (-len(x[1]), x[0]))
+
+    lines = [
         "# 标签索引",
         "",
-        f"当前共整理 **{len(by_tag)}** 个标签。若你知道方法特征但暂时想不起算法名，可以先从这里进入，再回到具体算法页。",
+        f"共 **{len(by_tag)}** 个标签，按算法数量排序。点击标签查看关联算法。",
         "",
     ]
-    for tag in sorted(by_tag.keys()):
-        algos = by_tag[tag]
+    for tag, algos in sorted_tags:
         lines.append(f"## `{tag}` ({len(algos)})")
         lines.append("")
-        for algo in algos:
+        for algo in sorted(algos, key=lambda a: a.get("name", "")):
             year = f" ({algo['year']})" if algo.get("year") else ""
             lines.append(f"- [{algo['name']}{year}](algorithms/{algo['id']}.md)")
         lines.append("")
     return "\n".join(lines)
 
 
-def generate_search_page() -> str:
-    """Generate static search help page."""
-    return """\
----
-hide:
-  - toc
----
+# ---------------------------------------------------------------------------
+# Algorithm index page
+# ---------------------------------------------------------------------------
 
-# 检索与筛选
-
-这个站点最适合承担“快速定位与发现”的角色。若你不想在 README 或仓库目录里长时间滚动，建议优先使用下面三种入口。
-
-## 站内全文搜索
-
-顶部搜索框可以直接匹配：
-
-- 算法名称
-- 条目描述与用途
-- 标签关键词
-- 分类页与项目文档
-
-## 推荐浏览路径
-
-- 想按研究任务浏览：从 [分类总览](categories/) 进入
-- 想按技术特征筛选：从 [标签索引](tags/) 进入
-- 想扫描全部条目：从 [全部算法](algorithms/) 进入
-- 想回到权威数据源和贡献入口：访问 [GitHub 仓库](https://github.com/LessUp/awesome-bioinfo-algorithms)
-
-## 命令行检索
-
-你也可以在本地仓库中直接搜索：
-
-```bash
-python -m scripts search "dynamic programming"
-python -m scripts search --tag fast
-python -m scripts search --category sequence-alignment
-python -m scripts search --difficulty beginner
-```
-"""
+def generate_algo_index(algorithms: list[dict], cat_map: dict) -> str:
+    """Generate the full algorithm listing as a searchable table."""
+    lines = [
+        "# 全部算法",
+        "",
+        f"共收录 **{len(algorithms)}** 个算法。使用顶部搜索框可快速定位。",
+        "",
+        "| 算法 | 年份 | 分类 | 用途 |",
+        "|:-----|:----:|:-----|:-----|",
+    ]
+    for algo in sorted(algorithms, key=lambda a: a.get("name", "").lower()):
+        name_link = f"[{algo['name']}]({algo['id']}.md)"
+        year = str(algo.get("year", "-"))
+        cat_info = cat_map.get(algo.get("category", ""), {})
+        cat_name = cat_info.get("name", "-")
+        purpose = trim_text(algo.get("purpose", "-"), 45)
+        lines.append(f"| {name_link} | {year} | {cat_name} | {purpose} |")
+    lines.append("")
+    return "\n".join(lines)
 
 
-def generate_about_page() -> str:
-    return """\
----
-hide:
-  - toc
----
+# ---------------------------------------------------------------------------
+# Nav generation (dynamic)
+# ---------------------------------------------------------------------------
 
-# 关于项目
+def generate_nav_yaml(categories: list[dict], by_cat: dict) -> str:
+    """Generate the nav YAML block as text."""
+    lines = [
+        "nav:",
+        "  - 首页: index.md",
+        "  - 算法:",
+        "    - 全部算法: algorithms/index.md",
+        "  - 分类:",
+        "    - 分类总览: categories/index.md",
+    ]
+    for cat in categories:
+        if by_cat.get(cat["id"]):
+            lines.append(f"    - {cat['name']}: categories/{cat['id']}.md")
+    lines.append("  - 标签: tags.md")
+    return "\n".join(lines) + "\n"
 
-**Awesome Bioinformatics Algorithms** 是一个面向生物信息学算法的结构化知识仓库。GitHub 仓库负责维护、协作和数据更新，Pages 站点负责展示、导航与检索。
 
-## 仓库里最有价值的资产
-
-- `data/algorithms/*.yaml`：算法主数据，统一整理描述、用途、复杂度、论文、实现与标签
-- `data/categories.yaml`：分类体系与子分类定义
-- `scripts/`：用于校验、搜索、导出、README 生成与 MkDocs 生成的维护工具
-- 自动生成的 README 与站点页面：减少内容漂移，保证仓库与网页的一致性
-
-## 适合谁使用
-
-- 想快速比较同类算法的研究者和工程师
-- 想按问题域梳理方法谱系的学习者
-- 想补充论文、实现链接或元数据的贡献者
-
-## 工作方式
-
-- 数据以 YAML 维护，便于审阅、批量处理和自动校验
-- README 与网页文档自动生成，降低手工维护成本
-- CLI 支持验证、搜索、统计和导出，方便本地维护与集成
-
-## 相关链接
-
-- [GitHub Repository](https://github.com/LessUp/awesome-bioinfo-algorithms)
-- [Contributing Guide](contributing/)
-- [Development Guide](development/)
-- [Changelog](changelog/)
-"""
-
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
 
 def write_generated_pages(
     base_dir: Path,
@@ -481,14 +451,36 @@ def write_generated_pages(
     by_cat: dict[str, list[dict]],
     by_tag: dict[str, list[dict]],
 ):
-    write_file(mkdocs_dir / "index.md", generate_index(categories, algorithms, cat_map, by_cat))
+    # Clean previous generated docs (keep stylesheets and .gitkeep)
+    if mkdocs_dir.exists():
+        for item in mkdocs_dir.iterdir():
+            if item.name in ("stylesheets", ".gitkeep"):
+                continue
+            if item.is_dir():
+                shutil.rmtree(item)
+            else:
+                item.unlink()
 
+    # Landing page
+    write_file(
+        mkdocs_dir / "index.md",
+        generate_index(categories, algorithms, cat_map, by_cat, by_tag),
+    )
+
+    # Algorithm detail pages
     for algo in algorithms:
         write_file(
             mkdocs_dir / "algorithms" / f"{algo['id']}.md",
             generate_algo_page(algo, cat_map),
         )
 
+    # Algorithm index
+    write_file(
+        mkdocs_dir / "algorithms" / "index.md",
+        generate_algo_index(algorithms, cat_map),
+    )
+
+    # Category pages
     for cat in categories:
         algos = by_cat.get(cat["id"], [])
         if algos:
@@ -497,45 +489,29 @@ def write_generated_pages(
                 generate_category_page(cat, algos, cat_map),
             )
 
-    cat_index_lines = [
-        "---",
-        "hide:",
-        "  - toc",
-        "---",
-        "",
-        "# 分类总览",
-        "",
-        f"当前共有 **{len([cat for cat in categories if by_cat.get(cat['id'])])}** 个已收录分类，建议先从与你的问题域最接近的方向进入。",
-        "",
-    ]
-    for cat in categories:
-        count = len(by_cat.get(cat["id"], []))
-        if count:
-            cat_index_lines.append(
-                f"- [{cat['name']} ({cat['name_en']})]({cat['id']}.md) — {count} 个算法"
-            )
-    write_file(mkdocs_dir / "categories" / "index.md", "\n".join(cat_index_lines) + "\n")
+    # Category index
+    write_file(
+        mkdocs_dir / "categories" / "index.md",
+        generate_category_index(categories, by_cat),
+    )
 
-    algo_index_lines = [
-        "---",
-        "hide:",
-        "  - toc",
-        "---",
-        "",
-        "# 全部算法",
-        "",
-        f"当前共收录 **{len(algorithms)}** 个算法，下面按名称排序。若你想先缩小范围，建议先看分类页或标签页。",
-        "",
-    ]
-    for algo in sorted(algorithms, key=lambda entry: entry.get("name", "")):
-        year = f" ({algo['year']})" if algo.get("year") else ""
-        algo_index_lines.append(f"- [{algo['name']}{year}]({algo['id']}.md)")
-    write_file(mkdocs_dir / "algorithms" / "index.md", "\n".join(algo_index_lines) + "\n")
-
+    # Tags
     write_file(mkdocs_dir / "tags.md", generate_tags_page(by_tag))
-    write_file(mkdocs_dir / "search.md", generate_search_page())
-    write_file(mkdocs_dir / "about.md", generate_about_page())
-    copy_docs_pages(base_dir, mkdocs_dir)
+
+    # Update nav in mkdocs.yml (text-based to preserve !!python/name tags)
+
+    mkdocs_yml = base_dir / "mkdocs" / "mkdocs.yml"
+    with open(mkdocs_yml, encoding="utf-8") as f:
+        text = f.read()
+
+    # Remove existing nav block if present
+    text = re.sub(r"(?m)^nav:.*?(?=^\S|\Z)", "", text, flags=re.DOTALL).rstrip() + "\n\n"
+
+    # Append generated nav
+    text += generate_nav_yaml(categories, by_cat)
+
+    with open(mkdocs_yml, "w", encoding="utf-8") as f:
+        f.write(text)
 
 
 def main(base_dir: Path | None = None) -> int:
@@ -553,8 +529,8 @@ def main(base_dir: Path | None = None) -> int:
     write_generated_pages(base_dir, mkdocs_dir, categories, algorithms, cat_map, by_cat, by_tag)
 
     print(f"  Generated {len(algorithms)} algorithm pages")
-    print(f"  Generated {len([cat for cat in categories if by_cat.get(cat['id'])])} category pages")
-    print("  Generated tags, search, about, and documentation pages")
+    print(f"  Generated {len([c for c in categories if by_cat.get(c['id'])])} category pages")
+    print("  Generated algorithm index, category index, and tags page")
     print("\nDone! Run 'mkdocs serve -f mkdocs/mkdocs.yml' to preview.")
     return 0
 

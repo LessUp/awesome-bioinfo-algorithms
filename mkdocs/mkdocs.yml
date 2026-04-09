@@ -1,43 +1,58 @@
 site_name: Awesome Bioinformatics Algorithms
 site_url: https://lessup.github.io/awesome-bioinfo-algorithms/
-site_description: "生物信息学算法概要汇总 | A curated list of bioinformatics algorithms"
+site_description: "A curated collection of 200+ bioinformatics algorithms"
 site_author: LessUp
 
 repo_url: https://github.com/LessUp/awesome-bioinfo-algorithms
-repo_name: awesome-bioinfo-algorithms
+repo_name: LessUp/awesome-bioinfo-algorithms
 
 theme:
   name: material
   language: zh
   palette:
-    - scheme: default
-      primary: teal
-      accent: amber
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: cyan
       toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-    - scheme: slate
-      primary: teal
-      accent: amber
+        icon: material/weather-night
+        name: 切换到深色模式
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: cyan
       toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
+        icon: material/weather-sunny
+        name: 切换到浅色模式
+  font:
+    text: Inter
+    code: JetBrains Mono
   features:
+    - navigation.instant
+    - navigation.instant.progress
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
     - navigation.indexes
-    - navigation.expand
     - navigation.top
-    - navigation.instant
+    - navigation.footer
     - search.suggest
     - search.highlight
+    - search.share
     - content.code.copy
+    - content.tooltips
     - toc.follow
+    - header.autohide
   icon:
     repo: fontawesome/brands/github
+    logo: material/dna
 
 plugins:
-  - search
+  - search:
+      separator: '[\s\-\.]+'
+      lang:
+        - zh
+        - en
 
 markdown_extensions:
   - admonition
@@ -45,34 +60,51 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.highlight:
       anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.tabbed:
       alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - toc:
       permalink: true
+      toc_depth: 3
   - attr_list
   - md_in_html
   - tables
+  - def_list
 
 extra_css:
   - stylesheets/extra.css
 
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/LessUp/awesome-bioinfo-algorithms
+  generator: false
+
 nav:
   - 首页: index.md
-  - 检索: search.md
-  - 标签: tags.md
-  - 分类:
-    - 分类总览: categories/index.md
   - 算法:
     - 全部算法: algorithms/index.md
-  - 指南:
-    - API 文档: api.md
-    - 常见问题: faq.md
-    - 开发指南: development.md
-    - 贡献指南: contributing.md
-  - 项目:
-    - 关于项目: about.md
-    - 变更日志: changelog.md
-    - 行为准则: code-of-conduct.md
-    - 安全指南: security.md
-    - 安全策略: security-policy.md
+  - 分类:
+    - 分类总览: categories/index.md
+    - 序列比对: categories/sequence-alignment.md
+    - 序列组装: categories/assembly.md
+    - 变异检测: categories/variant-calling.md
+    - 基因表达分析: categories/expression-analysis.md
+    - 蛋白质结构预测: categories/protein-structure.md
+    - 系统发育分析: categories/phylogenetics.md
+    - 功能注释: categories/functional-annotation.md
+    - 数据压缩: categories/data-compression.md
+    - 单细胞基因组学: categories/single-cell.md
+    - 宏基因组学: categories/metagenomics.md
+    - 表观基因组学: categories/epigenomics.md
+    - 基因预测: categories/gene-prediction.md
+    - 群体遗传学: categories/population-genetics.md
+    - 空间组学: categories/spatial-omics.md
+    - 图基因组学: categories/graph-genomics.md
+    - 蛋白质语言模型: categories/protein-language-model.md
+  - 标签: tags.md
