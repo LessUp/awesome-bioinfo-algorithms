@@ -16,6 +16,7 @@ Usage:
 import argparse
 import sys
 from pathlib import Path
+from typing import Optional
 
 from .algorithm_registry import AlgorithmRegistry
 from .category_manager import CategoryManager
@@ -66,7 +67,7 @@ def _load_registry_and_categories(base_dir: Path) -> tuple[AlgorithmRegistry, Ca
     return registry, category_manager
 
 
-def cmd_generate(output_path: Path | None = None) -> int:
+def cmd_generate(output_path: Optional[Path] = None) -> int:
     """Generate README.md from algorithm data."""
     base_dir, missing_paths = ensure_repo_layout()
     if missing_paths:
@@ -289,7 +290,7 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: Optional[list[str]] = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
 

@@ -410,6 +410,10 @@ class Validator:
 
         Returns:
             ValidationResult with validation status and any errors/warnings
+
+        Note:
+            On successful validation, populates self.valid_categories and
+            self.category_parents for use in subsequent algorithm validation.
         """
         result, data = self.validate_yaml_file(file_path)
         if not result.is_valid:

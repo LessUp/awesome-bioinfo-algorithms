@@ -9,8 +9,11 @@ Usage:
 import re
 import shutil
 from pathlib import Path
+from typing import Optional
 
 import yaml
+
+from .schema import DIFFICULTY_LABELS
 
 
 def get_base_dir() -> Path:
@@ -207,16 +210,9 @@ def generate_algo_page(algo: dict, cat_map: dict) -> str:
     """Generate a single algorithm detail page."""
     cat = cat_map.get(algo.get("category", ""), {})
     cat_name = cat.get("name", algo.get("category", ""))
-    cat_name_en = cat.get("name_en", "")
     cat_id = algo.get("category", "")
     sub = cat_map.get(algo.get("subcategory", ""), {})
     sub_name = sub.get("name", "")
-
-    difficulty_labels = {
-        "beginner": ":material-signal-cellular-1: 入门",
-        "intermediate": ":material-signal-cellular-2: 进阶",
-        "advanced": ":material-signal-cellular-3: 高级",
-    }
 
     lines = [f"# {algo['name']}", ""]
 
@@ -229,7 +225,7 @@ def generate_algo_page(algo: dict, cat_map: dict) -> str:
     if sub_name:
         badges.append(sub_name)
     if algo.get("difficulty"):
-        badges.append(difficulty_labels.get(algo["difficulty"], algo["difficulty"]))
+        badges.append(DIFFICULTY_LABELS.get(algo["difficulty"], algo["difficulty"]))
     if algo.get("language"):
         badges.append(" / ".join(algo["language"]))
     if badges:
@@ -514,7 +510,7 @@ def write_generated_pages(
         f.write(text)
 
 
-def main(base_dir: Path | None = None) -> int:
+def main(base_dir: Optional[Path] = None) -> int:
     base_dir = base_dir or get_base_dir()
     mkdocs_dir = base_dir / "mkdocs" / "docs"
 

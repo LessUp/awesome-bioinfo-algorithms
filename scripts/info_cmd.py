@@ -5,6 +5,7 @@ Shows detailed information about a single algorithm.
 
 from .algorithm_registry import AlgorithmRegistry
 from .category_manager import CategoryManager
+from .schema import DIFFICULTY_LABELS
 
 
 def cmd_info(
@@ -30,12 +31,6 @@ def cmd_info(
     cat = category_manager.get_category(algo.category)
     sub = category_manager.get_category(algo.subcategory) if algo.subcategory else None
 
-    difficulty_labels = {
-        "beginner": "入门 (Beginner)",
-        "intermediate": "进阶 (Intermediate)",
-        "advanced": "高级 (Advanced)",
-    }
-
     print(f"{'=' * 60}")
     print(f"  {algo.name}" + (f" ({algo.year})" if algo.year else ""))
     print(f"{'=' * 60}")
@@ -48,7 +43,7 @@ def cmd_info(
     if sub:
         print(f"  子分类:           {sub.name} ({sub.name_en})")
     if algo.difficulty:
-        print(f"  难度:             {difficulty_labels.get(algo.difficulty, algo.difficulty)}")
+        print(f"  难度:             {DIFFICULTY_LABELS.get(algo.difficulty, algo.difficulty)}")
     print()
     print("  描述:")
     for line in algo.description.strip().split("\n"):

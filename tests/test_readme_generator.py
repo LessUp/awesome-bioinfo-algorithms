@@ -210,7 +210,7 @@ def test_property_9_anchor_link_validity(data):
             assert "--" not in anchor, f"Anchor '{anchor}' should not have consecutive hyphens"
 
 
-@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
+@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much, HealthCheck.too_slow])
 @given(data=registry_with_categories_strategy())
 def test_full_readme_generation(data):
     """Test that full README generation works without errors."""

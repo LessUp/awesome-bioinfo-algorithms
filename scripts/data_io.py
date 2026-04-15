@@ -48,7 +48,7 @@ class DataIO:
             if fmt.lower() == "json":
                 json.dump(data, f, ensure_ascii=False, indent=2)
             else:
-                yaml.safe_dump(data, f, **YAML_DUMP_KWARGS)
+                yaml.safe_dump(data, f, **YAML_DUMP_KWARGS)  # type: ignore[call-overload]
 
     def import_data(self, input_path: str) -> tuple[list[Category], list[AlgorithmEntry]]:
         """
@@ -107,7 +107,7 @@ class DataIO:
             if fmt.lower() == "json":
                 json.dump(data, f, ensure_ascii=False, indent=2)
             else:
-                yaml.safe_dump(data, f, **YAML_DUMP_KWARGS)
+                yaml.safe_dump(data, f, **YAML_DUMP_KWARGS)  # type: ignore[call-overload]
 
     def export_algorithms(self, output_path: str, fmt: str = "yaml") -> None:
         """Export only algorithms to a file."""
@@ -117,7 +117,7 @@ class DataIO:
             if fmt.lower() == "json":
                 json.dump(data, f, ensure_ascii=False, indent=2)
             else:
-                yaml.safe_dump(data, f, **YAML_DUMP_KWARGS)
+                yaml.safe_dump(data, f, **YAML_DUMP_KWARGS)  # type: ignore[call-overload]
 
     @staticmethod
     def export_to_dict(categories: list[Category], algorithms: list[AlgorithmEntry]) -> dict:

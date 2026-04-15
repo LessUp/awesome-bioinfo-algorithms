@@ -135,7 +135,7 @@ class AlgorithmRegistry:
 
     def search(self, keyword: str) -> list[AlgorithmEntry]:
         """
-        Search algorithms by keyword in name, description, or tags.
+        Search algorithms by keyword in name, description, purpose, or tags.
 
         Args:
             keyword: Search keyword (case-insensitive)
@@ -150,6 +150,7 @@ class AlgorithmRegistry:
             if (
                 keyword_lower in algo.name.lower()
                 or keyword_lower in algo.description.lower()
+                or keyword_lower in algo.purpose.lower()
                 or any(keyword_lower in tag.lower() for tag in algo.tags)
             ):
                 results.append(algo)

@@ -22,7 +22,7 @@ def search_algorithms(
     Args:
         registry: Loaded algorithm registry
         category_manager: Loaded category manager
-        keyword: Keyword to search in name/description/tags
+        keyword: Keyword to search in name/description/purpose/tags
         tag: Filter by tag
         category: Filter by category ID
         difficulty: Filter by difficulty level
@@ -30,18 +30,11 @@ def search_algorithms(
     Returns:
         List of matching AlgorithmEntry objects
     """
-    results = registry.get_all_algorithms()
-
+    # Use registry's search for keyword matching
     if keyword:
-        kw = keyword.lower()
-        results = [
-            a
-            for a in results
-            if kw in a.name.lower()
-            or kw in a.description.lower()
-            or kw in a.purpose.lower()
-            or any(kw in t.lower() for t in a.tags)
-        ]
+        results = registry.search(keyword)
+    else:
+        results = registry.get_all_algorithms()
 
     if tag:
         tag_lower = tag.lower()
