@@ -9,6 +9,12 @@ from typing import Optional
 VALID_DIFFICULTIES = ("beginner", "intermediate", "advanced")
 VALID_REFERENCE_TYPES = ("tutorial", "blog", "video", "book", "documentation", "slides")
 
+DIFFICULTY_LABELS = {
+    "beginner": "入门 (Beginner)",
+    "intermediate": "进阶 (Intermediate)",
+    "advanced": "高级 (Advanced)",
+}
+
 
 @dataclass
 class Reference:

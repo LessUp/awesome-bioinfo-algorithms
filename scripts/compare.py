@@ -3,12 +3,14 @@ Compare command for Awesome Bioinformatics Algorithms.
 Side-by-side comparison of two algorithms.
 """
 
+from typing import Optional
+
 from .algorithm_registry import AlgorithmRegistry
 from .category_manager import CategoryManager
 from .schema import AlgorithmEntry
 
 
-def _resolve(registry: AlgorithmRegistry, algo_id: str) -> AlgorithmEntry | None:
+def _resolve(registry: AlgorithmRegistry, algo_id: str) -> Optional[AlgorithmEntry]:
     """Resolve an algorithm by ID or fuzzy search."""
     algo = registry.get_algorithm(algo_id)
     if algo:

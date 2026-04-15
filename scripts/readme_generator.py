@@ -8,7 +8,7 @@ import re
 
 from .algorithm_registry import AlgorithmRegistry
 from .category_manager import CategoryManager
-from .schema import AlgorithmEntry, Category
+from .schema import DIFFICULTY_LABELS, AlgorithmEntry, Category
 
 
 class ReadmeGenerator:
@@ -112,24 +112,11 @@ class ReadmeGenerator:
 
     @staticmethod
     def _generate_anchor(text: str) -> str:
-        """
-        Generate a valid Markdown anchor from text.
-
-        Args:
-            text: The heading text
-
-        Returns:
-            Valid anchor string
-        """
-        # Convert to lowercase
+        """Generate a valid Markdown anchor from text."""
         anchor = text.lower()
-        # Replace spaces with hyphens
         anchor = anchor.replace(" ", "-")
-        # Remove special characters except hyphens and alphanumeric
         anchor = re.sub(r"[^\w\u4e00-\u9fff-]", "", anchor)
-        # Remove consecutive hyphens
         anchor = re.sub(r"-+", "-", anchor)
-        # Remove leading/trailing hyphens
         anchor = anchor.strip("-")
         return anchor
 
@@ -219,12 +206,7 @@ class ReadmeGenerator:
 
         # Difficulty
         if algo.difficulty:
-            difficulty_labels = {
-                "beginner": "入门 (Beginner)",
-                "intermediate": "进阶 (Intermediate)",
-                "advanced": "高级 (Advanced)",
-            }
-            label = difficulty_labels.get(algo.difficulty, algo.difficulty)
+            label = DIFFICULTY_LABELS.get(algo.difficulty, algo.difficulty)
             lines.append(f"**难度**: {label}")
 
         # Implementation languages

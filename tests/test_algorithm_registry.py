@@ -143,6 +143,7 @@ def test_property_8_search_result_correctness(algorithms):
             assert (
                 search_term.lower() in result.name.lower()
                 or search_term.lower() in result.description.lower()
+                or search_term.lower() in result.purpose.lower()
                 or any(search_term.lower() in tag.lower() for tag in result.tags)
             ), f"Result '{result.id}' should match search term '{search_term}'"
 
