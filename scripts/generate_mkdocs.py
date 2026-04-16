@@ -15,7 +15,7 @@ from typing import Optional
 
 import yaml
 
-from .schema import DIFFICULTY_LABELS
+from scripts.schema import DIFFICULTY_LABELS
 
 
 def get_base_dir() -> Path:
