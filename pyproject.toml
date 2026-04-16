@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "awesome-bioinfo-algorithms"
-version = "1.0.0"
+version = "1.0.2"
 description = "Repository-maintenance tooling and curated bioinformatics algorithm data"
 readme = "README.md"
 license = {text = "CC0-1.0"}
