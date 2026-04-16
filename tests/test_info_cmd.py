@@ -13,23 +13,25 @@ def mock_category_manager():
     """Create a mock category manager."""
     manager = CategoryManager()
     # Use from_categories to properly register categories
-    manager.from_categories([
-        Category(
-            id="test-cat",
-            name="测试分类",
-            name_en="Test Category",
-            description="A test category",
-            subcategories=[
-                Category(
-                    id="test-sub",
-                    name="测试子分类",
-                    name_en="Test Subcategory",
-                    description="A test subcategory",
-                    parent_id="test-cat",
-                )
-            ],
-        ),
-    ])
+    manager.from_categories(
+        [
+            Category(
+                id="test-cat",
+                name="测试分类",
+                name_en="Test Category",
+                description="A test category",
+                subcategories=[
+                    Category(
+                        id="test-sub",
+                        name="测试子分类",
+                        name_en="Test Subcategory",
+                        description="A test subcategory",
+                        parent_id="test-cat",
+                    )
+                ],
+            ),
+        ]
+    )
     return manager
 
 
@@ -37,33 +39,35 @@ def mock_category_manager():
 def mock_registry():
     """Create a mock registry with sample algorithms."""
     registry = AlgorithmRegistry()
-    registry.from_algorithms([
-        AlgorithmEntry(
-            id="test-algo",
-            name="Test Algorithm",
-            description="A test algorithm description that meets the minimum length requirement for validation purposes in our testing framework.",
-            purpose="Testing purposes",
-            time_complexity="O(n)",
-            space_complexity="O(1)",
-            category="test-cat",
-            subcategory="test-sub",
-            year=2020,
-            difficulty="beginner",
-            paper_url="https://example.com/paper",
-            implementation_url="https://github.com/example/repo",
-            related_tools=["Tool1", "Tool2"],
-            tags=["test", "unit"],
-            language=["Python"],
-        ),
-        AlgorithmEntry(
-            id="simple-algo",
-            name="Simple Algorithm",
-            description="A simple algorithm for testing basic functionality without extra fields.",
-            purpose="Simplicity testing",
-            time_complexity="O(1)",
-            category="test-cat",
-        ),
-    ])
+    registry.from_algorithms(
+        [
+            AlgorithmEntry(
+                id="test-algo",
+                name="Test Algorithm",
+                description="A test algorithm description that meets the minimum length requirement for validation purposes in our testing framework.",
+                purpose="Testing purposes",
+                time_complexity="O(n)",
+                space_complexity="O(1)",
+                category="test-cat",
+                subcategory="test-sub",
+                year=2020,
+                difficulty="beginner",
+                paper_url="https://example.com/paper",
+                implementation_url="https://github.com/example/repo",
+                related_tools=["Tool1", "Tool2"],
+                tags=["test", "unit"],
+                language=["Python"],
+            ),
+            AlgorithmEntry(
+                id="simple-algo",
+                name="Simple Algorithm",
+                description="A simple algorithm for testing basic functionality without extra fields.",
+                purpose="Simplicity testing",
+                time_complexity="O(1)",
+                category="test-cat",
+            ),
+        ]
+    )
     return registry
 
 

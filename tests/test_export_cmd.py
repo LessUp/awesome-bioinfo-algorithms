@@ -22,30 +22,32 @@ def mock_category_manager():
 def mock_registry():
     """Create a mock registry with sample algorithms."""
     registry = AlgorithmRegistry()
-    registry.from_algorithms([
-        AlgorithmEntry(
-            id="algo-1",
-            name="Test Algorithm One",
-            description="A test algorithm description that meets the minimum length requirement.",
-            purpose="Testing purposes",
-            time_complexity="O(n)",
-            category="test-cat",
-            tags=["test", "unit"],
-            difficulty="beginner",
-            year=2020,
-            language=["Python"],
-        ),
-        AlgorithmEntry(
-            id="algo-2",
-            name="Test Algorithm Two",
-            description="Another test algorithm description that meets the minimum length requirement.",
-            purpose="More testing",
-            time_complexity="O(n log n)",
-            category="test-cat",
-            tags=["test", "integration"],
-            difficulty="intermediate",
-        ),
-    ])
+    registry.from_algorithms(
+        [
+            AlgorithmEntry(
+                id="algo-1",
+                name="Test Algorithm One",
+                description="A test algorithm description that meets the minimum length requirement.",
+                purpose="Testing purposes",
+                time_complexity="O(n)",
+                category="test-cat",
+                tags=["test", "unit"],
+                difficulty="beginner",
+                year=2020,
+                language=["Python"],
+            ),
+            AlgorithmEntry(
+                id="algo-2",
+                name="Test Algorithm Two",
+                description="Another test algorithm description that meets the minimum length requirement.",
+                purpose="More testing",
+                time_complexity="O(n log n)",
+                category="test-cat",
+                tags=["test", "integration"],
+                difficulty="intermediate",
+            ),
+        ]
+    )
     return registry
 
 
@@ -94,9 +96,7 @@ class TestCmdExport:
             output_path = f.name
 
         try:
-            result = cmd_export(
-                mock_registry, mock_category_manager, fmt="csv", output=output_path
-            )
+            result = cmd_export(mock_registry, mock_category_manager, fmt="csv", output=output_path)
             assert result == 0
             assert os.path.exists(output_path)
 

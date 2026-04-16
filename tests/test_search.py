@@ -12,14 +12,16 @@ from scripts.search import cmd_search, format_algorithm_short, search_algorithms
 def mock_category_manager():
     """Create a mock category manager."""
     manager = CategoryManager()
-    manager.from_categories([
-        Category(
-            id="test-cat",
-            name="测试分类",
-            name_en="Test Category",
-            description="A test category",
-        ),
-    ])
+    manager.from_categories(
+        [
+            Category(
+                id="test-cat",
+                name="测试分类",
+                name_en="Test Category",
+                description="A test category",
+            ),
+        ]
+    )
     return manager
 
 
@@ -28,28 +30,30 @@ def mock_registry():
     """Create a mock registry with sample algorithms."""
     registry = AlgorithmRegistry()
     # Use from_algorithms to properly register algorithms
-    registry.from_algorithms([
-        AlgorithmEntry(
-            id="algo-1",
-            name="Test Algorithm One",
-            description="A test algorithm description that meets the minimum length requirement for validation purposes.",
-            purpose="Testing purposes",
-            time_complexity="O(n)",
-            category="test-cat",
-            tags=["test", "unit"],
-            difficulty="beginner",
-        ),
-        AlgorithmEntry(
-            id="algo-2",
-            name="Test Algorithm Two",
-            description="Another test algorithm description that meets the minimum length requirement for validation.",
-            purpose="More testing",
-            time_complexity="O(n log n)",
-            category="test-cat",
-            tags=["test", "integration"],
-            difficulty="intermediate",
-        ),
-    ])
+    registry.from_algorithms(
+        [
+            AlgorithmEntry(
+                id="algo-1",
+                name="Test Algorithm One",
+                description="A test algorithm description that meets the minimum length requirement for validation purposes.",
+                purpose="Testing purposes",
+                time_complexity="O(n)",
+                category="test-cat",
+                tags=["test", "unit"],
+                difficulty="beginner",
+            ),
+            AlgorithmEntry(
+                id="algo-2",
+                name="Test Algorithm Two",
+                description="Another test algorithm description that meets the minimum length requirement for validation.",
+                purpose="More testing",
+                time_complexity="O(n log n)",
+                category="test-cat",
+                tags=["test", "integration"],
+                difficulty="intermediate",
+            ),
+        ]
+    )
     return registry
 
 
@@ -58,32 +62,24 @@ class TestSearchAlgorithms:
 
     def test_search_by_keyword(self, mock_registry, mock_category_manager):
         """Test keyword search returns matching algorithms."""
-        results = search_algorithms(
-            mock_registry, mock_category_manager, keyword="One"
-        )
+        results = search_algorithms(mock_registry, mock_category_manager, keyword="One")
         assert len(results) == 1
         assert results[0].id == "algo-1"
 
     def test_search_by_tag(self, mock_registry, mock_category_manager):
         """Test tag filter returns matching algorithms."""
-        results = search_algorithms(
-            mock_registry, mock_category_manager, tag="unit"
-        )
+        results = search_algorithms(mock_registry, mock_category_manager, tag="unit")
         assert len(results) == 1
         assert results[0].id == "algo-1"
 
     def test_search_by_category(self, mock_registry, mock_category_manager):
         """Test category filter returns matching algorithms."""
-        results = search_algorithms(
-            mock_registry, mock_category_manager, category="test-cat"
-        )
+        results = search_algorithms(mock_registry, mock_category_manager, category="test-cat")
         assert len(results) == 2
 
     def test_search_by_difficulty(self, mock_registry, mock_category_manager):
         """Test difficulty filter returns matching algorithms."""
-        results = search_algorithms(
-            mock_registry, mock_category_manager, difficulty="beginner"
-        )
+        results = search_algorithms(mock_registry, mock_category_manager, difficulty="beginner")
         assert len(results) == 1
         assert results[0].id == "algo-1"
 
@@ -100,9 +96,7 @@ class TestSearchAlgorithms:
 
     def test_search_no_results(self, mock_registry, mock_category_manager):
         """Test search with no matches returns empty list."""
-        results = search_algorithms(
-            mock_registry, mock_category_manager, keyword="nonexistent"
-        )
+        results = search_algorithms(mock_registry, mock_category_manager, keyword="nonexistent")
         assert len(results) == 0
 
 
@@ -149,9 +143,7 @@ class TestCmdSearch:
 
     def test_cmd_search_invalid_difficulty(self, mock_registry, mock_category_manager, capsys):
         """Test search with invalid difficulty returns error."""
-        result = cmd_search(
-            mock_registry, mock_category_manager, difficulty="invalid"
-        )
+        result = cmd_search(mock_registry, mock_category_manager, difficulty="invalid")
         assert result == 1
         output = capsys.readouterr().out
         assert "Invalid difficulty" in output
@@ -165,9 +157,7 @@ class TestCmdSearch:
 
     def test_cmd_search_no_results(self, mock_registry, mock_category_manager, capsys):
         """Test search with no results."""
-        result = cmd_search(
-            mock_registry, mock_category_manager, keyword="nonexistent"
-        )
+        result = cmd_search(mock_registry, mock_category_manager, keyword="nonexistent")
         assert result == 0
         output = capsys.readouterr().out
         assert "No algorithms found" in output
