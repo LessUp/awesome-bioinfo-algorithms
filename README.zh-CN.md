@@ -6,9 +6,9 @@
 [![Docs](https://img.shields.io/badge/Docs-GitHub%20Pages-blue?logo=github)](https://lessup.github.io/awesome-bioinfo-algorithms/)
 [![License: CC0-1.0](https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg)](http://creativecommons.org/publicdomain/zero/1.0/)
 
-[English](README.md) | 简体中文
+**[English](README.md)** | 简体中文
 
-> 中文入口页。完整算法列表、最新统计和自动生成目录统一维护在 [README.md](README.md)。
+> 简体中文入口页。完整算法列表、最新统计和自动生成目录统一维护在 [README.md](README.md)。
 
 ## 说明
 
