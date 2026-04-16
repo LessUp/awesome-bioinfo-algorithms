@@ -39,6 +39,12 @@ dev = [
     "pre-commit>=3.0",
     "types-PyYAML>=6.0",
     "mkdocs-material>=9.0",
+    "mkdocs-awesome-pages-plugin>=1.0",
+    "mkdocs-git-revision-date-localized-plugin>=1.0",
+    "mkdocs-minify-plugin>=0.7",
+    "mkdocs-rss-plugin>=1.0",
+    "pillow>=10.0",
+    "cairosvg>=2.0",
 ]
 
 [project.urls]
