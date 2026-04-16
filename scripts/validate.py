@@ -6,6 +6,7 @@ Implements Validator class for algorithm and category validation.
 import os
 import re
 from dataclasses import dataclass, field
+from datetime import datetime
 from typing import Any, Optional
 
 import yaml
@@ -204,7 +205,7 @@ class Validator:
                 result.add_warning(
                     f"Field 'year' should be an integer, got {type(year).__name__}: {year}"
                 )
-            elif year < 1950 or year > 2030:
+            elif year < 1950 or year > datetime.now().year + 5:
                 result.add_warning(f"Suspicious year value: {year}")
 
         for url_field in ["paper_url", "implementation_url"]:
