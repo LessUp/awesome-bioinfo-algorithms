@@ -1,110 +1,288 @@
 site_name: Awesome Bioinformatics Algorithms
 site_url: https://lessup.github.io/awesome-bioinfo-algorithms/
-site_description: "A curated collection of 200+ bioinformatics algorithms"
+site_description: "A curated collection of 200+ bioinformatics algorithms with modern, interactive documentation"
 site_author: LessUp
+copyright: "Copyright &copy; 2025-2026 LessUp | CC0 1.0 Universal"
 
 repo_url: https://github.com/LessUp/awesome-bioinfo-algorithms
 repo_name: LessUp/awesome-bioinfo-algorithms
+edit_uri: edit/main/mkdocs/docs/
 
+# ---------------------------------------------------------------------------
+# Theme Configuration - Material for MkDocs Advanced Features
+# ---------------------------------------------------------------------------
 theme:
   name: material
   language: zh
+  custom_dir: overrides
+  
+  # Color palette with dark mode support
   palette:
+    # Light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
+      primary: blue
       accent: cyan
       toggle:
-        icon: material/weather-night
+        icon: material/brightness-7
         name: 切换到深色模式
+    # Dark mode  
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
+      primary: blue
       accent: cyan
       toggle:
-        icon: material/weather-sunny
+        icon: material/brightness-4
         name: 切换到浅色模式
+  
+  # Typography
   font:
     text: Inter
     code: JetBrains Mono
+  
+  # Icon
+  icon:
+    logo: material/dna
+    repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
+  
+  # Favicon
+  favicon: assets/favicon.png
+  
+  # Advanced features
   features:
+    # Navigation
     - navigation.instant
     - navigation.instant.progress
+    - navigation.instant.prefetch
+    - navigation.tracking
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.sections
     - navigation.indexes
     - navigation.top
     - navigation.footer
+    
+    # Table of contents
+    - toc.follow
+    - toc.integrate
+    
+    # Search
     - search.suggest
     - search.highlight
     - search.share
+    
+    # Content
     - content.code.copy
+    - content.code.select
+    - content.code.annotate
     - content.tooltips
-    - toc.follow
-    - header.autohide
-  icon:
-    repo: fontawesome/brands/github
-    logo: material/dna
+    - content.tabs.link
+    
+    # Announce
+    - announce.dismiss
 
+# ---------------------------------------------------------------------------
+# Plugins
+# ---------------------------------------------------------------------------
 plugins:
+  # Built-in search with enhanced configuration
   - search:
       separator: '[\s\-\.]+'
       lang:
         - zh
         - en
+      pipeline:
+        - stemmer
+        - stopWordFilter
+        - trimmer
+  
+  # Navigation customization
+  - awesome-pages
+  
+  # Git integration
+  - git-revision-date-localized:
+      type: datetime
+      fallback_to_build_date: true
+      enable_creation_date: true
+  
+  # Minification for production
+  - minify:
+      minify_html: true
+      minify_js: true
+      minify_css: true
+      htmlmin_opts:
+        remove_comments: true
+  
+  # Social cards for better sharing
+  - social:
+      cards: true
+      cards_dir: assets/social
+      cards_layout_options:
+        background: "#1a1a1a"
+        color: "#ffffff"
+  
+  # RSS feed
+  - rss:
+      match_path: ".*"
+      date_from_meta:
+        as_creation: date
+      categories:
+        - categories
+        - tags
 
+# ---------------------------------------------------------------------------
+# Markdown Extensions
+# ---------------------------------------------------------------------------
 markdown_extensions:
+  # Python Markdown
   - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+      permalink_title: 锚点链接
+      toc_depth: 3
+  - tables
+  - abbr
+  
+  # PyMdown Extensions
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.critic
   - pymdownx.details
-  - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      options:
+        custom_icons:
+          - overrides/.icons
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
+      auto_title: true
   - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      check_paths: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+        - name: math
+          class: arithmatex
+          format: !!python/name:pymdownx.arithmatex.fence_mathjax_format
   - pymdownx.tabbed:
       alternate_style: true
-  - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
-  - toc:
-      permalink: true
-      toc_depth: 3
-  - attr_list
-  - md_in_html
-  - tables
-  - def_list
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - pymdownx.blocks.admonition
+  - pymdownx.blocks.definition
+  - pymdownx.blocks.details
+  - pymdownx.blocks.tab
 
+# ---------------------------------------------------------------------------
+# Extra CSS & JavaScript
+# ---------------------------------------------------------------------------
 extra_css:
   - stylesheets/extra.css
+  - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css
 
+extra_javascript:
+  - javascripts/extra.js
+  - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js
+  - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js
+  - javascripts/mathjax.js
+
+# ---------------------------------------------------------------------------
+# Extra Configuration
+# ---------------------------------------------------------------------------
 extra:
+  # Social links
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/LessUp/awesome-bioinfo-algorithms
+      name: GitHub
+    - icon: material/rss-box
+      link: /feed_rss_created.xml
+      name: RSS Feed
+  
+  # Analytics
+  analytics:
+    provider: google
+    property: G-XXXXXXXXXX  # Replace with actual GA4 property
+    feedback:
+      title: 此页面对您有帮助吗？
+      ratings:
+        - icon: material/thumb-up-outline
+          name: 有帮助
+          data: 1
+          note: 感谢您的反馈！
+        - icon: material/thumb-down-outline
+          name: 需要改进
+          data: 0
+          note: 感谢您的反馈！我们将持续改进。
+  
+  # Consent
+  consent:
+    title: Cookie 同意
+    description: >
+      我们使用 Cookie 来提供匿名化的分析数据，帮助改进网站体验。
+      查看我们的 <a href="/privacy/">隐私政策</a> 了解更多。
+    actions:
+      - accept
+      - manage
+      - reject
+  
+  # Generator
   generator: false
+  
+  # Version
+  version:
+    provider: mike
+    default: latest
 
+# ---------------------------------------------------------------------------
+# Hooks
+# ---------------------------------------------------------------------------
+# hooks:
+#   - overrides/hooks/custom_nav.py
+
+# ---------------------------------------------------------------------------
+# Validation
+# ---------------------------------------------------------------------------
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn
+
+# ---------------------------------------------------------------------------
+# Watch paths (for development)
+# ---------------------------------------------------------------------------
+watch:
+  - ../data
+  - ../scripts
+
+# ---------------------------------------------------------------------------
+# Navigation (auto-generated by scripts/generate_mkdocs.py)
+# ---------------------------------------------------------------------------
 nav:
   - 首页: index.md
   - 算法:
     - 全部算法: algorithms/index.md
   - 分类:
     - 分类总览: categories/index.md
-    - 序列比对: categories/sequence-alignment.md
-    - 序列组装: categories/assembly.md
-    - 变异检测: categories/variant-calling.md
-    - 基因表达分析: categories/expression-analysis.md
-    - 蛋白质结构预测: categories/protein-structure.md
-    - 系统发育分析: categories/phylogenetics.md
-    - 功能注释: categories/functional-annotation.md
-    - 数据压缩: categories/data-compression.md
-    - 单细胞基因组学: categories/single-cell.md
-    - 宏基因组学: categories/metagenomics.md
-    - 表观基因组学: categories/epigenomics.md
-    - 基因预测: categories/gene-prediction.md
-    - 群体遗传学: categories/population-genetics.md
-    - 空间组学: categories/spatial-omics.md
-    - 图基因组学: categories/graph-genomics.md
-    - 蛋白质语言模型: categories/protein-language-model.md
-  - 标签: tags.md
