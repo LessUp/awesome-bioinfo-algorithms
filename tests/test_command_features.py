@@ -109,11 +109,11 @@ def test_generate_mkdocs_creates_expected_pages(project_root, tmp_path):
     assert (temp_root / "mkdocs" / "docs" / "categories" / "index.md").exists()
 
     index_content = (temp_root / "mkdocs" / "docs" / "index.md").read_text(encoding="utf-8")
-    category_index_content = (
-        (temp_root / "mkdocs" / "docs" / "categories" / "index.md").read_text(encoding="utf-8")
+    category_index_content = (temp_root / "mkdocs" / "docs" / "categories" / "index.md").read_text(
+        encoding="utf-8"
     )
-    algorithm_index_content = (
-        (temp_root / "mkdocs" / "docs" / "algorithms" / "index.md").read_text(encoding="utf-8")
+    algorithm_index_content = (temp_root / "mkdocs" / "docs" / "algorithms" / "index.md").read_text(
+        encoding="utf-8"
     )
 
     assert "Awesome Bioinformatics Algorithms" in index_content

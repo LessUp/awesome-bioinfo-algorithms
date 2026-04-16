@@ -82,6 +82,7 @@ def trim_text(value: str, limit: int = 80) -> str:
 # Index (landing page) — inline HTML in markdown
 # ---------------------------------------------------------------------------
 
+
 def generate_index(
     categories: list[dict],
     algorithms: list[dict],
@@ -152,9 +153,9 @@ def generate_index(
         "",
         f"生物信息学算法结构化知识库 — 收录 **{total}** 个算法，覆盖 **{len(cats_with_algo)}** 个研究方向",
         "",
-        '[浏览全部算法](algorithms/){ .md-button .md-button--primary }',
-        '[按分类浏览](categories/){ .md-button }',
-        '[按标签筛选](tags/){ .md-button }',
+        "[浏览全部算法](algorithms/){ .md-button .md-button--primary }",
+        "[按分类浏览](categories/){ .md-button }",
+        "[按标签筛选](tags/){ .md-button }",
         "",
         "</div>",
         "",
@@ -205,6 +206,7 @@ def generate_index(
 # ---------------------------------------------------------------------------
 # Algorithm detail page
 # ---------------------------------------------------------------------------
+
 
 def generate_algo_page(algo: dict, cat_map: dict) -> str:
     """Generate a single algorithm detail page."""
@@ -282,6 +284,7 @@ def generate_algo_page(algo: dict, cat_map: dict) -> str:
 # Category pages
 # ---------------------------------------------------------------------------
 
+
 def generate_category_page(cat: dict, algos: list[dict], cat_map: dict) -> str:
     """Generate a category page with subcategory sections."""
     lines = [
@@ -345,7 +348,9 @@ def generate_category_page(cat: dict, algos: list[dict], cat_map: dict) -> str:
 
 def generate_category_index(categories: list[dict], by_cat: dict) -> str:
     """Generate category overview page."""
-    cats_with_algo = [(cat, len(by_cat.get(cat["id"], []))) for cat in categories if by_cat.get(cat["id"])]
+    cats_with_algo = [
+        (cat, len(by_cat.get(cat["id"], []))) for cat in categories if by_cat.get(cat["id"])
+    ]
 
     lines = [
         "# 分类总览",
@@ -367,6 +372,7 @@ def generate_category_index(categories: list[dict], by_cat: dict) -> str:
 # ---------------------------------------------------------------------------
 # Tags page
 # ---------------------------------------------------------------------------
+
 
 def generate_tags_page(by_tag: dict) -> str:
     """Generate tags index page with tag cloud feel."""
@@ -391,6 +397,7 @@ def generate_tags_page(by_tag: dict) -> str:
 # ---------------------------------------------------------------------------
 # Algorithm index page
 # ---------------------------------------------------------------------------
+
 
 def generate_algo_index(algorithms: list[dict], cat_map: dict) -> str:
     """Generate the full algorithm listing as a searchable table."""
@@ -417,6 +424,7 @@ def generate_algo_index(algorithms: list[dict], cat_map: dict) -> str:
 # Nav generation (dynamic)
 # ---------------------------------------------------------------------------
 
+
 def generate_nav_yaml(categories: list[dict], by_cat: dict) -> str:
     """Generate the nav YAML block as text."""
     lines = [
@@ -437,6 +445,7 @@ def generate_nav_yaml(categories: list[dict], by_cat: dict) -> str:
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
+
 
 def write_generated_pages(
     base_dir: Path,
