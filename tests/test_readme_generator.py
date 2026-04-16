@@ -227,8 +227,8 @@ def test_full_readme_generation(data):
     generator = ReadmeGenerator(registry, category_manager)
     readme = generator.generate()
 
-    # Verify basic structure
-    assert "# Awesome Bioinformatics Algorithms" in readme
+    # Verify basic structure (title can be markdown or HTML)
+    assert "Awesome Bioinformatics Algorithms" in readme
     assert "统计" in readme  # Statistics section (may have emoji prefix)
     assert "目录" in readme  # Table of Contents section
 
