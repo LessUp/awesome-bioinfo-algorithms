@@ -1,94 +1,133 @@
+<!-- AGENTS.md - AI Agent Configuration for Awesome Bioinformatics Algorithms -->
+
 # AGENTS.md - AI Agent Configuration
 
-## Project Philosophy: Spec-Driven Development (SDD)
+This file provides essential context for AI coding agents working on the **Awesome Bioinformatics Algorithms** project.
 
-This repository strictly follows **Spec-Driven Development (SDD)** paradigm. All code implementations must use the `/specs` directory documentation as the single source of truth.
-
-**中文**: 本项目严格遵循**规范驱动开发（Spec-Driven Development）**范式。所有的代码实现必须以 `/specs` 目录下的规范文档为唯一事实来源（Single Source of Truth）。
+**中文**: 本文件为在 **Awesome Bioinformatics Algorithms** 项目上工作的 AI 编程助手提供必要的项目背景信息。
 
 ---
 
-## Directory Context (目录说明)
+## Project Overview | 项目概述
 
-### Core Specifications (`/specs/`)
+**Awesome Bioinformatics Algorithms** is a curated collection of **201+ bioinformatics algorithms** across **16 categories**, providing:
 
-| Directory | Purpose | 中文说明 |
+- Time and space complexity analysis
+- Links to original papers and implementations
+- Multi-language documentation (Chinese/English)
+- CLI toolkit for data management and validation
+
+**中文**: 本项目收集和整理了 **201+ 个生物信息学算法**，涵盖 **16 个分类**，提供时间/空间复杂度分析、相关论文和实现链接，以及双语文档支持。
+
+### Project Purpose | 项目目标
+
+Create the most comprehensive, well-organized, and accessible collection of bioinformatics algorithms for researchers, students, and practitioners worldwide.
+
+### Key Stats | 关键数据
+
+| Metric | Value | 指标 | 数值 |
+|:-------|------:|:-----|-----:|
+| Total Algorithms | **201** | 算法总数 | **201** |
+| Categories | **16** | 分类数 | **16** |
+| Unique Tags | **399** | 唯一标签数 | **399** |
+
+---
+
+## Technology Stack | 技术栈
+
+| Component | Technology | Version/Notes |
+|-----------|------------|---------------|
+| Language | Python | >=3.9 (3.9, 3.10, 3.11, 3.12) |
+| Data Format | YAML | Structured algorithm entries |
+| Schema Validation | JSON Schema | Draft-07 |
+| Documentation | MkDocs Material | GitHub Pages deployment |
+| Testing | pytest + Hypothesis | Property-based testing |
+| Linting | ruff | Line length 100 |
+| Type Checking | mypy | Progressive enhancement |
+| Pre-commit | pre-commit | Git hooks |
+
+---
+
+## Project Structure | 项目结构
+
+```
+.
+├── awesome_bioinfo/          # Main Python package (核心代码)
+│   ├── __main__.py          # CLI entry point
+│   ├── algorithm_registry.py # Algorithm data management
+│   ├── category_manager.py   # Category taxonomy
+│   ├── validate.py           # YAML data validation
+│   ├── readme_generator.py   # README.md generation
+│   ├── generate_mkdocs.py    # MkDocs site generation
+│   ├── search.py             # Search functionality
+│   ├── compare.py            # Algorithm comparison
+│   └── ...
+├── data/                     # Data files (数据文件)
+│   ├── categories.yaml       # Category taxonomy (16 categories)
+│   └── algorithms/           # Algorithm entries (16 YAML files)
+├── specs/                    # Spec-Driven Development docs
+│   ├── product/              # Product requirements (PRDs)
+│   ├── rfc/                  # Technical design (RFCs)
+│   ├── api/                  # CLI interface specs
+│   ├── db/                   # Data schema definitions
+│   └── testing/              # Test specifications
+├── tests/                    # Test suite
+├── templates/                # Generation templates
+│   ├── algorithm_template.yaml
+│   └── readme_template.md
+├── schemas/                  # JSON Schema definitions
+│   └── algorithm-schema.json
+├── mkdocs/                   # MkDocs configuration
+├── docs/                     # Documentation source
+└── scripts/                  # Deprecated (use awesome_bioinfo)
+```
+
+---
+
+## Philosophy: Spec-Driven Development (SDD) | 规范驱动开发
+
+**This project strictly follows Spec-Driven Development.** All implementations MUST use the `/specs` directory as the single source of truth.
+
+**中文**: 本项目严格遵循**规范驱动开发**范式。所有代码实现必须以 `/specs` 目录为唯一事实来源。
+
+### Spec Hierarchy | 规范层级
+
+| Directory | Purpose | Priority |
 |-----------|---------|----------|
-| `/specs/product/` | Product requirements and feature definitions (PRDs) | 产品需求文档 |
-| `/specs/rfc/` | Technical design documents and architecture proposals | 技术设计与架构方案 |
-| `/specs/api/` | API specifications (CLI interface definitions) | CLI 接口规范 |
-| `/specs/db/` | Data schema definitions (YAML data structures) | 数据 Schema 定义 |
-| `/specs/testing/` | Test specifications and acceptance criteria | 测试规范与验收标准 |
+| `/specs/product/` | Product requirements and feature definitions | High |
+| `/specs/rfc/` | Technical design documents and architecture | High |
+| `/specs/api/` | API specifications (CLI interface definitions) | High |
+| `/specs/db/` | Data schema definitions (YAML data structures) | High |
+| `/specs/testing/` | Test specifications and acceptance criteria | Medium |
 
-### Documentation (`/docs/`)
+### AI Agent Workflow (MANDATORY) | AI 工作流（必须遵守）
 
-| Directory | Purpose |
-|-----------|---------|
-| `/docs/en/` | English documentation |
-| `/docs/zh/` | Chinese documentation (简体中文) |
-| `/docs/blog/` | Project blog posts and announcements |
+**When developing new features, modifying functionality, or fixing bugs:**
 
-### Data and Templates (`/data/`, `/templates/`)
+1. **Step 1: Review Specs First** | 审查规范
+   - MUST read relevant documentation in `/specs` directory
+   - Check product requirements, RFCs, API definitions
+   - **STOP immediately** if user request conflicts with existing specs
 
-| Path | Description |
-|------|-------------|
-| `/data/categories.yaml` | Category taxonomy (16 categories) |
-| `/data/algorithms/*.yaml` | Algorithm entry files (201 algorithms) |
-| `/templates/readme_template.md` | README generation template |
-| `/templates/algorithm_template.yaml` | Algorithm entry template |
+2. **Step 2: Spec-First Update** | 规范优先更新
+   - Propose spec changes BEFORE implementation
+   - Wait for user confirmation on spec modifications
+   - Maintain document-code synchronization
 
-### Source Code (`/scripts/`, `/tests/`)
+3. **Step 3: Implementation** | 代码实现
+   - Write code that **100% complies** with spec definitions
+   - **NO gold-plating**: do not add features not in specs
+   - Follow existing code conventions
 
-| Directory | Description |
-|-----------|-------------|
-| `/scripts/` | Python CLI tools and utilities |
-| `/tests/` | Pytest test suite with Hypothesis property-based tests |
-
----
-
-## AI Agent Workflow Instructions (AI 工作流指令)
-
-When you (AI) are asked to develop a new feature, modify existing functionality, or fix a bug, **you MUST strictly follow this workflow without skipping any steps**:
-
-### Step 1: 审查与分析 (Review Specs)
-
-- **MUST** first read relevant documentation in `/specs` directory
-- Check product requirements, RFCs, and API definitions
-- If user request conflicts with existing specs, **STOP immediately** and point out the conflict, asking user whether to update specs first
-
-### Step 2: 规范优先 (Spec-First Update)
-
-- For new features or changes to interfaces/data structures, **MUST propose spec changes first**
-- Wait for user confirmation on spec modifications before proceeding to code
-- Ensure document-code synchronization at all times
-
-### Step 3: 代码实现 (Implementation)
-
-- Write code that **100% complies** with spec definitions
-- **No gold-plating**: do not add features not defined in specs
-- Follow existing code conventions from `/scripts/`
-
-### Step 4: 测试验证 (Test against Spec)
-
-- Write tests based on acceptance criteria in specs
-- Ensure test coverage matches spec boundary conditions
-- Run validation: `python -m awesome_bioinfo validate`
+4. **Step 4: Test against Spec** | 测试验证
+   - Write tests based on acceptance criteria in specs
+   - Run validation: `python -m awesome_bioinfo validate`
 
 ---
 
-## Rule Sources
+## Build and Test Commands | 构建与测试命令
 
-| Source | Priority | Description |
-|--------|----------|-------------|
-| `/specs/` | **Highest** | Specifications - single source of truth for implementation |
-| `pyproject.toml` | High | Project configuration and dependencies |
-| `.pre-commit-config.yaml` | Medium | Pre-commit hooks |
-| `.github/workflows/ci.yml` | Medium | CI behavior |
-| `CONTRIBUTING.md` | Medium | Contributor guidance |
-
----
-
-## Environment Setup
+### Environment Setup | 环境设置
 
 ```bash
 python -m venv venv
@@ -96,33 +135,29 @@ source venv/bin/activate
 pip install -e ".[dev]"
 ```
 
----
-
-## Build, Lint, Test, and Validation Commands
-
-### Formatting and Linting
+### Formatting and Linting | 格式化和代码检查
 
 ```bash
 # Format check
-ruff format --check scripts/ tests/
+ruff format --check awesome_bioinfo/ tests/
 
 # Format fix
-ruff format scripts/ tests/
+ruff format awesome_bioinfo/ tests/
 
 # Lint check
-ruff check scripts/ tests/
+ruff check awesome_bioinfo/ tests/
 
 # Lint fix
-ruff check --fix scripts/ tests/
+ruff check --fix awesome_bioinfo/ tests/
 
 # Type check
-mypy scripts/ --ignore-missing-imports
+mypy awesome_bioinfo/ --ignore-missing-imports
 
 # All-in-one (pre-commit)
 pre-commit run --all-files
 ```
 
-### Testing
+### Testing | 测试
 
 ```bash
 # Run all tests
@@ -135,10 +170,10 @@ python -m pytest tests/test_validate.py -v
 python -m pytest tests/test_validate.py -k missing_required -v
 
 # Run with coverage
-python -m pytest tests/ --cov=scripts --cov-branch --cov-report=term-missing
+python -m pytest tests/ --cov=awesome_bioinfo --cov-branch --cov-report=term-missing
 ```
 
-### CLI Commands
+### CLI Commands | CLI 命令
 
 ```bash
 python -m awesome_bioinfo validate                    # Validate all YAML data
@@ -149,137 +184,293 @@ python -m awesome_bioinfo compare <id1> <id2>         # Compare algorithms
 python -m awesome_bioinfo export --format json        # Export data
 python -m awesome_bioinfo generate                    # Generate README.md
 python -m awesome_bioinfo mkdocs                      # Generate MkDocs site
+python -m awesome_bioinfo check-links                 # Check URL validity
 ```
 
-### MkDocs
+### MkDocs | 文档构建
 
 ```bash
-python scripts/generate_mkdocs.py
+python -m awesome_bioinfo mkdocs
 mkdocs build -f mkdocs/mkdocs.yml -d ./_site
 ```
 
-### Verification
+### Verification | 验证
 
 ```bash
+# Ensure generated outputs are up-to-date
 git diff --exit-code -- README.md mkdocs/docs/
 ```
 
 ---
 
-## What CI Actually Runs
+## Code Style Guidelines | 代码风格规范
 
-1. **Lint job**: `ruff format --check`, `ruff check`, `mypy`
-2. **Test job**: Python 3.9, 3.10, 3.11, 3.12 matrix
-3. **Coverage**: Collected on Python 3.11 with `--cov=scripts --cov-branch`
-4. **Verification**: CLI smoke checks for all commands
-5. **Diff check**: `git diff --exit-code -- README.md mkdocs/docs/`
-6. **Pages**: `mkdocs build` for GitHub Pages deployment
-
----
-
-## Change-Based Command Checklist
-
-| Change Type | Commands to Run |
-|-------------|-----------------|
-| Python in `scripts/` or `tests/` | `ruff`, `mypy`, relevant pytest target |
-| Validation logic | Focused test file, then full suite |
-| CLI behavior | Relevant `python -m awesome_bioinfo ...` command, update tests |
-| `data/` YAML | `python -m awesome_bioinfo validate` |
-| `templates/readme_template.md` | `python -m awesome_bioinfo generate` |
-| MkDocs generation | `python -m awesome_bioinfo mkdocs`, `mkdocs build` |
-
----
-
-## Python Style and Formatting
+### Python Style | Python 风格
 
 | Rule | Value/Description |
 |------|-------------------|
 | Target runtime | Python `>=3.9` |
 | Line length | 100 characters |
 | Lint rules | `E`, `F`, `W`, `I`, `N`, `UP`, `B`, `C4` |
-| Ignored rules | `E501` |
+| Ignored rules | `E501` (line length handled by formatter) |
 | Formatter | `ruff format` |
-| Import sorting | Ruff managed |
-| Naming: functions/methods/variables | `snake_case` |
-| Naming: classes/dataclasses | `PascalCase` |
-| Naming: constants | `UPPER_SNAKE_CASE` |
-| Generics | Prefer built-in `list[str]`, `dict[str, int]` |
-| Data structures | Prefer dataclasses for simple records |
+| Import sorting | ruff managed |
 
----
+### Naming Conventions | 命名规范
 
-## Data and YAML Conventions
+| Type | Convention | Example |
+|------|------------|---------|
+| Functions/Methods/Variables | `snake_case` | `load_algorithms()` |
+| Classes/Dataclasses | `PascalCase` | `AlgorithmEntry` |
+| Constants | `UPPER_SNAKE_CASE` | `MAX_DESCRIPTION_LENGTH` |
+| Algorithm IDs | lowercase, hyphenated | `smith-waterman` |
+| Tags | lowercase, hyphenated | `dynamic-programming` |
 
-| Field | Rule |
-|-------|------|
-| Top-level category key | `categories:` |
-| Top-level algorithm key | `algorithms:` |
-| Algorithm IDs | lowercase, hyphenated, unique |
-| Required algorithm fields | `id`, `name`, `description`, `purpose`, `time_complexity`, `category` |
-| Optional algorithm fields | `space_complexity`, `year`, `paper_url`, `implementation_url`, `related_tools`, `tags`, `subcategory`, `difficulty`, `language`, `references` |
-| Description length | 50-500 characters after trimming |
-| `difficulty` values | `beginner`, `intermediate`, `advanced` |
-| `references[*].type` values | `tutorial`, `blog`, `video`, `book`, `documentation`, `slides` |
+### Type Hints | 类型提示
 
----
+- Use built-in generics: `list[str]`, `dict[str, int]` (not `typing.List`, `typing.Dict`)
+- Prefer dataclasses for simple records
+- Add type hints to public functions
 
-## Error Handling Conventions
+### Error Handling | 错误处理
 
 | Scenario | Approach |
 |----------|----------|
 | CLI errors | Print actionable messages, return non-zero status |
-| Invalid user data | Collect in `ValidationResult.errors` and `ValidationResult.warnings` |
+| Invalid user data | Use `ValidationResult.errors` and `warnings` |
 | Invariant failures | Raise specific exceptions (`FileNotFoundError`, `ValueError`) |
 | Bare `except` | **Never use** |
 
 ---
 
-## Generated Outputs
+## Testing Strategy | 测试策略
 
-| Output | Source | Note |
-|--------|--------|------|
-| `README.md` | Generated from template | Do not hand-edit |
-| `mkdocs/docs/` | Generated by mkdocs command | Do not hand-edit |
+### Testing Framework | 测试框架
+
+- **pytest**: Main testing framework
+- **Hypothesis**: Property-based testing
+- **pytest-cov**: Coverage reporting (85% minimum)
+- **pytest-benchmark**: Performance benchmarks
+
+### Test Organization | 测试组织
+
+| Test File | Coverage |
+|-----------|----------|
+| `test_validate.py` | YAML validation logic |
+| `test_algorithm_registry.py` | Algorithm loading and registry |
+| `test_category_manager.py` | Category management |
+| `test_cli.py` | CLI entry points |
+| `test_data_io.py` | Data import/export |
+| `test_export_cmd.py` | Export command |
+| `test_search.py` | Search functionality |
+| `test_schema.py` | Data schema validation |
+
+### Property-Based Testing | 基于属性的测试
+
+Use Hypothesis for testing invariants:
+
+```python
+from hypothesis import given, strategies as st
+
+@given(st.text(min_size=50, max_size=500))
+def test_description_length(description):
+    # Description must be 50-500 characters
+    assert 50 <= len(description.strip()) <= 500
+```
+
+---
+
+## Data and YAML Conventions | 数据和 YAML 规范
+
+### Algorithm Entry Structure | 算法条目结构
+
+**Required Fields** | 必填字段:
+- `id` - Unique identifier (lowercase, hyphenated)
+- `name` - Human-readable name
+- `description` - 50-500 characters after trimming
+- `purpose` - Main use case
+- `time_complexity` - Big-O notation (e.g., `O(n)`, `O(mn)`)
+- `category` - Must be valid category ID
+
+**Optional Fields** | 可选字段:
+- `space_complexity` - Big-O notation
+- `year` - Publication year (1950-2100)
+- `paper_url` - DOI or paper URL
+- `implementation_url` - GitHub/repository URL
+- `related_tools` - List of related tools
+- `tags` - List of tags (lowercase, hyphenated)
+- `subcategory` - Must belong to specified category
+- `difficulty` - `beginner`, `intermediate`, or `advanced`
+- `language` - Implementation language (e.g., `C++`, `Python`)
+- `references` - Extended reference materials
+
+### Category Taxonomy | 分类体系
+
+16 Main Categories | 主分类:
+1. `sequence-alignment` - 序列比对
+2. `assembly` - 序列组装
+3. `variant-calling` - 变异检测
+4. `expression-analysis` - 基因表达分析
+5. `protein-structure` - 蛋白质结构预测
+6. `phylogenetics` - 系统发育分析
+7. `functional-annotation` - 功能注释
+8. `data-compression` - 数据压缩
+9. `single-cell` - 单细胞基因组学
+10. `metagenomics` - 宏基因组学
+11. `epigenomics` - 表观基因组学
+12. `gene-prediction` - 基因预测
+13. `population-genetics` - 群体遗传学
+14. `spatial-omics` - 空间组学
+15. `graph-genomics` - 图基因组学
+16. `protein-language-model` - 蛋白质语言模型
+
+See `data/categories.yaml` for complete subcategory list.
+
+### Validation Rules | 验证规则
+
+| Field | Rule |
+|-------|------|
+| `id` | Lowercase, hyphenated, 3-50 chars, globally unique |
+| `description` | 50-500 characters (trimmed) |
+| `tags` | Lowercase, hyphenated, `^[a-z0-9]+(-[a-z0-9]+)*$` |
+| `category` | Must exist in `data/categories.yaml` |
+| `subcategory` | Must belong to specified `category` |
+| `difficulty` | One of: `beginner`, `intermediate`, `advanced` |
+| `references[*].type` | One of: `tutorial`, `blog`, `video`, `book`, `documentation`, `slides` |
+
+---
+
+## CI/CD and Deployment | 持续集成与部署
+
+### GitHub Actions Workflow | 工作流
+
+| Job | Description |
+|-----|-------------|
+| `lint` | ruff format check, ruff lint, mypy type check |
+| `test` | Python 3.9-3.12 matrix, coverage on 3.11 |
+| `verify-repository-tools` | CLI smoke checks, diff verification |
+
+### What CI Actually Runs | CI 实际运行
+
+1. **Lint**: `ruff format --check`, `ruff check`, `mypy`
+2. **Test**: Python matrix with coverage collection on 3.11
+3. **CLI Smoke Tests**: All CLI commands execution
+4. **Diff Check**: `git diff --exit-code -- README.md mkdocs/docs/`
+5. **MkDocs Build**: `mkdocs build` for GitHub Pages
+
+### Change-Based Command Checklist | 基于变更的命令检查清单
+
+| Change Type | Commands to Run |
+|-------------|-----------------|
+| Python in `awesome_bioinfo/` or `tests/` | `ruff`, `mypy`, relevant pytest |
+| Validation logic | Focused test, then full suite |
+| CLI behavior | Relevant `python -m awesome_bioinfo ...` command |
+| `data/` YAML | `python -m awesome_bioinfo validate` |
+| `templates/readme_template.md` | `python -m awesome_bioinfo generate` |
+| MkDocs generation | `python -m awesome_bioinfo mkdocs`, `mkdocs build` |
+
+---
+
+## Generated Outputs | 生成输出
+
+These files are **auto-generated**. Do not hand-edit.
+
+| Output | Source | Generation Command |
+|--------|--------|-------------------|
+| `README.md` | Template + algorithm data | `python -m awesome_bioinfo generate` |
+| `mkdocs/docs/` | Algorithm data | `python -m awesome_bioinfo mkdocs` |
 
 When generator inputs change, regenerate outputs before considering work complete.
 
 ---
 
-## Code Generation Rules
+## Pre-commit Hooks | 预提交钩子
 
-1. Any externally exposed API changes **MUST** update `/specs/api/` specifications
-2. When uncertain about technical details, consult `/specs/rfc/` architecture documents
-3. **No gold-plating**: implement only what is specified in specs
-4. Maintain document-code synchronization at all times
+Configured in `.pre-commit-config.yaml`:
 
----
-
-## Why These Rules Exist (为什么这些规则存在)
-
-| Rule | Purpose |
-|------|---------|
-| **Prevent AI hallucinations** | Forcing spec-first approach anchors AI thinking to documented requirements |
-| **Ensure document-code synchronization** | Specs are updated before code, keeping documentation current |
-| **Improve PR quality** | Implementation aligned with business logic through spec-defined acceptance criteria |
-| **Reduce rework** | Clear specs prevent misunderstandings and unnecessary refactoring |
+1. **ruff** - Linting and formatting
+2. **mypy** - Type checking
+3. **check-yaml** - YAML syntax validation
+4. **check-jsonschema** - Validate algorithm YAML against schema
+5. **trailing-whitespace** - Whitespace cleanup
+6. **end-of-file-fixer** - EOF newline
+7. **check-added-large-files** - File size limit (1MB)
 
 ---
 
-## Quick Reference: Specs Structure
+## Security Considerations | 安全考虑
 
-```
-specs/
-├── product/                    # 产品与功能需求 (PRD)
-│   └── 000-product-vision.md
-├── rfc/                        # 技术设计与架构方案 (RFCs)
-│   ├── 0001-core-architecture.md
-│   └── 0002-project-history-archive.md
-├── api/                        # 接口规范
-│   └── 001-cli-interface.md
-├── db/                         # 数据库 Schema 设计规范
-│   └── 001-algorithm-entry.md
-└── testing/                    # 测试规范
-    └── 001-cli-tests.md
-```
+- Never commit sensitive files (`.env`, credentials)
+- URLs in algorithm entries should be to reputable sources
+- External links are validated periodically with `check-links` command
+- No execution of user-provided code
 
-For detailed spec workflow, see `/specs/README.md`.
+---
+
+## Common Tasks | 常见任务
+
+### Adding a New Algorithm | 添加新算法
+
+1. Edit the appropriate file in `data/algorithms/` (e.g., `sequence-alignment.yaml`)
+2. Copy template from `templates/algorithm_template.yaml`
+3. Fill in all required fields
+4. Run `python -m awesome_bioinfo validate` to verify
+5. Run `python -m awesome_bioinfo generate` to update README
+6. Run `python -m awesome_bioinfo mkdocs` to update docs
+
+### Adding a New Category | 添加新分类
+
+1. Update `data/categories.yaml`
+2. Update `schemas/algorithm-schema.json` category enum
+3. Create RFC in `specs/rfc/` for community review
+4. Update `templates/algorithm_template.yaml`
+
+### Adding a New CLI Command | 添加新 CLI 命令
+
+1. Update `specs/api/001-cli-interface.md`
+2. Add command handler in `awesome_bioinfo/__main__.py`
+3. Implement logic in new module (e.g., `awesome_bioinfo/new_cmd.py`)
+4. Add tests in `tests/test_<command>.py`
+5. Update CLI documentation
+
+---
+
+## Useful Resources | 有用资源
+
+| Resource | Location |
+|----------|----------|
+| Contributing Guide | `CONTRIBUTING.md` |
+| Spec Documentation | `specs/README.md` |
+| Algorithm Template | `templates/algorithm_template.yaml` |
+| JSON Schema | `schemas/algorithm-schema.json` |
+| Category Taxonomy | `data/categories.yaml` |
+| CLI Spec | `specs/api/001-cli-interface.md` |
+| Data Schema Spec | `specs/db/001-algorithm-entry.md` |
+
+---
+
+## Rule Sources | 规则来源优先级
+
+| Source | Priority | Description |
+|--------|----------|-------------|
+| `/specs/` | **Highest** | Specifications - single source of truth |
+| `pyproject.toml` | High | Project configuration and dependencies |
+| `.pre-commit-config.yaml` | Medium | Pre-commit hooks |
+| `.github/workflows/ci.yml` | Medium | CI behavior |
+| `CONTRIBUTING.md` | Medium | Contributor guidance |
+
+---
+
+## Language and Communication | 语言和沟通
+
+This project supports **bilingual documentation** (English and Chinese).
+
+- Code and comments: English preferred
+- Documentation: Both languages
+- CLI output: Bilingual where appropriate
+- Commit messages: English preferred
+
+---
+
+*Last updated: 2026-04-17*
+*Version: 1.0.0*
