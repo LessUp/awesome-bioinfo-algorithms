@@ -1,0 +1,163 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/LessUp/awesome-bioinfo-algorithms/schemas/algorithm-schema.json",
+  "title": "Algorithm Entry Schema",
+  "description": "Schema for bioinformatics algorithm entries",
+  "type": "object",
+  "required": ["algorithms"],
+  "properties": {
+    "algorithms": {
+      "type": "array",
+      "description": "List of algorithm entries",
+      "items": {
+        "$ref": "#/definitions/algorithm"
+      }
+    }
+  },
+  "definitions": {
+    "algorithm": {
+      "type": "object",
+      "required": ["id", "name", "description", "purpose", "time_complexity", "category"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the algorithm",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name of the algorithm",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the algorithm (50-500 characters)",
+          "minLength": 50,
+          "maxLength": 2000
+        },
+        "purpose": {
+          "type": "string",
+          "description": "Main purpose or use case of the algorithm",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "time_complexity": {
+          "type": "string",
+          "description": "Time complexity notation (e.g., O(n), O(mn))",
+          "pattern": "^O\\([^)]+\\)$",
+          "examples": ["O(n)", "O(mn)", "O(n log n)", "O(n^2)"]
+        },
+        "space_complexity": {
+          "type": "string",
+          "description": "Space complexity notation",
+          "pattern": "^O\\([^)]+\\)$"
+        },
+        "category": {
+          "type": "string",
+          "description": "Primary category ID",
+          "enum": [
+            "sequence-alignment",
+            "assembly",
+            "variant-calling",
+            "expression-analysis",
+            "protein-structure",
+            "phylogenetics",
+            "functional-annotation",
+            "data-compression",
+            "single-cell",
+            "metagenomics",
+            "epigenomics",
+            "gene-prediction",
+            "population-genetics",
+            "spatial-omics",
+            "graph-genomics",
+            "protein-language-model"
+          ]
+        },
+        "subcategory": {
+          "type": "string",
+          "description": "Subcategory ID within the category",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "year": {
+          "type": "integer",
+          "description": "Year the algorithm was published",
+          "minimum": 1950,
+          "maximum": 2100
+        },
+        "paper_url": {
+          "type": "string",
+          "description": "URL to the original paper",
+          "format": "uri"
+        },
+        "implementation_url": {
+          "type": "string",
+          "description": "URL to reference implementation",
+          "format": "uri"
+        },
+        "related_tools": {
+          "type": "array",
+          "description": "List of related tools or algorithms",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          }
+        },
+        "tags": {
+          "type": "array",
+          "description": "List of tags for categorization",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+            "minLength": 1,
+            "maxLength": 50
+          }
+        },
+        "difficulty": {
+          "type": "string",
+          "description": "Difficulty level for understanding/implementing",
+          "enum": ["beginner", "intermediate", "advanced"]
+        },
+        "language": {
+          "type": "string",
+          "description": "Primary implementation language",
+          "examples": ["Python", "C++", "Java", "R", "C"]
+        },
+        "references": {
+          "type": "array",
+          "description": "Additional reference materials",
+          "items": {
+            "$ref": "#/definitions/reference"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "reference": {
+      "type": "object",
+      "required": ["title", "url"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Reference title",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "description": "Reference URL",
+          "format": "uri"
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of reference material",
+          "enum": ["tutorial", "blog", "video", "book", "documentation", "slides"]
+        }
+      }
+    }
+  }
+}

@@ -8,9 +8,9 @@ from pathlib import Path
 from hypothesis import HealthCheck, given, settings
 from hypothesis import strategies as st
 
-from scripts.algorithm_registry import AlgorithmRegistry
-from scripts.category_manager import CategoryManager
-from scripts.validate import Validator
+from awesome_bioinfo.algorithm_registry import AlgorithmRegistry
+from awesome_bioinfo.category_manager import CategoryManager
+from awesome_bioinfo.validate import Validator
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = PROJECT_ROOT / "data"

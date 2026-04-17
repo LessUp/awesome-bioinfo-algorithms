@@ -144,7 +144,7 @@ python -m pytest tests/ --cov=scripts --cov-report=html
 ### 生成 README
 
 ```bash
-python -m scripts generate
+python -m awesome_bioinfo generate
 ```
 
 ### 数据导入导出
@@ -228,5 +228,5 @@ python -m pytest tests/ -v
 ### Generating README
 
 ```bash
-python -m scripts generate
+python -m awesome_bioinfo generate
 ```

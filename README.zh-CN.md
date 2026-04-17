@@ -33,13 +33,13 @@ pip install -e ".[dev]"
 # 以下命令需要在仓库根目录执行
 
 # 校验数据
-python -m scripts validate
+python -m awesome_bioinfo validate
 
 # 生成主 README
-python -m scripts generate
+python -m awesome_bioinfo generate
 
 # 查看统计
-python -m scripts stats
+python -m awesome_bioinfo stats
 ```
 
 ## 文档入口

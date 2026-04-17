@@ -1,11 +1,11 @@
 from pathlib import Path
 
-import scripts.__main__ as cli
-from scripts.compare import cmd_compare
-from scripts.export_cmd import cmd_export
-from scripts.generate_mkdocs import main as generate_mkdocs
-from scripts.info_cmd import cmd_info
-from scripts.search import cmd_search, search_algorithms
+import awesome_bioinfo.__main__ as cli
+from awesome_bioinfo.compare import cmd_compare
+from awesome_bioinfo.export_cmd import cmd_export
+from awesome_bioinfo.generate_mkdocs import main as generate_mkdocs
+from awesome_bioinfo.info_cmd import cmd_info
+from awesome_bioinfo.search import cmd_search, search_algorithms
 
 
 def test_search_algorithms_filters_loaded_registry(loaded_registry, loaded_category_manager):

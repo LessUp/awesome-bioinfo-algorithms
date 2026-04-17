@@ -131,6 +131,20 @@ plugins:
       categories:
         - categories
         - tags
+  
+  # API Documentation
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [../scripts]
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            show_category_heading: true
+            filters: ["!^_"]
+          import:
+            - https://docs.python.org/3/objects.inv
 
 # ---------------------------------------------------------------------------
 # Markdown Extensions
@@ -304,3 +318,8 @@ nav:
     - 图基因组学: categories/graph-genomics.md
     - 蛋白质语言模型: categories/protein-language-model.md
   - 标签: tags.md
+  - API 文档:
+    - 概述: api/index.md
+    - CLI 模块: api/cli.md
+    - 数据模块: api/data.md
+    - 验证模块: api/validate.md

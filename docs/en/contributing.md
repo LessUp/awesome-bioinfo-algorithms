@@ -76,7 +76,7 @@ Edit files as needed. For adding algorithms, see [Adding Algorithms](#adding-alg
 
 ```bash
 # Validate data
-python -m scripts validate
+python -m awesome_bioinfo validate
 
 # Run tests
 python -m pytest tests/ -v
@@ -90,10 +90,10 @@ mypy scripts/
 
 ```bash
 # Regenerate README
-python -m scripts generate
+python -m awesome_bioinfo generate
 
 # Regenerate docs
-python -m scripts mkdocs
+python -m awesome_bioinfo mkdocs
 ```
 
 ### 7. Commit and Push
@@ -189,13 +189,13 @@ vim data/algorithms/sequence-alignment.yaml
 # 2. Add your algorithm entry following the format above
 
 # 3. Validate
-python -m scripts validate
+python -m awesome_bioinfo validate
 
 # 4. Check it appears correctly
-python -m scripts info your-algorithm-id
+python -m awesome_bioinfo info your-algorithm-id
 
 # 5. Generate updated README
-python -m scripts generate
+python -m awesome_bioinfo generate
 ```
 
 ---

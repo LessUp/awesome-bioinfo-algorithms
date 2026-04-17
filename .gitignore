@@ -162,8 +162,8 @@ docs/_build/
 /site
 
 # Script outputs and logs
-scripts/output/
-scripts/logs/
+awesome_bioinfo/output/
+awesome_bioinfo/logs/
 *.log
 
 # Validation reports

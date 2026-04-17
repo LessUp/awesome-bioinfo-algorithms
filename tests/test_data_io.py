@@ -12,10 +12,10 @@ import yaml
 from hypothesis import HealthCheck, given, settings
 from hypothesis import strategies as st
 
-from scripts.algorithm_registry import AlgorithmRegistry
-from scripts.category_manager import CategoryManager
-from scripts.data_io import DataIO
-from scripts.schema import AlgorithmEntry, Category
+from awesome_bioinfo.algorithm_registry import AlgorithmRegistry
+from awesome_bioinfo.category_manager import CategoryManager
+from awesome_bioinfo.data_io import DataIO
+from awesome_bioinfo.schema import AlgorithmEntry, Category
 
 # Strategies for generating test data - using ASCII-safe characters for YAML round-trip
 valid_id = st.text(

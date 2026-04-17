@@ -1,0 +1,128 @@
+name: Algorithm Suggestion
+about: Suggest a new bioinformatics algorithm to add to the collection
+title: '[ALGO] Add '
+labels: ['enhancement', 'new-algorithm']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a new algorithm! Please provide the details below.
+
+  - type: input
+    id: algorithm_name
+    attributes:
+      label: Algorithm Name
+      description: The full name of the algorithm
+      placeholder: e.g., BWA-MEM2
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: Select the primary category for this algorithm
+      options:
+        - sequence-alignment
+        - assembly
+        - variant-calling
+        - expression-analysis
+        - protein-structure
+        - phylogenetics
+        - functional-annotation
+        - data-compression
+        - single-cell
+        - metagenomics
+        - epigenomics
+        - gene-prediction
+        - population-genetics
+        - spatial-omics
+        - graph-genomics
+        - protein-language-model
+    validations:
+      required: true
+
+  - type: input
+    id: subcategory
+    attributes:
+      label: Subcategory (optional)
+      description: If known, specify the subcategory
+      placeholder: e.g., pairwise, snv, de-novo
+
+  - type: input
+    id: year
+    attributes:
+      label: Year Published
+      description: The year the algorithm was published
+      placeholder: '2024'
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Brief description of the algorithm (50-500 characters recommended)
+      placeholder: |
+        Describe the algorithm, its key features, and when it should be used...
+    validations:
+      required: true
+
+  - type: input
+    id: time_complexity
+    attributes:
+      label: Time Complexity
+      placeholder: e.g., O(n log n), O(mn)
+
+  - type: input
+    id: space_complexity
+    attributes:
+      label: Space Complexity
+      placeholder: e.g., O(n), O(m+n)
+
+  - type: input
+    id: paper_url
+    attributes:
+      label: Paper URL
+      description: DOI URL or arXiv link to the original paper
+      placeholder: https://doi.org/10.xxxx/xxxx
+
+  - type: input
+    id: implementation_url
+    attributes:
+      label: Implementation URL
+      description: Link to the official implementation or repository
+      placeholder: https://github.com/...
+
+  - type: textarea
+    id: related_tools
+    attributes:
+      label: Related Tools
+      description: List related tools or similar algorithms
+      placeholder: |
+        - Tool1
+        - Tool2
+
+  - type: textarea
+    id: tags
+    attributes:
+      label: Tags
+      description: Relevant tags for this algorithm (comma-separated)
+      placeholder: e.g., deep-learning, alignment, fast
+
+  - type: dropdown
+    id: difficulty
+    attributes:
+      label: Difficulty Level
+      options:
+        - beginner
+        - intermediate
+        - advanced
+
+  - type: checkboxes
+    id: verification
+    attributes:
+      label: Verification
+      options:
+        - label: I have verified this algorithm is not already in the list
+          required: true
+        - label: I have verified all URLs are accessible
+          required: true

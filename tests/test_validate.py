@@ -9,7 +9,7 @@ import pytest
 from hypothesis import HealthCheck, given, settings
 from hypothesis import strategies as st
 
-from scripts.validate import Validator
+from awesome_bioinfo.validate import Validator
 
 # Strategies for generating test data
 valid_id = st.text(

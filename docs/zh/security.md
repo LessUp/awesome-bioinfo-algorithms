@@ -96,7 +96,7 @@ description: "漏洞报告和处理流程"
 ### 对于用户
 
 - 始终使用最新版本
-- 使用 `python -m scripts validate` 验证算法数据
+- 使用 `python -m awesome_bioinfo validate` 验证算法数据
 - 未经验证不要手动修改数据文件
 - 开发时使用虚拟环境
 

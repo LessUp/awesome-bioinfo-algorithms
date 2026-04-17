@@ -76,7 +76,7 @@ git checkout -b feat/add-my-algorithm
 
 ```bash
 # 验证数据
-python -m scripts validate
+python -m awesome_bioinfo validate
 
 # 运行测试
 python -m pytest tests/ -v
@@ -90,10 +90,10 @@ mypy scripts/
 
 ```bash
 # 重新生成 README
-python -m scripts generate
+python -m awesome_bioinfo generate
 
 # 重新生成文档
-python -m scripts mkdocs
+python -m awesome_bioinfo mkdocs
 ```
 
 ### 7. 提交和推送
@@ -189,13 +189,13 @@ vim data/algorithms/sequence-alignment.yaml
 # 2. 按上述格式添加算法条目
 
 # 3. 验证
-python -m scripts validate
+python -m awesome_bioinfo validate
 
 # 4. 检查是否正确显示
-python -m scripts info your-algorithm-id
+python -m awesome_bioinfo info your-algorithm-id
 
 # 5. 生成更新后的 README
-python -m scripts generate
+python -m awesome_bioinfo generate
 ```
 
 ---

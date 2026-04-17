@@ -52,19 +52,19 @@ pip install -e ".[dev]"
 
 ```bash
 # Generate README from data
-python -m scripts generate
+python -m awesome_bioinfo generate
 
 # Validate data integrity
-python -m scripts validate
+python -m awesome_bioinfo validate
 
 # View statistics
-python -m scripts stats
+python -m awesome_bioinfo stats
 
 # Search algorithms
-python -m scripts search "alignment"
+python -m awesome_bioinfo search "alignment"
 
 # Get algorithm details
-python -m scripts info smith-waterman
+python -m awesome_bioinfo info smith-waterman
 ```
 
 ---

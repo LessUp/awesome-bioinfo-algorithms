@@ -5,7 +5,8 @@ Handles importing and exporting algorithm data in YAML and JSON formats.
 
 import json
 import os
-from typing import Optional
+from functools import lru_cache
+from typing import Any, Optional
 
 import yaml
 
@@ -13,11 +14,71 @@ from .algorithm_registry import AlgorithmRegistry
 from .category_manager import CategoryManager
 from .schema import AlgorithmEntry, Category
 
+# Cache configuration
+_CACHE_ENABLED = True
+_cache: dict[str, Any] = {}
+
 YAML_DUMP_KWARGS = {
     "allow_unicode": True,
     "default_flow_style": False,
     "sort_keys": False,
 }
+
+
+@lru_cache(maxsize=32)
+def _cached_yaml_load(file_path: str) -> Any:
+    """
+    Load YAML file with caching.
+
+    Args:
+        file_path: Path to YAML file
+
+    Returns:
+        Parsed YAML content
+    """
+    with open(file_path, encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+
+@lru_cache(maxsize=1)
+def _cached_load_categories(categories_path: str) -> list[Category]:
+    """
+    Load and parse categories file with caching.
+
+    Args:
+        categories_path: Path to categories YAML file
+
+    Returns:
+        List of Category objects
+    """
+    data = _cached_yaml_load(categories_path)
+    if data and "categories" in data:
+        return [Category.from_dict(cat) for cat in data["categories"]]
+    return []
+
+
+@lru_cache(maxsize=16)
+def _cached_load_algorithm_file(file_path: str) -> list[AlgorithmEntry]:
+    """
+    Load and parse a single algorithm file with caching.
+
+    Args:
+        file_path: Path to algorithm YAML file
+
+    Returns:
+        List of AlgorithmEntry objects
+    """
+    data = _cached_yaml_load(file_path)
+    if data and "algorithms" in data:
+        return [AlgorithmEntry.from_dict(algo) for algo in data["algorithms"]]
+    return []
+
+
+def clear_data_cache() -> None:
+    """Clear all data loading caches."""
+    _cached_yaml_load.cache_clear()
+    _cached_load_categories.cache_clear()
+    _cached_load_algorithm_file.cache_clear()
 
 
 class DataIO:

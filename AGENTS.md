@@ -72,7 +72,7 @@ When you (AI) are asked to develop a new feature, modify existing functionality,
 
 - Write tests based on acceptance criteria in specs
 - Ensure test coverage matches spec boundary conditions
-- Run validation: `python -m scripts validate`
+- Run validation: `python -m awesome_bioinfo validate`
 
 ---
 
@@ -141,14 +141,14 @@ python -m pytest tests/ --cov=scripts --cov-branch --cov-report=term-missing
 ### CLI Commands
 
 ```bash
-python -m scripts validate                    # Validate all YAML data
-python -m scripts stats                       # Show statistics
-python -m scripts search <query>              # Search algorithms
-python -m scripts info <algorithm-id>         # Show algorithm details
-python -m scripts compare <id1> <id2>         # Compare algorithms
-python -m scripts export --format json        # Export data
-python -m scripts generate                    # Generate README.md
-python -m scripts mkdocs                      # Generate MkDocs site
+python -m awesome_bioinfo validate                    # Validate all YAML data
+python -m awesome_bioinfo stats                       # Show statistics
+python -m awesome_bioinfo search <query>              # Search algorithms
+python -m awesome_bioinfo info <algorithm-id>         # Show algorithm details
+python -m awesome_bioinfo compare <id1> <id2>         # Compare algorithms
+python -m awesome_bioinfo export --format json        # Export data
+python -m awesome_bioinfo generate                    # Generate README.md
+python -m awesome_bioinfo mkdocs                      # Generate MkDocs site
 ```
 
 ### MkDocs
@@ -183,10 +183,10 @@ git diff --exit-code -- README.md mkdocs/docs/
 |-------------|-----------------|
 | Python in `scripts/` or `tests/` | `ruff`, `mypy`, relevant pytest target |
 | Validation logic | Focused test file, then full suite |
-| CLI behavior | Relevant `python -m scripts ...` command, update tests |
-| `data/` YAML | `python -m scripts validate` |
-| `templates/readme_template.md` | `python -m scripts generate` |
-| MkDocs generation | `python -m scripts mkdocs`, `mkdocs build` |
+| CLI behavior | Relevant `python -m awesome_bioinfo ...` command, update tests |
+| `data/` YAML | `python -m awesome_bioinfo validate` |
+| `templates/readme_template.md` | `python -m awesome_bioinfo generate` |
+| MkDocs generation | `python -m awesome_bioinfo mkdocs`, `mkdocs build` |
 
 ---
 

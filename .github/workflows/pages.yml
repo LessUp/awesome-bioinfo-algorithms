@@ -6,7 +6,7 @@ on:
     paths:
       - 'data/**'
       - 'mkdocs/**'
-      - 'scripts/generate_mkdocs.py'
+      - 'awesome_bioinfo/generate_mkdocs.py'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
@@ -35,7 +35,7 @@ jobs:
           pip install mkdocs-material
 
       - name: Generate MkDocs pages
-        run: python scripts/generate_mkdocs.py
+        run: python awesome_bioinfo/generate_mkdocs.py
 
       - name: Build MkDocs site
         run: mkdocs build -f mkdocs/mkdocs.yml --site-dir ${{ github.workspace }}/_site

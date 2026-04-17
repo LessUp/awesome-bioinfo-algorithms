@@ -96,7 +96,6 @@ awesome-bioinfo-algorithms/
 │   └── zh/                      # Chinese changelogs
 │
 └── mkdocs/                      # MkDocs configuration
-    ├── mkdocs.yml
     └── docs/
 ```
 
@@ -162,7 +161,7 @@ pip install -e ".[dev]"
 # Or use: pip install -r requirements.txt
 
 # Verify installation
-python -m scripts --help
+python -m awesome_bioinfo --help
 ```
 
 ---
@@ -263,30 +262,30 @@ if not result.is_valid:
 
 ```bash
 # Validate all data files
-python -m scripts validate
+python -m awesome_bioinfo validate
 
 # Generate README.md
-python -m scripts generate
+python -m awesome_bioinfo generate
 
 # Generate MkDocs pages
-python -m scripts mkdocs
+python -m awesome_bioinfo mkdocs
 
 # Show statistics
-python -m scripts stats
+python -m awesome_bioinfo stats
 
 # Search algorithms
-python -m scripts search "smith"
-python -m scripts search --category sequence-alignment
+python -m awesome_bioinfo search "smith"
+python -m awesome_bioinfo search --category sequence-alignment
 
 # Get algorithm details
-python -m scripts info smith-waterman
+python -m awesome_bioinfo info smith-waterman
 
 # Compare two algorithms
-python -m scripts compare smith-waterman needleman-wunsch
+python -m awesome_bioinfo compare smith-waterman needleman-wunsch
 
 # Export data
-python -m scripts export --format json > algorithms.json
-python -m scripts export --format yaml > algorithms.yaml
+python -m awesome_bioinfo export --format json > algorithms.json
+python -m awesome_bioinfo export --format yaml > algorithms.yaml
 ```
 
 ---
@@ -370,7 +369,7 @@ See [Environment Setup](#environment-setup) above.
 
 ```bash
 # Validate data
-python -m scripts validate
+python -m awesome_bioinfo validate
 
 # Run tests
 python -m pytest tests/ -v
@@ -384,8 +383,8 @@ mypy scripts/
 
 ```bash
 # If you edited data or templates
-python -m scripts generate      # Update README
-python -m scripts mkdocs        # Update docs
+python -m awesome_bioinfo generate      # Update README
+python -m awesome_bioinfo mkdocs        # Update docs
 
 # Verify generated outputs are correct
 git diff --exit-code -- README.md mkdocs/docs/
@@ -435,7 +434,7 @@ gh release create v1.2.0 --generate-notes
 | `ModuleNotFoundError` | Run `pip install -e ".[dev]"` |
 | YAML syntax errors | Use online YAML validator |
 | Test timeouts | Run with `-k` to specify specific tests |
-| Generated README differs | Ensure you run `python -m scripts generate` |
+| Generated README differs | Ensure you run `python -m awesome_bioinfo generate` |
 
 ### Getting Help
 

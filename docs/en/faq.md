@@ -61,7 +61,7 @@ source venv/bin/activate  # Linux/macOS
 pip install -e ".[dev]"
 
 # Verify setup
-python -m scripts validate
+python -m awesome_bioinfo validate
 ```
 
 ### What Python version is required?
@@ -105,7 +105,7 @@ No! While bioinformatics knowledge is helpful for adding algorithms, you can con
 
 Check [`data/categories.yaml`](https://github.com/LessUp/awesome-bioinfo-algorithms/blob/master/data/categories.yaml) for the complete list of categories and subcategories. If you're unsure, you can:
 
-1. Search similar algorithms with `python -m scripts search "keyword"`
+1. Search similar algorithms with `python -m awesome_bioinfo search "keyword"`
 2. Check which category they belong to
 3. Use the same category for your algorithm
 
@@ -148,19 +148,19 @@ Use the `difficulty` field with one of:
 
 ```bash
 # Basic search
-python -m scripts search "alignment"
+python -m awesome_bioinfo search "alignment"
 
 # Search in specific category
-python -m scripts search "fast" --category sequence-alignment
+python -m awesome_bioinfo search "fast" --category sequence-alignment
 
 # Case-insensitive search
-python -m scripts search "BLAST"
+python -m awesome_bioinfo search "BLAST"
 ```
 
 ### How do I compare two algorithms?
 
 ```bash
-python -m scripts compare smith-waterman needleman-wunsch
+python -m awesome_bioinfo compare smith-waterman needleman-wunsch
 ```
 
 This will show a side-by-side comparison of:
@@ -172,10 +172,10 @@ This will show a side-by-side comparison of:
 
 ```bash
 # Export as JSON
-python -m scripts export --format json > algorithms.json
+python -m awesome_bioinfo export --format json > algorithms.json
 
 # Export as YAML
-python -m scripts export --format yaml > algorithms.yaml
+python -m awesome_bioinfo export --format yaml > algorithms.yaml
 ```
 
 ---
@@ -227,8 +227,8 @@ python -m pytest tests/test_validate.py::test_algorithm_valid -v
 **Solution:**
 ```bash
 # Regenerate all outputs
-python -m scripts generate
-python -m scripts mkdocs
+python -m awesome_bioinfo generate
+python -m awesome_bioinfo mkdocs
 
 # Check differences
 git diff
@@ -257,9 +257,9 @@ We welcome contributions in these areas:
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Run validation: `python -m scripts validate`
+4. Run validation: `python -m awesome_bioinfo validate`
 5. Run tests: `python -m pytest tests/ -v`
-6. Generate outputs: `python -m scripts generate`
+6. Generate outputs: `python -m awesome_bioinfo generate`
 7. Submit a pull request
 
 ### What are the commit message conventions?

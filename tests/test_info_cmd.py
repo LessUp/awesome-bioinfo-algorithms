@@ -2,10 +2,10 @@
 
 import pytest
 
-from scripts.algorithm_registry import AlgorithmRegistry
-from scripts.category_manager import CategoryManager
-from scripts.info_cmd import cmd_info
-from scripts.schema import AlgorithmEntry, Category
+from awesome_bioinfo.algorithm_registry import AlgorithmRegistry
+from awesome_bioinfo.category_manager import CategoryManager
+from awesome_bioinfo.info_cmd import cmd_info
+from awesome_bioinfo.schema import AlgorithmEntry, Category
 
 
 @pytest.fixture

@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using these metadata."
+title: "Awesome Bioinformatics Algorithms"
+abstract: "A curated collection of bioinformatics algorithms with comprehensive documentation, data validation, and CLI tools for repository maintenance."
+type: software
+authors:
+  - name: "LessUp"
+repository-code: "https://github.com/LessUp/awesome-bioinfo-algorithms"
+license: CC0-1.0
+keywords:
+  - bioinformatics
+  - algorithms
+  - awesome-list
+  - computational-biology
+  - sequence-analysis
+  - genomics
+  - proteomics
+  - data-structures
