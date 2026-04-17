@@ -1,25 +1,18 @@
-/**
- * KaTeX Math Rendering Initialization
- */
-document.addEventListener('DOMContentLoaded', () => {
+// KaTeX Auto-render Configuration
+// Renders LaTeX math expressions in the documentation
+
+document.addEventListener("DOMContentLoaded", function() {
   if (typeof renderMathInElement !== 'undefined') {
     renderMathInElement(document.body, {
       delimiters: [
-        {left: '$$', right: '$$', display: true},
-        {left: '$', right: '$', display: false},
-        {left: '\\(', right: '\\)', display: false},
-        {left: '\\[', right: '\\]', display: true}
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false},
+        {left: "\\[", right: "\\]", display: true},
+        {left: "\\(", right: "\\)", display: false}
       ],
       throwOnError: false,
-      strict: false,
       trust: true,
-      macros: {
-        '\\C': '\\mathbb{C}',
-        '\\R': '\\mathbb{R}',
-        '\\Q': '\\mathbb{Q}',
-        '\\Z': '\\mathbb{Z}',
-        '\\N': '\\mathbb{N}'
-      }
+      strict: false
     });
   }
 });

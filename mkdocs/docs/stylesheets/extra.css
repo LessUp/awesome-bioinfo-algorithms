@@ -1,1126 +1,207 @@
 /* =============================================================================
-   🧬 Awesome Bioinformatics Algorithms - Next Generation Styles
-   A radical, modern, and aggressive visual overhaul for MkDocs Material
+   Awesome Bioinformatics Algorithms - Custom Styles
    ============================================================================= */
 
 /* ---------------------------------------------------------------------------
-   Design Tokens & CSS Custom Properties
-   Using CSS variables for consistent theming with Material
-   --------------------------------------------------------------------------- */
-:root {
-  /* Brand Colors - Vibrant Bioinformatics Palette */
-  --aba-primary-blue: #2563eb;
-  --aba-primary-purple: #7c3aed;
-  --aba-accent-cyan: #06b6d4;
-  --aba-accent-teal: #14b8a6;
-  --aba-accent-green: #22c55e;
-  --aba-accent-amber: #f59e0b;
-  --aba-accent-rose: #f43f5e;
-  
-  /* Gradient Definitions */
-  --aba-gradient-primary: linear-gradient(135deg, var(--aba-primary-blue) 0%, var(--aba-primary-purple) 100%);
-  --aba-gradient-accent: linear-gradient(135deg, var(--aba-accent-cyan) 0%, var(--aba-accent-teal) 100%);
-  --aba-gradient-warm: linear-gradient(135deg, var(--aba-accent-amber) 0%, var(--aba-accent-rose) 100%);
-  --aba-gradient-cool: linear-gradient(135deg, var(--aba-accent-cyan) 0%, var(--aba-primary-blue) 100%);
-  
-  /* Typography Scale */
-  --aba-text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
-  --aba-text-sm: clamp(0.875rem, 0.85rem + 0.125vw, 1rem);
-  --aba-text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
-  --aba-text-lg: clamp(1.125rem, 1rem + 0.625vw, 1.5rem);
-  --aba-text-xl: clamp(1.5rem, 1.25rem + 1.25vw, 2.25rem);
-  --aba-text-2xl: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
-  --aba-text-3xl: clamp(3rem, 2rem + 5vw, 5rem);
-  
-  /* Spacing Scale */
-  --aba-space-1: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
-  --aba-space-2: clamp(0.5rem, 0.4rem + 0.5vw, 1rem);
-  --aba-space-3: clamp(0.75rem, 0.65rem + 0.5vw, 1.25rem);
-  --aba-space-4: clamp(1rem, 0.85rem + 0.75vw, 1.75rem);
-  --aba-space-6: clamp(1.5rem, 1.25rem + 1.25vw, 2.75rem);
-  --aba-space-8: clamp(2rem, 1.5rem + 2.5vw, 4.5rem);
-  --aba-space-12: clamp(3rem, 2rem + 5vw, 8rem);
-  
-  /* Effects */
-  --aba-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --aba-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --aba-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --aba-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --aba-shadow-glow: 0 0 40px -10px var(--aba-accent-cyan);
-  --aba-shadow-glow-purple: 0 0 40px -10px var(--aba-primary-purple);
-  
-  /* Border Radius */
-  --aba-radius-sm: 0.375rem;
-  --aba-radius-md: 0.625rem;
-  --aba-radius-lg: 1rem;
-  --aba-radius-xl: 1.5rem;
-  --aba-radius-2xl: 2rem;
-  
-  /* Animation Timing */
-  --aba-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --aba-transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  --aba-transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
-  --aba-spring: 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* Dark mode overrides */
-[data-md-color-scheme="slate"] {
-  --aba-glass-bg: rgba(30, 41, 59, 0.7);
-  --aba-glass-border: rgba(148, 163, 184, 0.1);
-}
-
-[data-md-color-scheme="default"] {
-  --aba-glass-bg: rgba(255, 255, 255, 0.7);
-  --aba-glass-border: rgba(148, 163, 184, 0.2);
-}
-
-/* ---------------------------------------------------------------------------
-   Base & Typography Enhancements
+   Typography Improvements
    --------------------------------------------------------------------------- */
 .md-typeset {
-  font-size: var(--aba-text-base);
-  line-height: 1.7;
+  font-size: 0.7rem;
+  line-height: 1.6;
 }
 
 .md-typeset h1 {
-  font-size: var(--aba-text-2xl);
-  font-weight: 800;
-  letter-spacing: -0.025em;
-  margin-bottom: var(--aba-space-4);
-}
-
-.md-typeset h2 {
-  font-size: var(--aba-text-xl);
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.02em;
-  margin-top: var(--aba-space-8);
-  margin-bottom: var(--aba-space-4);
-}
-
-.md-typeset h3 {
-  font-size: var(--aba-text-lg);
-  font-weight: 600;
-  margin-top: var(--aba-space-6);
-  margin-bottom: var(--aba-space-3);
-}
-
-/* Gradient Text Effect */
-.aba-gradient-text {
-  background: var(--aba-gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.aba-gradient-text-accent {
-  background: var(--aba-gradient-accent);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ---------------------------------------------------------------------------
-   Hero Section - Full Bleed, Immersive
-   --------------------------------------------------------------------------- */
-.aba-hero {
-  position: relative;
-  margin: calc(var(--aba-space-4) * -1) calc(var(--aba-space-4) * -1) var(--aba-space-8);
-  padding: var(--aba-space-12) var(--aba-space-6);
-  overflow: hidden;
-  background: 
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(37, 99, 235, 0.15), transparent),
-    radial-gradient(ellipse 60% 40% at 80% 50%, rgba(124, 58, 237, 0.1), transparent),
-    radial-gradient(ellipse 50% 30% at 20% 80%, rgba(6, 182, 212, 0.1), transparent);
-}
-
-.aba-hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.03;
-  pointer-events: none;
-}
-
-.aba-hero-content {
-  position: relative;
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.aba-hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--aba-space-2);
-  padding: var(--aba-space-1) var(--aba-space-3);
-  background: var(--aba-glass-bg);
-  border: 1px solid var(--aba-glass-border);
-  border-radius: var(--aba-radius-2xl);
-  font-size: var(--aba-text-sm);
-  font-weight: 500;
-  color: var(--aba-primary-blue);
-  margin-bottom: var(--aba-space-4);
-  backdrop-filter: blur(8px);
-  animation: badge-pulse 3s ease-in-out infinite;
-}
-
-@keyframes badge-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.2); }
-  50% { box-shadow: 0 0 20px 5px rgba(37, 99, 235, 0.1); }
-}
-
-.aba-hero-title {
-  font-size: var(--aba-text-3xl);
-  font-weight: 900;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  margin-bottom: var(--aba-space-4);
-}
-
-.aba-hero-subtitle {
-  font-size: var(--aba-text-lg);
-  color: var(--md-default-fg-color--light);
-  max-width: 600px;
-  margin: 0 auto var(--aba-space-6);
-  line-height: 1.6;
-}
-
-.aba-hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--aba-space-3);
-  justify-content: center;
-  margin-bottom: var(--aba-space-8);
-}
-
-/* ---------------------------------------------------------------------------
-   Interactive Button Styles
-   --------------------------------------------------------------------------- */
-.aba-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--aba-space-2);
-  padding: var(--aba-space-3) var(--aba-space-4);
-  font-size: var(--aba-text-sm);
-  font-weight: 600;
-  border-radius: var(--aba-radius-lg);
-  transition: all var(--aba-transition-base);
-  cursor: pointer;
-  border: none;
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-}
-
-.aba-btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
-  transform: translateX(-100%);
-  transition: transform 0.6s;
-}
-
-.aba-btn:hover::before {
-  transform: translateX(100%);
-}
-
-.aba-btn-primary {
-  background: var(--aba-gradient-primary);
-  color: white;
-  box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39);
-}
-
-.aba-btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.23);
-}
-
-.aba-btn-secondary {
-  background: var(--aba-glass-bg);
-  color: var(--md-default-fg-color);
-  border: 1px solid var(--aba-glass-border);
-  backdrop-filter: blur(8px);
-}
-
-.aba-btn-secondary:hover {
-  background: var(--aba-glass-bg);
-  border-color: var(--aba-primary-blue);
-  transform: translateY(-2px);
-}
-
-.aba-btn-icon {
-  width: 1.2em;
-  height: 1.2em;
-}
-
-/* ---------------------------------------------------------------------------
-   Stats Bar - Glassmorphic Floating Panel
-   --------------------------------------------------------------------------- */
-.aba-stats-bar {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: var(--aba-space-4);
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.aba-stat-card {
-  position: relative;
-  padding: var(--aba-space-4);
-  background: var(--aba-glass-bg);
-  border: 1px solid var(--aba-glass-border);
-  border-radius: var(--aba-radius-xl);
-  backdrop-filter: blur(12px);
-  text-align: center;
-  transition: all var(--aba-transition-base);
-}
-
-.aba-stat-card::after {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent 50%);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-.aba-stat-card:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: var(--aba-shadow-lg);
-}
-
-.aba-stat-value {
-  font-size: var(--aba-text-2xl);
-  font-weight: 800;
-  background: var(--aba-gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1;
-  margin-bottom: var(--aba-space-1);
-}
-
-.aba-stat-label {
-  font-size: var(--aba-text-sm);
-  color: var(--md-default-fg-color--light);
-  font-weight: 500;
-}
-
-/* ---------------------------------------------------------------------------
-   Category Cards Grid - Bento Grid Style
-   --------------------------------------------------------------------------- */
-.aba-bento-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--aba-space-4);
-  margin: var(--aba-space-6) 0;
-}
-
-.aba-bento-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: var(--aba-space-6);
-  background: var(--aba-glass-bg);
-  border: 1px solid var(--aba-glass-border);
-  border-radius: var(--aba-radius-xl);
-  backdrop-filter: blur(12px);
-  transition: all var(--aba-transition-base);
-  text-decoration: none;
-  color: inherit;
-  overflow: hidden;
-  min-height: 180px;
-}
-
-.aba-bento-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--aba-gradient-accent);
-  opacity: 0;
-  transition: opacity var(--aba-transition-fast);
-}
-
-.aba-bento-card:hover {
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: var(--aba-shadow-xl);
-}
-
-.aba-bento-card:hover::before {
-  opacity: 1;
-}
-
-.aba-bento-icon {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--aba-gradient-primary);
-  border-radius: var(--aba-radius-lg);
-  margin-bottom: var(--aba-space-3);
-  font-size: 1.5rem;
-}
-
-.aba-bento-title {
-  font-size: var(--aba-text-lg);
-  font-weight: 700;
-  margin-bottom: var(--aba-space-1);
-}
-
-.aba-bento-desc {
-  font-size: var(--aba-text-sm);
-  color: var(--md-default-fg-color--light);
-  line-height: 1.5;
-  flex-grow: 1;
-}
-
-.aba-bento-meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: var(--aba-space-3);
-  padding-top: var(--aba-space-3);
-  border-top: 1px solid var(--aba-glass-border);
-  font-size: var(--aba-text-xs);
-}
-
-.aba-bento-count {
-  font-weight: 600;
-  color: var(--aba-primary-blue);
-}
-
-.aba-bento-arrow {
-  opacity: 0;
-  transform: translateX(-10px);
-  transition: all var(--aba-transition-fast);
-}
-
-.aba-bento-card:hover .aba-bento-arrow {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* Featured card (spans 2 columns on larger screens) */
-@media (min-width: 768px) {
-  .aba-bento-featured {
-    grid-column: span 2;
-    flex-direction: row;
-    align-items: center;
-    gap: var(--aba-space-6);
-  }
-  
-  .aba-bento-featured .aba-bento-content {
-    flex: 1;
-  }
-  
-  .aba-bento-featured .aba-bento-visual {
-    width: 120px;
-    height: 120px;
-    flex-shrink: 0;
-  }
-}
-
-/* ---------------------------------------------------------------------------
-   Algorithm Cards - Featured Grid
-   --------------------------------------------------------------------------- */
-.aba-algo-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: var(--aba-space-4);
-  margin: var(--aba-space-6) 0;
-}
-
-.aba-algo-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  background: var(--aba-glass-bg);
-  border: 1px solid var(--aba-glass-border);
-  border-radius: var(--aba-radius-xl);
-  overflow: hidden;
-  transition: all var(--aba-transition-base);
-  text-decoration: none;
-  color: inherit;
-}
-
-.aba-algo-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--aba-shadow-xl), var(--aba-shadow-glow);
-}
-
-.aba-algo-header {
-  padding: var(--aba-space-4);
-  border-bottom: 1px solid var(--aba-glass-border);
-}
-
-.aba-algo-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--aba-space-1);
-  margin-bottom: var(--aba-space-2);
-}
-
-.aba-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.125rem 0.5rem;
-  font-size: var(--aba-text-xs);
-  font-weight: 500;
-  border-radius: var(--aba-radius-sm);
-  background: var(--md-primary-fg-color--lightest);
   color: var(--md-primary-fg-color);
 }
 
-.aba-badge-year {
-  background: var(--aba-gradient-accent);
-  color: white;
+.md-typeset h2 {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  border-bottom: 2px solid var(--md-primary-fg-color--light);
+  padding-bottom: 0.3em;
 }
 
-.aba-badge-difficulty-beginner {
-  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-  color: white;
+.md-typeset h3 {
+  font-weight: 500;
+  color: var(--md-primary-fg-color);
 }
 
-.aba-badge-difficulty-intermediate {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  color: white;
+/* ---------------------------------------------------------------------------
+   Code Blocks Enhancement
+   --------------------------------------------------------------------------- */
+.md-typeset code {
+  border-radius: 4px;
+  padding: 0.2em 0.4em;
 }
 
-.aba-badge-difficulty-advanced {
-  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
-  color: white;
+.md-typeset pre > code {
+  border-radius: 8px;
+  padding: 1em;
 }
 
-.aba-algo-name {
-  font-size: var(--aba-text-lg);
-  font-weight: 700;
-  margin-bottom: var(--aba-space-1);
+/* Highlight line numbers */
+.md-typeset .highlight span.filename {
+  background-color: var(--md-code-bg-color);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  font-weight: 500;
+  padding: 0.5em 1em;
 }
 
-.aba-algo-body {
-  padding: var(--aba-space-4);
-  flex-grow: 1;
+/* ---------------------------------------------------------------------------
+   Admonitions Customization
+   --------------------------------------------------------------------------- */
+.md-typeset .admonition {
+  border-radius: 8px;
+  border-left-width: 4px;
 }
 
-.aba-algo-purpose {
-  font-size: var(--aba-text-sm);
-  color: var(--md-default-fg-color--light);
-  line-height: 1.6;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+.md-typeset .admonition.note {
+  border-left-color: #448aff;
+}
+
+.md-typeset .admonition.tip {
+  border-left-color: #00bfa5;
+}
+
+.md-typeset .admonition.warning {
+  border-left-color: #ff9100;
+}
+
+.md-typeset .admonition.danger {
+  border-left-color: #ff1744;
+}
+
+/* ---------------------------------------------------------------------------
+   Table Enhancements
+   --------------------------------------------------------------------------- */
+.md-typeset table {
+  border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.aba-algo-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--aba-space-3) var(--aba-space-4);
-  background: var(--md-primary-fg-color--lightest);
-  font-size: var(--aba-text-xs);
+.md-typeset table th {
+  background-color: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+  font-weight: 600;
 }
 
-.aba-algo-complexity {
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--md-default-fg-color--light);
-}
-
-.aba-algo-arrow {
-  width: 20px;
-  height: 20px;
-  opacity: 0.5;
-  transition: all var(--aba-transition-fast);
-}
-
-.aba-algo-card:hover .aba-algo-arrow {
-  opacity: 1;
-  transform: translateX(4px);
-  color: var(--aba-primary-blue);
+.md-typeset table tr:nth-child(even) {
+  background-color: var(--md-code-bg-color);
 }
 
 /* ---------------------------------------------------------------------------
-   Algorithm Detail Page - Hero Layout
+   Algorithm Cards (for algorithm pages)
    --------------------------------------------------------------------------- */
-.aba-detail-hero {
-  margin: calc(var(--aba-space-4) * -1) calc(var(--aba-space-4) * -1) var(--aba-space-6);
-  padding: var(--aba-space-8) var(--aba-space-6);
-  background: 
-    radial-gradient(ellipse 100% 100% at 50% 0%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 30% at 80% 50%, rgba(124, 58, 237, 0.05) 0%, transparent 50%);
-  border-bottom: 1px solid var(--aba-glass-border);
+.algorithm-card {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  background: var(--md-default-bg-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.aba-detail-header {
-  max-width: 900px;
-  margin: 0 auto;
+.algorithm-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
-.aba-detail-badges {
+.algorithm-card h3 {
+  margin-top: 0;
+  color: var(--md-primary-fg-color);
+}
+
+.algorithm-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--aba-space-2);
-  margin-bottom: var(--aba-space-3);
+  gap: 0.5rem;
+  margin: 0.75rem 0;
 }
 
-.aba-detail-title {
-  font-size: var(--aba-text-2xl);
-  font-weight: 800;
-  margin-bottom: var(--aba-space-3);
-}
-
-.aba-detail-description {
-  font-size: var(--aba-text-lg);
-  color: var(--md-default-fg-color--light);
-  line-height: 1.7;
-  max-width: 700px;
-}
-
-/* Info Grid */
-.aba-info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: var(--aba-space-4);
-  margin: var(--aba-space-6) 0;
-}
-
-.aba-info-item {
-  padding: var(--aba-space-4);
-  background: var(--aba-glass-bg);
-  border: 1px solid var(--aba-glass-border);
-  border-radius: var(--aba-radius-lg);
-  backdrop-filter: blur(12px);
-}
-
-.aba-info-label {
-  display: flex;
-  align-items: center;
-  gap: var(--aba-space-1);
-  font-size: var(--aba-text-sm);
+.algorithm-tag {
+  background: var(--md-primary-fg-color--light);
+  color: var(--md-primary-bg-color);
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
   font-weight: 500;
-  color: var(--md-default-fg-color--light);
-  margin-bottom: var(--aba-space-1);
 }
 
-.aba-info-value {
-  font-size: var(--aba-text-base);
+/* ---------------------------------------------------------------------------
+   Search Enhancement
+   --------------------------------------------------------------------------- */
+.md-search__input {
+  border-radius: 20px;
+}
+
+.md-search-result__item {
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.md-search-result__item:hover {
+  background-color: var(--md-code-bg-color);
+}
+
+/* ---------------------------------------------------------------------------
+   Navigation Improvements
+   --------------------------------------------------------------------------- */
+.md-nav__item .md-nav__link {
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.md-nav__item .md-nav__link:hover {
+  background-color: var(--md-code-bg-color);
+}
+
+.md-nav__item .md-nav__link--active {
   font-weight: 600;
-}
-
-.aba-info-value code {
-  background: var(--md-primary-fg-color--lightest);
-  padding: 0.25em 0.5em;
-  border-radius: var(--aba-radius-sm);
-  font-size: 0.9em;
-}
-
-/* ---------------------------------------------------------------------------
-   Category Table - Modern Data Table
-   --------------------------------------------------------------------------- */
-.aba-table-container {
-  overflow-x: auto;
-  border-radius: var(--aba-radius-lg);
-  border: 1px solid var(--aba-glass-border);
-  margin: var(--aba-space-4) 0;
-}
-
-.aba-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--aba-text-sm);
-}
-
-.aba-table th {
-  padding: var(--aba-space-3) var(--aba-space-4);
-  text-align: left;
-  font-weight: 600;
-  background: var(--md-primary-fg-color--lightest);
-  border-bottom: 1px solid var(--aba-glass-border);
-  white-space: nowrap;
-}
-
-.aba-table td {
-  padding: var(--aba-space-3) var(--aba-space-4);
-  border-bottom: 1px solid var(--aba-glass-border);
-  transition: background var(--aba-transition-fast);
-}
-
-.aba-table tr:hover td {
-  background: var(--md-primary-fg-color--lightest);
-}
-
-.aba-table tr:last-child td {
-  border-bottom: none;
-}
-
-.aba-table a {
-  color: var(--aba-primary-blue);
-  font-weight: 500;
-  text-decoration: none;
-}
-
-.aba-table a:hover {
-  text-decoration: underline;
-}
-
-/* ---------------------------------------------------------------------------
-   Tag Cloud - Interactive Filter
-   --------------------------------------------------------------------------- */
-.aba-tag-cloud {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--aba-space-2);
-  margin: var(--aba-space-4) 0;
-}
-
-.aba-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--aba-space-1);
-  padding: var(--aba-space-1) var(--aba-space-3);
-  background: var(--aba-glass-bg);
-  border: 1px solid var(--aba-glass-border);
-  border-radius: var(--aba-radius-2xl);
-  font-size: var(--aba-text-sm);
-  color: var(--md-default-fg-color);
-  text-decoration: none;
-  transition: all var(--aba-transition-fast);
-  backdrop-filter: blur(4px);
-}
-
-.aba-tag:hover {
-  background: var(--md-primary-fg-color--lightest);
-  border-color: var(--aba-primary-blue);
-  transform: translateY(-1px);
-}
-
-.aba-tag-count {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 1.5em;
-  height: 1.5em;
-  padding: 0 0.375em;
-  background: var(--aba-gradient-primary);
-  color: white;
-  font-size: 0.75em;
-  font-weight: 600;
-  border-radius: var(--aba-radius-sm);
-}
-
-/* Tag sizes for cloud effect */
-.aba-tag-size-1 { font-size: 0.75rem; }
-.aba-tag-size-2 { font-size: 0.875rem; }
-.aba-tag-size-3 { font-size: 1rem; }
-.aba-tag-size-4 { font-size: 1.125rem; }
-.aba-tag-size-5 { font-size: 1.25rem; }
-
-/* ---------------------------------------------------------------------------
-   Timeline - Algorithm History Visualization
-   --------------------------------------------------------------------------- */
-.aba-timeline {
-  position: relative;
-  padding-left: 2rem;
-}
-
-.aba-timeline::before {
-  content: '';
-  position: absolute;
-  left: 0.5rem;
-  top: 0.5rem;
-  bottom: 0.5rem;
-  width: 2px;
-  background: var(--aba-gradient-primary);
-  border-radius: 1px;
-}
-
-.aba-timeline-item {
-  position: relative;
-  padding-bottom: var(--aba-space-6);
-}
-
-.aba-timeline-item::before {
-  content: '';
-  position: absolute;
-  left: -1.5rem;
-  top: 0.25rem;
-  width: 0.75rem;
-  height: 0.75rem;
-  background: var(--aba-primary-blue);
-  border: 3px solid var(--md-default-bg-color);
-  border-radius: 50%;
-  box-shadow: 0 0 0 2px var(--aba-primary-blue);
-}
-
-.aba-timeline-year {
-  font-size: var(--aba-text-sm);
-  font-weight: 700;
-  color: var(--aba-primary-blue);
-  margin-bottom: var(--aba-space-1);
-}
-
-.aba-timeline-content {
-  background: var(--aba-glass-bg);
-  border: 1px solid var(--aba-glass-border);
-  border-radius: var(--aba-radius-lg);
-  padding: var(--aba-space-3);
-}
-
-/* ---------------------------------------------------------------------------
-   Search & Filter Bar - Sticky Interactive Component
-   --------------------------------------------------------------------------- */
-.aba-search-bar {
-  position: sticky;
-  top: 64px;
-  z-index: 10;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--aba-space-3);
-  padding: var(--aba-space-3);
-  margin: calc(var(--aba-space-4) * -1) calc(var(--aba-space-4) * -1) var(--aba-space-6);
-  background: rgba(var(--md-default-bg-color), 0.8);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--aba-glass-border);
-}
-
-.aba-search-input {
-  flex: 1;
-  min-width: 200px;
-  padding: var(--aba-space-2) var(--aba-space-4);
-  background: var(--aba-glass-bg);
-  border: 1px solid var(--aba-glass-border);
-  border-radius: var(--aba-radius-lg);
-  font-size: var(--aba-text-base);
-  transition: all var(--aba-transition-fast);
-}
-
-.aba-search-input:focus {
-  outline: none;
-  border-color: var(--aba-primary-blue);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-}
-
-.aba-filter-select {
-  padding: var(--aba-space-2) var(--aba-space-4);
-  background: var(--aba-glass-bg);
-  border: 1px solid var(--aba-glass-border);
-  border-radius: var(--aba-radius-lg);
-  font-size: var(--aba-text-base);
-  cursor: pointer;
-}
-
-/* ---------------------------------------------------------------------------
-   Animations & Micro-interactions
-   --------------------------------------------------------------------------- */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-/* Scroll-triggered animations */
-.aba-animate {
-  animation: fadeInUp 0.6s var(--aba-transition-slow) forwards;
-  opacity: 0;
-}
-
-.aba-animate-delay-1 { animation-delay: 0.1s; }
-.aba-animate-delay-2 { animation-delay: 0.2s; }
-.aba-animate-delay-3 { animation-delay: 0.3s; }
-.aba-animate-delay-4 { animation-delay: 0.4s; }
-
-/* Skeleton loading states */
-.aba-skeleton {
-  background: linear-gradient(
-    90deg,
-    var(--aba-glass-bg) 25%,
-    var(--aba-glass-border) 50%,
-    var(--aba-glass-bg) 75%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  border-radius: var(--aba-radius-md);
-}
-
-/* ---------------------------------------------------------------------------
-   Tooltips & Popovers
-   --------------------------------------------------------------------------- */
-.aba-tooltip {
-  position: relative;
-}
-
-.aba-tooltip::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-8px);
-  padding: var(--aba-space-1) var(--aba-space-3);
-  background: rgba(0, 0, 0, 0.9);
-  color: white;
-  font-size: var(--aba-text-xs);
-  border-radius: var(--aba-radius-sm);
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition: all var(--aba-transition-fast);
-  pointer-events: none;
-  z-index: 100;
-}
-
-.aba-tooltip:hover::after {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(-4px);
-}
-
-/* ---------------------------------------------------------------------------
-   Responsive Adjustments
-   --------------------------------------------------------------------------- */
-@media (max-width: 768px) {
-  .aba-hero {
-    padding: var(--aba-space-8) var(--aba-space-4);
-  }
-  
-  .aba-hero-title {
-    font-size: var(--aba-text-xl);
-  }
-  
-  .aba-bento-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .aba-bento-featured {
-    grid-column: span 1;
-    flex-direction: column;
-  }
-  
-  .aba-algo-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .aba-info-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .aba-stats-bar {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  .aba-stats-bar {
-    grid-template-columns: 1fr;
-  }
-  
-  .aba-hero-actions {
-    flex-direction: column;
-  }
-  
-  .aba-btn {
-    width: 100%;
-    justify-content: center;
-  }
+  color: var(--md-primary-fg-color);
 }
 
 /* ---------------------------------------------------------------------------
    Print Styles
    --------------------------------------------------------------------------- */
 @media print {
-  .aba-hero,
-  .aba-search-bar,
-  .aba-btn {
-    display: none;
+  .md-header,
+  .md-footer,
+  .md-tabs,
+  .md-search {
+    display: none !important;
   }
   
-  .aba-bento-card,
-  .aba-algo-card {
-    break-inside: avoid;
+  .md-content {
+    margin-left: 0 !important;
   }
 }
 
 /* ---------------------------------------------------------------------------
-   Custom Scrollbar
+   Responsive Adjustments
    --------------------------------------------------------------------------- */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+@media screen and (max-width: 768px) {
+  .md-typeset {
+    font-size: 0.75rem;
+  }
+  
+  .algorithm-card {
+    padding: 1rem;
+  }
 }
 
-::-webkit-scrollbar-track {
+/* ---------------------------------------------------------------------------
+   Dark Mode Specific
+   --------------------------------------------------------------------------- */
+[data-md-color-scheme="slate"] .md-typeset h2 {
+  border-bottom-color: var(--md-primary-fg-color--dark);
+}
+
+[data-md-color-scheme="slate"] .algorithm-card {
   background: var(--md-default-bg-color);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--aba-glass-border);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--aba-primary-blue);
-}
-
-/* ---------------------------------------------------------------------------
-   Selection Styling
-   --------------------------------------------------------------------------- */
-::selection {
-  background: rgba(37, 99, 235, 0.2);
-  color: inherit;
-}
-
-/* Link Enhancements */
-.md-typeset a {
-  position: relative;
-  color: var(--aba-primary-blue);
-  text-decoration: none;
-  transition: color var(--aba-transition-fast);
-}
-
-.md-typeset a:hover {
-  color: var(--aba-primary-purple);
-}
-
-.md-typeset a::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--aba-gradient-primary);
-  transition: width var(--aba-transition-fast);
-}
-
-.md-typeset a:hover::after {
-  width: 100%;
-}
-
-/* ---------------------------------------------------------------------------
-   Admonition Enhancements
-   --------------------------------------------------------------------------- */
-.md-typeset .admonition {
-  border-radius: var(--aba-radius-lg);
-  border-left-width: 4px;
-  box-shadow: var(--aba-shadow-sm);
-}
-
-.md-typeset .admonition-title {
-  font-weight: 600;
-}
-
-/* Custom admonition for algorithm tips */
-.md-typeset .admonition.algo-tip {
-  border-left-color: var(--aba-accent-cyan);
-}
-
-.md-typeset .admonition.algo-tip > .admonition-title {
-  background: rgba(6, 182, 212, 0.1);
-  color: var(--aba-accent-cyan);
-}
-
-/* ---------------------------------------------------------------------------
-   Comparison Table - Side by Side
-   --------------------------------------------------------------------------- */
-.aba-compare-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--aba-space-4);
-  margin: var(--aba-space-6) 0;
-}
-
-.aba-compare-card {
-  padding: var(--aba-space-6);
-  background: var(--aba-glass-bg);
-  border: 1px solid var(--aba-glass-border);
-  border-radius: var(--aba-radius-xl);
-  backdrop-filter: blur(12px);
-}
-
-.aba-compare-card.highlight {
-  border-color: var(--aba-primary-blue);
-  box-shadow: var(--aba-shadow-glow);
-}
-
-/* ---------------------------------------------------------------------------
-   Progress Indicators
-   --------------------------------------------------------------------------- */
-.aba-progress {
-  width: 100%;
-  height: 8px;
-  background: var(--aba-glass-bg);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.aba-progress-bar {
-  height: 100%;
-  background: var(--aba-gradient-primary);
-  border-radius: 4px;
-  transition: width 1s ease-out;
-}
-
-/* ---------------------------------------------------------------------------
-   Code Block Enhancements
-   --------------------------------------------------------------------------- */
-.md-typeset pre {
-  border-radius: var(--aba-radius-lg);
-  box-shadow: var(--aba-shadow-sm);
-}
-
-.md-typeset code {
-  border-radius: var(--aba-radius-sm);
-}
-
-/* ---------------------------------------------------------------------------
-   External Link Indicator
-   --------------------------------------------------------------------------- */
-.md-typeset a[href^="http"]:not([href*="lessup.github.io"])::after {
-  content: '↗';
-  display: inline-block;
-  margin-left: 0.25em;
-  font-size: 0.8em;
-  opacity: 0.6;
-  transition: all var(--aba-transition-fast);
-}
-
-.md-typeset a[href^="http"]:not([href*="lessup.github.io"]):hover::after {
-  opacity: 1;
-  transform: translate(2px, -2px);
+  border-color: var(--md-default-fg-color--dark);
 }

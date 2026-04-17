@@ -23,25 +23,51 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Required for git-revision-date plugin
 
-      - uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: 'pip'
+          cache-dependency-path: |
+            pyproject.toml
+            requirements.txt
+
+      - name: Cache MkDocs build
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            mkdocs/.cache
+          key: ${{ runner.os }}-mkdocs-${{ hashFiles('pyproject.toml', 'mkdocs/mkdocs.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-mkdocs-
 
       - name: Install dependencies
         run: |
           pip install -e ".[dev]"
           pip install mkdocs-material
 
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
       - name: Generate MkDocs pages
         run: python awesome_bioinfo/generate_mkdocs.py
 
       - name: Build MkDocs site
-        run: mkdocs build -f mkdocs/mkdocs.yml --site-dir ${{ github.workspace }}/_site
+        run: mkdocs build -f mkdocs/mkdocs.yml --site-dir ${{ github.workspace }}/_site --strict
+        env:
+          MKDOCS_GIT_COMMITTERS_APIKEY: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ github.workspace }}/_site
 
   deploy:
     environment:
