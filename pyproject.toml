@@ -27,22 +27,27 @@ classifiers = [
 
 dependencies = [
     "PyYAML>=6.0",
+    "aiohttp>=3.9.0",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0",
     "pytest-cov>=4.0",
+    "pytest-benchmark>=4.0",
+    "pytest-xdist>=3.0",
     "hypothesis>=6.0",
     "ruff>=0.1.0",
     "mypy>=1.0",
     "pre-commit>=3.0",
     "types-PyYAML>=6.0",
-    "mkdocs-material>=9.0",
+    "types-aiohttp>=3.9.0",
+    "mkdocs-material[imaging]>=9.0",
     "mkdocs-awesome-pages-plugin>=1.0",
     "mkdocs-git-revision-date-localized-plugin>=1.0",
     "mkdocs-minify-plugin>=0.7",
     "mkdocs-rss-plugin>=1.0",
+    "mkdocstrings[python]>=0.24",
     "pillow>=10.0",
     "cairosvg>=2.0",
 ]
@@ -58,7 +63,7 @@ Issues = "https://github.com/LessUp/awesome-bioinfo-algorithms/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["scripts*"]
+include = ["awesome_bioinfo*"]
 
 [tool.ruff]
 line-length = 100
@@ -70,9 +75,25 @@ ignore = ["E501"]
 
 [tool.mypy]
 python_version = "3.9"
+# Type checking strictness (progressive enhancement)
 warn_return_any = true
 warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_unreachable = true
+# Strict mode (gradually enable)
+# strict = true
+check_untyped_defs = true
+# disallow_untyped_calls = true
+# disallow_untyped_defs = true
+# Ignore missing imports for third-party libraries without stubs
 ignore_missing_imports = true
+# Exclude patterns
+exclude = [
+    "venv/",
+    ".venv/",
+    "__pycache__/",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

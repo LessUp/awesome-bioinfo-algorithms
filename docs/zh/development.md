@@ -96,7 +96,6 @@ awesome-bioinfo-algorithms/
 │   └── zh/                      # 中文变更日志
 │
 └── mkdocs/                      # MkDocs 配置
-    ├── mkdocs.yml
     └── docs/
 ```
 
@@ -162,7 +161,7 @@ pip install -e ".[dev]"
 # 或使用: pip install -r requirements.txt
 
 # 验证安装
-python -m scripts --help
+python -m awesome_bioinfo --help
 ```
 
 ---
@@ -263,30 +262,30 @@ if not result.is_valid:
 
 ```bash
 # 验证所有数据文件
-python -m scripts validate
+python -m awesome_bioinfo validate
 
 # 生成 README.md
-python -m scripts generate
+python -m awesome_bioinfo generate
 
 # 生成 MkDocs 页面
-python -m scripts mkdocs
+python -m awesome_bioinfo mkdocs
 
 # 显示统计
-python -m scripts stats
+python -m awesome_bioinfo stats
 
 # 搜索算法
-python -m scripts search "smith"
-python -m scripts search --category sequence-alignment
+python -m awesome_bioinfo search "smith"
+python -m awesome_bioinfo search --category sequence-alignment
 
 # 获取算法详情
-python -m scripts info smith-waterman
+python -m awesome_bioinfo info smith-waterman
 
 # 比较两个算法
-python -m scripts compare smith-waterman needleman-wunsch
+python -m awesome_bioinfo compare smith-waterman needleman-wunsch
 
 # 导出数据
-python -m scripts export --format json > algorithms.json
-python -m scripts export --format yaml > algorithms.yaml
+python -m awesome_bioinfo export --format json > algorithms.json
+python -m awesome_bioinfo export --format yaml > algorithms.yaml
 ```
 
 ---
@@ -370,7 +369,7 @@ pre-commit run --all-files
 
 ```bash
 # 验证数据
-python -m scripts validate
+python -m awesome_bioinfo validate
 
 # 运行测试
 python -m pytest tests/ -v
@@ -384,8 +383,8 @@ mypy scripts/
 
 ```bash
 # 如果编辑了数据或模板
-python -m scripts generate      # 更新 README
-python -m scripts mkdocs        # 更新文档
+python -m awesome_bioinfo generate      # 更新 README
+python -m awesome_bioinfo mkdocs        # 更新文档
 
 # 验证生成的输出是否正确
 git diff --exit-code -- README.md mkdocs/docs/
@@ -435,7 +434,7 @@ gh release create v1.2.0 --generate-notes
 | `ModuleNotFoundError` | 运行 `pip install -e ".[dev]"` |
 | YAML 语法错误 | 使用在线 YAML 验证器 |
 | 测试超时 | 使用 `-k` 指定特定测试 |
-| 生成的 README 不同 | 确保运行了 `python -m scripts generate` |
+| 生成的 README 不同 | 确保运行了 `python -m awesome_bioinfo generate` |
 
 ### 获取帮助
 

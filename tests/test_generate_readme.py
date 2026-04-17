@@ -1,6 +1,6 @@
 """Tests for the generate_readme compatibility wrapper."""
 
-import scripts.generate_readme as generate_readme
+import awesome_bioinfo.generate_readme as generate_readme
 
 
 def test_main_delegates_to_cmd_generate(monkeypatch):

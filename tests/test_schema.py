@@ -6,7 +6,7 @@ Feature: awesome-bioinfo-algorithms, Property 4: Optional Fields Storage
 from hypothesis import HealthCheck, given, settings
 from hypothesis import strategies as st
 
-from scripts.schema import AlgorithmEntry, Category, Reference
+from awesome_bioinfo.schema import AlgorithmEntry, Category, Reference
 
 # Strategies for generating test data
 valid_id = st.text(

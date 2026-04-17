@@ -61,7 +61,7 @@ source venv/bin/activate  # Linux/macOS
 pip install -e ".[dev]"
 
 # 验证设置
-python -m scripts validate
+python -m awesome_bioinfo validate
 ```
 
 ### 需要什么 Python 版本？
@@ -105,7 +105,7 @@ python -m scripts validate
 
 查看 [`data/categories.yaml`](https://github.com/LessUp/awesome-bioinfo-algorithms/blob/master/data/categories.yaml) 获取完整的分类和子分类列表。如果不确定，您可以：
 
-1. 使用 `python -m scripts search "keyword"` 搜索类似算法
+1. 使用 `python -m awesome_bioinfo search "keyword"` 搜索类似算法
 2. 查看它们属于哪个分类
 3. 为您的算法使用相同分类
 
@@ -148,19 +148,19 @@ description: |
 
 ```bash
 # 基本搜索
-python -m scripts search "alignment"
+python -m awesome_bioinfo search "alignment"
 
 # 在特定分类中搜索
-python -m scripts search "fast" --category sequence-alignment
+python -m awesome_bioinfo search "fast" --category sequence-alignment
 
 # 不区分大小写搜索
-python -m scripts search "BLAST"
+python -m awesome_bioinfo search "BLAST"
 ```
 
 ### 如何比较两个算法？
 
 ```bash
-python -m scripts compare smith-waterman needleman-wunsch
+python -m awesome_bioinfo compare smith-waterman needleman-wunsch
 ```
 
 这将并排显示：
@@ -172,10 +172,10 @@ python -m scripts compare smith-waterman needleman-wunsch
 
 ```bash
 # 导出为 JSON
-python -m scripts export --format json > algorithms.json
+python -m awesome_bioinfo export --format json > algorithms.json
 
 # 导出为 YAML
-python -m scripts export --format yaml > algorithms.yaml
+python -m awesome_bioinfo export --format yaml > algorithms.yaml
 ```
 
 ---
@@ -227,8 +227,8 @@ python -m pytest tests/test_validate.py::test_algorithm_valid -v
 **解决方案：**
 ```bash
 # 重新生成所有输出
-python -m scripts generate
-python -m scripts mkdocs
+python -m awesome_bioinfo generate
+python -m awesome_bioinfo mkdocs
 
 # 检查差异
 git diff
@@ -257,9 +257,9 @@ git commit -m "chore: regenerate documentation"
 1. Fork 仓库
 2. 创建功能分支
 3. 进行更改
-4. 运行验证：`python -m scripts validate`
+4. 运行验证：`python -m awesome_bioinfo validate`
 5. 运行测试：`python -m pytest tests/ -v`
-6. 生成输出：`python -m scripts generate`
+6. 生成输出：`python -m awesome_bioinfo generate`
 7. 提交 pull request
 
 ### 提交信息规范是什么？

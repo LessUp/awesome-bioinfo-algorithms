@@ -5,8 +5,8 @@ from types import SimpleNamespace
 
 import pytest
 
-import scripts.__main__ as cli
-from scripts.validate import ValidationResult
+import awesome_bioinfo.__main__ as cli
+from awesome_bioinfo.validate import ValidationResult
 
 REPO_LAYOUT_PATHS = [
     "data/categories.yaml",

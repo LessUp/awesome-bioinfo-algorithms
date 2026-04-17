@@ -7,8 +7,8 @@ import pytest
 from hypothesis import HealthCheck, given, settings
 from hypothesis import strategies as st
 
-from scripts.algorithm_registry import AlgorithmRegistry
-from scripts.schema import AlgorithmEntry
+from awesome_bioinfo.algorithm_registry import AlgorithmRegistry
+from awesome_bioinfo.schema import AlgorithmEntry
 
 # Optimized strategies for generating test data
 # Using simpler strategies to avoid slow generation

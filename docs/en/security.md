@@ -96,7 +96,7 @@ When we receive a security bug report, we will:
 ### For Users
 
 - Always use the latest version
-- Validate algorithm data with `python -m scripts validate`
+- Validate algorithm data with `python -m awesome_bioinfo validate`
 - Don't modify data files manually without validation
 - Use virtual environments for development
 

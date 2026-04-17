@@ -1,0 +1,22 @@
+# Global default - all files require review from project owner
+* @LessUp
+
+# Data files and algorithms - require data maintainer review
+data/ @LessUp
+
+# Python scripts and tests - require code maintainer review
+awesome_bioinfo/ @LessUp
+tests/ @LessUp
+
+# GitHub workflow changes - require admin review
+.github/workflows/ @LessUp
+.github/dependabot.yml @LessUp
+
+# Documentation files
+docs/ @LessUp
+*.md @LessUp
+
+# Configuration files
+pyproject.toml @LessUp
+mkdocs*.yml @LessUp
+.pre-commit-config.yaml @LessUp

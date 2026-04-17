@@ -8,10 +8,10 @@ from pathlib import Path
 from hypothesis import HealthCheck, given, settings
 from hypothesis import strategies as st
 
-from scripts.algorithm_registry import AlgorithmRegistry
-from scripts.category_manager import CategoryManager
-from scripts.readme_generator import ReadmeGenerator
-from scripts.schema import AlgorithmEntry, Category
+from awesome_bioinfo.algorithm_registry import AlgorithmRegistry
+from awesome_bioinfo.category_manager import CategoryManager
+from awesome_bioinfo.readme_generator import ReadmeGenerator
+from awesome_bioinfo.schema import AlgorithmEntry, Category
 
 # Strategies for generating test data
 valid_id = st.text(

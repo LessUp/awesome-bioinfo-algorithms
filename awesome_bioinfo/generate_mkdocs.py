@@ -4,7 +4,7 @@ Generate MkDocs documentation from algorithm YAML data - Next Generation
 Modern, interactive, and visually stunning documentation generator.
 
 Usage:
-    python scripts/generate_mkdocs.py
+    python awesome_bioinfo/generate_mkdocs.py
 """
 
 import re
@@ -15,7 +15,7 @@ from typing import Optional
 
 import yaml
 
-from scripts.schema import DIFFICULTY_LABELS
+from awesome_bioinfo.schema import DIFFICULTY_LABELS
 
 
 def get_base_dir() -> Path:

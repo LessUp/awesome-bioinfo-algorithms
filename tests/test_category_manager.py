@@ -7,8 +7,8 @@ import pytest
 from hypothesis import HealthCheck, given, settings
 from hypothesis import strategies as st
 
-from scripts.category_manager import CategoryManager
-from scripts.schema import Category
+from awesome_bioinfo.category_manager import CategoryManager
+from awesome_bioinfo.schema import Category
 
 
 def build_category_with_subcategory() -> Category:
