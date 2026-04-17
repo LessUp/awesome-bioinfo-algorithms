@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lessup.github.io/awesome-bioinfo-algorithms/sitemap.xml
+
+# Disallow old or generated paths that shouldn't be indexed
+Disallow: /assets/*.json

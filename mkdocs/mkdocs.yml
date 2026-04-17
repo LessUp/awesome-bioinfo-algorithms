@@ -1,15 +1,27 @@
+# =============================================================================
+# Awesome Bioinformatics Algorithms - MkDocs Configuration
+# =============================================================================
+# A high-performance, feature-rich documentation site configuration
+# optimized for GitHub Pages deployment.
+# =============================================================================
+
 site_name: Awesome Bioinformatics Algorithms
 site_url: https://lessup.github.io/awesome-bioinfo-algorithms/
-site_description: "A curated collection of 200+ bioinformatics algorithms with modern, interactive documentation"
-site_author: LessUp
-copyright: "Copyright &copy; 2025-2026 LessUp | CC0 1.0 Universal"
+site_description: >
+  A curated collection of 200+ bioinformatics algorithms with complexity analysis,
+  implementation links, and comprehensive documentation in English and Chinese.
+site_author: LessUp Community
+copyright: >
+  Copyright &copy; 2025-2026 LessUp Community.
+  Released under CC0 1.0 Universal (Public Domain).
 
+# Repository configuration
 repo_url: https://github.com/LessUp/awesome-bioinfo-algorithms
 repo_name: LessUp/awesome-bioinfo-algorithms
 edit_uri: edit/main/mkdocs/docs/
 
 # ---------------------------------------------------------------------------
-# Theme Configuration - Material for MkDocs Advanced Features
+# Theme Configuration - Material for MkDocs
 # ---------------------------------------------------------------------------
 theme:
   name: material
@@ -21,41 +33,39 @@ theme:
     # Light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: blue
+      primary: teal
       accent: cyan
       toggle:
         icon: material/brightness-7
-        name: 切换到深色模式
+        name: Switch to dark mode
     # Dark mode  
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: blue
+      primary: teal
       accent: cyan
       toggle:
         icon: material/brightness-4
-        name: 切换到浅色模式
+        name: Switch to light mode
   
   # Typography
   font:
-    text: Inter
+    text: Roboto
     code: JetBrains Mono
   
-  # Icon
+  # Icons
   icon:
     logo: material/dna
     repo: fontawesome/brands/github
     edit: material/pencil
     view: material/eye
   
-  # Favicon
-  favicon: assets/favicon.png
+  # No favicon to avoid errors, uses default
+  # favicon: assets/favicon.png
   
-  # Advanced features
+  # Features - optimized for performance
   features:
     # Navigation
     - navigation.instant
-    - navigation.instant.progress
-    - navigation.instant.prefetch
     - navigation.tracking
     - navigation.tabs
     - navigation.tabs.sticky
@@ -71,23 +81,18 @@ theme:
     # Search
     - search.suggest
     - search.highlight
-    - search.share
     
     # Content
     - content.code.copy
     - content.code.select
     - content.code.annotate
     - content.tooltips
-    - content.tabs.link
-    
-    # Announce
-    - announce.dismiss
 
 # ---------------------------------------------------------------------------
-# Plugins
+# Plugins - optimized for GitHub Pages
 # ---------------------------------------------------------------------------
 plugins:
-  # Built-in search with enhanced configuration
+  # Built-in search
   - search:
       separator: '[\s\-\.]+'
       lang:
@@ -101,11 +106,11 @@ plugins:
   # Navigation customization
   - awesome-pages
   
-  # Git integration
+  # Git integration - page revision dates
   - git-revision-date-localized:
-      type: datetime
+      type: date
       fallback_to_build_date: true
-      enable_creation_date: true
+      enable_creation_date: false
   
   # Minification for production
   - minify:
@@ -115,14 +120,6 @@ plugins:
       htmlmin_opts:
         remove_comments: true
   
-  # Social cards for better sharing
-  - social:
-      cards: true
-      cards_dir: assets/social
-      cards_layout_options:
-        background: "#1a1a1a"
-        color: "#ffffff"
-  
   # RSS feed
   - rss:
       match_path: ".*"
@@ -131,20 +128,6 @@ plugins:
       categories:
         - categories
         - tags
-  
-  # API Documentation
-  - mkdocstrings:
-      handlers:
-        python:
-          paths: [../scripts]
-          options:
-            docstring_style: google
-            show_source: true
-            show_root_heading: true
-            show_category_heading: true
-            filters: ["!^_"]
-          import:
-            - https://docs.python.org/3/objects.inv
 
 # ---------------------------------------------------------------------------
 # Markdown Extensions
@@ -158,24 +141,19 @@ markdown_extensions:
   - md_in_html
   - toc:
       permalink: true
-      permalink_title: 锚点链接
-      toc_depth: 3
+      permalink_title: Anchor link
+      toc_depth: 4
   - tables
-  - abbr
   
   # PyMdown Extensions
   - pymdownx.arithmatex:
       generic: true
   - pymdownx.betterem
   - pymdownx.caret
-  - pymdownx.critic
   - pymdownx.details
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
-      options:
-        custom_icons:
-          - overrides/.icons
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
@@ -203,23 +181,17 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.tilde
-  - pymdownx.blocks.admonition
-  - pymdownx.blocks.definition
-  - pymdownx.blocks.details
-  - pymdownx.blocks.tab
 
 # ---------------------------------------------------------------------------
 # Extra CSS & JavaScript
 # ---------------------------------------------------------------------------
 extra_css:
   - stylesheets/extra.css
-  - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css
 
 extra_javascript:
-  - javascripts/extra.js
+  - javascripts/mathjax.js
   - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js
   - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js
-  - javascripts/mathjax.js
 
 # ---------------------------------------------------------------------------
 # Extra Configuration
@@ -234,46 +206,8 @@ extra:
       link: /feed_rss_created.xml
       name: RSS Feed
   
-  # Analytics
-  analytics:
-    provider: google
-    property: G-XXXXXXXXXX  # Replace with actual GA4 property
-    feedback:
-      title: 此页面对您有帮助吗？
-      ratings:
-        - icon: material/thumb-up-outline
-          name: 有帮助
-          data: 1
-          note: 感谢您的反馈！
-        - icon: material/thumb-down-outline
-          name: 需要改进
-          data: 0
-          note: 感谢您的反馈！我们将持续改进。
-  
-  # Consent
-  consent:
-    title: Cookie 同意
-    description: >
-      我们使用 Cookie 来提供匿名化的分析数据，帮助改进网站体验。
-      查看我们的 <a href="/privacy/">隐私政策</a> 了解更多。
-    actions:
-      - accept
-      - manage
-      - reject
-  
-  # Generator
+  # Generator disabled for cleaner output
   generator: false
-  
-  # Version
-  version:
-    provider: mike
-    default: latest
-
-# ---------------------------------------------------------------------------
-# Hooks
-# ---------------------------------------------------------------------------
-# hooks:
-#   - overrides/hooks/custom_nav.py
 
 # ---------------------------------------------------------------------------
 # Validation
@@ -289,10 +223,10 @@ validation:
 # ---------------------------------------------------------------------------
 watch:
   - ../data
-  - ../scripts
+  - ../awesome_bioinfo
 
 # ---------------------------------------------------------------------------
-# Navigation (auto-generated by scripts/generate_mkdocs.py)
+# Navigation (auto-generated by awesome_bioinfo/generate_mkdocs.py)
 # ---------------------------------------------------------------------------
 
 nav:
@@ -318,8 +252,3 @@ nav:
     - 图基因组学: categories/graph-genomics.md
     - 蛋白质语言模型: categories/protein-language-model.md
   - 标签: tags.md
-  - API 文档:
-    - 概述: api/index.md
-    - CLI 模块: api/cli.md
-    - 数据模块: api/data.md
-    - 验证模块: api/validate.md

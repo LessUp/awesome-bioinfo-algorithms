@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{# =================== MAIN TEMPLATE OVERRIDES =================== #}
+
+{# Announcement Banner #}
+{% block announce %}
+  <a href="https://github.com/LessUp/awesome-bioinfo-algorithms/releases/tag/v2.0.0">
+    🎉 <strong>v2.0.0 is out!</strong> Professional documentation with bilingual support!
+    <span class="twemoji">{% include ".icons/octicons/arrow-right-24.svg" %}</span>
+  </a>
+{% endblock %}
+
+{# Meta Tags for SEO #}
+{% block extrahead %}
+  {{ super() }}
+  
+  {# Open Graph / Social Media Meta Tags #}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ title }} - Awesome Bioinformatics Algorithms">
+  <meta property="og:description" content="A curated collection of 200+ bioinformatics algorithms with complexity analysis">
+  <meta property="og:image" content="https://lessup.github.io/awesome-bioinfo-algorithms/assets/images/social/index.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  
+  {# Twitter Card #}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@lessup">
+  <meta name="twitter:creator" content="@lessup">
+  <meta name="twitter:title" content="{{ title }} - Awesome Bioinformatics Algorithms">
+  <meta name="twitter:description" content="A curated collection of 200+ bioinformatics algorithms">
+  <meta name="twitter:image" content="https://lessup.github.io/awesome-bioinfo-algorithms/assets/images/social/index.png">
+  
+  {# Preconnect for performance #}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  {# Theme Color for Mobile Browsers #}
+  <meta name="theme-color" content="#3f51b5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)">
+  
+  {# Custom Fonts #}
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  {# Loading Animation Styles #}
+  <style>
+    /* Page Loading Animation */
+    .md-page-loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--md-default-bg-color);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .md-page-loading.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .md-loading-spinner {
+      width: 60px;
+      height: 60px;
+      border: 4px solid var(--md-primary-fg-color--lightest);
+      border-top-color: var(--md-primary-fg-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Progress Bar Animation */
+    .md-progress {
+      height: 3px;
+      background: linear-gradient(90deg, 
+        var(--md-primary-fg-color) 0%,
+        var(--md-accent-fg-color) 50%,
+        var(--md-primary-fg-color) 100%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+  </style>
+{% endblock %}
+
+{# Page Content Wrapper with Loading Animation #}
+{% block content %}
+  {# Loading Overlay #}
+  <div class="md-page-loading" id="page-loading">
+    <div class="md-loading-spinner"></div>
+  </div>
+  
+  {{ super() }}
+{% endblock %}
+
+{# Footer with Enhanced Information #}
+{% block footer %}
+  <footer class="md-footer">
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        {# Custom Footer Content #}
+        <div class="md-footer-copyright">
+          {% if config.copyright %}
+            <div class="md-footer-copyright__highlight">
+              {{ config.copyright }}
+            </div>
+          {% endif %}
+          
+          {# Stats Display #}
+          <div class="md-footer-stats">
+            <span class="md-footer-stat">
+              <strong>201</strong> Algorithms
+            </span>
+            <span class="md-footer-stat">
+              <strong>16</strong> Categories
+            </span>
+            <span class="md-footer-stat">
+              <strong>399</strong> Tags
+            </span>
+          </div>
+          
+          {# Made with Love #}
+          <div class="md-footer-made-with">
+            Made with ❤️ by the 
+            <a href="https://github.com/LessUp" target="_blank" rel="noopener">
+              LessUp Community
+            </a>
+          </div>
+        </div>
+        
+        {# Social Links #}
+        {% include "partials/social.html" %}
+      </div>
+    </div>
+  </footer>
+{% endblock %}
+
+{# Scripts at End of Body #}
+{% block scripts %}
+  {{ super() }}
+  
+  {# Loading Screen Removal Script #}
+  <script>
+    (function() {
+      // Remove loading screen when DOM is ready
+      document.addEventListener('DOMContentLoaded', function() {
+        var loader = document.getElementById('page-loading');
+        if (loader) {
+          // Wait for content to be ready
+          window.addEventListener('load', function() {
+            setTimeout(function() {
+              loader.classList.add('hidden');
+              setTimeout(function() {
+                loader.style.display = 'none';
+              }, 300);
+            }, 500);
+          });
+        }
+      });
+    })();
+  </script>
+{% endblock %}
