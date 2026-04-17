@@ -5,24 +5,54 @@
   <a href="https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/ci.yml"><img src="https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="https://lessup.github.io/awesome-bioinfo-algorithms/"><img src="https://img.shields.io/badge/Docs-GitHub%20Pages-blue?logo=github" alt="Documentation"></a>
   <a href="http://creativecommons.org/publicdomain/zero/1.0/"><img src="https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg" alt="License"></a>
+  <a href="https://github.com/LessUp/awesome-bioinfo-algorithms/blob/main/CITATION.cff"><img src="https://img.shields.io/badge/Cite%20Me-APA-blue" alt="Citation"></a>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Algorithms-201-blue.svg" alt="Algorithms">
   <img src="https://img.shields.io/badge/Categories-16-green.svg" alt="Categories">
   <img src="https://img.shields.io/badge/Tags-399-orange.svg" alt="Tags">
+  <img src="https://img.shields.io/badge/Python-3.9%2B-blue?logo=python" alt="Python">
 </p>
 
 <p align="center">
   <b>🧬 生物信息学算法概要汇总</b><br>
-  <b>A curated collection of bioinformatics algorithms</b>
+  <b>A curated collection of bioinformatics algorithms with complexity analysis</b>
 </p>
 
 <p align="center">
-  <a href="README.zh-CN.md">简体中文</a> | 
-  <a href="https://lessup.github.io/awesome-bioinfo-algorithms/">Documentation Site</a> | 
-  <a href="CONTRIBUTING.md">Contributing</a>
+  <a href="README.zh-CN.md">简体中文</a> • 
+  <a href="https://lessup.github.io/awesome-bioinfo-algorithms/">📖 Documentation Site</a> • 
+  <a href="CONTRIBUTING.md">🤝 Contributing</a> • 
+  <a href="#-citation--引用">📚 Citation</a>
 </p>
+
+---
+
+## ✨ Highlights | 项目亮点
+
+<table>
+<tr>
+<td width="50%">
+
+**🎯 For Researchers**
+- 201+ curated algorithms
+- Time/space complexity analysis
+- Paper and implementation links
+- Multi-language support
+
+</td>
+<td width="50%">
+
+**💻 For Developers**
+- CLI toolkit for data management
+- Automated validation & generation
+- Structured YAML data format
+- Extensive test coverage
+
+</td>
+</tr>
+</table>
 
 ---
 
@@ -30,9 +60,9 @@
 
 > **Mission**: To create the most comprehensive, well-organized, and accessible collection of bioinformatics algorithms for researchers, students, and practitioners worldwide.
 
-**中文**: 本项目收集和整理生物信息学领域常用的算法，提供算法的简要介绍、时间/空间复杂度分析、相关论文和实现链接，帮助研究人员和开发者快速了解和选择合适的算法。
+**中文**: 本项目收集和整理生物信息学领域常用的 **201** 个算法，涵盖 **16** 个分类，提供算法的简要介绍、时间/空间复杂度分析、相关论文和实现链接，帮助研究人员和开发者快速了解和选择合适的算法。
 
-**English**: This project collects and organizes commonly used algorithms in bioinformatics, providing brief introductions, time/space complexity analysis, and links to related papers and implementations. It helps researchers and developers quickly understand and choose appropriate algorithms.
+**English**: This project collects and organizes **201** commonly used algorithms in bioinformatics across **16** categories, providing brief introductions, time/space complexity analysis, and links to related papers and implementations. It helps researchers and developers quickly understand and choose appropriate algorithms.
 
 ---
 
@@ -49,13 +79,10 @@ cd awesome-bioinfo-algorithms
 pip install -e ".[dev]"
 
 # Validate data | 验证数据
-python -m scripts validate
-
-# Generate README | 生成 README
-python -m scripts generate
+python -m awesome_bioinfo validate
 
 # Show statistics | 查看统计
-python -m scripts stats
+python -m awesome_bioinfo stats
 ```
 
 ---
@@ -3335,35 +3362,26 @@ Meta AI 开发的蛋白质语言模型，使用 Transformer 架构在数亿条�
 
 ---
 
-## 💡 Key Features | 主要特性
-
-- 📚 **Comprehensive Coverage** — 201 algorithms across 16 categories / 16个分类201个算法
-- 📖 **Bilingual Documentation** — Chinese and English support / 中英文双语支持
-- 🔍 **Powerful Search** — CLI and programmatic search capabilities / 强大的搜索功能
-- ✅ **Data Validation** — Automated validation for data integrity / 自动化数据验证
-- 🔄 **Auto-Generated** — README and docs generated from structured data / 从结构化数据自动生成
-- 🧪 **Well Tested** — Comprehensive test suite with pytest / 全面的测试套件
-- 🌍 **Open Source** — CC0 1.0 (Public Domain) license / CC0 1.0 开源许可
-
----
-
 ## 🛠️ CLI Commands | 命令行工具
 
 ```bash
 # Search for algorithms | 搜索算法
-python -m scripts search "alignment"
+python -m awesome_bioinfo search "alignment"
 
 # Get algorithm details | 获取算法详情
-python -m scripts info smith-waterman
+python -m awesome_bioinfo info smith-waterman
 
 # Compare two algorithms | 比较两个算法
-python -m scripts compare smith-waterman needleman-wunsch
+python -m awesome_bioinfo compare smith-waterman needleman-wunsch
 
-# Export data | 导出数据
-python -m scripts export --format json > algorithms.json
+# Export data to JSON | 导出数据
+python -m awesome_bioinfo export --format json > algorithms.json
 
-# Generate MkDocs | 生成 MkDocs 文档
-python -m scripts mkdocs
+# Generate MkDocs site | 生成 MkDocs 文档站点
+python -m awesome_bioinfo mkdocs
+
+# Generate README | 生成 README
+python -m awesome_bioinfo generate
 ```
 
 ---
@@ -3399,6 +3417,25 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ---
 
+## 📚 Citation | 引用
+
+If you use this project in your research, please cite it as:
+
+如果您在研究中使用了本项目，请按以下方式引用：
+
+```bibtex
+@software{awesome_bioinfo_algorithms,
+  title = {Awesome Bioinformatics Algorithms},
+  author = {{LessUp Community}},
+  year = {2025},
+  url = {https://github.com/LessUp/awesome-bioinfo-algorithms}
+}
+```
+
+Or see [CITATION.cff](CITATION.cff) for more citation formats.
+
+---
+
 ## 📄 License | 许可证
 
 <p align="center">
@@ -3412,14 +3449,9 @@ This project is licensed under [CC0 1.0 Universal](https://creativecommons.org/p
 本项目采用 [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)（公共领域）许可协议。
 
 You are free to:
-- ✅ Copy, modify, distribute
-- ✅ Use for commercial purposes
-- ✅ No attribution required
-
-您可以自由：
-- ✅ 复制、修改、分发
-- ✅ 用于商业目的
-- ✅ 无需署名
+- ✅ Copy, modify, distribute / 复制、修改、分发
+- ✅ Use for commercial purposes / 用于商业目的
+- ✅ No attribution required / 无需署名
 
 ---
 
