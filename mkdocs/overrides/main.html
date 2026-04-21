@@ -4,8 +4,8 @@
 
 {# Announcement Banner #}
 {% block announce %}
-  <a href="https://github.com/LessUp/awesome-bioinfo-algorithms/releases/tag/v2.0.0">
-    🎉 <strong>v2.0.0 is out!</strong> Professional documentation with bilingual support!
+  <a href="https://github.com/LessUp/awesome-bioinfo-algorithms/releases/latest">
+    🎉 <strong>Latest Release Available!</strong> 201+ algorithms with bilingual support!
     <span class="twemoji">{% include ".icons/octicons/arrow-right-24.svg" %}</span>
   </a>
 {% endblock %}
@@ -17,27 +17,38 @@
   {# Open Graph / Social Media Meta Tags #}
   <meta property="og:type" content="website">
   <meta property="og:title" content="{{ title }} - Awesome Bioinformatics Algorithms">
-  <meta property="og:description" content="A curated collection of 200+ bioinformatics algorithms with complexity analysis">
+  <meta property="og:description" content="A curated collection of 200+ bioinformatics algorithms with complexity analysis, paper links, and bilingual documentation.">
   <meta property="og:image" content="https://lessup.github.io/awesome-bioinfo-algorithms/assets/images/social/index.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:url" content="{{ page.canonical_url }}">
+  <meta property="og:site_name" content="Awesome Bioinformatics Algorithms">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:locale:alternate" content="en_US">
   
   {# Twitter Card #}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@lessup">
   <meta name="twitter:creator" content="@lessup">
   <meta name="twitter:title" content="{{ title }} - Awesome Bioinformatics Algorithms">
-  <meta name="twitter:description" content="A curated collection of 200+ bioinformatics algorithms">
+  <meta name="twitter:description" content="A curated collection of 200+ bioinformatics algorithms with complexity analysis.">
   <meta name="twitter:image" content="https://lessup.github.io/awesome-bioinfo-algorithms/assets/images/social/index.png">
+  
+  {# SEO Meta Tags #}
+  <meta name="description" content="{{ page.meta.description | default('A curated collection of 200+ bioinformatics algorithms') }}">
+  <meta name="keywords" content="bioinformatics, algorithms, genomics, sequence alignment, variant calling, protein structure, machine learning">
+  <meta name="author" content="LessUp Community">
+  <link rel="canonical" href="{{ page.canonical_url }}">
   
   {# Preconnect for performance #}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
   
   {# Theme Color for Mobile Browsers #}
   <meta name="theme-color" content="#3f51b5" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#1a237e" media="(prefers-color-scheme: dark)">
   
   {# Custom Fonts #}
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">

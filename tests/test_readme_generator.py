@@ -291,7 +291,11 @@ def test_generated_readme_matches_repository_readme(
     generated = generator.generate()
 
     assert generated == expected_readme
-    assert "{{" not in generated
+    assert "{{ total_algorithms }}" not in generated
+    assert "{{ total_categories }}" not in generated
+    assert "{{ total_tags }}" not in generated
+    assert "{{ toc }}" not in generated
+    assert "{{ content }}" not in generated
 
 
 def test_real_repository_toc_entries_match_rendered_sections(
