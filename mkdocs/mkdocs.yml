@@ -33,23 +33,23 @@ theme:
     # Light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: teal
-      accent: cyan
+      primary: indigo
+      accent: indigo
       toggle:
         icon: material/brightness-7
-        name: Switch to dark mode
+        name: Switch to dark mode | 切换到深色模式
     # Dark mode  
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: teal
-      accent: cyan
+      primary: indigo
+      accent: indigo
       toggle:
         icon: material/brightness-4
-        name: Switch to light mode
+        name: Switch to light mode | 切换到浅色模式
   
   # Typography
   font:
-    text: Roboto
+    text: Inter
     code: JetBrains Mono
   
   # Icons
@@ -59,10 +59,10 @@ theme:
     edit: material/pencil
     view: material/eye
   
-  # No favicon to avoid errors, uses default
-  # favicon: assets/favicon.png
+  # Favicon
+  favicon: assets/favicon.png
   
-  # Features - optimized for performance
+  # Features - optimized for performance and UX
   features:
     # Navigation
     - navigation.instant
@@ -73,6 +73,7 @@ theme:
     - navigation.indexes
     - navigation.top
     - navigation.footer
+    - navigation.path
     
     # Table of contents
     - toc.follow
@@ -81,12 +82,15 @@ theme:
     # Search
     - search.suggest
     - search.highlight
+    - search.share
     
     # Content
     - content.code.copy
     - content.code.select
     - content.code.annotate
     - content.tooltips
+    - content.action.edit
+    - content.action.view
 
 # ---------------------------------------------------------------------------
 # Plugins - optimized for GitHub Pages
@@ -201,13 +205,26 @@ extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/LessUp/awesome-bioinfo-algorithms
-      name: GitHub
+      name: GitHub Repository
     - icon: material/rss-box
       link: /feed_rss_created.xml
       name: RSS Feed
+    - icon: material/star
+      link: https://github.com/LessUp/awesome-bioinfo-algorithms/stargazers
+      name: Star us on GitHub
+  
+  # Status indicators
+  status:
+    new: Recently added
+    updated: Recently updated
   
   # Generator disabled for cleaner output
   generator: false
+  
+  # Analytics (optional - uncomment if needed)
+  # analytics:
+  #   provider: google
+  #   property: G-XXXXXXXXXX
 
 # ---------------------------------------------------------------------------
 # Validation
