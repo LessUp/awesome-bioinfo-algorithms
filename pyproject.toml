@@ -41,7 +41,6 @@ dev = [
     "mypy>=1.0",
     "pre-commit>=3.0",
     "types-PyYAML>=6.0",
-    "types-aiohttp>=3.9.0",
     "mkdocs-material[imaging]>=9.0",
     "mkdocs-awesome-pages-plugin>=1.0",
     "mkdocs-git-revision-date-localized-plugin>=1.0",
