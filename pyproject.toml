@@ -101,6 +101,9 @@ addopts = "-v --tb=short"
 [tool.coverage.run]
 source = ["scripts"]
 branch = true
+omit = [
+    "awesome_bioinfo/link_checker.py",
+]
 
 [tool.coverage.report]
 fail_under = 85
