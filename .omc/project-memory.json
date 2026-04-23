@@ -1,0 +1,245 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1776969953837,
+  "projectRoot": "/home/shane/dev/awesome-bioinfo-algorithms",
+  "techStack": {
+    "languages": [
+      {
+        "name": "Python",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "pyproject.toml",
+          "requirements.txt"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "pytest",
+        "version": null,
+        "category": "testing"
+      }
+    ],
+    "packageManager": "pip",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": "pytest",
+    "lintCommand": "ruff check",
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs",
+      "scripts",
+      "tests"
+    ],
+    "gitBranches": {
+      "defaultBranch": "master",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "awesome_bioinfo": {
+      "path": "awesome_bioinfo",
+      "purpose": null,
+      "fileCount": 17,
+      "lastAccessed": 1776969953815,
+      "keyFiles": [
+        "CLAUDE.md",
+        "__init__.py",
+        "__main__.py",
+        "algorithm_registry.py",
+        "category_manager.py"
+      ]
+    },
+    "awesome_bioinfo_algorithms.egg-info": {
+      "path": "awesome_bioinfo_algorithms.egg-info",
+      "purpose": null,
+      "fileCount": 5,
+      "lastAccessed": 1776969953821,
+      "keyFiles": [
+        "PKG-INFO",
+        "SOURCES.txt",
+        "dependency_links.txt",
+        "requires.txt",
+        "top_level.txt"
+      ]
+    },
+    "changelog": {
+      "path": "changelog",
+      "purpose": null,
+      "fileCount": 3,
+      "lastAccessed": 1776969953822,
+      "keyFiles": [
+        "2026-04-16_code-review.md",
+        "CHANGELOG_TEMPLATE.md",
+        "README.md"
+      ]
+    },
+    "data": {
+      "path": "data",
+      "purpose": "Data files",
+      "fileCount": 1,
+      "lastAccessed": 1776969953824,
+      "keyFiles": [
+        "categories.yaml"
+      ]
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 11,
+      "lastAccessed": 1776969953825,
+      "keyFiles": [
+        "404.md",
+        "API.md",
+        "DEVELOPMENT.md",
+        "FAQ.md",
+        "Gemfile"
+      ]
+    },
+    "includes": {
+      "path": "includes",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776969953825,
+      "keyFiles": [
+        "abbreviations.md"
+      ]
+    },
+    "mkdocs": {
+      "path": "mkdocs",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776969953826,
+      "keyFiles": [
+        "mkdocs.yml"
+      ]
+    },
+    "openspec": {
+      "path": "openspec",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776969953827,
+      "keyFiles": [
+        "config.yaml"
+      ]
+    },
+    "overrides": {
+      "path": "overrides",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776969953827,
+      "keyFiles": [
+        "main.html"
+      ]
+    },
+    "schemas": {
+      "path": "schemas",
+      "purpose": "Schema definitions",
+      "fileCount": 1,
+      "lastAccessed": 1776969953828,
+      "keyFiles": [
+        "algorithm-schema.json"
+      ]
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 2,
+      "lastAccessed": 1776969953828,
+      "keyFiles": [
+        "__init__.py",
+        "__main__.py"
+      ]
+    },
+    "templates": {
+      "path": "templates",
+      "purpose": null,
+      "fileCount": 3,
+      "lastAccessed": 1776969953828,
+      "keyFiles": [
+        "algorithm_template.yaml",
+        "readme_template.md"
+      ]
+    },
+    "tests": {
+      "path": "tests",
+      "purpose": "Test files",
+      "fileCount": 15,
+      "lastAccessed": 1776969953829,
+      "keyFiles": [
+        "__init__.py",
+        "conftest.py",
+        "test_algorithm_registry.py",
+        "test_category_manager.py",
+        "test_cli.py"
+      ]
+    },
+    "venv": {
+      "path": "venv",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776969953829,
+      "keyFiles": [
+        "pyvenv.cfg"
+      ]
+    },
+    "mkdocs/docs": {
+      "path": "mkdocs/docs",
+      "purpose": "Documentation",
+      "fileCount": 3,
+      "lastAccessed": 1776969953832,
+      "keyFiles": [
+        "index.md",
+        "tags.md"
+      ]
+    },
+    "venv/bin": {
+      "path": "venv/bin",
+      "purpose": "Executable scripts",
+      "fileCount": 39,
+      "lastAccessed": 1776969953835,
+      "keyFiles": [
+        "Activate.ps1",
+        "activate",
+        "activate.csh"
+      ]
+    },
+    "venv/lib": {
+      "path": "venv/lib",
+      "purpose": "Library code",
+      "fileCount": 0,
+      "lastAccessed": 1776969953836,
+      "keyFiles": []
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "CLAUDE.md",
+      "accessCount": 1,
+      "lastAccessed": 1776969990181,
+      "type": "file"
+    },
+    {
+      "path": "awesome_bioinfo/CLAUDE.md",
+      "accessCount": 1,
+      "lastAccessed": 1776969990263,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}
