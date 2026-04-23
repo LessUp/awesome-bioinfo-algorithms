@@ -3,226 +3,275 @@ categories:
     name: 序列比对
     name_en: Sequence Alignment
     description: 用于比较和对齐生物序列的算法
+    description_en: Algorithms for comparing and aligning biological sequences
     subcategories:
       - id: pairwise
         name: 双序列比对
         name_en: Pairwise Alignment
         description: 两条序列之间的比对算法
+        description_en: Algorithms for aligning two sequences
       - id: multiple
         name: 多序列比对
         name_en: Multiple Sequence Alignment
         description: 多条序列同时比对的算法
+        description_en: Algorithms for aligning multiple sequences simultaneously
 
   - id: assembly
     name: 序列组装
     name_en: Sequence Assembly
     description: 从短读段重建完整序列的算法
+    description_en: Algorithms for reconstructing complete sequences from short reads
     subcategories:
       - id: de-novo
         name: 从头组装
         name_en: De Novo Assembly
         description: 不依赖参考序列的组装方法
+        description_en: Reference-free assembly methods
       - id: reference-guided
         name: 参考引导组装
         name_en: Reference-Guided Assembly
         description: 基于参考序列的组装方法
+        description_en: Assembly methods using reference sequences
 
   - id: variant-calling
     name: 变异检测
     name_en: Variant Calling
     description: 检测基因组变异的算法
+    description_en: Algorithms for detecting genomic variations
     subcategories:
       - id: snv
         name: 单核苷酸变异
         name_en: SNV Detection
         description: 检测单核苷酸变异和小型插入缺失
+        description_en: Detection of SNPs and small indels
       - id: structural
         name: 结构变异
         name_en: Structural Variants
         description: 检测大规模结构变异
+        description_en: Detection of large-scale structural variations
 
   - id: expression-analysis
     name: 基因表达分析
     name_en: Gene Expression Analysis
     description: 分析基因表达水平的算法
+    description_en: Algorithms for analyzing gene expression levels
     subcategories:
       - id: quantification
         name: 表达定量
         name_en: Expression Quantification
         description: 转录本和基因水平的表达量估计
+        description_en: Estimation of transcript and gene expression levels
       - id: differential-expression
         name: 差异表达
         name_en: Differential Expression
         description: 不同条件间的差异表达分析
+        description_en: Analysis of differential expression between conditions
 
   - id: protein-structure
     name: 蛋白质结构预测
     name_en: Protein Structure Prediction
     description: 预测蛋白质三维结构的算法
+    description_en: Algorithms for predicting protein 3D structures
     subcategories:
       - id: ab-initio
         name: 从头预测
         name_en: Ab Initio Prediction
         description: 基于序列信息的从头结构预测
+        description_en: De novo structure prediction from sequence
       - id: template-based
         name: 模板方法
         name_en: Template-Based Modeling
         description: 基于已知结构模板的建模方法
+        description_en: Modeling based on known structure templates
 
   - id: phylogenetics
     name: 系统发育分析
     name_en: Phylogenetics
     description: 构建和分析进化树的算法
+    description_en: Algorithms for building and analyzing evolutionary trees
     subcategories:
       - id: distance-method
         name: 距离法
         name_en: Distance Methods
         description: 基于距离矩阵的建树方法
+        description_en: Tree building from distance matrices
       - id: character-method
         name: 特征法
         name_en: Character-Based Methods
         description: 基于序列特征的建树方法
+        description_en: Tree building from sequence characters
 
   - id: functional-annotation
     name: 功能注释
     name_en: Functional Annotation
     description: 预测基因和蛋白质功能的算法
+    description_en: Algorithms for predicting gene and protein functions
     subcategories:
       - id: homology-based
         name: 同源性方法
         name_en: Homology-Based
         description: 基于序列同源性的功能推断
+        description_en: Function inference based on sequence homology
       - id: domain-based
         name: 结构域方法
         name_en: Domain-Based
         description: 基于蛋白质结构域的功能注释
+        description_en: Annotation based on protein domains
 
   - id: data-compression
     name: 数据压缩
     name_en: Data Compression
     description: 压缩生物信息学数据的算法
+    description_en: Algorithms for compressing bioinformatics data
     subcategories:
       - id: general-compression
         name: 通用压缩
         name_en: General Compression
         description: 通用数据压缩格式
+        description_en: General-purpose data compression formats
       - id: specialized-compression
         name: 专用压缩
         name_en: Specialized Compression
         description: 针对特定生物数据格式的压缩方法
+        description_en: Compression for specific bioinformatics formats
 
   - id: single-cell
     name: 单细胞基因组学
     name_en: Single-Cell Genomics
     description: 单细胞水平的基因组和转录组分析算法
+    description_en: Algorithms for single-cell genomics and transcriptomics
     subcategories:
       - id: sc-preprocessing
         name: 数据预处理
         name_en: Preprocessing
         description: 单细胞数据的质控、标准化和预处理
+        description_en: QC, normalization and preprocessing for single-cell data
       - id: sc-clustering
         name: 细胞聚类与注释
         name_en: Cell Clustering & Annotation
         description: 细胞类型识别和聚类分析
+        description_en: Cell type identification and clustering analysis
 
   - id: metagenomics
     name: 宏基因组学
     name_en: Metagenomics
     description: 微生物群落的基因组分析算法
+    description_en: Algorithms for microbial community genomics
     subcategories:
       - id: taxonomic-profiling
         name: 物种分类
         name_en: Taxonomic Profiling
         description: 微生物物种组成鉴定
+        description_en: Microbial species composition identification
       - id: functional-profiling
         name: 功能分析
         name_en: Functional Profiling
         description: 微生物群落功能分析
+        description_en: Microbial community functional analysis
 
   - id: epigenomics
     name: 表观基因组学
     name_en: Epigenomics
     description: 分析表观遗传修饰的算法
+    description_en: Algorithms for analyzing epigenetic modifications
     subcategories:
       - id: chip-seq
         name: ChIP-seq 分析
         name_en: ChIP-seq Analysis
         description: 染色质免疫共沉淀测序分析
+        description_en: Chromatin immunoprecipitation sequencing analysis
       - id: methylation
         name: 甲基化分析
         name_en: Methylation Analysis
         description: DNA 甲基化数据分析
+        description_en: DNA methylation data analysis
 
   - id: gene-prediction
     name: 基因预测
     name_en: Gene Prediction
     description: 基因结构预测和基因组注释算法
+    description_en: Algorithms for gene structure prediction and annotation
     subcategories:
       - id: eukaryotic
         name: 真核基因预测
         name_en: Eukaryotic Gene Prediction
         description: 真核生物基因结构预测
+        description_en: Eukaryotic gene structure prediction
       - id: prokaryotic
         name: 原核基因预测
         name_en: Prokaryotic Gene Prediction
         description: 原核生物基因识别
+        description_en: Prokaryotic gene identification
 
   - id: population-genetics
     name: 群体遗传学
     name_en: Population Genetics
     description: 分析群体遗传结构和进化的算法
+    description_en: Algorithms for population genetic structure and evolution
     subcategories:
       - id: pca-structure
         name: 主成分与群体结构
         name_en: PCA & Population Structure
         description: 降维和群体结构推断方法
+        description_en: Dimensionality reduction and population structure inference
       - id: gwas
         name: 全基因组关联分析
         name_en: Genome-Wide Association Study
         description: 基因型与表型关联分析方法
+        description_en: Genotype-phenotype association analysis
       - id: selection-signature
         name: 选择信号检测
         name_en: Selection Signature Detection
         description: 检测自然选择留下的遗传信号
+        description_en: Detection of natural selection signatures
 
   - id: spatial-omics
     name: 空间组学
     name_en: Spatial Omics
     description: 保留空间信息的组学数据分析算法
+    description_en: Algorithms for spatially-resolved omics data
     subcategories:
       - id: spatial-transcriptomics
         name: 空间转录组学
         name_en: Spatial Transcriptomics
         description: 空间分辨的基因表达分析方法
+        description_en: Spatially-resolved gene expression analysis
       - id: spatial-proteomics
         name: 空间蛋白质组学
         name_en: Spatial Proteomics
         description: 空间分辨的蛋白质组分析方法
+        description_en: Spatially-resolved proteomics analysis
 
   - id: graph-genomics
     name: 图基因组学
     name_en: Graph Genomics
     description: 基于图结构表示和分析基因组的算法
+    description_en: Algorithms based on graph representations of genomes
     subcategories:
       - id: pangenome
         name: 泛基因组
         name_en: Pangenome
         description: 构建和分析泛基因组图的方法
+        description_en: Methods for pangenome graph construction
       - id: variation-graph
         name: 变异图
         name_en: Variation Graph
         description: 基于变异图的序列分析方法
+        description_en: Sequence analysis based on variation graphs
 
   - id: protein-language-model
     name: 蛋白质语言模型
     name_en: Protein Language Model
     description: 基于大规模预训练模型的蛋白质分析算法
+    description_en: Protein analysis using large-scale pre-trained models
     subcategories:
       - id: protein-lm
         name: 蛋白质语言模型预训练
         name_en: Protein Language Model Pretraining
         description: 蛋白质序列的语言模型和表征学习方法
+        description_en: Language models and representation learning for proteins
       - id: protein-function-prediction
         name: 蛋白质功能预测
         name_en: Protein Function Prediction
         description: 基于语言模型的蛋白质功能和性质预测
+        description_en: Protein function and property prediction using language models
