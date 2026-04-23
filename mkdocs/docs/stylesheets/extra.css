@@ -1,249 +1,120 @@
 /* =============================================================================
-   Awesome Bioinformatics Algorithms - Custom Styles
+   Awesome Bioinformatics Algorithms - BioTech Horizon Theme
+   Modern, scientific, bilingual design system
    ============================================================================= */
 
-/* CSS Variables for consistent theming */
+/* ---------------------------------------------------------------------------
+   CSS Variables - Design Tokens
+   --------------------------------------------------------------------------- */
 :root {
-  --aba-primary: #3f51b5;
-  --aba-secondary: #1a237e;
-  --aba-accent: #00bcd4;
-  --aba-gradient-primary: linear-gradient(135deg, #3f51b5 0%, #1a237e 100%);
-  --aba-gradient-accent: linear-gradient(135deg, #00bcd4 0%, #009688 100%);
-  --aba-glass-bg: rgba(255, 255, 255, 0.1);
-  --aba-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --aba-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
-  --aba-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+  /* Primary Colors - Deep Tech Blue */
+  --aba-primary: #0ea5e9;
+  --aba-primary-light: #38bdf8;
+  --aba-primary-dark: #0284c7;
+  --aba-secondary: #6366f1;
+  --aba-accent: #10b981;
+  
+  /* Background Colors */
+  --aba-bg-dark: #0f172a;
+  --aba-bg-darker: #020617;
+  --aba-glass-bg: rgba(255, 255, 255, 0.08);
+  --aba-glass-border: rgba(255, 255, 255, 0.1);
+  
+  /* Gradients */
+  --aba-gradient-hero: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0c4a6e 100%);
+  --aba-gradient-glow: radial-gradient(ellipse at 50% 0%, rgba(14, 165, 233, 0.15) 0%, transparent 50%);
+  --aba-gradient-card: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  --aba-gradient-accent: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
+  
+  /* Difficulty Colors */
+  --aba-difficulty-beginner: #22c55e;
+  --aba-difficulty-intermediate: #f59e0b;
+  --aba-difficulty-advanced: #ef4444;
+  
+  /* Shadows */
+  --aba-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --aba-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.25);
+  --aba-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --aba-shadow-glow: 0 0 40px rgba(14, 165, 233, 0.15);
+  
+  /* Border Radius */
   --aba-radius-sm: 8px;
   --aba-radius-md: 12px;
   --aba-radius-lg: 16px;
+  --aba-radius-xl: 24px;
+  
+  /* Spacing */
+  --aba-spacing-xs: 0.5rem;
+  --aba-spacing-sm: 1rem;
+  --aba-spacing-md: 1.5rem;
+  --aba-spacing-lg: 2rem;
+  --aba-spacing-xl: 3rem;
+  
+  /* Transitions */
+  --aba-transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   --aba-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --aba-transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Dark mode variables */
 [data-md-color-scheme="slate"] {
-  --aba-glass-bg: rgba(0, 0, 0, 0.2);
-  --aba-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
-  --aba-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.35);
-  --aba-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.4);
+  --aba-glass-bg: rgba(255, 255, 255, 0.05);
+  --aba-glass-border: rgba(255, 255, 255, 0.08);
+  --aba-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --aba-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --aba-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
 }
 
 /* ---------------------------------------------------------------------------
    Typography Improvements
    --------------------------------------------------------------------------- */
 .md-typeset {
-  font-size: 0.7rem;
-  line-height: 1.6;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  letter-spacing: -0.01em;
 }
 
 .md-typeset h1 {
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--md-primary-fg-color);
+  font-weight: 700;
+  font-size: 2.5rem;
+  letter-spacing: -0.03em;
+  background: var(--aba-gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .md-typeset h2 {
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  border-bottom: 2px solid var(--md-primary-fg-color--light);
-  padding-bottom: 0.3em;
+  font-weight: 600;
+  font-size: 1.75rem;
+  letter-spacing: -0.02em;
+  border-bottom: 2px solid var(--aba-primary);
+  padding-bottom: 0.5em;
+  margin-top: 2em;
 }
 
 .md-typeset h3 {
-  font-weight: 500;
-  color: var(--md-primary-fg-color);
-}
-
-/* ---------------------------------------------------------------------------
-   Code Blocks Enhancement
-   --------------------------------------------------------------------------- */
-.md-typeset code {
-  border-radius: 4px;
-  padding: 0.2em 0.4em;
-}
-
-.md-typeset pre > code {
-  border-radius: 8px;
-  padding: 1em;
-}
-
-/* Highlight line numbers */
-.md-typeset .highlight span.filename {
-  background-color: var(--md-code-bg-color);
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  font-weight: 500;
-  padding: 0.5em 1em;
-}
-
-/* ---------------------------------------------------------------------------
-   Admonitions Customization
-   --------------------------------------------------------------------------- */
-.md-typeset .admonition {
-  border-radius: 8px;
-  border-left-width: 4px;
-}
-
-.md-typeset .admonition.note {
-  border-left-color: #448aff;
-}
-
-.md-typeset .admonition.tip {
-  border-left-color: #00bfa5;
-}
-
-.md-typeset .admonition.warning {
-  border-left-color: #ff9100;
-}
-
-.md-typeset .admonition.danger {
-  border-left-color: #ff1744;
-}
-
-/* ---------------------------------------------------------------------------
-   Table Enhancements
-   --------------------------------------------------------------------------- */
-.md-typeset table {
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.md-typeset table th {
-  background-color: var(--md-primary-fg-color);
-  color: var(--md-primary-bg-color);
   font-weight: 600;
-}
-
-.md-typeset table tr:nth-child(even) {
-  background-color: var(--md-code-bg-color);
-}
-
-/* ---------------------------------------------------------------------------
-   Algorithm Cards (for algorithm pages)
-   --------------------------------------------------------------------------- */
-.algorithm-card {
-  border: 1px solid var(--md-default-fg-color--lightest);
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin: 1rem 0;
-  background: var(--md-default-bg-color);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.algorithm-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-}
-
-.algorithm-card h3 {
-  margin-top: 0;
-  color: var(--md-primary-fg-color);
-}
-
-.algorithm-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 0.75rem 0;
-}
-
-.algorithm-tag {
-  background: var(--md-primary-fg-color--light);
-  color: var(--md-primary-bg-color);
-  padding: 0.2rem 0.6rem;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-size: 1.35rem;
+  color: var(--aba-primary);
 }
 
 /* ---------------------------------------------------------------------------
-   Search Enhancement
-   --------------------------------------------------------------------------- */
-.md-search__input {
-  border-radius: 20px;
-}
-
-.md-search-result__item {
-  border-radius: 4px;
-  transition: background-color 0.2s;
-}
-
-.md-search-result__item:hover {
-  background-color: var(--md-code-bg-color);
-}
-
-/* ---------------------------------------------------------------------------
-   Navigation Improvements
-   --------------------------------------------------------------------------- */
-.md-nav__item .md-nav__link {
-  border-radius: 4px;
-  transition: background-color 0.2s;
-}
-
-.md-nav__item .md-nav__link:hover {
-  background-color: var(--md-code-bg-color);
-}
-
-.md-nav__item .md-nav__link--active {
-  font-weight: 600;
-  color: var(--md-primary-fg-color);
-}
-
-/* ---------------------------------------------------------------------------
-   Print Styles
-   --------------------------------------------------------------------------- */
-@media print {
-  .md-header,
-  .md-footer,
-  .md-tabs,
-  .md-search {
-    display: none !important;
-  }
-  
-  .md-content {
-    margin-left: 0 !important;
-  }
-}
-
-/* ---------------------------------------------------------------------------
-   Responsive Adjustments
-   --------------------------------------------------------------------------- */
-@media screen and (max-width: 768px) {
-  .md-typeset {
-    font-size: 0.75rem;
-  }
-  
-  .algorithm-card {
-    padding: 1rem;
-  }
-}
-
-/* ---------------------------------------------------------------------------
-   Dark Mode Specific
-   --------------------------------------------------------------------------- */
-[data-md-color-scheme="slate"] .md-typeset h2 {
-  border-bottom-color: var(--md-primary-fg-color--dark);
-}
-
-[data-md-color-scheme="slate"] .algorithm-card {
-  background: var(--md-default-bg-color);
-  border-color: var(--md-default-fg-color--dark);
-}
-
-/* ---------------------------------------------------------------------------
-   Hero Section Styles
+   Hero Section - BioTech Horizon Style
    --------------------------------------------------------------------------- */
 .aba-hero {
   position: relative;
-  padding: 4rem 2rem;
-  margin: -2rem -2rem 2rem -2rem;
-  background: var(--aba-gradient-primary);
-  color: white;
-  text-align: center;
+  padding: 6rem 2rem;
+  margin: -2rem -2rem 3rem -2rem;
+  background: var(--aba-bg-dark);
   overflow: hidden;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Animated background grid */
 .aba-hero::before {
   content: '';
   position: absolute;
@@ -251,40 +122,76 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-image: 
+    linear-gradient(rgba(14, 165, 233, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 165, 233, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridMove 20s linear infinite;
+}
+
+/* DNA Helix pattern overlay */
+.aba-hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 50 Q 35 20, 50 50 T 80 50' stroke='rgba(14, 165, 233, 0.1)' fill='none' stroke-width='2'/%3E%3Cpath d='M20 50 Q 35 80, 50 50 T 80 50' stroke='rgba(16, 185, 129, 0.1)' fill='none' stroke-width='2'/%3E%3Ccircle cx='35' cy='35' r='3' fill='rgba(14, 165, 233, 0.2)'/%3E%3Ccircle cx='65' cy='65' r='3' fill='rgba(16, 185, 129, 0.2)'/%3E%3C/svg%3E");
   opacity: 0.5;
+}
+
+@keyframes gridMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(60px, 60px); }
 }
 
 .aba-hero-content {
   position: relative;
-  z-index: 1;
-  max-width: 800px;
-  margin: 0 auto;
+  z-index: 2;
+  max-width: 900px;
+  text-align: center;
 }
 
 .aba-hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.2);
+  padding: 0.6rem 1.25rem;
+  background: var(--aba-glass-bg);
+  border: 1px solid var(--aba-glass-border);
   border-radius: 2rem;
-  font-size: 0.875rem;
-  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--aba-primary-light);
+  margin-bottom: 2rem;
   backdrop-filter: blur(10px);
+  animation: fadeInUp 0.6s ease-out;
 }
 
 .aba-hero-title {
-  font-size: 3rem;
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 1rem;
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+
+.aba-hero-title span {
+  background: var(--aba-gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .aba-hero-subtitle {
-  font-size: 1.125rem;
-  opacity: 0.9;
-  margin-bottom: 2rem;
+  font-size: 1.35rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  animation: fadeInUp 0.6s ease-out 0.2s both;
 }
 
 .aba-hero-actions {
@@ -292,13 +199,19 @@
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
+  margin-bottom: 4rem;
+  animation: fadeInUp 0.6s ease-out 0.3s both;
 }
 
-.aba-gradient-text {
-  background: linear-gradient(135deg, #fff 0%, #e1bee7 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -308,81 +221,208 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--aba-radius-sm);
+  padding: 0.875rem 1.75rem;
+  border-radius: var(--aba-radius-md);
   font-weight: 500;
+  font-size: 0.95rem;
   text-decoration: none;
   transition: var(--aba-transition);
   cursor: pointer;
+  border: none;
 }
 
 .aba-btn-primary {
-  background: white;
-  color: var(--aba-primary);
+  background: var(--aba-gradient-accent);
+  color: white;
+  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.4);
 }
 
 .aba-btn-primary:hover {
-  background: #f5f5f5;
   transform: translateY(-2px);
-  box-shadow: var(--aba-shadow-md);
+  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+  color: white;
 }
 
 .aba-btn-secondary {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: var(--aba-glass-bg);
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--aba-glass-border);
+  backdrop-filter: blur(10px);
 }
 
 .aba-btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   transform: translateY(-2px);
+  color: white;
 }
 
 /* ---------------------------------------------------------------------------
-   Stats Bar
+   Stats Bar - Floating Cards
    --------------------------------------------------------------------------- */
 .aba-stats-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.5rem;
   justify-content: center;
-  margin-top: 3rem;
+  animation: fadeInUp 0.6s ease-out 0.4s both;
 }
 
 .aba-stat-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem 2rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: var(--aba-radius-md);
+  padding: 1.5rem 2rem;
+  background: var(--aba-glass-bg);
+  border: 1px solid var(--aba-glass-border);
+  border-radius: var(--aba-radius-lg);
   backdrop-filter: blur(10px);
-  min-width: 100px;
+  min-width: 120px;
+  transition: var(--aba-transition);
+}
+
+.aba-stat-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: var(--aba-shadow-glow);
 }
 
 .aba-stat-value {
-  font-size: 2rem;
-  font-weight: 700;
+  font-size: 2.5rem;
+  font-weight: 800;
   line-height: 1;
+  background: var(--aba-gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .aba-stat-label {
-  font-size: 0.75rem;
-  opacity: 0.8;
-  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 /* ---------------------------------------------------------------------------
-   Bento Grid Layout
+   Bento Grid - Category Cards
    --------------------------------------------------------------------------- */
+.aba-section {
+  margin: 4rem 0;
+}
+
 .aba-bento-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
   margin: 2rem 0;
 }
 
 .aba-bento-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem;
+  background: var(--aba-glass-bg);
+  border: 1px solid var(--aba-glass-border);
+  border-radius: var(--aba-radius-lg);
+  text-decoration: none;
+  color: inherit;
+  transition: var(--aba-transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.aba-bento-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--aba-gradient-accent);
+  transform: scaleX(0);
+  transition: var(--aba-transition);
+}
+
+.aba-bento-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: var(--aba-shadow-lg);
+  border-color: rgba(14, 165, 233, 0.3);
+}
+
+.aba-bento-card:hover::before {
+  transform: scaleX(1);
+}
+
+.aba-bento-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1.25rem;
+  color: var(--aba-primary);
+}
+
+.aba-bento-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--md-default-fg-color);
+}
+
+.aba-bento-desc {
+  font-size: 0.95rem;
+  color: var(--md-default-fg-color--light);
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+  line-height: 1.6;
+}
+
+.aba-bento-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.aba-bento-count {
+  color: var(--aba-accent);
+  font-weight: 500;
+}
+
+.aba-bento-arrow {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: var(--aba-transition);
+  color: var(--aba-primary);
+}
+
+.aba-bento-card:hover .aba-bento-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Featured cards */
+.aba-bento-featured {
+  grid-column: span 1;
+}
+
+@media (min-width: 992px) {
+  .aba-bento-featured:nth-child(1),
+  .aba-bento-featured:nth-child(2) {
+    grid-column: span 2;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Algorithm Card Grid
+   --------------------------------------------------------------------------- */
+.aba-algo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+  margin: 2rem 0;
+}
+
+.aba-algo-card {
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
@@ -392,146 +432,71 @@
   text-decoration: none;
   color: inherit;
   transition: var(--aba-transition);
-  box-shadow: var(--aba-shadow-sm);
-}
-
-.aba-bento-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--aba-shadow-lg);
-  border-color: var(--md-primary-fg-color);
-}
-
-.aba-bento-featured {
-  grid-column: span 1;
-}
-
-@media (min-width: 768px) {
-  .aba-bento-featured:nth-child(1),
-  .aba-bento-featured:nth-child(2) {
-    grid-column: span 2;
-  }
-}
-
-.aba-bento-icon {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.aba-bento-title {
-  font-size: 1.125rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.aba-bento-desc {
-  font-size: 0.875rem;
-  color: var(--md-default-fg-color--light);
-  margin-bottom: 1rem;
-  flex-grow: 1;
-}
-
-.aba-bento-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.75rem;
-}
-
-.aba-bento-count {
-  color: var(--md-primary-fg-color);
-  font-weight: 500;
-}
-
-.aba-bento-arrow {
-  opacity: 0;
-  transition: var(--aba-transition);
-}
-
-.aba-bento-card:hover .aba-bento-arrow {
-  opacity: 1;
-  transform: translateX(4px);
-}
-
-/* ---------------------------------------------------------------------------
-   Algorithm Card Grid
-   --------------------------------------------------------------------------- */
-.aba-algo-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1rem;
-  margin: 2rem 0;
-}
-
-.aba-algo-card {
-  display: flex;
-  flex-direction: column;
-  padding: 1.25rem;
-  background: var(--md-default-bg-color);
-  border: 1px solid var(--md-default-fg-color--lightest);
-  border-radius: var(--aba-radius-sm);
-  text-decoration: none;
-  color: inherit;
-  transition: var(--aba-transition);
+  position: relative;
 }
 
 .aba-algo-card:hover {
-  border-color: var(--md-primary-fg-color);
+  border-color: var(--aba-primary);
   box-shadow: var(--aba-shadow-md);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 
 .aba-algo-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  gap: 1rem;
 }
 
 .aba-algo-name {
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 600;
-  color: var(--md-primary-fg-color);
+  color: var(--md-default-fg-color);
+  line-height: 1.3;
 }
 
 .aba-algo-badges {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+  flex-shrink: 0;
 }
 
 .aba-badge {
   display: inline-flex;
-  padding: 0.125rem 0.5rem;
+  padding: 0.25rem 0.625rem;
   border-radius: 4px;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 500;
 }
 
 .aba-badge-year {
-  background: var(--md-primary-fg-color--light);
-  color: var(--md-primary-bg-color);
+  background: var(--aba-primary);
+  color: white;
 }
 
 .aba-badge-difficulty-beginner {
-  background: #4caf50;
+  background: var(--aba-difficulty-beginner);
   color: white;
 }
 
 .aba-badge-difficulty-intermediate {
-  background: #ff9800;
+  background: var(--aba-difficulty-intermediate);
   color: white;
 }
 
 .aba-badge-difficulty-advanced {
-  background: #f44336;
+  background: var(--aba-difficulty-advanced);
   color: white;
 }
 
 .aba-algo-purpose {
-  font-size: 0.8125rem;
+  font-size: 0.9rem;
   color: var(--md-default-fg-color--light);
-  margin-bottom: 0.75rem;
-  line-height: 1.4;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+  flex-grow: 1;
 }
 
 .aba-algo-footer {
@@ -539,25 +504,116 @@
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
-  padding-top: 0.75rem;
+  padding-top: 1rem;
   border-top: 1px solid var(--md-default-fg-color--lightest);
 }
 
 .aba-algo-complexity {
-  font-size: 0.75rem;
-  color: var(--md-default-fg-color--light);
+  font-size: 0.85rem;
+  color: var(--aba-primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
 }
 
 .aba-algo-arrow {
-  width: 16px;
-  height: 16px;
-  opacity: 0.5;
+  width: 20px;
+  height: 20px;
+  opacity: 0.4;
   transition: var(--aba-transition);
 }
 
 .aba-algo-card:hover .aba-algo-arrow {
   opacity: 1;
   transform: translateX(4px);
+  color: var(--aba-primary);
+}
+
+/* ---------------------------------------------------------------------------
+   Detail Page Styles
+   --------------------------------------------------------------------------- */
+.aba-detail-hero {
+  background: var(--aba-gradient-hero);
+  margin: -2rem -2rem 2rem -2rem;
+  padding: 3rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.aba-detail-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--aba-gradient-glow);
+}
+
+.aba-detail-header {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+}
+
+.aba-detail-badges {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.aba-detail-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.aba-detail-description {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+}
+
+/* Info Grid */
+.aba-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.aba-info-item {
+  padding: 1.25rem;
+  background: var(--aba-glass-bg);
+  border: 1px solid var(--aba-glass-border);
+  border-radius: var(--aba-radius-md);
+  backdrop-filter: blur(10px);
+}
+
+.aba-info-label {
+  font-size: 0.8rem;
+  color: var(--md-default-fg-color--light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.aba-info-value {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--md-default-fg-color);
+}
+
+.aba-info-value code {
+  background: var(--aba-primary);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.95rem;
 }
 
 /* ---------------------------------------------------------------------------
@@ -565,30 +621,182 @@
    --------------------------------------------------------------------------- */
 .aba-timeline {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0;
   margin: 2rem 0;
+  position: relative;
+}
+
+.aba-timeline::before {
+  content: '';
+  position: absolute;
+  left: 60px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--aba-gradient-accent);
 }
 
 .aba-timeline-item {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
-  background: var(--md-default-bg-color);
-  border-radius: var(--aba-radius-sm);
-  border-left: 3px solid var(--md-primary-fg-color);
-  box-shadow: var(--aba-shadow-sm);
+  gap: 2rem;
+  padding: 1.25rem 0;
+  position: relative;
 }
 
 .aba-timeline-year {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--md-primary-fg-color);
+  color: var(--aba-primary);
+  width: 50px;
+  text-align: right;
 }
 
 .aba-timeline-content {
+  font-size: 1rem;
+  color: var(--md-default-fg-color);
+  padding: 0.75rem 1.25rem;
+  background: var(--aba-glass-bg);
+  border: 1px solid var(--aba-glass-border);
+  border-radius: var(--aba-radius-md);
+  flex-grow: 1;
+}
+
+/* ---------------------------------------------------------------------------
+   Table Styles
+   --------------------------------------------------------------------------- */
+.aba-table-container {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border-radius: var(--aba-radius-md);
+  border: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.aba-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.aba-table th {
+  background: var(--aba-gradient-accent);
+  color: white;
+  font-weight: 600;
+  text-align: left;
+  padding: 1rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.aba-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.aba-table tr:hover td {
+  background: var(--aba-glass-bg);
+}
+
+.aba-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Tag Cloud
+   --------------------------------------------------------------------------- */
+.aba-tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+.aba-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 1rem;
+  background: var(--aba-glass-bg);
+  border: 1px solid var(--aba-glass-border);
+  border-radius: 2rem;
+  text-decoration: none;
+  color: var(--md-default-fg-color);
   font-size: 0.875rem;
+  transition: var(--aba-transition);
+}
+
+.aba-tag:hover {
+  background: var(--aba-primary);
+  color: white;
+  border-color: var(--aba-primary);
+  transform: translateY(-2px);
+}
+
+.aba-tag-count {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.aba-tag:hover .aba-tag-count {
+  opacity: 1;
+}
+
+/* Tag sizes */
+.aba-tag-size-1 { font-size: 0.8rem; }
+.aba-tag-size-2 { font-size: 0.875rem; }
+.aba-tag-size-3 { font-size: 1rem; }
+.aba-tag-size-4 { font-size: 1.125rem; }
+.aba-tag-size-5 { font-size: 1.25rem; }
+
+/* ---------------------------------------------------------------------------
+   Search Bar
+   --------------------------------------------------------------------------- */
+.aba-search-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1.25rem;
+  background: var(--aba-glass-bg);
+  border: 1px solid var(--aba-glass-border);
+  border-radius: var(--aba-radius-lg);
+  backdrop-filter: blur(10px);
+}
+
+.aba-search-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.875rem 1.25rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: var(--aba-radius-md);
+  font-size: 0.95rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  transition: var(--aba-transition);
+}
+
+.aba-search-input:focus {
+  outline: none;
+  border-color: var(--aba-primary);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+}
+
+.aba-filter-select {
+  padding: 0.875rem 1.25rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: var(--aba-radius-md);
+  font-size: 0.95rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  cursor: pointer;
+  transition: var(--aba-transition);
+  min-width: 140px;
+}
+
+.aba-filter-select:focus {
+  outline: none;
+  border-color: var(--aba-primary);
 }
 
 /* ---------------------------------------------------------------------------
@@ -597,63 +805,34 @@
 .aba-divider {
   border: none;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--md-default-fg-color--lightest), transparent);
-  margin: 3rem 0;
+  background: linear-gradient(90deg, transparent, var(--aba-primary), transparent);
+  margin: 4rem 0;
+  opacity: 0.3;
 }
 
 /* ---------------------------------------------------------------------------
-   Search Bar Styles
+   Chart Containers
    --------------------------------------------------------------------------- */
-.aba-search-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  padding: 1rem;
-  background: var(--md-default-bg-color);
-  border-radius: var(--aba-radius-sm);
-  box-shadow: var(--aba-shadow-sm);
+.aba-chart {
+  background: var(--aba-glass-bg);
+  border: 1px solid var(--aba-glass-border);
+  border-radius: var(--aba-radius-lg);
+  padding: 1.5rem;
+  margin: 1rem 0;
 }
 
-.aba-search-input {
-  flex: 1;
-  min-width: 200px;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--md-default-fg-color--lightest);
-  border-radius: var(--aba-radius-sm);
-  font-size: 0.875rem;
-  background: var(--md-default-bg-color);
+.aba-chart-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
   color: var(--md-default-fg-color);
-  transition: var(--aba-transition);
-}
-
-.aba-search-input:focus {
-  outline: none;
-  border-color: var(--md-primary-fg-color);
-  box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.1);
-}
-
-.aba-filter-select {
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--md-default-fg-color--lightest);
-  border-radius: var(--aba-radius-sm);
-  font-size: 0.875rem;
-  background: var(--md-default-bg-color);
-  color: var(--md-default-fg-color);
-  cursor: pointer;
-  transition: var(--aba-transition);
-}
-
-.aba-filter-select:focus {
-  outline: none;
-  border-color: var(--md-primary-fg-color);
 }
 
 /* ---------------------------------------------------------------------------
    Animation Utilities
    --------------------------------------------------------------------------- */
 .aba-animate {
-  animation: abaFadeIn 0.6s ease-out forwards;
+  animation: fadeInUp 0.6s ease-out forwards;
   opacity: 0;
 }
 
@@ -662,28 +841,133 @@
 .aba-animate-delay-2 { animation-delay: 0.2s; }
 .aba-animate-delay-3 { animation-delay: 0.3s; }
 .aba-animate-delay-4 { animation-delay: 0.4s; }
+.aba-animate-delay-5 { animation-delay: 0.5s; }
 
-@keyframes abaFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+/* ---------------------------------------------------------------------------
+   Responsive Adjustments
+   --------------------------------------------------------------------------- */
+@media screen and (max-width: 768px) {
+  .aba-hero {
+    padding: 4rem 1.5rem;
+    min-height: auto;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  
+  .aba-hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .aba-hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .aba-hero-actions {
+    flex-direction: column;
+  }
+  
+  .aba-hero-actions .aba-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .aba-stat-card {
+    min-width: 100px;
+    padding: 1rem 1.25rem;
+  }
+  
+  .aba-stat-value {
+    font-size: 1.75rem;
+  }
+  
+  .aba-bento-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .aba-bento-featured {
+    grid-column: span 1 !important;
+  }
+  
+  .aba-algo-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .aba-info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .aba-search-bar {
+    flex-direction: column;
+  }
+  
+  .aba-search-input,
+  .aba-filter-select {
+    width: 100%;
+  }
+  
+  .aba-detail-hero {
+    padding: 2rem 1.5rem;
+  }
+  
+  .aba-detail-title {
+    font-size: 1.75rem;
+  }
+  
+  .aba-timeline::before {
+    left: 20px;
+  }
+  
+  .aba-timeline-year {
+    width: auto;
+    font-size: 1rem;
+  }
+  
+  .aba-timeline-item {
+    gap: 1rem;
+    padding-left: 2rem;
   }
 }
 
-/* Reduce motion for accessibility */
+/* ---------------------------------------------------------------------------
+   Dark Mode Specific
+   --------------------------------------------------------------------------- */
+[data-md-color-scheme="slate"] .aba-bento-card,
+[data-md-color-scheme="slate"] .aba-algo-card,
+[data-md-color-scheme="slate"] .aba-info-item {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+[data-md-color-scheme="slate"] .aba-bento-card:hover,
+[data-md-color-scheme="slate"] .aba-algo-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ---------------------------------------------------------------------------
+   Print Styles
+   --------------------------------------------------------------------------- */
+@media print {
+  .aba-hero,
+  .aba-search-bar,
+  .aba-animate {
+    animation: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced Motion
+   --------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   .aba-animate {
-    animation: none;
-    opacity: 1;
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  
+  .aba-hero::before {
+    animation: none !important;
   }
   
   .aba-btn:hover,
   .aba-bento-card:hover,
-  .aba-algo-card:hover {
-    transform: none;
+  .aba-algo-card:hover,
+  .aba-stat-card:hover {
+    transform: none !important;
   }
 }

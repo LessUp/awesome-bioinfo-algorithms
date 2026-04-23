@@ -4,8 +4,8 @@
 
 {# Announcement Banner #}
 {% block announce %}
-  <a href="https://github.com/LessUp/awesome-bioinfo-algorithms/releases/latest">
-    🎉 <strong>Latest Release Available!</strong> 201+ algorithms with bilingual support!
+  <a href="https://github.com/shane/awesome-bioinfo-algorithms">
+    🎉 <strong>v2.0 BioTech Horizon Theme!</strong> Bilingual support · Data visualization · Modern design!
     <span class="twemoji">{% include ".icons/octicons/arrow-right-24.svg" %}</span>
   </a>
 {% endblock %}
@@ -18,7 +18,7 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="{{ title }} - Awesome Bioinformatics Algorithms">
   <meta property="og:description" content="A curated collection of 200+ bioinformatics algorithms with complexity analysis, paper links, and bilingual documentation.">
-  <meta property="og:image" content="https://lessup.github.io/awesome-bioinfo-algorithms/assets/images/social/index.png">
+  <meta property="og:image" content="https://shane.github.io/awesome-bioinfo-algorithms/assets/images/social/index.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -29,16 +29,14 @@
   
   {# Twitter Card #}
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@lessup">
-  <meta name="twitter:creator" content="@lessup">
   <meta name="twitter:title" content="{{ title }} - Awesome Bioinformatics Algorithms">
   <meta name="twitter:description" content="A curated collection of 200+ bioinformatics algorithms with complexity analysis.">
-  <meta name="twitter:image" content="https://lessup.github.io/awesome-bioinfo-algorithms/assets/images/social/index.png">
+  <meta name="twitter:image" content="https://shane.github.io/awesome-bioinfo-algorithms/assets/images/social/index.png">
   
   {# SEO Meta Tags #}
   <meta name="description" content="{{ page.meta.description if page and page.meta else 'A curated collection of 200+ bioinformatics algorithms' }}">
   <meta name="keywords" content="bioinformatics, algorithms, genomics, sequence alignment, variant calling, protein structure, machine learning">
-  <meta name="author" content="LessUp Community">
+  <meta name="author" content="Awesome Bioinfo Community">
   <link rel="canonical" href="{{ page.canonical_url if page else '' }}">
   
   {# Preconnect for performance #}
@@ -46,12 +44,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   
-  {# Theme Color for Mobile Browsers #}
-  <meta name="theme-color" content="#3f51b5" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#1a237e" media="(prefers-color-scheme: dark)">
+  {# Theme Color for Mobile Browsers - BioTech Horizon Colors #}
+  <meta name="theme-color" content="#0ea5e9" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
   
   {# Custom Fonts #}
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   
   {# Loading Animation Styles #}
   <style>
@@ -62,7 +60,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: var(--md-default-bg-color);
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
       z-index: 9999;
       display: flex;
       justify-content: center;
@@ -78,31 +76,14 @@
     .md-loading-spinner {
       width: 60px;
       height: 60px;
-      border: 4px solid var(--md-primary-fg-color--lightest);
-      border-top-color: var(--md-primary-fg-color);
+      border: 4px solid rgba(14, 165, 233, 0.2);
+      border-top-color: #0ea5e9;
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
     
     @keyframes spin {
       to { transform: rotate(360deg); }
-    }
-    
-    /* Progress Bar Animation */
-    .md-progress {
-      height: 3px;
-      background: linear-gradient(90deg, 
-        var(--md-primary-fg-color) 0%,
-        var(--md-accent-fg-color) 50%,
-        var(--md-primary-fg-color) 100%
-      );
-      background-size: 200% 100%;
-      animation: shimmer 2s infinite;
-    }
-    
-    @keyframes shimmer {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
     }
   </style>
 {% endblock %}
@@ -131,23 +112,23 @@
           {% endif %}
           
           {# Stats Display #}
-          <div class="md-footer-stats">
+          <div class="md-footer-stats" style="margin: 1rem 0; display: flex; gap: 1.5rem; flex-wrap: wrap;">
             <span class="md-footer-stat">
-              <strong>201</strong> Algorithms
+              <strong style="color: #0ea5e9;">201</strong> Algorithms
             </span>
             <span class="md-footer-stat">
-              <strong>16</strong> Categories
+              <strong style="color: #10b981;">16</strong> Categories
             </span>
             <span class="md-footer-stat">
-              <strong>399</strong> Tags
+              <strong style="color: #6366f1;">399</strong> Tags
             </span>
           </div>
           
           {# Made with Love #}
-          <div class="md-footer-made-with">
-            Made with ❤️ by the 
-            <a href="https://github.com/LessUp" target="_blank" rel="noopener">
-              LessUp Community
+          <div class="md-footer-made-with" style="margin-top: 1rem; font-size: 0.875rem; color: var(--md-default-fg-color--light);">
+            Built with ❤️ by the community | 
+            <a href="https://github.com/shane/awesome-bioinfo-algorithms" target="_blank" rel="noopener">
+              Contribute on GitHub
             </a>
           </div>
         </div>

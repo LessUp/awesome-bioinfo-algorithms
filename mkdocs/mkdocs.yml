@@ -1,23 +1,23 @@
 # =============================================================================
 # Awesome Bioinformatics Algorithms - MkDocs Configuration
 # =============================================================================
-# A high-performance, feature-rich documentation site configuration
-# optimized for GitHub Pages deployment.
+# Modern, bilingual documentation site configuration
+# Theme: BioTech Horizon - Deep tech blue with bio-green accents
 # =============================================================================
 
 site_name: Awesome Bioinformatics Algorithms
-site_url: https://lessup.github.io/awesome-bioinfo-algorithms/
+site_url: https://shane.github.io/awesome-bioinfo-algorithms/
 site_description: >
   A curated collection of 200+ bioinformatics algorithms with complexity analysis,
   implementation links, and comprehensive documentation in English and Chinese.
-site_author: LessUp Community
+site_author: Awesome Bioinfo Community
 copyright: >
-  Copyright &copy; 2025-2026 LessUp Community.
+  Copyright &copy; 2025-2026 Awesome Bioinfo Community.
   Released under CC0 1.0 Universal (Public Domain).
 
 # Repository configuration
-repo_url: https://github.com/LessUp/awesome-bioinfo-algorithms
-repo_name: LessUp/awesome-bioinfo-algorithms
+repo_url: https://github.com/shane/awesome-bioinfo-algorithms
+repo_name: shane/awesome-bioinfo-algorithms
 edit_uri: edit/main/mkdocs/docs/
 
 # ---------------------------------------------------------------------------
@@ -28,26 +28,26 @@ theme:
   language: zh
   custom_dir: overrides
   
-  # Color palette with dark mode support
+  # Color palette - BioTech Horizon theme
   palette:
-    # Light mode
+    # Light mode - Clean scientific
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: indigo
+      primary: light blue
+      accent: green
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode | 切换到深色模式
-    # Dark mode  
+    # Dark mode - Deep tech
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
-      accent: indigo
+      primary: blue
+      accent: teal
       toggle:
         icon: material/brightness-4
         name: Switch to light mode | 切换到浅色模式
   
-  # Typography
+  # Typography - Modern scientific
   font:
     text: Inter
     code: JetBrains Mono
@@ -93,7 +93,7 @@ theme:
     - content.action.view
 
 # ---------------------------------------------------------------------------
-# Plugins - optimized for GitHub Pages
+# Plugins - Core only
 # ---------------------------------------------------------------------------
 plugins:
   # Built-in search
@@ -102,36 +102,6 @@ plugins:
       lang:
         - zh
         - en
-      pipeline:
-        - stemmer
-        - stopWordFilter
-        - trimmer
-  
-  # Navigation customization
-  - awesome-pages
-  
-  # Git integration - page revision dates
-  - git-revision-date-localized:
-      type: date
-      fallback_to_build_date: true
-      enable_creation_date: false
-  
-  # Minification for production
-  - minify:
-      minify_html: true
-      minify_js: true
-      minify_css: true
-      htmlmin_opts:
-        remove_comments: true
-  
-  # RSS feed
-  - rss:
-      match_path: ".*"
-      date_from_meta:
-        as_creation: date
-      categories:
-        - categories
-        - tags
 
 # ---------------------------------------------------------------------------
 # Markdown Extensions
@@ -194,37 +164,48 @@ extra_css:
 
 extra_javascript:
   - javascripts/mathjax.js
+  - javascripts/extra.js
   - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js
   - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js
 
 # ---------------------------------------------------------------------------
-# Extra Configuration
+# Extra Configuration - Bilingual Support
 # ---------------------------------------------------------------------------
 extra:
+  # Language alternatives
+  alternate:
+    - name: 🇨🇳 简体中文
+      link: /
+      lang: zh
+    - name: 🇺🇸 English
+      link: /en/
+      lang: en
+  
   # Social links
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/LessUp/awesome-bioinfo-algorithms
+      link: https://github.com/shane/awesome-bioinfo-algorithms
       name: GitHub Repository
     - icon: material/rss-box
       link: /feed_rss_created.xml
       name: RSS Feed
     - icon: material/star
-      link: https://github.com/LessUp/awesome-bioinfo-algorithms/stargazers
+      link: https://github.com/shane/awesome-bioinfo-algorithms/stargazers
       name: Star us on GitHub
   
   # Status indicators
   status:
     new: Recently added
     updated: Recently updated
+    new_zh: 最近添加
+    updated_zh: 最近更新
+  
+  # Site metadata
+  version: 2.0.0
+  release_date: 2025-01
   
   # Generator disabled for cleaner output
   generator: false
-  
-  # Analytics (optional - uncomment if needed)
-  # analytics:
-  #   provider: google
-  #   property: G-XXXXXXXXXX
 
 # ---------------------------------------------------------------------------
 # Validation
@@ -243,7 +224,7 @@ watch:
   - ../awesome_bioinfo
 
 # ---------------------------------------------------------------------------
-# Navigation (auto-generated by awesome_bioinfo/generate_mkdocs.py)
+# Navigation
 # ---------------------------------------------------------------------------
 
 nav:
