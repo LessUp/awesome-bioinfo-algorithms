@@ -41,7 +41,7 @@ We welcome contributions in the following areas:
 
 ```bash
 # Fork the repository on GitHub, then:
-git clone https://github.com/YOUR_USERNAME/awesome-bioinfo-algorithms.git
+git clone https://github.com/LessUp/awesome-bioinfo-algorithms.git
 cd awesome-bioinfo-algorithms
 ```
 

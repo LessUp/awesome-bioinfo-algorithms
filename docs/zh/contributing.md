@@ -41,7 +41,7 @@ description: "如何添加算法、分支规范和贡献流程"
 
 ```bash
 # 在 GitHub 上 Fork 仓库，然后：
-git clone https://github.com/YOUR_USERNAME/awesome-bioinfo-algorithms.git
+git clone https://github.com/LessUp/awesome-bioinfo-algorithms.git
 cd awesome-bioinfo-algorithms
 ```
 
