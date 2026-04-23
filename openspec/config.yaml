@@ -1,0 +1,75 @@
+# OpenSpec Configuration
+# https://github.com/Fission-AI/OpenSpec
+
+# Required: Workflow schema to use
+schema: spec-driven
+
+# Optional: Project context injected into artifact instructions (max 50KB)
+context: |
+  Project: Awesome Bioinformatics Algorithms
+  Description: A curated collection of 200+ bioinformatics algorithms with automated tooling
+
+  Tech Stack:
+  - Language: Python 3.9-3.12
+  - Data Format: YAML (human-readable, machine-accessible)
+  - Testing: pytest + Hypothesis (property-based testing)
+  - Documentation: MkDocs with Material theme
+  - Quality: Ruff (linting/formatting), mypy (type checking), pre-commit hooks
+  - CI: GitHub Actions (multi-version testing, coverage >85%)
+
+  CLI Entry Point: python -m awesome_bioinfo <command>
+
+  Key Commands:
+  - validate: Validate all YAML data against schema
+  - stats: Display collection statistics
+  - search: Search algorithms by name, category, tags
+  - info: Display detailed algorithm information
+  - compare: Compare multiple algorithms side-by-side
+  - export: Export data in JSON/YAML/CSV/Markdown formats
+  - generate: Generate README.md from templates
+  - mkdocs: Generate MkDocs documentation site
+
+  Data Structure:
+  - data/categories.yaml: 16 categories with hierarchical subcategories
+  - data/algorithms/*.yaml: Algorithm entries (one file per category)
+  - schemas/algorithm-schema.json: JSON Schema for validation
+  - templates/: YAML templates for new entries
+
+  Constraints:
+  - No external dependencies for core CLI (stdlib + PyYAML only)
+  - Python 3.9-3.12 compatibility required
+  - Deterministic generation for CI diff checks
+  - Bilingual parity (English + Chinese documentation)
+  - Description length: 50-500 characters
+  - Algorithm IDs: lowercase, hyphenated, globally unique
+
+  Generated Outputs (do not hand-edit):
+  - README.md — via python -m awesome_bioinfo generate
+  - README.zh-CN.md — via python -m awesome_bioinfo generate --lang zh
+  - mkdocs/docs/ — via python -m awesome_bioinfo mkdocs
+
+# Optional: Rules mapped to artifact IDs
+rules:
+  proposal:
+    - Include affected algorithm categories if relevant
+    - Consider bilingual documentation impact
+    - Check if data schema changes are needed
+    - Update tests if behavior changes
+
+  specs:
+    - Use GIVEN/WHEN/THEN format for scenarios
+    - Reference existing patterns before inventing new ones
+    - Consider both success and error scenarios
+    - Include validation requirements
+
+  design:
+    - Consider Python 3.9 compatibility
+    - Avoid external dependencies for core functionality
+    - Ensure deterministic output for generators
+    - Consider bilingual support
+
+  tasks:
+    - Include validation command to run after changes
+    - Specify if README/mkdocs regeneration needed
+    - Add tests for new functionality
+    - Run linting and type checking
