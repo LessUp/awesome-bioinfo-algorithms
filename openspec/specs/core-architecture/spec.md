@@ -1,0 +1,167 @@
+# Core Architecture Specification
+
+## Purpose
+
+Define the technical architecture, data flow, and design constraints for the Awesome Bioinformatics Algorithms project to ensure maintainability, performance, and scalability.
+
+## Requirements
+
+### Requirement: Layered Architecture
+
+The system SHALL implement a layered architecture for separation of concerns.
+
+#### Scenario: Data layer
+- **GIVEN** the project structure
+- **WHEN** data is accessed
+- **THEN** YAML files in `data/` directory SHALL be the single source of truth
+- **AND** `data/categories.yaml` SHALL define the category taxonomy
+- **AND** `data/algorithms/*.yaml` SHALL contain algorithm entries
+
+#### Scenario: Processing layer
+- **GIVEN** the Python package
+- **WHEN** data is processed
+- **THEN** `awesome_bioinfo/` package SHALL provide all processing logic
+- **AND** dataclasses SHALL be used for structured records
+- **AND** the registry pattern SHALL be used for algorithm lookup
+
+#### Scenario: CLI layer
+- **GIVEN** the command interface
+- **WHEN** a user runs a command
+- **THEN** `python -m awesome_bioinfo <command>` SHALL be the entry point
+- **AND** appropriate exit codes SHALL be returned
+
+#### Scenario: Documentation layer
+- **GIVEN** the generators
+- **WHEN** documentation is generated
+- **THEN** README.md and MkDocs site SHALL be generated
+- **AND** templates SHALL be used for consistent output
+
+### Requirement: Data Flow Architecture
+
+Data SHALL flow unidirectionally from source to generated outputs.
+
+#### Scenario: Data loading flow
+- **GIVEN** YAML data files
+- **WHEN** data is loaded
+- **THEN** Data Loader (`data_io.py`) SHALL read YAML files
+- **AND** Validator (`validate.py`) SHALL validate entries
+- **AND** Registry SHALL build in-memory index
+
+#### Scenario: Generation flow
+- **GIVEN** the registry
+- **WHEN** generation is requested
+- **THEN** README Generator SHALL produce README.md
+- **AND** MkDocs Generator SHALL produce documentation site
+- **AND** output SHALL be deterministic
+
+### Requirement: Technology Stack
+
+The project SHALL use the specified technology stack.
+
+#### Scenario: Python version support
+- **GIVEN** the project code
+- **WHEN** Python version is checked
+- **THEN** Python 3.9, 3.10, 3.11, and 3.12 SHALL be supported
+- **AND** no version-specific features SHALL break compatibility
+
+#### Scenario: Dependency constraints
+- **GIVEN** the core CLI commands
+- **WHEN** dependencies are analyzed
+- **THEN** only stdlib + PyYAML SHALL be required for core functionality
+- **AND** additional dependencies MAY be used for development/testing
+
+#### Scenario: Data format
+- **GIVEN** data files
+- **WHEN** format is checked
+- **THEN** YAML SHALL be used for human readability
+- **AND** files SHALL be split by category for maintainability
+
+### Requirement: Code Quality Tools
+
+The project SHALL use modern code quality tools.
+
+#### Scenario: Linting
+- **GIVEN** Python source files
+- **WHEN** linting is run
+- **THEN** Ruff SHALL be used for formatting and linting
+- **AND** all checks SHALL pass in CI
+
+#### Scenario: Type checking
+- **GIVEN** Python source files
+- **WHEN** type checking is run
+- **THEN** mypy SHALL be used
+- **AND** `--ignore-missing-imports` flag MAY be used
+
+#### Scenario: Testing
+- **GIVEN** the test suite
+- **WHEN** tests are run
+- **THEN** pytest SHALL be the test framework
+- **AND** Hypothesis SHALL be used for property-based testing
+
+### Requirement: CLI Exit Codes
+
+All CLI commands SHALL return appropriate exit codes.
+
+#### Scenario: Success
+- **GIVEN** any CLI command
+- **WHEN** execution succeeds
+- **THEN** exit code 0 SHALL be returned
+
+#### Scenario: Validation failure
+- **GIVEN** the validate command
+- **WHEN** validation errors are found
+- **THEN** exit code 1 SHALL be returned
+
+#### Scenario: Invalid arguments
+- **GIVEN** any CLI command
+- **WHEN** invalid arguments are provided
+- **THEN** exit code 2 SHALL be returned
+
+### Requirement: Deterministic Generation
+
+Generated outputs SHALL be deterministic.
+
+#### Scenario: README regeneration
+- **GIVEN** the same input data
+- **WHEN** README is generated multiple times
+- **THEN** output SHALL be identical each time
+- **AND** `git diff --exit-code` SHALL pass in CI
+
+#### Scenario: MkDocs regeneration
+- **GIVEN** the same input data
+- **WHEN** MkDocs site is generated multiple times
+- **THEN** output SHALL be identical each time
+
+### Requirement: File Organization
+
+The project SHALL follow the specified directory structure.
+
+#### Scenario: Main package structure
+- **GIVEN** the project root
+- **WHEN** the structure is examined
+- **THEN** `awesome_bioinfo/` SHALL contain the main package
+- **AND** `data/algorithms/` SHALL contain 16 YAML files (one per category)
+- **AND** `tests/` SHALL contain pytest tests
+- **AND** `templates/` SHALL contain YAML and README templates
+
+#### Scenario: OpenSpec integration
+- **GIVEN** the OpenSpec structure
+- **WHEN** specifications are accessed
+- **THEN** `openspec/specs/` SHALL contain living specifications
+- **AND** `openspec/changes/` SHALL contain proposed changes
+- **AND** `openspec/changes/archive/` SHALL contain completed changes
+
+## Performance Constraints
+
+| Constraint | Requirement |
+|------------|-------------|
+| Validation time | <10 seconds for 200+ algorithms |
+| CLI response | <2 seconds for any command |
+| Scalability | Support up to 1000 algorithm entries |
+
+## Testing Strategy
+
+1. **Unit Tests**: Test each module in isolation
+2. **Integration Tests**: Test CLI commands end-to-end
+3. **Property Tests**: Use Hypothesis to validate invariants
+4. **Smoke Tests**: CI runs basic CLI commands
