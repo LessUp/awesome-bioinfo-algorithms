@@ -180,7 +180,7 @@ def test_main_returns_help_when_no_command_is_provided(capsys):
     output = capsys.readouterr().out
 
     assert exit_code == 1
-    assert "usage: python -m scripts" in output
+    assert "usage: python -m awesome_bioinfo" in output
     assert "search" in output
     assert "mkdocs" in output
 
