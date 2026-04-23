@@ -129,9 +129,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Statistics / 统计
 
-- **Total Algorithms**: 201 / 算法总数：201
+- **Total Algorithms**: 195 / 算法总数：195
 - **Total Categories**: 16 / 分类数：16
-- **Total Tags**: 399 / 标签数：399
+- **Total Tags**: 392 / 标签数：392
 
 ---
 
