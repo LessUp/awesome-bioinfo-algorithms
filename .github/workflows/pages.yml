@@ -25,8 +25,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Required for git-revision-date plugin
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -57,12 +55,10 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Generate MkDocs pages
-        run: python awesome_bioinfo/generate_mkdocs.py
+        run: python -m awesome_bioinfo mkdocs
 
       - name: Build MkDocs site
         run: mkdocs build -f mkdocs/mkdocs.yml --site-dir ${{ github.workspace }}/_site
-        env:
-          MKDOCS_GIT_COMMITTERS_APIKEY: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

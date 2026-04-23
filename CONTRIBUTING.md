@@ -68,8 +68,8 @@ algorithms:
 如果要快速确认分类、子分类和已有条目，也可以运行：
 
 ```bash
-python -m scripts stats
-python -m scripts search --category sequence-alignment
+python -m awesome_bioinfo stats
+python -m awesome_bioinfo search --category sequence-alignment
 ```
 
 #### 3. 参与规范文档编写
@@ -117,13 +117,13 @@ pip install -e ".[dev]"
 python -m pytest tests/ -v
 
 # 校验数据
-python -m scripts validate
+python -m awesome_bioinfo validate
 
 # 生成 MkDocs 预览页面
-python -m scripts mkdocs
+python -m awesome_bioinfo mkdocs
 
 # 生成 README 预览
-python -m scripts generate
+python -m awesome_bioinfo generate
 ```
 
 ### 其他贡献方式
@@ -205,8 +205,8 @@ See `data/categories.yaml` or `templates/algorithm_template.yaml` for the full s
 To quickly inspect available categories, subcategories, and existing entries, you can also run:
 
 ```bash
-python -m scripts stats
-python -m scripts search --category sequence-alignment
+python -m awesome_bioinfo stats
+python -m awesome_bioinfo search --category sequence-alignment
 ```
 
 #### 3. Contributing to Specifications
@@ -254,13 +254,13 @@ pip install -e ".[dev]"
 python -m pytest tests/ -v
 
 # Validate data
-python -m scripts validate
+python -m awesome_bioinfo validate
 
 # Generate MkDocs preview pages
-python -m scripts mkdocs
+python -m awesome_bioinfo mkdocs
 
 # Generate README preview
-python -m scripts generate
+python -m awesome_bioinfo generate
 ```
 
 ### Other Ways to Contribute

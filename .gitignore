@@ -237,3 +237,9 @@ mkdocs/docs/search.md
 mkdocs/docs/about.md
 mkdocs/docs/index.md
 mkdocs/site/
+
+# =============================================================================
+# Claude Code Local
+# =============================================================================
+
+CLAUDE.local.md
