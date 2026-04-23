@@ -61,9 +61,11 @@ class Validator:
         "difficulty",
         "language",
         "references",
+        "description_en",
+        "purpose_en",
     ]
     REQUIRED_CATEGORY_FIELDS = ["id", "name", "name_en"]
-    OPTIONAL_CATEGORY_FIELDS = ["description", "subcategories"]
+    OPTIONAL_CATEGORY_FIELDS = ["description", "description_en", "subcategories"]
     CATEGORY_STRING_FIELDS = ["id", "name", "name_en", "description"]
     ALGORITHM_STRING_FIELDS = [
         "id",
@@ -76,6 +78,8 @@ class Validator:
         "paper_url",
         "implementation_url",
         "subcategory",
+        "description_en",
+        "purpose_en",
     ]
     ALGORITHM_LIST_FIELDS = ["related_tools", "tags"]
 
@@ -201,7 +205,7 @@ class Validator:
 
         year = data.get("year", 0)
         if year:
-            if type(year) is not int:
+            if not isinstance(year, int):
                 result.add_warning(
                     f"Field 'year' should be an integer, got {type(year).__name__}: {year}"
                 )
