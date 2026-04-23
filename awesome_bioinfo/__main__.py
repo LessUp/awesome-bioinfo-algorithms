@@ -3,14 +3,14 @@
 CLI entry point for Awesome Bioinformatics Algorithms scripts.
 
 Usage:
-    python -m scripts generate                     # Generate README.md
-    python -m scripts validate                     # Validate all data files
-    python -m scripts stats                        # Show statistics
-    python -m scripts search [options]             # Search algorithms
-    python -m scripts info <id>                    # Show algorithm details
-    python -m scripts compare <id1> <id2>          # Compare two algorithms
-    python -m scripts export [options]             # Export data to JSON/CSV
-    python -m scripts mkdocs                       # Generate MkDocs pages
+    python -m awesome_bioinfo generate                     # Generate README.md
+    python -m awesome_bioinfo validate                     # Validate all data files
+    python -m awesome_bioinfo stats                        # Show statistics
+    python -m awesome_bioinfo search [options]             # Search algorithms
+    python -m awesome_bioinfo info <id>                    # Show algorithm details
+    python -m awesome_bioinfo compare <id1> <id2>          # Compare two algorithms
+    python -m awesome_bioinfo export [options]             # Export data to JSON/CSV
+    python -m awesome_bioinfo mkdocs                       # Generate MkDocs pages
 """
 
 import argparse
@@ -255,7 +255,7 @@ def cmd_check_links() -> int:
 
 def build_parser() -> argparse.ArgumentParser:
     """Build the top-level CLI parser."""
-    parser = argparse.ArgumentParser(prog="python -m scripts")
+    parser = argparse.ArgumentParser(prog="python -m awesome_bioinfo")
     subparsers = parser.add_subparsers(dest="command")
 
     generate_parser = subparsers.add_parser(

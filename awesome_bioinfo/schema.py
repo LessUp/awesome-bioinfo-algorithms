@@ -10,6 +10,12 @@ VALID_DIFFICULTIES = ("beginner", "intermediate", "advanced")
 VALID_REFERENCE_TYPES = ("tutorial", "blog", "video", "book", "documentation", "slides")
 
 DIFFICULTY_LABELS = {
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced",
+}
+
+DIFFICULTY_LABELS_BILINGUAL = {
     "beginner": "入门 (Beginner)",
     "intermediate": "进阶 (Intermediate)",
     "advanced": "高级 (Advanced)",
@@ -51,6 +57,7 @@ class Category:
     name: str
     name_en: str
     description: str = ""
+    description_en: str = ""
     subcategories: list["Category"] = field(default_factory=list)
     parent_id: Optional[str] = None
 
@@ -62,6 +69,8 @@ class Category:
             "name_en": self.name_en,
             "description": self.description,
         }
+        if self.description_en:
+            result["description_en"] = self.description_en
         if self.subcategories:
             result["subcategories"] = [sub.to_dict() for sub in self.subcategories]
         return result
@@ -79,6 +88,7 @@ class Category:
             name=data["name"],
             name_en=data["name_en"],
             description=data.get("description", ""),
+            description_en=data.get("description_en", ""),
             subcategories=subcategories,
             parent_id=parent_id,
         )
@@ -107,6 +117,10 @@ class AlgorithmEntry:
     difficulty: str = ""
     language: list[str] = field(default_factory=list)
     references: list[Reference] = field(default_factory=list)
+
+    # English translations (optional, for README generation)
+    description_en: str = ""
+    purpose_en: str = ""
 
     def to_dict(self) -> dict:
         """Convert to dictionary for serialization."""
@@ -139,6 +153,10 @@ class AlgorithmEntry:
             result["language"] = self.language
         if self.references:
             result["references"] = [ref.to_dict() for ref in self.references]
+        if self.description_en:
+            result["description_en"] = self.description_en
+        if self.purpose_en:
+            result["purpose_en"] = self.purpose_en
         return result
 
     @classmethod
@@ -161,8 +179,28 @@ class AlgorithmEntry:
             difficulty=data.get("difficulty", ""),
             language=data.get("language", []),
             references=[Reference.from_dict(r) for r in data.get("references", [])],
+            description_en=data.get("description_en", ""),
+            purpose_en=data.get("purpose_en", ""),
         )
 
     def __hash__(self) -> int:
         """Hash based on algorithm ID for use in sets and dicts."""
         return hash(self.id)
+
+    def get_year_badge(self) -> str:
+        """Return year badge based on algorithm publication year."""
+        if self.year == 0:
+            return ""
+        if self.year <= 1990:
+            return "⭐"
+        if self.year >= 2023:
+            return "🆕"
+        return ""
+
+    def is_classic(self) -> bool:
+        """Check if algorithm is considered classic (published before 1990)."""
+        return self.year > 0 and self.year <= 1990
+
+    def is_new(self) -> bool:
+        """Check if algorithm is considered new (published in last 3 years)."""
+        return self.year >= 2023
