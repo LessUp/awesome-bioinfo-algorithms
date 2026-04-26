@@ -29,6 +29,35 @@ This project follows **OpenSpec** for specification-driven development (SDD). Th
 | algorithm-schema | `openspec/specs/algorithm-schema/spec.md` | YAML data schema |
 | testing-strategy | `openspec/specs/testing-strategy/spec.md` | Test requirements |
 
+### When to Propose vs. Directly Edit
+
+| Situation | Action |
+|-----------|--------|
+| Fixing a typo, updating a URL, adding one algorithm entry | Edit directly, no proposal needed |
+| Adding a new CLI command, changing validation rules | `/opsx:propose` → `/opsx:apply` → `/opsx:archive` |
+| Any change touching multiple specs or Python modules | `/opsx:propose` → `/opsx:apply` → `/opsx:archive` |
+| Updating a living spec to match already-merged code | Direct edit to the spec, no proposal needed |
+
+### Branch Strategy
+
+Keep branching lightweight:
+
+- **Trivial fixes** (data entries, docs, single-file edits): commit directly to `main`.
+- **Non-trivial changes** (new feature, refactor, multi-file): create a short-lived branch named `<type>/<short-description>` (e.g. `feat/add-blast-entry`), merge via PR, delete branch after merge.
+- Avoid long-lived branches. Changes should be small enough to merge within a day or two.
+- After merging, regenerate outputs if `data/` or templates changed (see **Generated Outputs** below).
+
+### When to Use `/review`
+
+Invoke `/review` (the `requesting-code-review` skill) before merging when:
+
+- The change touches Python logic in `awesome_bioinfo/`.
+- The change modifies a living spec in `openspec/specs/`.
+- The change adds or removes a category.
+- You are unsure whether the implementation matches the spec.
+
+Skip `/review` for pure data additions (new algorithm YAML entries that pass `validate`) and documentation-only typo fixes.
+
 ## Project Commands
 
 ```bash
