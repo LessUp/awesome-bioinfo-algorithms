@@ -309,7 +309,7 @@ This project uses **OpenSpec**. Living specs in `openspec/specs/` are the single
 
 ### Branch Strategy
 
-- **Trivial / single-file changes**: commit directly to `main`.
+- **Trivial / single-file changes**: commit directly to the default branch (currently `master`).
 - **Non-trivial changes**: short-lived branch `<type>/<description>`, merged via PR, branch deleted after merge.
 - Keep branches short-lived. Aim to merge within one or two days to avoid divergence.
 

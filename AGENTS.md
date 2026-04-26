@@ -42,7 +42,7 @@ This project follows **OpenSpec** for specification-driven development (SDD). Th
 
 Keep branching lightweight:
 
-- **Trivial fixes** (data entries, docs, single-file edits): commit directly to `main`.
+- **Trivial fixes** (data entries, docs, single-file edits): commit directly to the default branch (currently `master`).
 - **Non-trivial changes** (new feature, refactor, multi-file): create a short-lived branch named `<type>/<short-description>` (e.g. `feat/add-blast-entry`), merge via PR, delete branch after merge.
 - Avoid long-lived branches. Changes should be small enough to merge within a day or two.
 - After merging, regenerate outputs if `data/` or templates changed (see **Generated Outputs** below).
