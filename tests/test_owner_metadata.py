@@ -9,9 +9,6 @@ import inspect
 import os
 import re
 
-import pytest
-
-
 WRONG_OWNER_RE = re.compile(r"(shane\.github\.io|github\.com/shane\b|shane/awesome-bioinfo)", re.IGNORECASE)
 CORRECT_AUTHOR = "LessUp"
 CORRECT_REPO_URL = "https://github.com/LessUp/awesome-bioinfo-algorithms"
