@@ -109,8 +109,8 @@ python -m awesome_bioinfo search --category sequence-alignment
 在提交前，请在本地运行验证：
 
 ```bash
-# 安装依赖（开发模式）
-pip install -e ".[dev]"
+# 安装依赖（开发 + MkDocs）
+pip install -e ".[dev,docs]"
 # 或：pip install -r requirements.txt
 
 # 运行测试
@@ -246,8 +246,8 @@ See: [Spec Contributing Guide](#spec-contributing-english)
 Before submitting, please run validation locally:
 
 ```bash
-# Install dependencies (dev mode)
-pip install -e ".[dev]"
+# Install dependencies (dev + MkDocs)
+pip install -e ".[dev,docs]"
 # Or: pip install -r requirements.txt
 
 # Run tests

@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pip-audit
-          pip install -e ".[dev]"
+          pip install -e ".[dev,docs]"
 
       - name: Generate requirements lock
         run: pip freeze > /tmp/requirements-lock.txt

@@ -116,8 +116,8 @@ cd awesome-bioinfo-algorithms
 python -m venv venv
 source venv/bin/activate
 
-# 安装开发依赖
-pip install -e ".[dev]"
+# 安装开发依赖（如需生成 MkDocs，请包含 docs extra）
+pip install -e ".[dev,docs]"
 ```
 
 ### 常用 CLI 命令

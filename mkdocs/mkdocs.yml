@@ -18,7 +18,7 @@ copyright: >
 # Repository configuration
 repo_url: https://github.com/LessUp/awesome-bioinfo-algorithms
 repo_name: LessUp/awesome-bioinfo-algorithms
-edit_uri: edit/main/mkdocs/docs/
+edit_uri: edit/master/mkdocs/docs/
 
 # ---------------------------------------------------------------------------
 # Theme Configuration - Material for MkDocs
@@ -186,9 +186,6 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/LessUp/awesome-bioinfo-algorithms
       name: GitHub Repository
-    - icon: material/rss-box
-      link: /feed_rss_created.xml
-      name: RSS Feed
     - icon: material/star
       link: https://github.com/LessUp/awesome-bioinfo-algorithms/stargazers
       name: Star us on GitHub
@@ -201,8 +198,8 @@ extra:
     updated_zh: 最近更新
   
   # Site metadata
-  version: 2.0.0
-  release_date: 2025-01
+  version: 1.0.2
+  release_date: 2026-04-16
   
   # Generator disabled for cleaner output
   generator: false
