@@ -228,6 +228,9 @@ def test_build_parser_accepts_new_command_options():
     args = parser.parse_args(["mkdocs"])
     assert args.command == "mkdocs"
 
+    args = parser.parse_args(["check-links"])
+    assert args.command == "check-links"
+
 
 def test_main_prefers_keyword_flag_over_positional(monkeypatch):
     """main() should prefer --keyword over the positional search term."""
@@ -279,3 +282,12 @@ def test_main_dispatches_mkdocs_command(monkeypatch):
 
     assert cli.main(["mkdocs"]) == 0
     assert called == ["mkdocs"]
+
+
+def test_main_dispatches_check_links_command(monkeypatch):
+    """main() should dispatch the check-links subcommand."""
+    called = []
+    monkeypatch.setattr(cli, "cmd_check_links", lambda: called.append("check-links") or 0)
+
+    assert cli.main(["check-links"]) == 0
+    assert called == ["check-links"]

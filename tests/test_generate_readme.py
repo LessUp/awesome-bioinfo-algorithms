@@ -15,3 +15,11 @@ def test_main_delegates_to_cmd_generate(monkeypatch):
 
     assert generate_readme.main() == 5
     assert called == ["generate"]
+
+
+def test_wrapper_docstring_references_current_cli_module():
+    """Compatibility wrapper docstring should reference awesome_bioinfo, not scripts."""
+    module_doc = generate_readme.__doc__ or ""
+
+    assert "python -m awesome_bioinfo generate" in module_doc
+    assert "python -m scripts generate" not in module_doc

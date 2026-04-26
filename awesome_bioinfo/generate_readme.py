@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Backward-compatible wrapper around `python -m scripts generate`."""
+"""Backward-compatible wrapper around `python -m awesome_bioinfo generate`."""
 
 import sys
 

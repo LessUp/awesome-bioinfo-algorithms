@@ -10,15 +10,25 @@ from .category_manager import CategoryManager
 from .schema import AlgorithmEntry
 
 
-def _resolve(registry: AlgorithmRegistry, algo_id: str) -> Optional[AlgorithmEntry]:
-    """Resolve an algorithm by ID or fuzzy search."""
+def _resolve(
+    registry: AlgorithmRegistry, algo_id: str
+) -> tuple[Optional[AlgorithmEntry], list[AlgorithmEntry]]:
+    """Resolve an algorithm by exact ID or unambiguous fuzzy search.
+
+    Returns:
+        A tuple of:
+        - the resolved AlgorithmEntry when there is an exact or unambiguous fuzzy match
+        - the list of ambiguous fuzzy candidates, empty when resolution is unambiguous
+    """
     algo = registry.get_algorithm(algo_id)
     if algo:
-        return algo
+        return algo, []
     matches = registry.search(algo_id)
     if len(matches) == 1:
-        return matches[0]
-    return None
+        return matches[0], []
+    if len(matches) > 1:
+        return None, matches
+    return None, []
 
 
 def cmd_compare(
@@ -28,15 +38,35 @@ def cmd_compare(
     id2: str,
 ) -> int:
     """Compare two algorithms side by side."""
-    a1 = _resolve(registry, id1)
-    a2 = _resolve(registry, id2)
+    r1, r1_candidates = _resolve(registry, id1)
+    r2, r2_candidates = _resolve(registry, id2)
 
-    if not a1:
-        print(f"Algorithm not found: '{id1}'")
+    problems: list[tuple[str, str, Optional[list[AlgorithmEntry]]]] = []
+    if r1_candidates:
+        problems.append(("ambiguous", id1, r1_candidates))
+    elif not r1:
+        problems.append(("missing", id1, None))
+
+    if r2_candidates:
+        problems.append(("ambiguous", id2, r2_candidates))
+    elif not r2:
+        problems.append(("missing", id2, None))
+
+    if problems:
+        for problem_type, query, candidates in problems:
+            if problem_type == "ambiguous":
+                assert candidates is not None
+                print(f"Ambiguous argument '{query}': matches multiple algorithms:")
+                for candidate in candidates:
+                    print(f"  - {candidate.id}: {candidate.name}")
+            else:
+                print(f"Algorithm not found: '{query}'")
         return 1
-    if not a2:
-        print(f"Algorithm not found: '{id2}'")
-        return 1
+
+    assert r1 is not None
+    assert r2 is not None
+    a1 = r1
+    a2 = r2
 
     fields = [
         ("Name", lambda a: a.name),

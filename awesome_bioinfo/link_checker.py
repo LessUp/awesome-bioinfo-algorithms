@@ -2,7 +2,7 @@
 URL validation module for checking algorithm paper and implementation links.
 
 Usage:
-    python -m scripts check-links
+    python -m awesome_bioinfo check-links
 
 This command validates all URLs in algorithm entries and reports broken links.
 """
