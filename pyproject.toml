@@ -41,14 +41,11 @@ dev = [
     "mypy>=1.0",
     "pre-commit>=3.0",
     "types-PyYAML>=6.0",
-    "mkdocs-material[imaging]>=9.0",
-    "mkdocs-awesome-pages-plugin>=1.0",
-    "mkdocs-git-revision-date-localized-plugin>=1.0",
-    "mkdocs-minify-plugin>=0.7",
-    "mkdocs-rss-plugin>=1.0",
-    "mkdocstrings[python]>=0.24",
-    "pillow>=10.0",
-    "cairosvg>=2.0",
+]
+docs = [
+    # MkDocs Material theme — the only plugin in use is the built-in search.
+    # [imaging] is omitted: social cards are not configured in mkdocs/mkdocs.yml.
+    "mkdocs-material>=9.0",
 ]
 
 [project.urls]

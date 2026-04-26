@@ -1,4 +1,7 @@
 # Convenience requirements file for contributors.
 # The dependency source of truth is pyproject.toml.
 # Use this file if you prefer: pip install -r requirements.txt
--e .[dev]
+#
+# [dev]  – testing, linting, type-checking (required for CI)
+# [docs] – MkDocs Material for local site preview (optional)
+-e .[dev,docs]
