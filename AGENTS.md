@@ -58,6 +58,14 @@ Invoke `/review` (the `requesting-code-review` skill) before merging when:
 
 Skip `/review` for pure data additions (new algorithm YAML entries that pass `validate`) and documentation-only typo fixes.
 
+### MCP vs CLI Skills
+
+- Use MCP for **external GitHub state**: repository metadata, issues/PRs, Actions runs/logs, and other remote settings.
+- Use local CLI skills for **repo-contained maintenance loops** where the source of truth is already in the checkout.
+- Current high-value local skills:
+  - `verify` — quick lint + typecheck sanity check
+  - `updating-algorithm-data` — category / algorithm YAML changes, validation, regeneration, and generated-output drift checks
+
 ## Project Commands
 
 ```bash
