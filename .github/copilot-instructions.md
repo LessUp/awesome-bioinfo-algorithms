@@ -18,7 +18,7 @@ After changing `data/` or templates, regenerate and verify no unintended drift:
 
 ```bash
 python -m awesome_bioinfo generate && python -m awesome_bioinfo mkdocs
-git diff -- README.md mkdocs/docs/
+git diff --exit-code -- README.md mkdocs/docs/
 ```
 
 **`README.zh-CN.md` is manually maintained -- never treat it as generated or overwrite it.**
@@ -45,7 +45,7 @@ python -m awesome_bioinfo compare <id1> <id2>
 python -m awesome_bioinfo export --format json
 python -m awesome_bioinfo check-links
 
-ruff check awesome_bioinfo tests && mypy awesome_bioinfo
+ruff check awesome_bioinfo tests && mypy awesome_bioinfo --ignore-missing-imports
 pytest tests/ -v --tb=short
 ```
 
