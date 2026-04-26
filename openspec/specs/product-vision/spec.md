@@ -4,7 +4,7 @@
 
 Define the product vision and high-level requirements for the Awesome Bioinformatics Algorithms project, ensuring comprehensive algorithm coverage, bilingual documentation, and automated tooling for the bioinformatics community.
 
-`openspec/specs/` is the single source of truth for all product and technical requirements. The MkDocs site (`mkdocs/`) is the sole public documentation surface. Legacy `docs/` (Jekyll-based) has been removed and is not maintained.
+`openspec/specs/` is the single source of truth for all product and technical requirements. The MkDocs site (`mkdocs/`) is the authoritative public documentation surface. A legacy `docs/` directory (Jekyll-based) may temporarily coexist during migration but is non-authoritative and scheduled for removal.
 
 ## Requirements
 
@@ -148,4 +148,4 @@ These features are explicitly NOT planned:
 - Algorithm implementations (only references)
 - Execution benchmarking (only complexity analysis)
 - Real-time data updates (static YAML files)
-- Jekyll / legacy `docs/` site (removed)
+- New Jekyll / legacy `docs/` content (legacy `docs/` is non-authoritative and being removed)

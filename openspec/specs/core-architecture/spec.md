@@ -11,10 +11,10 @@ Define the technical architecture, data flow, and design constraints for the Awe
 | Requirements | `openspec/specs/` | Living specifications (this layer) |
 | Data | `data/` | Algorithm YAML + category definitions |
 | Implementation | `awesome_bioinfo/` | Python CLI package |
-| Public Docs | `mkdocs/` | MkDocs site (sole public documentation surface) |
+| Public Docs | `mkdocs/` | MkDocs site (authoritative public documentation surface) |
 | Root Governance | `README.md`, `CONTRIBUTING.md`, etc. | Necessary root-level files only |
 
-Legacy Jekyll documentation in `docs/` has been removed. `openspec/` and `mkdocs/` are the authoritative requirements and documentation surfaces respectively.
+Legacy Jekyll documentation in `docs/` may temporarily coexist during migration but is non-authoritative and scheduled for removal. `openspec/` and `mkdocs/` are the authoritative requirements and documentation surfaces respectively.
 
 ## Requirements
 

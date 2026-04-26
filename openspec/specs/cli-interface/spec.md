@@ -59,21 +59,24 @@ The stats command SHALL display collection statistics.
 
 The search command SHALL find algorithms matching criteria.
 
-#### Scenario: Search by name
+#### Scenario: Search by name (positional or --keyword)
 - **GIVEN** the algorithm collection
 - **WHEN** `python -m awesome_bioinfo search <query>` is executed
-- **THEN** algorithms with matching names SHALL be returned
+- **OR** `python -m awesome_bioinfo search --keyword <query>` is executed
+- **THEN** algorithms with matching names, descriptions, purposes, or tags SHALL be returned
 - **AND** search SHALL be case-insensitive
+
+> Note: Both forms are equivalent. The positional argument and `--keyword` flag resolve to the same search path.
 
 #### Scenario: Filter by category
 - **GIVEN** the search command
 - **WHEN** `--category` option is provided
 - **THEN** only algorithms in that category SHALL be returned
 
-#### Scenario: Filter by tags
+#### Scenario: Filter by tag
 - **GIVEN** the search command
-- **WHEN** `--tags` option is provided
-- **THEN** algorithms with all specified tags SHALL be returned
+- **WHEN** `--tag` option is provided
+- **THEN** algorithms with the specified tag SHALL be returned
 
 #### Scenario: Filter by difficulty
 - **GIVEN** the search command
@@ -83,24 +86,31 @@ The search command SHALL find algorithms matching criteria.
 #### Scenario: No results
 - **GIVEN** a search query
 - **WHEN** no algorithms match
-- **THEN** exit code 1 SHALL be returned
-- **AND** a helpful message SHALL be displayed
+- **THEN** exit code 0 SHALL be returned
+- **AND** a "no results" message SHALL be displayed
 
 ### Requirement: Info Command
 
 The info command SHALL display detailed algorithm information as formatted text.
 
-#### Scenario: Algorithm found
+#### Scenario: Algorithm found by exact ID
 - **GIVEN** a valid algorithm ID
 - **WHEN** `python -m awesome_bioinfo info <id>` is executed
 - **THEN** all algorithm fields SHALL be displayed as text
 - **AND** exit code 0 SHALL be returned
 
+#### Scenario: Fuzzy lookup on partial/approximate ID
+- **GIVEN** a query that does not exactly match any ID
+- **WHEN** info command is executed
+- **THEN** the registry search SHALL be used as a fallback
+- **AND** if exactly one match is found it SHALL be displayed (exit code 0)
+- **AND** if multiple matches are found they SHALL be listed and exit code 1 SHALL be returned
+
 #### Scenario: Algorithm not found
-- **GIVEN** an invalid algorithm ID
+- **GIVEN** an ID with no exact or fuzzy match
 - **WHEN** info command is executed
 - **THEN** exit code 1 SHALL be returned
-- **AND** an error message with suggestion to use search SHALL be displayed
+- **AND** an error message SHALL be displayed
 
 > Note: Output is text-only. There is no `--format` flag for this command.
 
@@ -109,13 +119,20 @@ The info command SHALL display detailed algorithm information as formatted text.
 The compare command SHALL compare exactly two algorithms side by side.
 
 #### Scenario: Successful comparison
-- **GIVEN** exactly two valid algorithm IDs
+- **GIVEN** exactly two valid algorithm IDs (or unambiguous partial names)
 - **WHEN** `python -m awesome_bioinfo compare <id1> <id2>` is executed
 - **THEN** a side-by-side comparison SHALL be displayed
 - **AND** key differences SHALL be highlighted
 
+#### Scenario: Fuzzy resolution for compare
+- **GIVEN** an argument that does not exactly match an ID
+- **WHEN** compare is executed
+- **THEN** fuzzy search SHALL be used as fallback
+- **AND** if exactly one match is found it SHALL be used transparently
+- **AND** if zero or multiple matches are found exit code 1 SHALL be returned with an error message
+
 #### Scenario: Algorithm not found
-- **GIVEN** one or more invalid IDs
+- **GIVEN** one or more IDs with no exact or fuzzy match
 - **WHEN** compare is executed
 - **THEN** exit code 1 SHALL be returned
 - **AND** which algorithms were not found SHALL be indicated
@@ -193,15 +210,17 @@ The check-links command SHALL verify the validity of URLs in algorithm entries.
 - **THEN** broken URLs SHALL be reported with their algorithm IDs
 - **AND** exit code 1 SHALL be returned
 
-### Requirement: Consistent Error Format
+### Requirement: Error Output Conventions
 
-All commands SHALL use consistent error formatting.
+CLI commands SHOULD move toward consistent error formatting as a convergence goal.
 
-#### Scenario: Error message format
+#### Scenario: Error message format (target)
 - **GIVEN** any CLI error
 - **WHEN** an error occurs
-- **THEN** `Error: <message>` SHALL be displayed
-- **AND** `Hint: <suggestion>` SHALL be provided when applicable
+- **THEN** the message SHOULD begin with `Error:` to aid scripting and readability
+- **AND** a contextual hint or suggestion SHOULD accompany the error where helpful
+
+> Note: Current implementation follows this convention in most but not all commands. New commands and future refactoring SHALL adopt this format. Tests SHOULD verify `Error:` prefix for error paths in new code, but MUST NOT assume it for all existing commands.
 
 ### Requirement: Exit Codes
 

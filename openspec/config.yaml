@@ -13,12 +13,13 @@ context: |
   - Language: Python 3.9-3.12
   - Data Format: YAML (human-readable, machine-accessible)
   - Testing: pytest + Hypothesis (property-based testing)
-  - Documentation: MkDocs with Material theme (sole public docs surface)
+  - Documentation: MkDocs with Material theme (authoritative public docs surface)
   - Quality: Ruff (linting/formatting), mypy (type checking), pre-commit hooks
   - CI: GitHub Actions (multi-version testing, coverage >85%)
 
   Requirements Source of Truth: openspec/specs/ (living specifications)
-  Legacy Jekyll docs/ has been removed; openspec/ and mkdocs/ are authoritative.
+  MkDocs (mkdocs/) is the authoritative public docs surface. Legacy docs/ (Jekyll-based)
+  may temporarily coexist during migration but is non-authoritative and scheduled for removal.
 
   CLI Entry Point: python -m awesome_bioinfo <command>
 
@@ -42,7 +43,8 @@ context: |
   - templates/: YAML templates for new entries
 
   Constraints:
-  - No external dependencies for core CLI (stdlib + PyYAML only)
+  - Core commands (validate, stats, search, info, compare, export, generate, mkdocs) depend only on stdlib + PyYAML
+  - check-links additionally requires aiohttp (declared in project dependencies)
   - Python 3.9-3.12 compatibility required
   - Deterministic generation for CI diff checks
   - Bilingual support: Chinese primary in data, English secondary fields optional
