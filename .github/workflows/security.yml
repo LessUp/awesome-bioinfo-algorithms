@@ -3,15 +3,19 @@ name: Security Audit
 on:
   push:
     branches: [main, master]
+    paths: &audit_paths
+      - '.github/workflows/security.yml'
+      - 'pyproject.toml'
+      - 'requirements.txt'
   pull_request:
     branches: [main, master]
+    paths: *audit_paths
   schedule:
     - cron: '0 0 * * 1'  # 每周一运行
   workflow_dispatch:
 
 permissions:
   contents: read
-  security-events: write
 
 jobs:
   pip-audit:
@@ -28,16 +32,5 @@ jobs:
           pip install pip-audit
           pip install -e ".[dev,docs]"
 
-      - name: Generate requirements lock
-        run: pip freeze > /tmp/requirements-lock.txt
-
       - name: Run pip-audit
-        run: pip-audit --requirement=/tmp/requirements-lock.txt
-        continue-on-error: true
-
-      - name: Upload audit results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: security-audit-results
-          path: /tmp/requirements-lock.txt
+        run: pip-audit

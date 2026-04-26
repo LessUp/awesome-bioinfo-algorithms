@@ -3,7 +3,6 @@ name: Deploy GitHub Pages (MkDocs)
 env:
   DOCS_PYPROJECT_PATH: &docs_pyproject_path pyproject.toml
   DOCS_REQUIREMENTS_PATH: &docs_requirements_path requirements.txt
-  DOCS_CONFIG_PATH: &docs_config_path mkdocs/mkdocs.yml
   DOCS_CACHE_DEPENDENCY_PATHS: &docs_cache_dependency_paths |
     pyproject.toml
     requirements.txt
@@ -42,16 +41,6 @@ jobs:
           python-version: "3.11"
           cache: 'pip'
           cache-dependency-path: *docs_cache_dependency_paths
-
-      - name: Cache MkDocs build
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/pip
-            mkdocs/.cache
-          key: ${{ runner.os }}-mkdocs-${{ hashFiles(env.DOCS_PYPROJECT_PATH, env.DOCS_REQUIREMENTS_PATH, env.DOCS_CONFIG_PATH) }}
-          restore-keys: |
-            ${{ runner.os }}-mkdocs-
 
       - name: Install dependencies
         run: |
