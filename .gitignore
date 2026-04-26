@@ -160,6 +160,7 @@ data/categories.bak
 # Generated documentation
 docs/_build/
 /site
+.worktrees/
 
 # Script outputs and logs
 awesome_bioinfo/output/
