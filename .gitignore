@@ -95,7 +95,8 @@ __pypackages__/
 .idea/
 
 # VS Code
-.vscode/
+.vscode/*
+!.vscode/settings.json
 
 # Spyder
 .spyderproject
