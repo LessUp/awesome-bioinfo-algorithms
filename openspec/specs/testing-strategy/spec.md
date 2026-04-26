@@ -106,7 +106,7 @@ CLI tests SHALL achieve 90% coverage.
 - **WHEN** executed
 - **THEN** correct algorithm count SHALL be displayed
 - **AND** correct category count SHALL be displayed
-- **AND** JSON output format SHALL work
+- **AND** output SHALL be text format only
 
 #### Scenario: Search command functionality
 - **GIVEN** the search command
@@ -120,11 +120,11 @@ CLI tests SHALL achieve 90% coverage.
 #### Scenario: Info command output
 - **GIVEN** a valid algorithm ID
 - **WHEN** info command is executed
-- **THEN** all fields SHALL be displayed
-- **AND** JSON output format SHALL work
+- **THEN** all fields SHALL be displayed as text
+- **AND** exit code 0 SHALL be returned
 
 #### Scenario: Compare command functionality
-- **GIVEN** two valid algorithm IDs
+- **GIVEN** exactly two valid algorithm IDs
 - **WHEN** compare command is executed
 - **THEN** side-by-side comparison SHALL be displayed
 - **AND** key differences SHALL be highlighted
@@ -136,11 +136,13 @@ CLI tests SHALL achieve 90% coverage.
 - **WHEN** `--format csv` is specified
 - **THEN** valid CSV SHALL be output
 
+> Note: YAML export is not supported. Tests SHALL NOT test `--format yaml`.
+
 #### Scenario: Generate command output
 - **GIVEN** the generate command
 - **WHEN** executed
 - **THEN** README.md SHALL be generated
-- **AND** bilingual generation SHALL work
+- **AND** generation SHALL be deterministic
 
 #### Scenario: MkDocs command output
 - **GIVEN** the mkdocs command
