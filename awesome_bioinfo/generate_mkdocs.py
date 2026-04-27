@@ -15,7 +15,7 @@ from typing import Optional
 
 import yaml
 
-from awesome_bioinfo.schema import DIFFICULTY_LABELS
+from awesome_bioinfo.schema import DIFFICULTY_LABELS, DIFFICULTY_LABELS_BILINGUAL
 
 
 def get_base_dir() -> Path:
@@ -23,18 +23,37 @@ def get_base_dir() -> Path:
 
 
 def load_data(base_dir: Path) -> tuple[list[dict], list[dict]]:
-    """Load categories and algorithms from YAML files."""
+    """Load categories and algorithms from YAML files.
+
+    Raises:
+        FileNotFoundError: If categories.yaml or algorithms directory not found
+        yaml.YAMLError: If YAML parsing fails
+    """
     categories_path = base_dir / "data" / "categories.yaml"
-    with open(categories_path, encoding="utf-8") as f:
-        cat_data = yaml.safe_load(f)
+
+    if not categories_path.exists():
+        raise FileNotFoundError(f"Categories file not found: {categories_path}")
+
+    try:
+        with open(categories_path, encoding="utf-8") as f:
+            cat_data = yaml.safe_load(f)
+    except yaml.YAMLError as e:
+        raise yaml.YAMLError(f"Failed to parse categories YAML: {e}") from e
 
     algorithms = []
     alg_dir = base_dir / "data" / "algorithms"
+
+    if not alg_dir.exists():
+        raise FileNotFoundError(f"Algorithms directory not found: {alg_dir}")
+
     for fname in sorted(alg_dir.glob("*.yaml")):
-        with open(fname, encoding="utf-8") as f:
-            data = yaml.safe_load(f)
-        if data and "algorithms" in data:
-            algorithms.extend(data["algorithms"])
+        try:
+            with open(fname, encoding="utf-8") as f:
+                data = yaml.safe_load(f)
+            if data and "algorithms" in data:
+                algorithms.extend(data["algorithms"])
+        except yaml.YAMLError as e:
+            raise yaml.YAMLError(f"Failed to parse {fname}: {e}") from e
 
     return cat_data.get("categories", []), algorithms
 
@@ -67,7 +86,7 @@ def build_tag_index(algorithms: list[dict]) -> dict[str, list[dict]]:
     return by_tag
 
 
-def write_file(path: Path, content: str):
+def write_file(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         f.write(content)
@@ -358,7 +377,7 @@ title: 首页
 
 [:material-tag-multiple: 按标签筛选](tags/){{ .aba-btn .aba-btn-secondary }}
 
-[:material-github: GitHub 仓库](https://github.com/shane/awesome-bioinfo-algorithms){{ .aba-btn .aba-btn-secondary target="_blank" }}
+[:material-github: GitHub 仓库](https://github.com/LessUp/awesome-bioinfo-algorithms){{ .aba-btn .aba-btn-secondary target="_blank" }}
 
 </div>
 
@@ -575,8 +594,7 @@ def generate_category_page(cat: dict, algos: list[dict], cat_map: dict) -> str:
 
         for algo in sub_algos:
             diff_class = get_difficulty_badge_class(algo.get("difficulty", ""))
-            diff_map = {"beginner": "入门", "intermediate": "进阶", "advanced": "高级"}
-            diff = diff_map.get(algo.get("difficulty", ""), "-")
+            diff = DIFFICULTY_LABELS_BILINGUAL.get(algo.get("difficulty", ""), "-")
 
             lines.append(
                 f'<tr data-category="{cat["name"]}" data-difficulty="{algo.get("difficulty", "")}" data-year="{algo.get("year", "")}">'
@@ -731,8 +749,7 @@ def generate_algo_index(algorithms: list[dict], cat_map: dict) -> str:
         cat_name = cat_info.get("name", "-")
         year = str(algo.get("year", "-"))
         diff_class = get_difficulty_badge_class(algo.get("difficulty", ""))
-        diff_map = {"beginner": "入门", "intermediate": "进阶", "advanced": "高级"}
-        diff = diff_map.get(algo.get("difficulty", ""), "-")
+        diff = DIFFICULTY_LABELS_BILINGUAL.get(algo.get("difficulty", ""), "-")
 
         rows.append(
             f'<tr data-category="{cat_name}" data-difficulty="{algo.get("difficulty", "")}" '
@@ -846,7 +863,7 @@ def write_generated_pages(
     cat_map: dict[str, dict],
     by_cat: dict[str, list[dict]],
     by_tag: dict[str, list[dict]],
-):
+) -> None:
     # Clean previous generated docs (keep stylesheets and javascripts)
     if mkdocs_dir.exists():
         for item in mkdocs_dir.iterdir():

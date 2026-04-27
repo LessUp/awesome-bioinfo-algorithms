@@ -149,7 +149,7 @@ python -m awesome_bioinfo stats
 | 🆕 WFA2-lib | 2023 | O(ns) | O(s) | `wavefront` `adaptive` `ultra-fast` |
 | Minimap2 | 2018 | O(n) | O(n) | `minimizer` `long-read` `versatile` |
 
-*[View all 14 algorithms in this category →](https://shane.github.io/awesome-bioinfo-algorithms/)*
+*[View all 14 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
 **Multiple Sequence Alignment**
 
@@ -175,7 +175,7 @@ python -m awesome_bioinfo stats
 | Flye | 2019 | O(n log n) | O(n) | `repeat-graph` `long-read` `ont` |
 | Wtdbg2 | 2019 | O(n) | O(n) | `long-read` `fuzzy-bruijn` `fast` |
 
-*[View all 12 algorithms in this category →](https://shane.github.io/awesome-bioinfo-algorithms/)*
+*[View all 12 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
 **Reference-Guided Assembly**
 
@@ -198,7 +198,7 @@ python -m awesome_bioinfo stats
 | DeepVariant | 2018 | O(n * r) | O(r) | `deep-learning` `cnn` `snp` |
 | Strelka2 | 2018 | O(n * r) | O(r) | `somatic` `germline` `fast` |
 
-*[View all 8 algorithms in this category →](https://shane.github.io/awesome-bioinfo-algorithms/)*
+*[View all 8 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
 **Structural Variants**
 
@@ -210,7 +210,7 @@ python -m awesome_bioinfo stats
 | Manta | 2016 | O(n * c) | O(c) | `structural-variant` `graph-assembly` `clinical` |
 | SvABA | 2016 | O(n * c) | O(c) | `structural-variant` `somatic` `assembly-based` |
 
-*[View all 6 algorithms in this category →](https://shane.github.io/awesome-bioinfo-algorithms/)*
+*[View all 6 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
 
 ### Gene Expression Analysis <a id="gene-expression-analysis"></a>
@@ -226,7 +226,7 @@ python -m awesome_bioinfo stats
 | StringTie | 2015 | O(n) | O(g) | `transcript-assembly` `quantification` `rna-seq` |
 | STAR | 2013 | O(n) | O(g) | `rna-seq` `splice-aware` `alignment` |
 
-*[View all 6 algorithms in this category →](https://shane.github.io/awesome-bioinfo-algorithms/)*
+*[View all 6 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
 **Differential Expression**
 
@@ -238,7 +238,7 @@ python -m awesome_bioinfo stats
 | limma-voom | 2014 | O(n * g) | O(g) | `differential-expression` `precision-weight` `linear-model` |
 | Ballgown | 2014 | O(n * g) | O(g) | `differential-expression` `fpkm` `transcript-level` |
 
-*[View all 6 algorithms in this category →](https://shane.github.io/awesome-bioinfo-algorithms/)*
+*[View all 6 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
 
 ### Protein Structure Prediction <a id="protein-structure-prediction"></a>
@@ -254,7 +254,7 @@ python -m awesome_bioinfo stats
 | 🆕 ESMFold | 2023 | O(n^2) | O(n^2) | `language-model` `single-sequence` `fast` |
 | OmegaFold | 2022 | O(n^2) | O(n^2) | `language-model` `single-sequence` `structure-prediction` |
 
-*[View all 9 algorithms in this category →](https://shane.github.io/awesome-bioinfo-algorithms/)*
+*[View all 9 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
 **Template-Based Modeling**
 
@@ -287,7 +287,7 @@ python -m awesome_bioinfo stats
 | RevBayes | 2016 | O(n^2 * s * r) | O(n * s) | `bayesian` `probabilistic-programming` `flexible` |
 | IQ-TREE | 2015 | O(n^2 * s) | O(n * s) | `maximum-likelihood` `model-selection` `ultrafast-bootstrap` |
 
-*[View all 10 algorithms in this category →](https://shane.github.io/awesome-bioinfo-algorithms/)*
+*[View all 10 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
 
 ### Functional Annotation <a id="functional-annotation"></a>
@@ -303,7 +303,7 @@ python -m awesome_bioinfo stats
 | OrthoFinder | 2019 | O(n^2) | O(n^2) | `orthology` `comparative-genomics` `gene-family` |
 | eggNOG-mapper | 2017 | O(n * m) | O(m) | `orthology` `go-annotation` `kegg` |
 
-*[View all 6 algorithms in this category →](https://shane.github.io/awesome-bioinfo-algorithms/)*
+*[View all 6 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
 **Domain-Based**
 
@@ -315,7 +315,7 @@ python -m awesome_bioinfo stats
 | HMMER | 2011 | O(mn) | O(m) | `hmm` `domain-detection` `remote-homology` |
 | PfamScan | 2011 | O(mn) | O(m) | `domain-detection` `pfam` `protein-family` |
 
-*[View all 6 algorithms in this category →](https://shane.github.io/awesome-bioinfo-algorithms/)*
+*[View all 6 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
 
 ### Data Compression <a id="data-compression"></a>
@@ -331,7 +331,7 @@ python -m awesome_bioinfo stats
 | MANGO | 2018 | O(n) | O(n) | `reference-free` `genome-compression` `context-modeling` |
 | Orione | 2015 | O(n) | O(1) | `reference-assisted` `fastq` `sam` |
 
-*[View all 8 algorithms in this category →](https://shane.github.io/awesome-bioinfo-algorithms/)*
+*[View all 8 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
 **General Compression**
 
@@ -354,7 +354,7 @@ python -m awesome_bioinfo stats
 | scANVI | 2021 | O(c * g * e) | O(c * g) | `semi-supervised` `annotation` `deep-learning` |
 | SCENIC | 2020 | O(c * g^2) | O(c * g) | `regulatory-network` `transcription-factor` `grn` |
 
-*[View all 10 algorithms in this category →](https://shane.github.io/awesome-bioinfo-algorithms/)*
+*[View all 10 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
 **Preprocessing**
 
@@ -380,7 +380,7 @@ python -m awesome_bioinfo stats
 | MetaBAT 2 | 2019 | O(n * c) | O(n) | `binning` `metagenome` `adaptive` |
 | mOTUs | 2017 | O(n * m) | O(m) | `marker-gene` `profiling` `universal` |
 
-*[View all 9 algorithms in this category →](https://shane.github.io/awesome-bioinfo-algorithms/)*
+*[View all 9 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
 **Functional Profiling**
 
@@ -436,7 +436,7 @@ python -m awesome_bioinfo stats
 | GeneMark-ES | 2005 | O(n) | O(n) | `gene-prediction` `hmm` `prokaryotic` |
 | GLIMMER | 1998 | O(n) | O(n) | `interpolated-markov-model` `prokaryotic` `gene-finding` |
 
-*[View all 7 algorithms in this category →](https://shane.github.io/awesome-bioinfo-algorithms/)*
+*[View all 7 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
 
 ### Population Genetics <a id="population-genetics"></a>
@@ -483,7 +483,7 @@ python -m awesome_bioinfo stats
 | SPARK-X | 2021 | O(g * n) | O(n) | `spatial` `fast` `non-parametric` |
 | stLearn | 2021 | O(c * g) | O(c * g) | `spatial` `image-integration` `trajectory` |
 
-*[View all 7 algorithms in this category →](https://shane.github.io/awesome-bioinfo-algorithms/)*
+*[View all 7 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
 **Spatial Proteomics**
 
@@ -530,7 +530,7 @@ python -m awesome_bioinfo stats
 | ESM-1v | 2021 | O(n^2 * d) | O(n^2) | `variant-effect` `zero-shot` `pathogenicity` |
 | ProGen | 2020 | O(n^2 * d) | O(n^2) | `generative` `protein-design` `conditional-generation` |
 
-*[View all 6 algorithms in this category →](https://shane.github.io/awesome-bioinfo-algorithms/)*
+*[View all 6 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
 **Protein Language Model Pretraining**
 

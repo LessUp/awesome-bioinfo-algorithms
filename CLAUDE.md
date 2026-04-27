@@ -227,19 +227,20 @@ pytest tests/ -v
 |------|------|
 | [`pyproject.toml`](pyproject.toml) | 项目配置、依赖、工具设置 |
 | [`data/categories.yaml`](data/categories.yaml) | 16 个顶级分类定义 |
-| [`data/algorithms/*.yaml`](data/algorithms/) | 17 个分类的算法数据文件 |
+| [`data/algorithms/*.yaml`](data/algorithms/) | 16 个分类的算法数据文件 |
 | [`templates/algorithm_template.yaml`](templates/algorithm_template.yaml) | 新算法条目模板 |
 | [`templates/readme_template.md`](templates/readme_template.md) | README 生成模板 |
-| [`docs/DEVELOPMENT.md`](docs/DEVELOPMENT.md) | 详细开发指南 |
 
 ## 项目统计
 
 - **版本**：1.0.2
-- **算法数量**：100+ 条目
+- **算法数量**：195 条目
 - **分类数量**：16 个顶级分类 + 子分类
+- **标签数量**：392 个
 - **Python 模块**：15 个核心文件
 - **测试文件**：15 个
+- **测试覆盖率**：89%
 
 ---
 
-*此文档由 AI 上下文初始化流程自动生成，最后更新：2026-04-24*
+*此文档由 AI 上下文初始化流程自动生成，最后更新：2026-04-27*

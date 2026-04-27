@@ -4,6 +4,7 @@ Defines Category, Reference, and AlgorithmEntry dataclasses.
 """
 
 from dataclasses import dataclass, field
+from datetime import datetime
 from typing import Optional
 
 VALID_DIFFICULTIES = ("beginner", "intermediate", "advanced")
@@ -189,11 +190,12 @@ class AlgorithmEntry:
 
     def get_year_badge(self) -> str:
         """Return year badge based on algorithm publication year."""
+        current_year = datetime.now().year
         if self.year == 0:
             return ""
         if self.year <= 1990:
             return "⭐"
-        if self.year >= 2023:
+        if self.year >= current_year - 3:
             return "🆕"
         return ""
 
@@ -203,4 +205,5 @@ class AlgorithmEntry:
 
     def is_new(self) -> bool:
         """Check if algorithm is considered new (published in last 3 years)."""
-        return self.year >= 2023
+        current_year = datetime.now().year
+        return self.year >= current_year - 3

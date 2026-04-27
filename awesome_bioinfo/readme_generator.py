@@ -228,7 +228,7 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
             total_in_sub = len(algos)
             if total_in_sub > max_algorithms:
                 lines.append(
-                    f"*[View all {total_in_sub} algorithms in this category →](https://shane.github.io/awesome-bioinfo-algorithms/)*"
+                    f"*[View all {total_in_sub} algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*"
                 )
                 lines.append("")
 
@@ -333,7 +333,7 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
         ]
         return "\n".join(lines)
 
-    def save(self, output_path: str = "README.md"):
+    def save(self, output_path: str = "README.md") -> None:
         """
         Generate and save README to file.
 

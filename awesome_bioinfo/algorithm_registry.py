@@ -195,7 +195,7 @@ class AlgorithmRegistry:
         """Get all category IDs that have algorithms."""
         return list(self._by_category.keys())
 
-    def from_algorithms(self, algorithms: list[AlgorithmEntry]):
+    def from_algorithms(self, algorithms: list[AlgorithmEntry]) -> None:
         """Load algorithms from a list of AlgorithmEntry objects."""
         self._algorithms = []
         self._by_category = {}

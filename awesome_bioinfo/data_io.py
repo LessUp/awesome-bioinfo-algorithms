@@ -14,10 +14,6 @@ from .algorithm_registry import AlgorithmRegistry
 from .category_manager import CategoryManager
 from .schema import AlgorithmEntry, Category
 
-# Cache configuration
-_CACHE_ENABLED = True
-_cache: dict[str, Any] = {}
-
 YAML_DUMP_KWARGS = {
     "allow_unicode": True,
     "default_flow_style": False,
@@ -109,6 +105,7 @@ class DataIO:
             if fmt.lower() == "json":
                 json.dump(data, f, ensure_ascii=False, indent=2)
             else:
+                # yaml.safe_dump accepts TextIO but type stubs don't reflect this
                 yaml.safe_dump(data, f, **YAML_DUMP_KWARGS)  # type: ignore[call-overload]
 
     def import_data(self, input_path: str) -> tuple[list[Category], list[AlgorithmEntry]]:
@@ -168,6 +165,7 @@ class DataIO:
             if fmt.lower() == "json":
                 json.dump(data, f, ensure_ascii=False, indent=2)
             else:
+                # yaml.safe_dump accepts TextIO but type stubs don't reflect this
                 yaml.safe_dump(data, f, **YAML_DUMP_KWARGS)  # type: ignore[call-overload]
 
     def export_algorithms(self, output_path: str, fmt: str = "yaml") -> None:
@@ -178,6 +176,7 @@ class DataIO:
             if fmt.lower() == "json":
                 json.dump(data, f, ensure_ascii=False, indent=2)
             else:
+                # yaml.safe_dump accepts TextIO but type stubs don't reflect this
                 yaml.safe_dump(data, f, **YAML_DUMP_KWARGS)  # type: ignore[call-overload]
 
     @staticmethod

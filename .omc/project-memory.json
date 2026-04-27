@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1776969953837,
+  "lastScanned": 1777253772352,
   "projectRoot": "/home/shane/dev/awesome-bioinfo-algorithms",
   "techStack": {
     "languages": [
@@ -56,7 +56,7 @@
       "path": "awesome_bioinfo",
       "purpose": null,
       "fileCount": 17,
-      "lastAccessed": 1776969953815,
+      "lastAccessed": 1777253772334,
       "keyFiles": [
         "CLAUDE.md",
         "__init__.py",
@@ -69,7 +69,7 @@
       "path": "awesome_bioinfo_algorithms.egg-info",
       "purpose": null,
       "fileCount": 5,
-      "lastAccessed": 1776969953821,
+      "lastAccessed": 1777253772340,
       "keyFiles": [
         "PKG-INFO",
         "SOURCES.txt",
@@ -82,7 +82,7 @@
       "path": "changelog",
       "purpose": null,
       "fileCount": 3,
-      "lastAccessed": 1776969953822,
+      "lastAccessed": 1777253772341,
       "keyFiles": [
         "2026-04-16_code-review.md",
         "CHANGELOG_TEMPLATE.md",
@@ -93,7 +93,7 @@
       "path": "data",
       "purpose": "Data files",
       "fileCount": 1,
-      "lastAccessed": 1776969953824,
+      "lastAccessed": 1777253772342,
       "keyFiles": [
         "categories.yaml"
       ]
@@ -102,7 +102,7 @@
       "path": "docs",
       "purpose": "Documentation",
       "fileCount": 11,
-      "lastAccessed": 1776969953825,
+      "lastAccessed": 1777253772343,
       "keyFiles": [
         "404.md",
         "API.md",
@@ -115,7 +115,7 @@
       "path": "includes",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1776969953825,
+      "lastAccessed": 1777253772343,
       "keyFiles": [
         "abbreviations.md"
       ]
@@ -124,7 +124,7 @@
       "path": "mkdocs",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1776969953826,
+      "lastAccessed": 1777253772343,
       "keyFiles": [
         "mkdocs.yml"
       ]
@@ -133,7 +133,7 @@
       "path": "openspec",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1776969953827,
+      "lastAccessed": 1777253772344,
       "keyFiles": [
         "config.yaml"
       ]
@@ -142,7 +142,7 @@
       "path": "overrides",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1776969953827,
+      "lastAccessed": 1777253772344,
       "keyFiles": [
         "main.html"
       ]
@@ -151,7 +151,7 @@
       "path": "schemas",
       "purpose": "Schema definitions",
       "fileCount": 1,
-      "lastAccessed": 1776969953828,
+      "lastAccessed": 1777253772344,
       "keyFiles": [
         "algorithm-schema.json"
       ]
@@ -160,7 +160,7 @@
       "path": "scripts",
       "purpose": "Build/utility scripts",
       "fileCount": 2,
-      "lastAccessed": 1776969953828,
+      "lastAccessed": 1777253772345,
       "keyFiles": [
         "__init__.py",
         "__main__.py"
@@ -170,7 +170,7 @@
       "path": "templates",
       "purpose": null,
       "fileCount": 3,
-      "lastAccessed": 1776969953828,
+      "lastAccessed": 1777253772346,
       "keyFiles": [
         "algorithm_template.yaml",
         "readme_template.md"
@@ -180,7 +180,7 @@
       "path": "tests",
       "purpose": "Test files",
       "fileCount": 15,
-      "lastAccessed": 1776969953829,
+      "lastAccessed": 1777253772347,
       "keyFiles": [
         "__init__.py",
         "conftest.py",
@@ -193,7 +193,7 @@
       "path": "venv",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1776969953829,
+      "lastAccessed": 1777253772347,
       "keyFiles": [
         "pyvenv.cfg"
       ]
@@ -202,7 +202,7 @@
       "path": "mkdocs/docs",
       "purpose": "Documentation",
       "fileCount": 3,
-      "lastAccessed": 1776969953832,
+      "lastAccessed": 1777253772349,
       "keyFiles": [
         "index.md",
         "tags.md"
@@ -212,7 +212,7 @@
       "path": "venv/bin",
       "purpose": "Executable scripts",
       "fileCount": 39,
-      "lastAccessed": 1776969953835,
+      "lastAccessed": 1777253772351,
       "keyFiles": [
         "Activate.ps1",
         "activate",
@@ -223,21 +223,309 @@
       "path": "venv/lib",
       "purpose": "Library code",
       "fileCount": 0,
-      "lastAccessed": 1776969953836,
+      "lastAccessed": 1777253772352,
       "keyFiles": []
     }
   },
   "hotPaths": [
     {
+      "path": "",
+      "accessCount": 41,
+      "lastAccessed": 1777262369606,
+      "type": "directory"
+    },
+    {
+      "path": "awesome_bioinfo/generate_mkdocs.py",
+      "accessCount": 31,
+      "lastAccessed": 1777262960951,
+      "type": "file"
+    },
+    {
+      "path": "awesome_bioinfo",
+      "accessCount": 27,
+      "lastAccessed": 1777262529659,
+      "type": "directory"
+    },
+    {
+      "path": "mkdocs/mkdocs.yml",
+      "accessCount": 10,
+      "lastAccessed": 1777262335593,
+      "type": "file"
+    },
+    {
+      "path": "awesome_bioinfo/link_checker.py",
+      "accessCount": 10,
+      "lastAccessed": 1777262607527,
+      "type": "file"
+    },
+    {
       "path": "CLAUDE.md",
-      "accessCount": 1,
-      "lastAccessed": 1776969990181,
+      "accessCount": 9,
+      "lastAccessed": 1777260650669,
+      "type": "file"
+    },
+    {
+      "path": "awesome_bioinfo/readme_generator.py",
+      "accessCount": 8,
+      "lastAccessed": 1777262426848,
+      "type": "file"
+    },
+    {
+      "path": "pyproject.toml",
+      "accessCount": 7,
+      "lastAccessed": 1777261471180,
+      "type": "file"
+    },
+    {
+      "path": "awesome_bioinfo/data_io.py",
+      "accessCount": 7,
+      "lastAccessed": 1777262599355,
+      "type": "file"
+    },
+    {
+      "path": "awesome_bioinfo/schema.py",
+      "accessCount": 7,
+      "lastAccessed": 1777262622421,
+      "type": "file"
+    },
+    {
+      "path": "mkdocs/overrides/main.html",
+      "accessCount": 6,
+      "lastAccessed": 1777262310236,
+      "type": "file"
+    },
+    {
+      "path": "AGENTS.md",
+      "accessCount": 5,
+      "lastAccessed": 1777260414736,
+      "type": "file"
+    },
+    {
+      "path": "awesome_bioinfo/validate.py",
+      "accessCount": 5,
+      "lastAccessed": 1777262433426,
+      "type": "file"
+    },
+    {
+      "path": "openspec/specs/product-vision/spec.md",
+      "accessCount": 4,
+      "lastAccessed": 1777260433954,
+      "type": "file"
+    },
+    {
+      "path": "README.md",
+      "accessCount": 4,
+      "lastAccessed": 1777260615489,
+      "type": "file"
+    },
+    {
+      "path": "awesome_bioinfo/algorithm_registry.py",
+      "accessCount": 4,
+      "lastAccessed": 1777262423618,
+      "type": "file"
+    },
+    {
+      "path": "awesome_bioinfo/category_manager.py",
+      "accessCount": 4,
+      "lastAccessed": 1777262467494,
+      "type": "file"
+    },
+    {
+      "path": "docs/index.md",
+      "accessCount": 3,
+      "lastAccessed": 1777255354604,
+      "type": "file"
+    },
+    {
+      "path": "openspec/specs/algorithm-schema/spec.md",
+      "accessCount": 3,
+      "lastAccessed": 1777260434037,
+      "type": "file"
+    },
+    {
+      "path": "openspec/specs/core-architecture/spec.md",
+      "accessCount": 3,
+      "lastAccessed": 1777260434093,
       "type": "file"
     },
     {
       "path": "awesome_bioinfo/CLAUDE.md",
+      "accessCount": 3,
+      "lastAccessed": 1777260442414,
+      "type": "file"
+    },
+    {
+      "path": "openspec/config.yaml",
+      "accessCount": 3,
+      "lastAccessed": 1777260638265,
+      "type": "file"
+    },
+    {
+      "path": "awesome_bioinfo/__init__.py",
+      "accessCount": 3,
+      "lastAccessed": 1777260638423,
+      "type": "file"
+    },
+    {
+      "path": "awesome_bioinfo/__main__.py",
+      "accessCount": 3,
+      "lastAccessed": 1777260638588,
+      "type": "file"
+    },
+    {
+      "path": "docs/DEVELOPMENT.md",
+      "accessCount": 2,
+      "lastAccessed": 1777255354717,
+      "type": "file"
+    },
+    {
+      "path": "awesome_bioinfo/export_cmd.py",
+      "accessCount": 2,
+      "lastAccessed": 1777260411433,
+      "type": "file"
+    },
+    {
+      "path": "awesome_bioinfo/compare.py",
+      "accessCount": 2,
+      "lastAccessed": 1777260411494,
+      "type": "file"
+    },
+    {
+      "path": "awesome_bioinfo/search.py",
+      "accessCount": 2,
+      "lastAccessed": 1777260424920,
+      "type": "file"
+    },
+    {
+      "path": "awesome_bioinfo/info_cmd.py",
+      "accessCount": 2,
+      "lastAccessed": 1777260424941,
+      "type": "file"
+    },
+    {
+      "path": "openspec/specs/cli-interface/spec.md",
+      "accessCount": 2,
+      "lastAccessed": 1777260433983,
+      "type": "file"
+    },
+    {
+      "path": "openspec/specs/testing-strategy/spec.md",
+      "accessCount": 2,
+      "lastAccessed": 1777260434005,
+      "type": "file"
+    },
+    {
+      "path": "tests/conftest.py",
+      "accessCount": 2,
+      "lastAccessed": 1777260468414,
+      "type": "file"
+    },
+    {
+      "path": "awesome_bioinfo/generate_readme.py",
+      "accessCount": 2,
+      "lastAccessed": 1777260605020,
+      "type": "file"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "accessCount": 2,
+      "lastAccessed": 1777260615409,
+      "type": "file"
+    },
+    {
+      "path": "data/categories.yaml",
+      "accessCount": 2,
+      "lastAccessed": 1777260625540,
+      "type": "file"
+    },
+    {
+      "path": "templates/algorithm_template.yaml",
       "accessCount": 1,
-      "lastAccessed": 1776969990263,
+      "lastAccessed": 1777255146880,
+      "type": "file"
+    },
+    {
+      "path": "templates/readme_template.md",
+      "accessCount": 1,
+      "lastAccessed": 1777255159759,
+      "type": "file"
+    },
+    {
+      "path": ".pre-commit-config.yaml",
+      "accessCount": 1,
+      "lastAccessed": 1777255160349,
+      "type": "file"
+    },
+    {
+      "path": "docs/API.md",
+      "accessCount": 1,
+      "lastAccessed": 1777255160512,
+      "type": "file"
+    },
+    {
+      "path": "docs/FAQ.md",
+      "accessCount": 1,
+      "lastAccessed": 1777255160624,
+      "type": "file"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "accessCount": 1,
+      "lastAccessed": 1777255168990,
+      "type": "file"
+    },
+    {
+      "path": "tests/test_schema.py",
+      "accessCount": 1,
+      "lastAccessed": 1777255189965,
+      "type": "file"
+    },
+    {
+      "path": "tests/test_cli.py",
+      "accessCount": 1,
+      "lastAccessed": 1777255190018,
+      "type": "file"
+    },
+    {
+      "path": "tests/test_validate.py",
+      "accessCount": 1,
+      "lastAccessed": 1777255190097,
+      "type": "file"
+    },
+    {
+      "path": "docs/_config.yml",
+      "accessCount": 1,
+      "lastAccessed": 1777255480200,
+      "type": "file"
+    },
+    {
+      "path": "docs/Gemfile",
+      "accessCount": 1,
+      "lastAccessed": 1777255481545,
+      "type": "file"
+    },
+    {
+      "path": "mkdocs/docs/index.md",
+      "accessCount": 1,
+      "lastAccessed": 1777260423636,
+      "type": "file"
+    },
+    {
+      "path": "changelog/CHANGELOG_TEMPLATE.md",
+      "accessCount": 1,
+      "lastAccessed": 1777260423705,
+      "type": "file"
+    },
+    {
+      "path": "changelog/README.md",
+      "accessCount": 1,
+      "lastAccessed": 1777260430743,
+      "type": "file"
+    },
+    {
+      "path": "changelog/zh/2026-04-16_code-review.md",
+      "accessCount": 1,
+      "lastAccessed": 1777260430838,
       "type": "file"
     }
   ],

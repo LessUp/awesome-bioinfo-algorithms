@@ -121,7 +121,7 @@ class CategoryManager:
         """Convert all categories to dictionary for serialization."""
         return {"categories": [cat.to_dict() for cat in self._categories]}
 
-    def from_categories(self, categories: list[Category]):
+    def from_categories(self, categories: list[Category]) -> None:
         """Load categories from a list of Category objects."""
         self._categories = categories
         self._category_map = {}
