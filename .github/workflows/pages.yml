@@ -61,7 +61,7 @@ jobs:
         run: mkdocs build -f mkdocs/mkdocs.yml --site-dir ${{ github.workspace }}/_site
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ${{ github.workspace }}/_site
 
