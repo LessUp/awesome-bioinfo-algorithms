@@ -83,6 +83,20 @@ pytest tests/ -v --tb=short
 - `time_complexity` / `space_complexity`：须匹配 `O(...)` 模式
 - 模板：`templates/algorithm_template.yaml`
 
+**可选字段**：
+- `space_complexity`, `year`, `paper_url`, `implementation_url`
+- `related_tools`, `tags`, `subcategory`, `difficulty`, `language`
+- `references`（扩展资料列表）
+- `description_en`, `purpose_en`（英文翻译）
+
+### 添加新算法
+
+1. 复制模板：`templates/algorithm_template.yaml`
+2. 创建文件：`data/algorithms/<category>.yaml`（追加到现有文件或新建）
+3. 填写字段，确保描述长度 50-500 字符
+4. 运行验证：`python -m awesome_bioinfo validate`
+5. 生成 README：`python -m awesome_bioinfo generate`
+
 ## 命名与代码约定
 
 - 算法/分类 ID：lowercase-hyphenated
