@@ -72,7 +72,7 @@ def cmd_search(
         return 1
 
     if not any([keyword, tag, category, difficulty]):
-        print("Usage: python -m scripts search [options]")
+        print("Usage: python -m awesome_bioinfo search [options]")
         print("Options:")
         print("  --keyword <text>    Search in name, description, purpose, tags")
         print("  --tag <tag>         Filter by tag")

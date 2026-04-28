@@ -37,14 +37,18 @@ Tests SHALL be organized by module.
 - **WHEN** structure is examined
 - **THEN** `conftest.py` SHALL contain shared fixtures
 - **AND** `test_validate.py` SHALL contain validation tests
-- **AND** `test_cli.py` SHALL contain CLI command tests
+- **AND** `test_cli.py` SHALL contain top-level CLI command tests
 - **AND** `test_schema.py` SHALL contain data model tests
 - **AND** `test_data_io.py` SHALL contain YAML I/O tests
-- **AND** `test_registry.py` SHALL contain registry tests
+- **AND** `test_algorithm_registry.py` SHALL contain registry tests
 - **AND** `test_search.py` SHALL contain search tests
-- **AND** `test_export.py` SHALL contain export tests
+- **AND** `test_export_cmd.py` SHALL contain export tests
+- **AND** `test_info_cmd.py` SHALL contain info command tests
+- **AND** `test_command_features.py` SHALL contain cross-command feature tests
 - **AND** `test_readme_generator.py` SHALL contain README generation tests
-- **AND** `test_mkdocs_generator.py` SHALL contain MkDocs generation tests
+- **AND** `test_generate_readme.py` SHALL contain end-to-end generate command tests
+- **AND** `test_category_manager.py` SHALL contain category management tests
+- **AND** `test_data_completeness.py` SHALL contain completeness/integrity tests
 
 ### Requirement: Validation Tests
 
@@ -106,7 +110,7 @@ CLI tests SHALL achieve 90% coverage.
 - **WHEN** executed
 - **THEN** correct algorithm count SHALL be displayed
 - **AND** correct category count SHALL be displayed
-- **AND** JSON output format SHALL work
+- **AND** output SHALL be text format only
 
 #### Scenario: Search command functionality
 - **GIVEN** the search command
@@ -115,19 +119,48 @@ CLI tests SHALL achieve 90% coverage.
 - **WHEN** filtering by category
 - **THEN** only algorithms in that category SHALL be returned
 - **WHEN** no results match
-- **THEN** exit code 1 SHALL be returned
+- **THEN** exit code 0 SHALL be returned with a no-results message
 
-#### Scenario: Info command output
+#### Scenario: Info command — exact ID
 - **GIVEN** a valid algorithm ID
 - **WHEN** info command is executed
-- **THEN** all fields SHALL be displayed
-- **AND** JSON output format SHALL work
+- **THEN** all fields SHALL be displayed as text
+- **AND** exit code 0 SHALL be returned
 
-#### Scenario: Compare command functionality
-- **GIVEN** two valid algorithm IDs
+#### Scenario: Info command — fuzzy single match
+- **GIVEN** a partial or approximate query that matches exactly one algorithm
+- **WHEN** info command is executed
+- **THEN** that algorithm's details SHALL be displayed
+- **AND** exit code 0 SHALL be returned
+
+#### Scenario: Info command — fuzzy multiple matches
+- **GIVEN** a query that matches more than one algorithm
+- **WHEN** info command is executed
+- **THEN** the matching algorithm IDs SHALL be listed
+- **AND** exit code 1 SHALL be returned
+
+#### Scenario: Info command — no match
+- **GIVEN** a query with no exact or fuzzy match
+- **WHEN** info command is executed
+- **THEN** exit code 1 SHALL be returned
+
+#### Scenario: Compare command — successful comparison
+- **GIVEN** exactly two valid algorithm IDs or unambiguous partial names
 - **WHEN** compare command is executed
 - **THEN** side-by-side comparison SHALL be displayed
 - **AND** key differences SHALL be highlighted
+
+#### Scenario: Compare command — fuzzy disambiguation
+- **GIVEN** an argument that does not exactly match an ID but fuzzy-matches exactly one
+- **WHEN** compare command is executed
+- **THEN** the match SHALL be used transparently
+- **AND** exit code 0 SHALL be returned
+
+#### Scenario: Compare command — ambiguous or missing argument
+- **GIVEN** an argument that matches zero or multiple algorithms
+- **WHEN** compare command is executed
+- **THEN** exit code 1 SHALL be returned
+- **AND** the ambiguous or missing argument SHALL be identified
 
 #### Scenario: Export command formats
 - **GIVEN** the export command
@@ -136,17 +169,31 @@ CLI tests SHALL achieve 90% coverage.
 - **WHEN** `--format csv` is specified
 - **THEN** valid CSV SHALL be output
 
+> Note: YAML export is not supported. Tests SHALL NOT test `--format yaml`.
+
 #### Scenario: Generate command output
 - **GIVEN** the generate command
 - **WHEN** executed
 - **THEN** README.md SHALL be generated
-- **AND** bilingual generation SHALL work
+- **AND** generation SHALL be deterministic
 
 #### Scenario: MkDocs command output
 - **GIVEN** the mkdocs command
 - **WHEN** executed
 - **THEN** documentation site SHALL be generated
 - **AND** all category pages SHALL be created
+
+#### Scenario: Check-links command — all valid
+- **GIVEN** algorithm entries with reachable URLs
+- **WHEN** `python -m awesome_bioinfo check-links` is executed
+- **THEN** exit code 0 SHALL be returned
+- **AND** a summary of checked links SHALL be displayed
+
+#### Scenario: Check-links command — broken links
+- **GIVEN** algorithm entries containing at least one unreachable URL
+- **WHEN** check-links is executed
+- **THEN** exit code 1 SHALL be returned
+- **AND** broken URLs SHALL be reported with their algorithm IDs
 
 ### Requirement: Data I/O Tests
 
@@ -240,11 +287,11 @@ Each module SHALL meet coverage targets.
 - **THEN** validate.py SHALL have at least 95% coverage
 - **AND** schema.py SHALL have at least 85% coverage
 - **AND** data_io.py SHALL have at least 90% coverage
-- **AND** registry.py SHALL have at least 90% coverage
+- **AND** algorithm_registry.py SHALL have at least 90% coverage
 - **AND** search.py SHALL have at least 90% coverage
-- **AND** export.py SHALL have at least 90% coverage
+- **AND** export_cmd.py SHALL have at least 90% coverage
 - **AND** readme_generator.py SHALL have at least 85% coverage
-- **AND** mkdocs_generator.py SHALL have at least 85% coverage
+- **AND** generate_mkdocs.py SHALL have at least 85% coverage
 - **AND** overall coverage SHALL exceed 85%
 
 ### Requirement: Test Execution

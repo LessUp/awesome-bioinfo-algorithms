@@ -4,6 +4,8 @@
 
 Define the product vision and high-level requirements for the Awesome Bioinformatics Algorithms project, ensuring comprehensive algorithm coverage, bilingual documentation, and automated tooling for the bioinformatics community.
 
+`openspec/specs/` is the single source of truth for all product and technical requirements. The MkDocs site (`mkdocs/`) is the authoritative public documentation surface. A legacy `docs/` directory (Jekyll-based) may temporarily coexist during migration but is non-authoritative and scheduled for removal.
+
 ## Requirements
 
 ### Requirement: Comprehensive Algorithm Coverage
@@ -13,7 +15,7 @@ The project SHALL maintain a comprehensive collection of bioinformatics algorith
 #### Scenario: Algorithm collection size
 - **GIVEN** the project data directory
 - **WHEN** algorithms are counted
-- **THEN** there SHALL be at least 200 algorithm entries
+- **THEN** there SHALL be at least 100 algorithm entries
 - **AND** algorithms SHALL be organized across 16 major categories
 
 #### Scenario: Category coverage
@@ -24,19 +26,23 @@ The project SHALL maintain a comprehensive collection of bioinformatics algorith
 
 ### Requirement: Bilingual Documentation Support
 
-The project SHALL provide full bilingual documentation in English and Chinese.
+The project SHALL support both English and Chinese audiences in appropriate forms.
 
-#### Scenario: README bilingual generation
+#### Scenario: English primary README
 - **GIVEN** the algorithm data
-- **WHEN** README generation is run
-- **THEN** both `README.md` (English) and `README.zh-CN.md` (Chinese) SHALL be generated
-- **AND** both documents SHALL have feature parity
+- **WHEN** `python -m awesome_bioinfo generate` is run
+- **THEN** `README.md` (English) SHALL be generated as the primary project README
 
-#### Scenario: MkDocs bilingual pages
+#### Scenario: Chinese portal README
+- **GIVEN** the repository root
+- **WHEN** a Chinese-language visitor reads `README.zh-CN.md`
+- **THEN** they SHALL find a lightweight Chinese-language portal linking to the primary docs
+- **AND** `README.zh-CN.md` is maintained manually as a portal, NOT auto-generated
+
+#### Scenario: MkDocs documentation
 - **GIVEN** the MkDocs generator
 - **WHEN** documentation site is generated
-- **THEN** all pages SHALL be available in both languages
-- **AND** navigation SHALL support language switching
+- **THEN** site pages SHALL contain bilingual content where available (Chinese primary, English secondary fields)
 
 ### Requirement: Structured Machine-Readable Data
 
@@ -64,6 +70,22 @@ The project SHALL provide CLI tools for data management.
 - **WHEN** `python -m awesome_bioinfo generate` is executed
 - **THEN** README.md SHALL be generated from templates
 - **AND** generation SHALL be deterministic for CI diff checks
+
+### Requirement: OpenSpec-Driven Development
+
+The project SHALL use OpenSpec for all feature and architectural changes.
+
+#### Scenario: Requirements source of truth
+- **GIVEN** any proposed change to the project
+- **WHEN** the change affects behavior, data schema, or documentation
+- **THEN** a change proposal SHALL be created in `openspec/changes/`
+- **AND** the relevant living spec in `openspec/specs/` SHALL be updated
+
+#### Scenario: Anti-drift enforcement
+- **GIVEN** the living specs and the implementation
+- **WHEN** CI runs
+- **THEN** generated outputs (README.md, mkdocs/docs/) SHALL match the re-generated outputs exactly
+- **AND** `git diff --exit-code -- README.md mkdocs/docs/` SHALL pass
 
 ### Requirement: Open Source and Community-Driven
 
@@ -113,11 +135,11 @@ The project SHALL maintain high code and data quality.
 
 | Metric | Target |
 |--------|--------|
-| Algorithm Entries | 200+ |
+| Algorithm Entries | 100+ (growing toward 200+) |
 | Categories | 16 |
-| Unique Tags | 400+ |
 | Test Coverage | >85% |
 | CI Pass Rate | 100% |
+| Spec-Implementation Drift | 0 (enforced by CI diff checks) |
 
 ## Out of Scope
 
@@ -126,3 +148,4 @@ These features are explicitly NOT planned:
 - Algorithm implementations (only references)
 - Execution benchmarking (only complexity analysis)
 - Real-time data updates (static YAML files)
+- New Jekyll / legacy `docs/` content (legacy `docs/` is non-authoritative and being removed)

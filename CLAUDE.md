@@ -1,191 +1,108 @@
 # CLAUDE.md
 
-> 本文档为 AI 助手（如 Claude）提供项目上下文，帮助快速理解项目架构和开发规范。
+> AI 助手项目上下文。权威来源优先级见下方层级表。
 
-## 项目愿景与定位
+## 权威来源层级
 
-**Awesome Bioinformatics Algorithms** 是一个精心策划的生物信息学算法集合，提供：
+1. `openspec/specs/` — 需求与设计的唯一真相来源
+2. `data/` — 算法与分类数据（`algorithms/*.yaml`, `categories.yaml`）
+3. `awesome_bioinfo/` — 实现，需与 specs 保持一致
+4. `mkdocs/` — 公开文档（MkDocs Material），唯一权威文档渠道
+5. `.github/copilot-instructions.md` — Copilot 工作流规则（何时走 OpenSpec、何时直接编辑）
 
-- 📚 **算法知识库**：收录经典与现代生物信息学算法，包含复杂度分析
-- 🔧 **维护工具链**：Python CLI 工具用于数据验证、搜索、导出和文档生成
-- 🌐 **多语言支持**：中英双语描述，国际化友好
-- 📖 **自动化文档**：自动生成 README 和 MkDocs 站点
+## 架构简图
 
-**核心价值**：帮助研究人员快速了解算法原理、复杂度和实现，同时为开发者提供结构化的数据管理工具。
+```
+data/
+  categories.yaml          # 16 个顶级分类定义
+  algorithms/*.yaml        # 每类一个文件，顶级键 algorithms:
 
-## 架构总览
+awesome_bioinfo/           # 核心 Python 包
+  schema.py                # 数据类: Category, AlgorithmEntry, Reference
+  algorithm_registry.py    # 加载、索引、搜索
+  category_manager.py      # 分类层级查询
+  validate.py              # 字段规则验证（含 JSON Schema）
+  data_io.py               # YAML/JSON 导入导出
+  readme_generator.py      # 生成 README.md（从模板）
+  generate_mkdocs.py       # 生成 mkdocs/docs/
+  __main__.py              # CLI 入口（python -m awesome_bioinfo）
+  search.py / info_cmd.py / compare.py / export_cmd.py / link_checker.py
 
-```mermaid
-graph TB
-    subgraph 数据层["📁 数据层 (data/)"]
-        CAT[categories.yaml<br/>分类定义]
-        ALG[algorithms/*.yaml<br/>算法数据]
-    end
+templates/
+  algorithm_template.yaml  # 新条目模板
+  readme_template.md       # README 模板
 
-    subgraph 核心模块["🐍 核心模块 (awesome_bioinfo/)"]
-        SCHEMA[schema.py<br/>数据模型]
-        REGISTRY[algorithm_registry.py<br/>算法注册表]
-        CAT_MGR[category_manager.py<br/>分类管理器]
-        VALIDATE[validate.py<br/>数据验证]
-        DATA_IO[data_io.py<br/>导入导出]
-    end
+schemas/
+  algorithm-schema.json    # JSON Schema（validate 命令使用）
 
-    subgraph 生成器["📄 生成器"]
-        README_GEN[readme_generator.py<br/>README 生成]
-        MKDOCS_GEN[generate_mkdocs.py<br/>MkDocs 生成]
-    end
-
-    subgraph CLI["🖥️ CLI 入口"]
-        MAIN[__main__.py<br/>命令行接口]
-        SEARCH[search.py<br/>搜索命令]
-        INFO[info_cmd.py<br/>详情命令]
-        COMPARE[compare.py<br/>比较命令]
-        EXPORT[export_cmd.py<br/>导出命令]
-    end
-
-    subgraph 输出["📤 输出"]
-        README[README.md]
-        MKDOCS_SITE[MkDocs 站点]
-        JSON_CSV[JSON/CSV 导出]
-    end
-
-    subgraph 模板["📋 模板 (templates/)"]
-        README_TPL[readme_template.md]
-        ALGO_TPL[algorithm_template.yaml]
-    end
-
-    CAT --> CAT_MGR
-    ALG --> REGISTRY
-    SCHEMA --> REGISTRY
-    SCHEMA --> CAT_MGR
-    SCHEMA --> VALIDATE
-    REGISTRY --> README_GEN
-    CAT_MGR --> README_GEN
-    VALIDATE --> MAIN
-    REGISTRY --> MAIN
-    CAT_MGR --> MAIN
-    README_TPL --> README_GEN
-    README_GEN --> README
-    MKDOCS_GEN --> MKDOCS_SITE
-    MAIN --> SEARCH
-    MAIN --> INFO
-    MAIN --> COMPARE
-    MAIN --> EXPORT
-    EXPORT --> JSON_CSV
-    DATA_IO --> JSON_CSV
-    ALGO_TPL -.->|新算法模板| ALG
+openspec/specs/            # 需求规格（各子目录含 spec.md）
 ```
 
-## 模块索引
+## 生成输出（禁止手动编辑）
 
-| 模块 | 路径 | 职责 |
-|------|------|------|
-| 核心数据模型 | [`awesome_bioinfo/schema.py`](awesome_bioinfo/schema.py) | 定义 `Category`、`AlgorithmEntry`、`Reference` 数据类 |
-| 算法注册表 | [`awesome_bioinfo/algorithm_registry.py`](awesome_bioinfo/algorithm_registry.py) | 加载、索引、搜索算法数据 |
-| 分类管理器 | [`awesome_bioinfo/category_manager.py`](awesome_bioinfo/category_manager.py) | 管理分类层级和子分类关系 |
-| 数据验证 | [`awesome_bioinfo/validate.py`](awesome_bioinfo/validate.py) | YAML 格式和业务规则验证 |
-| 数据 I/O | [`awesome_bioinfo/data_io.py`](awesome_bioinfo/data_io.py) | YAML/JSON 导入导出 |
-| README 生成 | [`awesome_bioinfo/readme_generator.py`](awesome_bioinfo/readme_generator.py) | 从模板生成 README.md |
-| MkDocs 生成 | [`awesome_bioinfo/generate_mkdocs.py`](awesome_bioinfo/generate_mkdocs.py) | 生成文档站点页面 |
-| CLI 入口 | [`awesome_bioinfo/__main__.py`](awesome_bioinfo/__main__.py) | 命令行接口入口 |
+| 文件/目录 | 生成命令 |
+|---|---|
+| `README.md` | `python -m awesome_bioinfo generate` |
+| `mkdocs/docs/` | `python -m awesome_bioinfo mkdocs` |
 
-**详细模块文档**：
-- [awesome_bioinfo/CLAUDE.md](awesome_bioinfo/CLAUDE.md) - 核心模块详细说明
-
-## 技术栈概要
-
-| 类别 | 技术 | 版本 |
-|------|------|------|
-| **语言** | Python | ≥3.9 |
-| **数据格式** | YAML (PyYAML) | ≥6.0 |
-| **HTTP 客户端** | aiohttp | ≥3.9.0 |
-| **测试** | pytest + hypothesis | ≥7.0 |
-| **代码质量** | ruff + mypy | 最新 |
-| **文档生成** | MkDocs Material | ≥9.0 |
-
-## 开发指南
-
-### 环境设置
+数据或模板变更后须重新生成并验证无漂移：
 
 ```bash
-# 克隆仓库
-git clone https://github.com/LessUp/awesome-bioinfo-algorithms.git
-cd awesome-bioinfo-algorithms
-
-# 创建虚拟环境
-python -m venv venv
-source venv/bin/activate
-
-# 安装开发依赖
-pip install -e ".[dev]"
+python -m awesome_bioinfo generate && python -m awesome_bioinfo mkdocs
+git diff --exit-code -- README.md mkdocs/docs/
 ```
 
-### 常用 CLI 命令
+**`README.zh-CN.md` 为手动维护，永远不要自动覆写。**
+
+## 常用命令
 
 ```bash
-# 数据验证
-python -m awesome_bioinfo validate
-
-# 查看统计
+# 验证与统计
+python -m awesome_bioinfo validate          # 数据 PR 必须通过
 python -m awesome_bioinfo stats
 
-# 搜索算法
-python -m awesome_bioinfo search "alignment"
-python -m awesome_bioinfo search --tag dynamic-programming
-python -m awesome_bioinfo search --category sequence-alignment
+# 查询
+python -m awesome_bioinfo search <query>
+python -m awesome_bioinfo info <id>
+python -m awesome_bioinfo compare <id1> <id2>
+python -m awesome_bioinfo export --format json
 
-# 查看算法详情
-python -m awesome_bioinfo info smith-waterman
-
-# 比较算法
-python -m awesome_bioinfo compare smith-waterman needleman-wunsch
-
-# 导出数据
-python -m awesome_bioinfo export --format json > algorithms.json
-python -m awesome_bioinfo export --format csv > algorithms.csv
-
-# 生成文档
-python -m awesome_bioinfo generate      # README.md
-python -m awesome_bioinfo mkdocs        # MkDocs 站点
-
-# 检查链接有效性
-python -m awesome_bioinfo check-links
+# Lint / 类型检查 / 测试
+ruff check awesome_bioinfo tests && mypy awesome_bioinfo --ignore-missing-imports
+pytest tests/ -v --tb=short
 ```
 
-### 快速验证（迭代时推荐）
+## 算法条目规则
 
-```bash
-# Lint + Typecheck
-ruff check awesome_bioinfo tests
-mypy awesome_bioinfo
+- **必填**：`id`, `name`, `description`, `purpose`, `time_complexity`, `category`
+- `description`：50–500 字符（trimmed）
+- `id`：全局唯一，小写字母 + 连字符（如 `smith-waterman`）
+- `tags`：小写字母 + 连字符
+- `category` / `subcategory`：必须存在于 `data/categories.yaml`
+- `difficulty`：`beginner` | `intermediate` | `advanced`
+- `time_complexity` / `space_complexity`：须匹配 `O(...)` 模式
+- 模板：`templates/algorithm_template.yaml`
 
-# 运行测试
-pytest tests/ -v
-```
+## 命名与代码约定
 
-### 数据结构
+- 算法/分类 ID：lowercase-hyphenated
+- Python 模块：snake_case；数据类：PascalCase
+- 行宽 100（Ruff）；mypy `ignore_missing_imports = true`
+- YAML 文件编码 UTF-8；双语支持通过 `*_en` 可选字段
 
-**算法条目必填字段**：
-- `id`: 唯一标识符（小写字母+连字符）
-- `name`: 算法名称
-- `description`: 详细描述（50-500 字符）
-- `purpose`: 主要用途
-- `time_complexity`: 时间复杂度
-- `category`: 分类 ID
+## Git 约定
 
-**可选字段**：
-- `space_complexity`, `year`, `paper_url`, `implementation_url`
-- `related_tools`, `tags`, `subcategory`, `difficulty`, `language`
-- `references`（扩展资料列表）
-- `description_en`, `purpose_en`（英文翻译）
+- 默认分支：`master`
+- 提交信息：Conventional Commits
+- PR 合并前：CI 运行 lint、typecheck、tests
 
-### 添加新算法
+## 常见陷阱
 
-1. 复制模板：`templates/algorithm_template.yaml`
-2. 创建文件：`data/algorithms/<category>.yaml`（追加到现有文件或新建）
-3. 填写字段，确保描述长度 50-500 字符
-4. 运行验证：`python -m awesome_bioinfo validate`
-5. 生成 README：`python -m awesome_bioinfo generate`
+- `scripts/` 已废弃，改用 `python -m awesome_bioinfo`
+- `docs/` 目录已移除，MkDocs 在 `mkdocs/` 下
+- 不要修改 `README.md` 或 `mkdocs/docs/`（生成文件）
+- 添加/删除分类是 spec 级变更，需走 `/opsx:propose`
+- `data/categories.yaml` 变更后，所有引用该分类的算法文件都需同步更新
 
 ## 全局规范与约定
 
@@ -211,7 +128,7 @@ pytest tests/ -v
 
 ### Git 工作流
 
-- **主分支**：`main`
+- **主分支**：`master`
 - **提交信息**：遵循 Conventional Commits
 - **PR 检查**：CI 运行 lint、typecheck、tests
 

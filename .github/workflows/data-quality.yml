@@ -1,4 +1,4 @@
-name: Data Quality Check
+name: Link Check
 
 on:
   schedule:
@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: read
-  issues: write
 
 jobs:
   link-check:
@@ -20,7 +19,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install -e ".[dev]"
+        run: pip install -e .
 
       - name: Check URL validity
         run: python -m awesome_bioinfo check-links

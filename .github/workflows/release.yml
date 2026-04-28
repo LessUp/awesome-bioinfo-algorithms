@@ -4,7 +4,6 @@ on:
   push:
     tags:
       - 'v*'
-  workflow_dispatch:
 
 permissions:
   contents: write
@@ -29,7 +28,6 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v3
         with:
-          body: ${{ steps.changelog.outputs.changelog }}
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

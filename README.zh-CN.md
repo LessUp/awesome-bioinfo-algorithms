@@ -18,7 +18,6 @@
 
 - 完整算法目录与统计：见 [README.md](README.md)
 - GitHub Pages 文档站：见 <https://lessup.github.io/awesome-bioinfo-algorithms/>
-- API 文档：见 [docs/API.md](docs/API.md)
 - 贡献指南：见 [CONTRIBUTING.md](CONTRIBUTING.md)
 
 主 README 本身已经采用中英双语内容，后续新增算法、分类统计和目录结构会优先在那里自动更新。
@@ -45,8 +44,7 @@ python -m awesome_bioinfo stats
 ## 文档入口
 
 - 项目首页：<https://lessup.github.io/awesome-bioinfo-algorithms/>
-- 开发指南：[docs/DEVELOPMENT.md](docs/DEVELOPMENT.md)
-- 常见问题：[docs/FAQ.md](docs/FAQ.md)
+- 贡献指南：[CONTRIBUTING.md](CONTRIBUTING.md)
 - 变更日志：[CHANGELOG.md](CHANGELOG.md)
 
 ## License

@@ -387,7 +387,7 @@ title: 首页
 
 <div style="text-align: center; padding: 2rem 0; font-size: 0.875rem; color: var(--md-default-fg-color--light);">
 
-Built with :material-heart: by the shane Community | © 2025-{current_year} | CC0 1.0 Universal
+Built with :material-heart: by the LessUp Community | © 2025-{current_year} | CC0 1.0 Universal
 
 </div>
 """

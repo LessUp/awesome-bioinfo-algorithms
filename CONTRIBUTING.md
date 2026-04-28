@@ -74,23 +74,26 @@ python -m awesome_bioinfo search --category sequence-alignment
 
 #### 3. 参与规范文档编写
 
-本项目采用**规范驱动开发（Spec-Driven Development）**，所有实现都以 `/specs` 目录下的文档为准。
+本项目采用 **OpenSpec 规范驱动开发**，`openspec/specs/` 目录是所有需求的唯一来源。规范文件直接在此目录中维护，不再使用 RFC 流程。
 
-**如何贡献：**
+**何时需要提案（propose）：**
+- 新增 CLI 命令、修改校验规则、重构涉及多个模块 → 使用 `/opsx:propose` 创建变更提案
+- 修正已合并代码对应的规范文字、修改单个算法条目 → 直接编辑对应文件即可
 
-1. 阅读现有规范（`specs/README.md`）
-2. 发现需要补充或修改的规范
-3. 创建 RFC（Request for Comments）文档
-4. 提交 PR 讨论，获得社区认可后合并
+**OpenSpec 标准工作流：**
 
-**规范类型：**
-- `specs/product/` - 产品需求和功能定义
-- `specs/rfc/` - 技术设计和架构方案
-- `specs/api/` - CLI 接口规范
-- `specs/db/` - 数据结构定义
-- `specs/testing/` - 测试规范和验收标准
+1. **`/opsx:propose <想法>`** — 生成变更提案（含设计、规范更新和任务列表）
+2. **`/opsx:apply`** — 逐步执行提案中的任务
+3. **`/opsx:archive`** — 任务完成后归档提案、更新 Living Spec
 
-详见：[Spec 贡献指南](#spec-contributing-english)
+**规范文件位置：**
+- `openspec/specs/product-vision/spec.md` — 产品需求
+- `openspec/specs/core-architecture/spec.md` — 技术架构
+- `openspec/specs/cli-interface/spec.md` — CLI 接口
+- `openspec/specs/algorithm-schema/spec.md` — 数据模式
+- `openspec/specs/testing-strategy/spec.md` — 测试策略
+
+详见：[规范贡献指南（英文）](#spec-contributing-english)
 
 #### 4. 质量要求
 
@@ -109,8 +112,8 @@ python -m awesome_bioinfo search --category sequence-alignment
 在提交前，请在本地运行验证：
 
 ```bash
-# 安装依赖（开发模式）
-pip install -e ".[dev]"
+# 安装依赖（开发 + MkDocs）
+pip install -e ".[dev,docs]"
 # 或：pip install -r requirements.txt
 
 # 运行测试
@@ -211,23 +214,26 @@ python -m awesome_bioinfo search --category sequence-alignment
 
 #### 3. Contributing to Specifications
 
-This project follows **Spec-Driven Development (SDD)**, where all implementations are guided by documentation in the `/specs` directory.
+This project follows **OpenSpec-driven development**. `openspec/specs/` is the single source of truth — all specs are living documents maintained directly in that directory. There is no RFC process.
 
-**How to Contribute:**
+**When to create a change proposal:**
+- Adding a new CLI command, changing validation rules, or refactoring across multiple modules → use `/opsx:propose`
+- Correcting spec wording to match already-merged code, or adding a single algorithm entry → edit directly, no proposal needed
 
-1. Read existing specs (`specs/README.md`)
-2. Identify specs that need updates or additions
-3. Create an RFC (Request for Comments) document
-4. Submit a PR for discussion, merge after community approval
+**OpenSpec workflow:**
 
-**Spec Types:**
-- `specs/product/` - Product requirements and feature definitions
-- `specs/rfc/` - Technical design and architecture proposals
-- `specs/api/` - CLI interface specifications
-- `specs/db/` - Data schema definitions
-- `specs/testing/` - Test specifications and acceptance criteria
+1. **`/opsx:propose <idea>`** — generate a change proposal (includes design, spec updates, and task list)
+2. **`/opsx:apply`** — execute tasks from the proposal step by step
+3. **`/opsx:archive`** — archive the proposal and update the living specs when done
 
-See: [Spec Contributing Guide](#spec-contributing-english)
+**Spec locations:**
+- `openspec/specs/product-vision/spec.md` — product requirements
+- `openspec/specs/core-architecture/spec.md` — technical architecture
+- `openspec/specs/cli-interface/spec.md` — CLI interface contracts
+- `openspec/specs/algorithm-schema/spec.md` — YAML data schema
+- `openspec/specs/testing-strategy/spec.md` — testing strategy
+
+See: [Specification Contributing Guide](#spec-contributing-english)
 
 #### 4. Quality Requirements
 
@@ -246,8 +252,8 @@ See: [Spec Contributing Guide](#spec-contributing-english)
 Before submitting, please run validation locally:
 
 ```bash
-# Install dependencies (dev mode)
-pip install -e ".[dev]"
+# Install dependencies (dev + MkDocs)
+pip install -e ".[dev,docs]"
 # Or: pip install -r requirements.txt
 
 # Run tests
@@ -282,66 +288,56 @@ python -m awesome_bioinfo generate
 
 ## Specification Contributing Guide
 
-This project follows **Spec-Driven Development (SDD)**. All implementations must be guided by specifications in the `/specs` directory.
+This project uses **OpenSpec**. Living specs in `openspec/specs/` are the single source of truth. There are no RFCs and no separate spec approval step — propose, apply, and archive via the commands below.
 
-### When to Update Specs
+### Decision: Propose vs. Edit Directly
 
-1. **New Feature**: Create product spec → RFC → implementation
-2. **Architecture Change**: Create RFC documenting the change
-3. **API Changes**: Update API spec before implementation
-4. **Data Schema Changes**: Update DB spec and migrate existing data
+| Situation | Action |
+|-----------|--------|
+| Adding or correcting one algorithm entry | Edit `data/algorithms/*.yaml` directly |
+| Fixing spec wording to match merged code | Edit the spec directly |
+| New CLI feature, validation rule change, multi-module refactor | `/opsx:propose` → `/opsx:apply` → `/opsx:archive` |
+| Updating multiple specs or introducing new spec capabilities | `/opsx:propose` → `/opsx:apply` → `/opsx:archive` |
 
-### Spec Workflow
+### OpenSpec Workflow
 
-1. **Review**: Read existing specs before proposing changes
-2. **Propose**: Create RFC or update product spec
-3. **Discuss**: Get community feedback via PR comments
-4. **Implement**: Only after spec is approved and merged
-5. **Verify**: Ensure implementation matches spec exactly
-
-### RFC Template
-
-```markdown
-# RFC-XXXX: Title
-
-## Status
-- **Status**: Proposed | Accepted | Implemented
-- **Created**: YYYY-MM-DD
-- **Author**: Your Name
-
-## Context
-What problem are we solving?
-
-## Proposal
-Detailed technical proposal.
-
-## Alternatives
-What other approaches did you consider?
-
-## Implementation Plan
-How will this be implemented?
-
-## Related Documents
-Links to related specs or RFCs.
 ```
+/opsx:propose <idea>   # Creates proposal with design, spec diffs, and task list
+/opsx:apply            # Implements tasks from the current proposal
+/opsx:archive          # Updates living specs and archives the proposal
+```
+
+### Branch Strategy
+
+- **Trivial / single-file changes**: commit directly to the default branch (currently `master`).
+- **Non-trivial changes**: short-lived branch `<type>/<description>`, merged via PR, branch deleted after merge.
+- Keep branches short-lived. Aim to merge within one or two days to avoid divergence.
+
+### When to Request a Review (`/review`)
+
+Use `/review` before merging when the change:
+- modifies Python logic in `awesome_bioinfo/`
+- updates a living spec in `openspec/specs/`
+- adds or removes a category
+- spans multiple files or modules
+
+Pure data additions (algorithm YAML entries that pass `validate`) and documentation typo fixes do not require a review step.
 
 ### Spec Quality Standards
 
 - ✅ Clear and unambiguous language
-- ✅ Examples for all patterns
-- ✅ Validation rules defined explicitly
-- ✅ Change history maintained
+- ✅ Validation rules stated explicitly
+- ✅ Examples for non-obvious patterns
 - ✅ Cross-references to related specs
-- ✅ Bilingual where appropriate (English + Chinese summaries)
+- ✅ Bilingual where appropriate (Chinese primary, English secondary)
 
 ### AI Agent Instructions
 
-AI assistants (Qwen Code, Cursor, etc.) must follow the spec-first workflow:
-1. Read relevant specs before coding
-2. Propose spec changes before implementation
-3. Wait for approval before writing code
-4. Implement exactly as specified in specs
+AI assistants must follow the spec-first workflow defined in `AGENTS.md`. Key points:
 
-See `AGENTS.md` for detailed AI workflow instructions.
+1. Read `openspec/specs/` before making changes.
+2. Use `/opsx:propose` for non-trivial changes; edit directly for small fixes.
+3. Run local verification commands before committing (see `AGENTS.md` → **Change-Based Verification**).
+4. Use `/review` for changes touching Python logic or living specs.
 
 ---

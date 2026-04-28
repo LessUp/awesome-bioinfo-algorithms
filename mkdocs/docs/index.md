@@ -159,7 +159,7 @@ title: 首页
 
 [:material-tag-multiple: 按标签筛选](tags/){ .aba-btn .aba-btn-secondary }
 
-[:material-github: GitHub 仓库](https://github.com/shane/awesome-bioinfo-algorithms){ .aba-btn .aba-btn-secondary target="_blank" }
+[:material-github: GitHub 仓库](https://github.com/LessUp/awesome-bioinfo-algorithms){ .aba-btn .aba-btn-secondary target="_blank" }
 
 </div>
 
@@ -169,6 +169,6 @@ title: 首页
 
 <div style="text-align: center; padding: 2rem 0; font-size: 0.875rem; color: var(--md-default-fg-color--light);">
 
-Built with :material-heart: by the shane Community | © 2025-2026 | CC0 1.0 Universal
+Built with :material-heart: by the LessUp Community | © 2025-2026 | CC0 1.0 Universal
 
 </div>

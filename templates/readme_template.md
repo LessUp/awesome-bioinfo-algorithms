@@ -62,8 +62,8 @@
 git clone https://github.com/LessUp/awesome-bioinfo-algorithms.git
 cd awesome-bioinfo-algorithms
 
-# Install dependencies
-pip install -e ".[dev]"
+# Install dependencies (includes MkDocs support)
+pip install -e ".[dev,docs]"
 
 # Validate data
 python -m awesome_bioinfo validate

@@ -161,3 +161,10 @@ class TestCmdSearch:
         assert result == 0
         output = capsys.readouterr().out
         assert "No algorithms found" in output
+
+    def test_cmd_search_usage_references_correct_module(self, mock_registry, mock_category_manager, capsys):
+        """Usage text must reference python -m awesome_bioinfo, not python -m scripts."""
+        cmd_search(mock_registry, mock_category_manager)
+        output = capsys.readouterr().out
+        assert "python -m awesome_bioinfo" in output
+        assert "python -m scripts" not in output
