@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"mypy awesome_bioinfo 2>&1\",\"description\":\"运行 mypy 类型检查\"}",
-  "error": "Exit code 1\nawesome_bioinfo/generate_mkdocs.py:213: error: Name \"DIFFICULTY_LABELS\" is not defined  [name-defined]\nawesome_bioinfo/generate_mkdocs.py:419: error: Name \"DIFFICULTY_LABELS\" is not defined  [name-defined]\nawesome_bioinfo/generate_mkdocs.py:773: error: Name \"DIFFICULTY_LABELS\" is not defined  [name-defined]\nFound 3 errors in 1 file (checked 14 source files)",
-  "timestamp": "2026-04-27T04:07:34.195Z",
-  "retry_count": 2
-}

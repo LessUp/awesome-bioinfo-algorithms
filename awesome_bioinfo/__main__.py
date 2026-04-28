@@ -300,6 +300,16 @@ def build_parser() -> argparse.ArgumentParser:
 
     subparsers.add_parser("check-links", help="Check validity of algorithm URLs")
 
+    # Translate subcommand
+    translate_parser = subparsers.add_parser("translate", help="Translation utilities")
+    translate_subparsers = translate_parser.add_subparsers(
+        dest="translate_command", help="Translation commands"
+    )
+    translate_subparsers.add_parser("status", help="Show translation status")
+    translate_subparsers.add_parser("generate", help="Generate translation template")
+    apply_parser = translate_subparsers.add_parser("apply", help="Apply translations from file")
+    apply_parser.add_argument("file", nargs="?", help="Translation file to apply")
+
     return parser
 
 
@@ -331,6 +341,15 @@ def main(argv: Optional[list[str]] = None) -> int:
         return cmd_mkdocs()
     if args.command == "check-links":
         return cmd_check_links()
+    if args.command == "translate":
+        from .translate import cmd_translate_apply, cmd_translate_generate, cmd_translate_status
+
+        if args.translate_command == "status":
+            return cmd_translate_status()
+        if args.translate_command == "generate":
+            return cmd_translate_generate()
+        if args.translate_command == "apply":
+            return cmd_translate_apply(getattr(args, "file", None))
 
     parser.print_help()
     return 1

@@ -4,8 +4,6 @@ import asyncio
 from dataclasses import asdict
 from unittest.mock import AsyncMock, MagicMock
 
-import pytest
-
 from awesome_bioinfo.link_checker import (
     LinkCheckResult,
     LinkCheckSummary,

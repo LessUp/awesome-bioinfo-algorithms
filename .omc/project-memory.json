@@ -248,8 +248,8 @@
     },
     {
       "path": "mkdocs/mkdocs.yml",
-      "accessCount": 10,
-      "lastAccessed": 1777262335593,
+      "accessCount": 11,
+      "lastAccessed": 1777344848155,
       "type": "file"
     },
     {
@@ -439,6 +439,12 @@
       "type": "file"
     },
     {
+      "path": "mkdocs/docs/index.md",
+      "accessCount": 2,
+      "lastAccessed": 1777344861735,
+      "type": "file"
+    },
+    {
       "path": "templates/algorithm_template.yaml",
       "accessCount": 1,
       "lastAccessed": 1777255146880,
@@ -502,12 +508,6 @@
       "path": "docs/Gemfile",
       "accessCount": 1,
       "lastAccessed": 1777255481545,
-      "type": "file"
-    },
-    {
-      "path": "mkdocs/docs/index.md",
-      "accessCount": 1,
-      "lastAccessed": 1777260423636,
       "type": "file"
     },
     {
