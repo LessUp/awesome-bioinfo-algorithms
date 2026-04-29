@@ -114,13 +114,13 @@
           {# Stats Display #}
           <div class="md-footer-stats" style="margin: 1rem 0; display: flex; gap: 1.5rem; flex-wrap: wrap;">
             <span class="md-footer-stat">
-              <strong style="color: #0ea5e9;">201</strong> Algorithms
+              <strong style="color: #0ea5e9;">{{ config.extra.stats.algorithms if config.extra.stats else '195+' }}</strong> Algorithms
             </span>
             <span class="md-footer-stat">
-              <strong style="color: #10b981;">16</strong> Categories
+              <strong style="color: #10b981;">{{ config.extra.stats.categories if config.extra.stats else '16' }}</strong> Categories
             </span>
             <span class="md-footer-stat">
-              <strong style="color: #6366f1;">399</strong> Tags
+              <strong style="color: #6366f1;">{{ config.extra.stats.tags if config.extra.stats else '390+' }}</strong> Tags
             </span>
           </div>
           

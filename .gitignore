@@ -162,6 +162,7 @@ data/categories.bak
 docs/_build/
 /site
 .worktrees/
+.omc/
 
 # Script outputs and logs
 awesome_bioinfo/output/

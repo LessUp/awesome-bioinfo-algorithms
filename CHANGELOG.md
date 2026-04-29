@@ -8,6 +8,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.3] - 2026-04-30
+
+### Removed / 移除
+
+- Removed legacy `docs/` directory (was marked for removal in specs) / 移除遗留 `docs/` 目录
+- Removed obsolete `AI_HANDOFF.md` / 移除过时的交接文档
+- Removed redundant `AGENTS.md` (content merged into `CLAUDE.md`) / 移除冗余的 AGENTS.md（内容已合并到 CLAUDE.md）
+- Removed obsolete `awesome_bioinfo/generate_readme.py` (1-line wrapper) / 移除废弃的 generate_readme.py 包装器
+- Removed corresponding `tests/test_generate_readme.py` / 移除对应的测试文件
+- Removed `.omc/` directory (tool artifact) / 移除工具残留目录
+- Removed `.worktrees/` empty directory / 移除空目录
+- Removed `.github/prompts/` directory (duplicate of `.claude/skills/`) / 移除与 skills 重复的 prompts 目录
+
+### Changed / 变更
+
+- Integrated AGENTS.md OpenSpec workflow content into `CLAUDE.md` / 将 AGENTS.md 的 OpenSpec 工作流内容整合到 CLAUDE.md
+- Fixed hardcoded statistics in `mkdocs/overrides/main.html` / 修复 main.html 中的硬编码统计数据
+- Updated `generate_mkdocs.py` to dynamically inject stats into `mkdocs.yml` / 更新生成器以动态注入统计数据
+- Updated `.gitignore` to include `.omc/` / 更新 gitignore 添加 .omc/
+
+### Technical / 技术细节
+
+- MkDocs footer stats now use `{{ config.extra.stats.* }}` template variables / MkDocs 页脚统计现在使用模板变量
+- All 250 tests pass / 所有 250 个测试通过
+- Coverage remains at 89% / 覆盖率保持 89%
+
+---
+
 ## [1.0.2] - 2026-04-16
 
 ### Fixed / 修复

@@ -855,6 +855,43 @@ def generate_nav_yaml(categories: list[dict], by_cat: dict) -> str:
 # -----------------------------------------------------------------------------
 
 
+def update_mkdocs_yml(
+    base_dir: Path,
+    categories: list[dict],
+    algorithms: list[dict],
+    by_cat: dict[str, list[dict]],
+    by_tag: dict[str, list[dict]],
+) -> None:
+    """Update mkdocs.yml with dynamic stats and nav."""
+    mkdocs_yml = base_dir / "mkdocs" / "mkdocs.yml"
+    with open(mkdocs_yml, encoding="utf-8") as f:
+        text = f.read()
+
+    # Calculate stats
+    cats_with_algo = len([c for c in categories if by_cat.get(c["id"])])
+
+    # Update stats in extra section (inject after "generator: false")
+    stats_block = f"""
+  # Dynamic stats (updated by generate_mkdocs.py)
+  stats:
+    algorithms: {len(algorithms)}
+    categories: {cats_with_algo}
+    tags: {len(by_tag)}"""
+
+    # Find "generator: false" and insert stats after it
+    if "stats:" not in text:
+        text = text.replace("generator: false", "generator: false" + stats_block)
+
+    # Remove existing nav block if present
+    text = re.sub(r"(?m)^nav:.*?(?=^\S|\Z)", "", text, flags=re.DOTALL).rstrip() + "\n\n"
+
+    # Append generated nav
+    text += generate_nav_yaml(categories, by_cat)
+
+    with open(mkdocs_yml, "w", encoding="utf-8") as f:
+        f.write(text)
+
+
 def write_generated_pages(
     base_dir: Path,
     mkdocs_dir: Path,
@@ -911,19 +948,8 @@ def write_generated_pages(
     # Tags
     write_file(mkdocs_dir / "tags.md", generate_tags_page(by_tag))
 
-    # Update nav in mkdocs.yml (text-based to preserve !!python/name tags)
-    mkdocs_yml = base_dir / "mkdocs" / "mkdocs.yml"
-    with open(mkdocs_yml, encoding="utf-8") as f:
-        text = f.read()
-
-    # Remove existing nav block if present
-    text = re.sub(r"(?m)^nav:.*?(?=^\S|\Z)", "", text, flags=re.DOTALL).rstrip() + "\n\n"
-
-    # Append generated nav
-    text += generate_nav_yaml(categories, by_cat)
-
-    with open(mkdocs_yml, "w", encoding="utf-8") as f:
-        f.write(text)
+    # Update mkdocs.yml with stats and nav
+    update_mkdocs_yml(base_dir, categories, algorithms, by_cat, by_tag)
 
 
 def main(base_dir: Optional[Path] = None) -> int:

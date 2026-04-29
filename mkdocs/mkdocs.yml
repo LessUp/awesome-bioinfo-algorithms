@@ -198,11 +198,16 @@ extra:
     updated_zh: 最近更新
   
   # Site metadata
-  version: 1.0.2
+  version: 1.0.3
   release_date: 2026-04
   
   # Generator disabled for cleaner output
   generator: false
+  # Dynamic stats (updated by generate_mkdocs.py)
+  stats:
+    algorithms: 195
+    categories: 16
+    tags: 392
 
 # ---------------------------------------------------------------------------
 # Validation
