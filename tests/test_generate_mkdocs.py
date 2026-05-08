@@ -12,6 +12,7 @@ from awesome_bioinfo.generate_mkdocs import (
     trim_text,
     write_file,
 )
+from awesome_bioinfo.schema import AlgorithmEntry, Category
 
 
 class TestUtilityFunctions:
@@ -94,23 +95,25 @@ class TestLoadData:
         assert isinstance(algorithms, list)
 
     def test_load_data_categories_structure(self) -> None:
-        """load_data should return categories with expected fields."""
+        """load_data should return Category objects."""
         base_dir = get_base_dir()
         categories, _ = load_data(base_dir)
         assert len(categories) > 0
         for cat in categories:
-            assert "id" in cat
-            assert "name" in cat
+            assert isinstance(cat, Category)
+            assert cat.id
+            assert cat.name
 
     def test_load_data_algorithms_structure(self) -> None:
-        """load_data should return algorithms with expected fields."""
+        """load_data should return AlgorithmEntry objects."""
         base_dir = get_base_dir()
         _, algorithms = load_data(base_dir)
         assert len(algorithms) > 0
         for algo in algorithms:
-            assert "id" in algo
-            assert "name" in algo
-            assert "category" in algo
+            assert isinstance(algo, AlgorithmEntry)
+            assert algo.id
+            assert algo.name
+            assert algo.category
 
     def test_load_data_file_not_found(self) -> None:
         """load_data should raise FileNotFoundError for missing data dir."""

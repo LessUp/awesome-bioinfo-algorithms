@@ -13,14 +13,19 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
-from awesome_bioinfo.schema import DIFFICULTY_LABELS, DIFFICULTY_LABELS_BILINGUAL
+from awesome_bioinfo.schema import (
+    DIFFICULTY_LABELS,
+    DIFFICULTY_LABELS_BILINGUAL,
+    AlgorithmEntry,
+    Category,
+)
 
 
 def get_base_dir() -> Path:
     return Path(__file__).resolve().parent.parent
 
 
-def load_data(base_dir: Path) -> tuple[list[dict], list[dict]]:
+def load_data(base_dir: Path) -> tuple[list["Category"], list["AlgorithmEntry"]]:
     """Load categories and algorithms using DataStore.
 
     Raises:
@@ -35,36 +40,33 @@ def load_data(base_dir: Path) -> tuple[list[dict], list[dict]]:
 
     store.load_all()
 
-    categories = [cat.to_dict() for cat in store.get_all_categories()]
-    algorithms = [algo.to_dict() for algo in store.get_all_algorithms()]
-
-    return categories, algorithms
+    return store.get_all_categories(), store.get_all_algorithms()
 
 
-def build_category_map(categories: list[dict]) -> dict[str, dict]:
-    """Build flat map of category id -> category data (incl subcategories)."""
-    cat_map = {}
+def build_category_map(categories: list[Category]) -> dict[str, Category]:
+    """Build flat map of category id -> category object (incl subcategories)."""
+    cat_map: dict[str, Category] = {}
     for cat in categories:
-        cat_map[cat["id"]] = cat
-        for sub in cat.get("subcategories", []):
-            cat_map[sub["id"]] = {**sub, "parent": cat}
+        cat_map[cat.id] = cat
+        for sub in cat.subcategories:
+            sub.parent_id = cat.id
+            cat_map[sub.id] = sub
     return cat_map
 
 
-def build_algo_by_category(algorithms: list[dict]) -> dict[str, list[dict]]:
+def build_algo_by_category(algorithms: list[AlgorithmEntry]) -> dict[str, list[AlgorithmEntry]]:
     """Group algorithms by category."""
-    by_cat: dict[str, list[dict]] = {}
+    by_cat: dict[str, list[AlgorithmEntry]] = {}
     for algo in algorithms:
-        cat = algo.get("category", "unknown")
-        by_cat.setdefault(cat, []).append(algo)
+        by_cat.setdefault(algo.category, []).append(algo)
     return by_cat
 
 
-def build_tag_index(algorithms: list[dict]) -> dict[str, list[dict]]:
+def build_tag_index(algorithms: list[AlgorithmEntry]) -> dict[str, list[AlgorithmEntry]]:
     """Build tag -> algorithms index."""
-    by_tag: dict[str, list[dict]] = {}
+    by_tag: dict[str, list[AlgorithmEntry]] = {}
     for algo in algorithms:
-        for tag in algo.get("tags", []):
+        for tag in algo.tags:
             by_tag.setdefault(tag, []).append(algo)
     return by_tag
 
@@ -120,24 +122,24 @@ def get_category_icon(category_id: str) -> str:
 
 
 def generate_index(
-    categories: list[dict],
-    algorithms: list[dict],
-    cat_map: dict,
-    by_cat: dict,
-    by_tag: dict,
+    categories: list[Category],
+    algorithms: list[AlgorithmEntry],
+    cat_map: dict[str, Category],
+    by_cat: dict[str, list[AlgorithmEntry]],
+    by_tag: dict[str, list[AlgorithmEntry]],
 ) -> str:
     """Generate the landing page with modern hero design."""
     total = len(algorithms)
-    all_tags = set()
+    all_tags: set[str] = set()
     with_paper = 0
     with_impl = 0
-    cats_with_algo = [cat for cat in categories if by_cat.get(cat["id"])]
+    cats_with_algo = [cat for cat in categories if by_cat.get(cat.id)]
 
     for algo in algorithms:
-        all_tags.update(algo.get("tags", []))
-        if algo.get("paper_url"):
+        all_tags.update(algo.tags)
+        if algo.paper_url:
             with_paper += 1
-        if algo.get("implementation_url"):
+        if algo.implementation_url:
             with_impl += 1
 
     # Build hero stats
@@ -159,19 +161,19 @@ def generate_index(
     # Build bento grid for categories
     cat_cards = []
     for i, cat in enumerate(categories):
-        count = len(by_cat.get(cat["id"], []))
+        count = len(by_cat.get(cat.id, []))
         if count == 0:
             continue
-        icon = get_category_icon(cat["id"])
+        icon = get_category_icon(cat.id)
         featured = " aba-bento-featured" if i < 2 else ""
         delay = min(i, 4)
         cat_cards.append(
             f'<a class="aba-bento-card{featured} aba-animate aba-animate-delay-{delay}" '
-            f'href="categories/{cat["id"]}/" data-category="{cat["id"]}">'
+            f'href="categories/{cat.id}/" data-category="{cat.id}">'
             f'  <div class="aba-bento-icon">:{icon}:</div>'
             f'  <div class="aba-bento-content">'
-            f'    <div class="aba-bento-title">{cat["name"]}</div>'
-            f'    <div class="aba-bento-desc">{trim_text(cat.get("description", ""), 80)}</div>'
+            f'    <div class="aba-bento-title">{cat.name}</div>'
+            f'    <div class="aba-bento-desc">{trim_text(cat.description, 80)}</div>'
             f'    <div class="aba-bento-meta">'
             f'      <span class="aba-bento-count">{count} 个算法</span>'
             f'      <span class="aba-bento-arrow">→</span>'
@@ -182,38 +184,38 @@ def generate_index(
 
     # Build latest algorithms
     latest = sorted(
-        [a for a in algorithms if a.get("year")],
-        key=lambda e: (e.get("year", 0), e.get("name", "")),
+        [a for a in algorithms if a.year],
+        key=lambda e: (e.year, e.name),
         reverse=True,
     )[:6]
 
     algo_cards = []
     for i, algo in enumerate(latest):
-        cat_info = cat_map.get(algo.get("category", ""), {})
+        cat_info = cat_map.get(algo.category)
         diff_badge = ""
-        if algo.get("difficulty"):
-            diff_class = get_difficulty_badge_class(algo["difficulty"])
-            diff_text = DIFFICULTY_LABELS.get(algo["difficulty"], algo["difficulty"])
+        if algo.difficulty:
+            diff_class = get_difficulty_badge_class(algo.difficulty)
+            diff_text = DIFFICULTY_LABELS.get(algo.difficulty, algo.difficulty)
             diff_badge = f'<span class="aba-badge {diff_class}">{diff_text}</span>'
 
         year_badge = (
-            f'<span class="aba-badge aba-badge-year">{algo["year"]}</span>'
-            if algo.get("year")
+            f'<span class="aba-badge aba-badge-year">{algo.year}</span>'
+            if algo.year
             else ""
         )
-        complexity = algo.get("time_complexity", "-")
+        complexity = algo.time_complexity or "-"
 
         delay = min(i, 4)
         algo_cards.append(
             f'<a class="aba-algo-card aba-animate aba-animate-delay-{delay}" '
-            f'href="algorithms/{algo["id"]}/" data-category="{cat_info.get("name", "")}" '
-            f'data-year="{algo.get("year", "")}" data-difficulty="{algo.get("difficulty", "")}">'
+            f'href="algorithms/{algo.id}/" data-category="{cat_info.name if cat_info else ""}" '
+            f'data-year="{algo.year}" data-difficulty="{algo.difficulty}">'
             f'  <div class="aba-algo-header">'
             f'    <div class="aba-algo-badges">{year_badge}{diff_badge}</div>'
-            f'    <div class="aba-algo-name">{algo["name"]}</div>'
+            f'    <div class="aba-algo-name">{algo.name}</div>'
             f"  </div>"
             f'  <div class="aba-algo-body">'
-            f'    <div class="aba-algo-purpose">{trim_text(algo.get("purpose", ""), 100)}</div>'
+            f'    <div class="aba-algo-purpose">{trim_text(algo.purpose, 100)}</div>'
             f"  </div>"
             f'  <div class="aba-algo-footer">'
             f'    <span class="aba-algo-complexity">{complexity}</span>'
@@ -227,9 +229,8 @@ def generate_index(
     # Year distribution data for chart
     year_counts: dict[int, int] = {}
     for algo in algorithms:
-        year = algo.get("year")
-        if year:
-            year_counts[year] = year_counts.get(year, 0) + 1
+        if algo.year:
+            year_counts[algo.year] = year_counts.get(algo.year, 0) + 1
 
     timeline_items = []
     for year in sorted(year_counts.keys(), reverse=True)[:8]:
@@ -381,52 +382,52 @@ Built with :material-heart: by the LessUp Community | © 2025-{current_year} | C
 # -----------------------------------------------------------------------------
 
 
-def generate_algo_page(algo: dict, cat_map: dict) -> str:
+def generate_algo_page(algo: AlgorithmEntry, cat_map: dict[str, Category]) -> str:
     """Generate a single algorithm detail page with modern layout."""
-    cat = cat_map.get(algo.get("category", ""), {})
-    cat_name = cat.get("name", algo.get("category", ""))
-    cat_id = algo.get("category", "")
-    sub = cat_map.get(algo.get("subcategory", ""), {})
-    sub_name = sub.get("name", "")
+    cat = cat_map.get(algo.category)
+    cat_name = cat.name if cat else algo.category
+    cat_id = algo.category
+    sub = cat_map.get(algo.subcategory) if algo.subcategory else None
+    sub_name = sub.name if sub else ""
 
     # Build badges
     badges = []
-    if algo.get("year"):
-        badges.append(f'<span class="aba-badge aba-badge-year">{algo["year"]}年</span>')
+    if algo.year:
+        badges.append(f'<span class="aba-badge aba-badge-year">{algo.year}年</span>')
     if cat_name:
         badges.append(f'<span class="aba-badge">{cat_name}</span>')
     if sub_name:
         badges.append(f'<span class="aba-badge">{sub_name}</span>')
-    if algo.get("difficulty"):
-        diff_class = get_difficulty_badge_class(algo["difficulty"])
-        diff_text = DIFFICULTY_LABELS.get(algo["difficulty"], algo["difficulty"])
+    if algo.difficulty:
+        diff_class = get_difficulty_badge_class(algo.difficulty)
+        diff_text = DIFFICULTY_LABELS.get(algo.difficulty, algo.difficulty)
         badges.append(f'<span class="aba-badge {diff_class}">{diff_text}</span>')
 
     # Build info grid
     info_items = []
-    if algo.get("purpose"):
+    if algo.purpose:
         info_items.append(f"""
 <div class="aba-info-item">
   <div class="aba-info-label">:material-target: 用途</div>
-  <div class="aba-info-value">{algo["purpose"]}</div>
+  <div class="aba-info-value">{algo.purpose}</div>
 </div>
 """)
-    if algo.get("time_complexity"):
+    if algo.time_complexity:
         info_items.append(f"""
 <div class="aba-info-item">
   <div class="aba-info-label">:material-clock-fast: 时间复杂度</div>
-  <div class="aba-info-value"><code>{algo["time_complexity"]}</code></div>
+  <div class="aba-info-value"><code>{algo.time_complexity}</code></div>
 </div>
 """)
-    if algo.get("space_complexity"):
+    if algo.space_complexity:
         info_items.append(f"""
 <div class="aba-info-item">
   <div class="aba-info-label">:material-memory: 空间复杂度</div>
-  <div class="aba-info-value"><code>{algo["space_complexity"]}</code></div>
+  <div class="aba-info-value"><code>{algo.space_complexity}</code></div>
 </div>
 """)
-    if algo.get("language"):
-        langs = "、".join(algo["language"])
+    if algo.language:
+        langs = "、".join(algo.language)
         info_items.append(f"""
 <div class="aba-info-item">
   <div class="aba-info-label">:material-code: 实现语言</div>
@@ -436,23 +437,23 @@ def generate_algo_page(algo: dict, cat_map: dict) -> str:
 
     # Links section
     links_section = []
-    if algo.get("paper_url"):
+    if algo.paper_url:
         links_section.append(f'''
-<a href="{algo["paper_url"]}" class="aba-btn aba-btn-secondary" target="_blank">
+<a href="{algo.paper_url}" class="aba-btn aba-btn-secondary" target="_blank">
   :material-file-document: 论文链接
 </a>
 ''')
-    if algo.get("implementation_url"):
+    if algo.implementation_url:
         links_section.append(f'''
-<a href="{algo["implementation_url"]}" class="aba-btn aba-btn-secondary" target="_blank">
+<a href="{algo.implementation_url}" class="aba-btn aba-btn-secondary" target="_blank">
   :material-github: 代码实现
 </a>
 ''')
 
     # Related tools
     tools_section = ""
-    if algo.get("related_tools"):
-        tool_links = " · ".join(f"`{tool}`" for tool in algo["related_tools"])
+    if algo.related_tools:
+        tool_links = " · ".join(f"`{tool}`" for tool in algo.related_tools)
         tools_section = f"""
 ### :material-tools: 相关工具
 
@@ -461,9 +462,9 @@ def generate_algo_page(algo: dict, cat_map: dict) -> str:
 
     # Tags
     tags_section = ""
-    if algo.get("tags"):
+    if algo.tags:
         tag_links = " ".join(
-            f'[<span class="aba-badge">{tag}</span>](tags.md#{tag})' for tag in algo["tags"]
+            f'[<span class="aba-badge">{tag}</span>](tags.md#{tag})' for tag in algo.tags
         )
         tags_section = f"""
 ### :material-tag: 标签
@@ -475,11 +476,11 @@ def generate_algo_page(algo: dict, cat_map: dict) -> str:
 
     # References
     refs_section = ""
-    if algo.get("references"):
+    if algo.references:
         refs = "\n".join(
-            f"- [{ref.get('title', ref.get('url', ''))}]({ref['url']})"
-            + (f" *({ref['type']})*" if ref.get("type") else "")
-            for ref in algo["references"]
+            f"- [{ref.title or ref.url}]({ref.url})"
+            + (f" *({ref.type})*" if ref.type else "")
+            for ref in algo.references
         )
         refs_section = f"""
 ### :material-book-open: 参考资料
@@ -487,7 +488,7 @@ def generate_algo_page(algo: dict, cat_map: dict) -> str:
 {refs}
 """
 
-    return f"""# {algo["name"]}
+    return f"""# {algo.name}
 
 <!-- Detail Hero -->
 <div class="aba-detail-hero">
@@ -495,9 +496,9 @@ def generate_algo_page(algo: dict, cat_map: dict) -> str:
     <div class="aba-detail-badges">
       {chr(10).join(badges)}
     </div>
-    <h1 class="aba-detail-title">{algo["name"]}</h1>
+    <h1 class="aba-detail-title">{algo.name}</h1>
     <div class="aba-detail-description">
-      {algo.get("description", "").strip().replace(chr(10), " ")}
+      {algo.description.strip().replace(chr(10), " ")}
     </div>
   </div>
 </div>
@@ -528,8 +529,8 @@ def generate_algo_page(algo: dict, cat_map: dict) -> str:
 
 <div style="font-size: 0.875rem; color: var(--md-default-fg-color--light);">
 
-:material-folder: 分类：<a href="../categories/{cat_id}">{cat_name}</a> {f' / <a href="../categories/{cat_id}#{sub.get("id", "")}">{sub_name}</a>' if sub_name else ""} |
-:material-identifier: ID：<code>{algo["id"]}</code>
+:material-folder: 分类：<a href="../categories/{cat_id}">{cat_name}</a> {f' / <a href="../categories/{cat_id}#{sub.id}">{sub_name}</a>' if sub and sub_name else ""} |
+:material-identifier: ID：<code>{algo.id}</code>
 
 </div>
 """
@@ -540,33 +541,37 @@ def generate_algo_page(algo: dict, cat_map: dict) -> str:
 # -----------------------------------------------------------------------------
 
 
-def generate_category_page(cat: dict, algos: list[dict], cat_map: dict) -> str:
+def generate_category_page(
+    cat: Category,
+    algos: list[AlgorithmEntry],
+    cat_map: dict[str, Category],
+) -> str:
     """Generate a category page with subcategory sections."""
     lines = [
-        f"# {cat['name']}",
+        f"# {cat.name}",
         "",
     ]
-    if cat.get("description"):
-        lines.append(f"> {cat['description']}")
+    if cat.description:
+        lines.append(f"> {cat.description}")
         lines.append("")
 
     lines.append(f"**{len(algos)}** 个算法收录于该分类。")
     lines.append("")
 
     # Add data attributes for JS filtering
-    for sub in cat.get("subcategories", []):
+    for sub in cat.subcategories:
         sub_algos = sorted(
-            [a for a in algos if a.get("subcategory") == sub["id"]],
-            key=lambda a: (a.get("year") or 0, a.get("name", "")),
+            [a for a in algos if a.subcategory == sub.id],
+            key=lambda a: (a.year or 0, a.name),
             reverse=True,
         )
         if not sub_algos:
             continue
 
-        lines.append(f"## {sub['name']} ({sub.get('name_en', '')})")
+        lines.append(f"## {sub.name} ({sub.name_en})")
         lines.append("")
-        if sub.get("description"):
-            lines.append(f"*{sub['description']}*")
+        if sub.description:
+            lines.append(f"*{sub.description}*")
             lines.append("")
 
         # Modern table
@@ -576,14 +581,14 @@ def generate_category_page(cat: dict, algos: list[dict], cat_map: dict) -> str:
         lines.append("<tbody>")
 
         for algo in sub_algos:
-            diff_class = get_difficulty_badge_class(algo.get("difficulty", ""))
-            diff = DIFFICULTY_LABELS_BILINGUAL.get(algo.get("difficulty", ""), "-")
+            diff_class = get_difficulty_badge_class(algo.difficulty)
+            diff = DIFFICULTY_LABELS_BILINGUAL.get(algo.difficulty, "-")
 
             lines.append(
-                f'<tr data-category="{cat["name"]}" data-difficulty="{algo.get("difficulty", "")}" data-year="{algo.get("year", "")}">'
-                f'<td><a href="../algorithms/{algo["id"]}/">{algo["name"]}</a></td>'
-                f"<td>{algo.get('year', '-')}</td>"
-                f"<td>{trim_text(algo.get('purpose', '-'), 50)}</td>"
+                f'<tr data-category="{cat.name}" data-difficulty="{algo.difficulty}" data-year="{algo.year}">'
+                f'<td><a href="../algorithms/{algo.id}/">{algo.name}</a></td>'
+                f"<td>{algo.year or '-'}</td>"
+                f"<td>{trim_text(algo.purpose or '-', 50)}</td>"
                 f'<td><span class="aba-badge {diff_class}">{diff}</span></td>'
                 f"</tr>"
             )
@@ -595,8 +600,8 @@ def generate_category_page(cat: dict, algos: list[dict], cat_map: dict) -> str:
 
     # Algorithms without subcategory
     direct = sorted(
-        [a for a in algos if not a.get("subcategory")],
-        key=lambda a: (a.get("year") or 0, a.get("name", "")),
+        [a for a in algos if not a.subcategory],
+        key=lambda a: (a.year or 0, a.name),
         reverse=True,
     )
     if direct:
@@ -609,10 +614,10 @@ def generate_category_page(cat: dict, algos: list[dict], cat_map: dict) -> str:
 
         for algo in direct:
             lines.append(
-                f'<tr data-category="{cat["name"]}" data-year="{algo.get("year", "")}">'
-                f'<td><a href="../algorithms/{algo["id"]}/">{algo["name"]}</a></td>'
-                f"<td>{algo.get('year', '-')}</td>"
-                f"<td>{trim_text(algo.get('purpose', '-'), 50)}</td>"
+                f'<tr data-category="{cat.name}" data-year="{algo.year}">'
+                f'<td><a href="../algorithms/{algo.id}/">{algo.name}</a></td>'
+                f"<td>{algo.year or '-'}</td>"
+                f"<td>{trim_text(algo.purpose or '-', 50)}</td>"
                 f"</tr>"
             )
 
@@ -623,22 +628,25 @@ def generate_category_page(cat: dict, algos: list[dict], cat_map: dict) -> str:
     return "\n".join(lines)
 
 
-def generate_category_index(categories: list[dict], by_cat: dict) -> str:
+def generate_category_index(
+    categories: list[Category],
+    by_cat: dict[str, list[AlgorithmEntry]],
+) -> str:
     """Generate category overview page."""
     cats_with_algo = [
-        (cat, len(by_cat.get(cat["id"], []))) for cat in categories if by_cat.get(cat["id"])
+        (cat, len(by_cat.get(cat.id, []))) for cat in categories if by_cat.get(cat.id)
     ]
 
     # Build bento grid
     cat_cards = []
     for i, (cat, count) in enumerate(sorted(cats_with_algo, key=lambda x: -x[1])):
-        icon = get_category_icon(cat["id"])
+        icon = get_category_icon(cat.id)
         delay = min(i, 4)
         cat_cards.append(
-            f'<a class="aba-bento-card aba-animate aba-animate-delay-{delay}" href="{cat["id"]}/">'
+            f'<a class="aba-bento-card aba-animate aba-animate-delay-{delay}" href="{cat.id}/">'
             f'  <div class="aba-bento-icon">:{icon}:</div>'
-            f'  <div class="aba-bento-title">{cat["name"]}</div>'
-            f'  <div class="aba-bento-desc">{trim_text(cat.get("description", ""), 80)}</div>'
+            f'  <div class="aba-bento-title">{cat.name}</div>'
+            f'  <div class="aba-bento-desc">{trim_text(cat.description, 80)}</div>'
             f'  <div class="aba-bento-meta">'
             f'    <span class="aba-bento-count">{count} 个算法</span>'
             f'    <span class="aba-bento-arrow">→</span>'
@@ -660,12 +668,7 @@ def generate_category_index(categories: list[dict], by_cat: dict) -> str:
 """
 
 
-# -----------------------------------------------------------------------------
-# Tags page - Interactive tag cloud
-# -----------------------------------------------------------------------------
-
-
-def generate_tags_page(by_tag: dict) -> str:
+def generate_tags_page(by_tag: dict[str, list[AlgorithmEntry]]) -> str:
     """Generate tags index page with interactive tag cloud."""
     sorted_tags = sorted(by_tag.items(), key=lambda x: (-len(x[1]), x[0]))
     max_count = max(len(algos) for algos in by_tag.values()) if by_tag else 1
@@ -696,10 +699,10 @@ def generate_tags_page(by_tag: dict) -> str:
     tag_sections = []
     for tag, algos in sorted_tags:
         algo_list = "\n".join(
-            f"- [{algo['name']} ({algo['year']})](algorithms/{algo['id']}.md)"
-            if algo.get("year")
-            else f"- [{algo['name']}](algorithms/{algo['id']}.md)"
-            for algo in sorted(algos, key=lambda a: a.get("name", ""))
+            f"- [{algo.name} ({algo.year})](algorithms/{algo.id}.md)"
+            if algo.year
+            else f"- [{algo.name}](algorithms/{algo.id}.md)"
+            for algo in sorted(algos, key=lambda a: a.name)
         )
         tag_sections.append(
             f'## <span id="{tag}">{tag}</span> {{ #{tag} }}\n\n{len(algos)} 个算法\n\n{algo_list}\n'
@@ -724,57 +727,60 @@ def generate_tags_page(by_tag: dict) -> str:
 # -----------------------------------------------------------------------------
 
 
-def generate_algo_index(algorithms: list[dict], cat_map: dict) -> str:
+def generate_algo_index(
+    algorithms: list[AlgorithmEntry],
+    cat_map: dict[str, Category],
+) -> str:
     """Generate the full algorithm listing as a searchable table."""
     rows = []
-    for algo in sorted(algorithms, key=lambda a: a.get("name", "").lower()):
-        cat_info = cat_map.get(algo.get("category", ""), {})
-        cat_name = cat_info.get("name", "-")
-        year = str(algo.get("year", "-"))
-        diff_class = get_difficulty_badge_class(algo.get("difficulty", ""))
-        diff = DIFFICULTY_LABELS_BILINGUAL.get(algo.get("difficulty", ""), "-")
+    for algo in sorted(algorithms, key=lambda a: a.name.lower()):
+        cat_info = cat_map.get(algo.category)
+        cat_name = cat_info.name if cat_info else "-"
+        year = str(algo.year) if algo.year else "-"
+        diff_class = get_difficulty_badge_class(algo.difficulty)
+        diff = DIFFICULTY_LABELS_BILINGUAL.get(algo.difficulty, "-")
 
         rows.append(
-            f'<tr data-category="{cat_name}" data-difficulty="{algo.get("difficulty", "")}" '
-            f'data-year="{algo.get("year", "")}">'
-            f'<td><a href="{algo["id"]}/">{algo["name"]}</a></td>'
+            f'<tr data-category="{cat_name}" data-difficulty="{algo.difficulty}" '
+            f'data-year="{algo.year}">'
+            f'<td><a href="{algo.id}/">{algo.name}</a></td>'
             f"<td>{year}</td>"
             f"<td>{cat_name}</td>"
-            f"<td>{trim_text(algo.get('purpose', '-'), 45)}</td>"
+            f"<td>{trim_text(algo.purpose or '-', 45)}</td>"
             f'<td><span class="aba-badge {diff_class}">{diff}</span></td>'
             f"</tr>"
         )
 
     # Grid view cards (for JS toggle)
     grid_cards = []
-    for i, algo in enumerate(sorted(algorithms, key=lambda a: a.get("name", "").lower())[:20]):
-        cat_info = cat_map.get(algo.get("category", ""), {})
+    for i, algo in enumerate(sorted(algorithms, key=lambda a: a.name.lower())[:20]):
+        cat_info = cat_map.get(algo.category)
         delay = min(i, 4)
         diff_badge = ""
-        if algo.get("difficulty"):
-            diff_class = get_difficulty_badge_class(algo["difficulty"])
-            diff_text = DIFFICULTY_LABELS.get(algo["difficulty"], algo["difficulty"])
+        if algo.difficulty:
+            diff_class = get_difficulty_badge_class(algo.difficulty)
+            diff_text = DIFFICULTY_LABELS.get(algo.difficulty, algo.difficulty)
             diff_badge = f'<span class="aba-badge {diff_class}">{diff_text}</span>'
 
         year_badge = (
-            f'<span class="aba-badge aba-badge-year">{algo["year"]}</span>'
-            if algo.get("year")
+            f'<span class="aba-badge aba-badge-year">{algo.year}</span>'
+            if algo.year
             else ""
         )
 
         grid_cards.append(
             f'<a class="aba-algo-card aba-animate aba-animate-delay-{delay}" '
-            f'href="{algo["id"]}/" data-category="{cat_info.get("name", "")}" '
-            f'data-year="{algo.get("year", "")}" data-difficulty="{algo.get("difficulty", "")}">'
+            f'href="{algo.id}/" data-category="{cat_info.name if cat_info else ""}" '
+            f'data-year="{algo.year}" data-difficulty="{algo.difficulty}">'
             f'  <div class="aba-algo-header">'
             f'    <div class="aba-algo-badges">{year_badge}{diff_badge}</div>'
-            f'    <div class="aba-algo-name">{algo["name"]}</div>'
+            f'    <div class="aba-algo-name">{algo.name}</div>'
             f"  </div>"
             f'  <div class="aba-algo-body">'
-            f'    <div class="aba-algo-purpose">{trim_text(algo.get("purpose", ""), 80)}</div>'
+            f'    <div class="aba-algo-purpose">{trim_text(algo.purpose or "", 80)}</div>'
             f"  </div>"
             f'  <div class="aba-algo-footer">'
-            f'    <span class="aba-algo-complexity">{cat_info.get("name", "")}</span>'
+            f'    <span class="aba-algo-complexity">{cat_info.name if cat_info else ""}</span>'
             f'    <svg class="aba-algo-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">'
             f'      <path d="M5 12h14M12 5l7 7-7 7"/>'
             f"    </svg>"
@@ -816,7 +822,10 @@ def generate_algo_index(algorithms: list[dict], cat_map: dict) -> str:
 # -----------------------------------------------------------------------------
 
 
-def generate_nav_yaml(categories: list[dict], by_cat: dict) -> str:
+def generate_nav_yaml(
+    categories: list[Category],
+    by_cat: dict[str, list[AlgorithmEntry]],
+) -> str:
     """Generate the nav YAML block as text."""
     lines = [
         "nav:",
@@ -827,23 +836,18 @@ def generate_nav_yaml(categories: list[dict], by_cat: dict) -> str:
         "    - 分类总览: categories/index.md",
     ]
     for cat in categories:
-        if by_cat.get(cat["id"]):
-            lines.append(f"    - {cat['name']}: categories/{cat['id']}.md")
+        if by_cat.get(cat.id):
+            lines.append(f"    - {cat.name}: categories/{cat.id}.md")
     lines.append("  - 标签: tags.md")
     return "\n".join(lines) + "\n"
 
 
-# -----------------------------------------------------------------------------
-# Main
-# -----------------------------------------------------------------------------
-
-
 def update_mkdocs_yml(
     base_dir: Path,
-    categories: list[dict],
-    algorithms: list[dict],
-    by_cat: dict[str, list[dict]],
-    by_tag: dict[str, list[dict]],
+    categories: list[Category],
+    algorithms: list[AlgorithmEntry],
+    by_cat: dict[str, list[AlgorithmEntry]],
+    by_tag: dict[str, list[AlgorithmEntry]],
 ) -> None:
     """Update mkdocs.yml with dynamic stats and nav."""
     mkdocs_yml = base_dir / "mkdocs" / "mkdocs.yml"
@@ -851,7 +855,7 @@ def update_mkdocs_yml(
         text = f.read()
 
     # Calculate stats
-    cats_with_algo = len([c for c in categories if by_cat.get(c["id"])])
+    cats_with_algo = len([c for c in categories if by_cat.get(c.id)])
 
     # Update stats in extra section (inject after "generator: false")
     stats_block = f"""
@@ -878,11 +882,11 @@ def update_mkdocs_yml(
 def write_generated_pages(
     base_dir: Path,
     mkdocs_dir: Path,
-    categories: list[dict],
-    algorithms: list[dict],
-    cat_map: dict[str, dict],
-    by_cat: dict[str, list[dict]],
-    by_tag: dict[str, list[dict]],
+    categories: list[Category],
+    algorithms: list[AlgorithmEntry],
+    cat_map: dict[str, Category],
+    by_cat: dict[str, list[AlgorithmEntry]],
+    by_tag: dict[str, list[AlgorithmEntry]],
 ) -> None:
     # Clean previous generated docs (keep stylesheets and javascripts)
     if mkdocs_dir.exists():
@@ -903,7 +907,7 @@ def write_generated_pages(
     # Algorithm detail pages
     for algo in algorithms:
         write_file(
-            mkdocs_dir / "algorithms" / f"{algo['id']}.md",
+            mkdocs_dir / "algorithms" / f"{algo.id}.md",
             generate_algo_page(algo, cat_map),
         )
 
@@ -915,10 +919,10 @@ def write_generated_pages(
 
     # Category pages
     for cat in categories:
-        algos = by_cat.get(cat["id"], [])
+        algos = by_cat.get(cat.id, [])
         if algos:
             write_file(
-                mkdocs_dir / "categories" / f"{cat['id']}.md",
+                mkdocs_dir / "categories" / f"{cat.id}.md",
                 generate_category_page(cat, algos, cat_map),
             )
 
@@ -950,7 +954,7 @@ def main(base_dir: Optional[Path] = None) -> int:
     write_generated_pages(base_dir, mkdocs_dir, categories, algorithms, cat_map, by_cat, by_tag)
 
     print(f"  Generated {len(algorithms)} algorithm pages")
-    print(f"  Generated {len([c for c in categories if by_cat.get(c['id'])])} category pages")
+    print(f"  Generated {len([c for c in categories if by_cat.get(c.id)])} category pages")
     print("  Generated algorithm index, category index, and tags page")
     print("\nDone! Run 'mkdocs serve -f mkdocs/mkdocs.yml' to preview.")
     return 0
