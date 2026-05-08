@@ -20,6 +20,7 @@ from typing import Optional
 
 from .algorithm_registry import AlgorithmRegistry
 from .category_manager import CategoryManager
+from .data_store import DataStore
 from .readme_generator import ReadmeGenerator
 from .validate import Validator
 
@@ -53,18 +54,15 @@ def _print_repo_layout_error(missing_paths: list[str]) -> int:
     return 1
 
 
+def _load_data_store(base_dir: Path) -> DataStore:
+    """Load and return an initialized DataStore."""
+    return DataStore(base_dir).load_all()
+
+
 def _load_registry_and_categories(base_dir: Path) -> tuple[AlgorithmRegistry, CategoryManager]:
     """Load and return an initialized registry and category manager."""
-    algorithms_dir = base_dir / "data" / "algorithms"
-    categories_path = base_dir / "data" / "categories.yaml"
-
-    category_manager = CategoryManager()
-    category_manager.load_categories(str(categories_path))
-
-    registry = AlgorithmRegistry(str(algorithms_dir))
-    registry.load_all()
-
-    return registry, category_manager
+    store = _load_data_store(base_dir)
+    return store.registry, store.category_manager
 
 
 def cmd_generate(output_path: Optional[Path] = None) -> int:

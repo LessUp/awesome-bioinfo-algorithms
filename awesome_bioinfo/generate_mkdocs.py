@@ -13,8 +13,6 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
-import yaml
-
 from awesome_bioinfo.schema import DIFFICULTY_LABELS, DIFFICULTY_LABELS_BILINGUAL
 
 
@@ -23,39 +21,24 @@ def get_base_dir() -> Path:
 
 
 def load_data(base_dir: Path) -> tuple[list[dict], list[dict]]:
-    """Load categories and algorithms from YAML files.
+    """Load categories and algorithms using DataStore.
 
     Raises:
         FileNotFoundError: If categories.yaml or algorithms directory not found
-        yaml.YAMLError: If YAML parsing fails
     """
-    categories_path = base_dir / "data" / "categories.yaml"
+    from awesome_bioinfo.data_store import DataStore
 
-    if not categories_path.exists():
-        raise FileNotFoundError(f"Categories file not found: {categories_path}")
+    store = DataStore(base_dir)
+    missing = store.validate_layout()
+    if missing:
+        raise FileNotFoundError(f"Missing required paths: {', '.join(missing)}")
 
-    try:
-        with open(categories_path, encoding="utf-8") as f:
-            cat_data = yaml.safe_load(f)
-    except yaml.YAMLError as e:
-        raise yaml.YAMLError(f"Failed to parse categories YAML: {e}") from e
+    store.load_all()
 
-    algorithms = []
-    alg_dir = base_dir / "data" / "algorithms"
+    categories = [cat.to_dict() for cat in store.get_all_categories()]
+    algorithms = [algo.to_dict() for algo in store.get_all_algorithms()]
 
-    if not alg_dir.exists():
-        raise FileNotFoundError(f"Algorithms directory not found: {alg_dir}")
-
-    for fname in sorted(alg_dir.glob("*.yaml")):
-        try:
-            with open(fname, encoding="utf-8") as f:
-                data = yaml.safe_load(f)
-            if data and "algorithms" in data:
-                algorithms.extend(data["algorithms"])
-        except yaml.YAMLError as e:
-            raise yaml.YAMLError(f"Failed to parse {fname}: {e}") from e
-
-    return cat_data.get("categories", []), algorithms
+    return categories, algorithms
 
 
 def build_category_map(categories: list[dict]) -> dict[str, dict]:
