@@ -14,6 +14,9 @@ Usage:
 """
 
 import argparse
+import csv
+import io
+import json
 import sys
 from pathlib import Path
 from typing import Optional
@@ -22,6 +25,7 @@ from .algorithm_registry import AlgorithmRegistry
 from .category_manager import CategoryManager
 from .data_store import DataStore
 from .readme_generator import ReadmeGenerator
+from .schema import DIFFICULTY_LABELS, VALID_DIFFICULTIES, AlgorithmEntry
 from .validate import Validator
 
 
@@ -63,6 +67,313 @@ def _load_registry_and_categories(base_dir: Path) -> tuple[AlgorithmRegistry, Ca
     """Load and return an initialized registry and category manager."""
     store = _load_data_store(base_dir)
     return store.registry, store.category_manager
+
+
+# =========================================================================
+# Search functions (merged from search.py)
+# =========================================================================
+
+def search_algorithms(
+    registry: AlgorithmRegistry,
+    category_manager: CategoryManager,
+    keyword: str = "",
+    tag: str = "",
+    category: str = "",
+    difficulty: str = "",
+) -> list[AlgorithmEntry]:
+    """Search algorithms with optional filters."""
+    if keyword:
+        results = registry.search(keyword)
+    else:
+        results = registry.get_all_algorithms()
+
+    if tag:
+        tag_lower = tag.lower()
+        results = [a for a in results if any(tag_lower in t.lower() for t in a.tags)]
+
+    if category:
+        results = [a for a in results if a.category == category or a.subcategory == category]
+
+    if difficulty:
+        results = [a for a in results if a.difficulty == difficulty]
+
+    return results
+
+
+def format_algorithm_short(algo: AlgorithmEntry, category_manager: CategoryManager) -> str:
+    """Format a single algorithm as a short listing line."""
+    cat = category_manager.get_category(algo.category)
+    cat_label = cat.name_en if cat else algo.category
+    year_str = f" ({algo.year})" if algo.year else ""
+    diff_str = f" [{algo.difficulty}]" if algo.difficulty else ""
+    return f"  {algo.id}{year_str} - {algo.name}{diff_str} | {cat_label}"
+
+
+def cmd_search(
+    registry: AlgorithmRegistry,
+    category_manager: CategoryManager,
+    keyword: str = "",
+    tag: str = "",
+    category: str = "",
+    difficulty: str = "",
+) -> int:
+    """Execute the search command."""
+    if difficulty and difficulty not in VALID_DIFFICULTIES:
+        print(f"Invalid difficulty: '{difficulty}'. Valid: {', '.join(VALID_DIFFICULTIES)}")
+        return 1
+
+    if not any([keyword, tag, category, difficulty]):
+        print("Usage: python -m awesome_bioinfo search [options]")
+        print("Options:")
+        print("  --keyword <text>    Search in name, description, purpose, tags")
+        print("  --tag <tag>         Filter by tag")
+        print("  --category <id>     Filter by category ID")
+        print("  --difficulty <d>    Filter by difficulty (beginner/intermediate/advanced)")
+        return 1
+
+    results = search_algorithms(registry, category_manager, keyword, tag, category, difficulty)
+
+    if not results:
+        print("No algorithms found matching your criteria.")
+        return 0
+
+    print(f"Found {len(results)} algorithm(s):\n")
+    for algo in results:
+        print(format_algorithm_short(algo, category_manager))
+
+    return 0
+
+
+# =========================================================================
+# Info functions (merged from info_cmd.py)
+# =========================================================================
+
+def cmd_info(
+    registry: AlgorithmRegistry,
+    category_manager: CategoryManager,
+    algo_id: str,
+) -> int:
+    """Show detailed info about an algorithm."""
+    algo = registry.get_algorithm(algo_id)
+    if not algo:
+        matches = registry.search(algo_id)
+        if not matches:
+            print(f"Algorithm not found: '{algo_id}'")
+            return 1
+        if len(matches) > 1:
+            print(f"Multiple matches for '{algo_id}':")
+            for m in matches:
+                print(f"  - {m.id}: {m.name}")
+            return 1
+        algo = matches[0]
+
+    cat = category_manager.get_category(algo.category)
+    sub = category_manager.get_category(algo.subcategory) if algo.subcategory else None
+
+    print(f"{'=' * 60}")
+    print(f"  {algo.name}" + (f" ({algo.year})" if algo.year else ""))
+    print(f"{'=' * 60}")
+    print(f"  ID:               {algo.id}")
+    print(
+        f"  分类:             {cat.name} ({cat.name_en})"
+        if cat
+        else f"  分类:             {algo.category}"
+    )
+    if sub:
+        print(f"  子分类:           {sub.name} ({sub.name_en})")
+    if algo.difficulty:
+        print(f"  难度:             {DIFFICULTY_LABELS.get(algo.difficulty, algo.difficulty)}")
+    print()
+    print("  描述:")
+    for line in algo.description.strip().split("\n"):
+        print(f"    {line.strip()}")
+    print()
+    print(f"  用途:             {algo.purpose}")
+    print(f"  时间复杂度:       {algo.time_complexity}")
+    if algo.space_complexity:
+        print(f"  空间复杂度:       {algo.space_complexity}")
+    if algo.language:
+        print(f"  实现语言:         {', '.join(algo.language)}")
+    if algo.paper_url:
+        print(f"  论文:             {algo.paper_url}")
+    if algo.implementation_url:
+        print(f"  实现:             {algo.implementation_url}")
+    if algo.related_tools:
+        print(f"  相关工具:         {', '.join(algo.related_tools)}")
+    if algo.tags:
+        print(f"  标签:             {', '.join(algo.tags)}")
+    if algo.references:
+        print("  扩展资料:")
+        for ref in algo.references:
+            title = ref.title or ref.url
+            ref_type = f" [{ref.type}]" if ref.type else ""
+            print(f"    - {title}{ref_type}: {ref.url}")
+
+    print()
+    return 0
+
+
+# =========================================================================
+# Compare functions (merged from compare.py)
+# =========================================================================
+
+def _resolve_algorithm(
+    registry: AlgorithmRegistry, algo_id: str
+) -> tuple[Optional[AlgorithmEntry], list[AlgorithmEntry]]:
+    """Resolve an algorithm by exact ID or unambiguous fuzzy search."""
+    algo = registry.get_algorithm(algo_id)
+    if algo:
+        return algo, []
+    matches = registry.search(algo_id)
+    if len(matches) == 1:
+        return matches[0], []
+    if len(matches) > 1:
+        return None, matches
+    return None, []
+
+
+def cmd_compare(
+    registry: AlgorithmRegistry,
+    category_manager: CategoryManager,
+    id1: str,
+    id2: str,
+) -> int:
+    """Compare two algorithms side by side."""
+    r1, r1_candidates = _resolve_algorithm(registry, id1)
+    r2, r2_candidates = _resolve_algorithm(registry, id2)
+
+    problems: list[tuple[str, str, Optional[list[AlgorithmEntry]]]] = []
+    if r1_candidates:
+        problems.append(("ambiguous", id1, r1_candidates))
+    elif not r1:
+        problems.append(("missing", id1, None))
+
+    if r2_candidates:
+        problems.append(("ambiguous", id2, r2_candidates))
+    elif not r2:
+        problems.append(("missing", id2, None))
+
+    if problems:
+        for problem_type, query, candidates in problems:
+            if problem_type == "ambiguous":
+                assert candidates is not None
+                print(f"Ambiguous argument '{query}': matches multiple algorithms:")
+                for candidate in candidates:
+                    print(f"  - {candidate.id}: {candidate.name}")
+            else:
+                print(f"Algorithm not found: '{query}'")
+        return 1
+
+    assert r1 is not None
+    assert r2 is not None
+    a1 = r1
+    a2 = r2
+
+    fields = [
+        ("Name", lambda a: a.name),
+        ("Year", lambda a: str(a.year) if a.year else "-"),
+        ("Category", lambda a: a.category),
+        ("Difficulty", lambda a: a.difficulty or "-"),
+        ("Time Complexity", lambda a: a.time_complexity),
+        ("Space Complexity", lambda a: a.space_complexity or "-"),
+        ("Language", lambda a: ", ".join(a.language) if a.language else "-"),
+        ("Purpose", lambda a: a.purpose),
+        ("Related Tools", lambda a: ", ".join(a.related_tools) if a.related_tools else "-"),
+        ("Tags", lambda a: ", ".join(a.tags) if a.tags else "-"),
+    ]
+
+    w1, w2 = 40, 40
+    print(f"{'Field':<20} | {'Algorithm 1':^{w1}} | {'Algorithm 2':^{w2}}")
+    print(f"{'-' * 20}-+-{'-' * w1}-+-{'-' * w2}")
+    print(f"{'ID':<20} | {a1.id:^{w1}} | {a2.id:^{w2}}")
+    for label, getter in fields:
+        v1 = getter(a1)
+        v2 = getter(a2)
+        print(f"{label:<20} | {v1:<{w1}} | {v2:<{w2}}")
+
+    print()
+    print(f"  Description ({a1.name}):")
+    for line in a1.description.strip().split("\n")[:3]:
+        print(f"    {line.strip()}")
+    print()
+    print(f"  Description ({a2.name}):")
+    for line in a2.description.strip().split("\n")[:3]:
+        print(f"    {line.strip()}")
+    print()
+
+    return 0
+
+
+# =========================================================================
+# Export functions (merged from export_cmd.py)
+# =========================================================================
+
+def cmd_export(
+    registry: AlgorithmRegistry,
+    category_manager: CategoryManager,
+    fmt: str = "json",
+    output: str = "",
+) -> int:
+    """Export all algorithms to JSON or CSV."""
+    if fmt not in ("json", "csv"):
+        print(f"Unsupported format: '{fmt}'. Use 'json' or 'csv'.")
+        return 1
+
+    algorithms = registry.get_all_algorithms()
+    if not algorithms:
+        print("No algorithms to export.")
+        return 1
+
+    if fmt == "json":
+        data = {
+            "algorithms": [a.to_dict() for a in algorithms],
+            "total": len(algorithms),
+        }
+        content = json.dumps(data, ensure_ascii=False, indent=2)
+    else:
+        buf = io.StringIO()
+        writer = csv.writer(buf)
+        writer.writerow(
+            [
+                "id",
+                "name",
+                "year",
+                "category",
+                "subcategory",
+                "difficulty",
+                "time_complexity",
+                "space_complexity",
+                "language",
+                "tags",
+                "purpose",
+            ]
+        )
+        for a in algorithms:
+            writer.writerow(
+                [
+                    a.id,
+                    a.name,
+                    a.year or "",
+                    a.category,
+                    a.subcategory,
+                    a.difficulty,
+                    a.time_complexity,
+                    a.space_complexity,
+                    "|".join(a.language),
+                    "|".join(a.tags),
+                    a.purpose,
+                ]
+            )
+        content = buf.getvalue()
+
+    if output:
+        with open(output, "w", encoding="utf-8") as f:
+            f.write(content)
+        print(f"Exported {len(algorithms)} algorithms to {output}")
+    else:
+        sys.stdout.write(content)
+
+    return 0
 
 
 def cmd_generate(output_path: Optional[Path] = None) -> int:
@@ -183,8 +494,6 @@ def cmd_search_cli(
     difficulty: str = "",
 ) -> int:
     """CLI wrapper for the search command."""
-    from .search import cmd_search
-
     base_dir, missing_paths = ensure_repo_layout()
     if missing_paths:
         return _print_repo_layout_error(missing_paths)
@@ -195,8 +504,6 @@ def cmd_search_cli(
 
 def cmd_info_cli(algo_id: str) -> int:
     """CLI wrapper for the info command."""
-    from .info_cmd import cmd_info
-
     base_dir, missing_paths = ensure_repo_layout()
     if missing_paths:
         return _print_repo_layout_error(missing_paths)
@@ -207,8 +514,6 @@ def cmd_info_cli(algo_id: str) -> int:
 
 def cmd_compare_cli(id1: str, id2: str) -> int:
     """CLI wrapper for the compare command."""
-    from .compare import cmd_compare
-
     base_dir, missing_paths = ensure_repo_layout()
     if missing_paths:
         return _print_repo_layout_error(missing_paths)
@@ -219,8 +524,6 @@ def cmd_compare_cli(id1: str, id2: str) -> int:
 
 def cmd_export_cli(*, fmt: str = "json", output: str = "") -> int:
     """CLI wrapper for the export command."""
-    from .export_cmd import cmd_export
-
     base_dir, missing_paths = ensure_repo_layout()
     if missing_paths:
         return _print_repo_layout_error(missing_paths)
