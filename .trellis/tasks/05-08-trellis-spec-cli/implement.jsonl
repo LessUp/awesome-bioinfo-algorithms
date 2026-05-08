@@ -1,0 +1,13 @@
+{"file": ".trellis/tasks/05-08-trellis-spec-cli/prd.md", "reason": "任务需求和验收标准"}
+{
+    "file": "openspec/specs/algorithm-schema/spec.md",
+    "reason": "OpenSpec 数据模型规范，作为统一后的 spec 参考",
+}
+{
+    "file": "openspec/specs/cli-interface/spec.md",
+    "reason": "OpenSpec CLI 接口规范，作为统一后的 spec 参考",
+}
+{
+    "file": "openspec/specs/testing-strategy/spec.md",
+    "reason": "OpenSpec 测试策略规范，作为统一后的 spec 参考",
+}
