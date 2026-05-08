@@ -4,11 +4,21 @@ Manages algorithm categories and subcategories.
 """
 
 import os
+from dataclasses import dataclass, field
 from typing import Optional
 
 import yaml
 
 from .schema import Category
+from .validate import ValidationResult
+
+
+@dataclass
+class CategoryRelationships:
+    """Stores category/subcategory relationships for validation."""
+
+    valid_categories: list[str] = field(default_factory=list)
+    category_parents: dict[str, Optional[str]] = field(default_factory=dict)
 
 
 class CategoryManager:
@@ -17,6 +27,7 @@ class CategoryManager:
     def __init__(self):
         self._categories: list[Category] = []
         self._category_map: dict[str, Category] = {}
+        self._relationships = CategoryRelationships()
 
     def load_categories(self, path: str) -> list[Category]:
         """
@@ -39,11 +50,15 @@ class CategoryManager:
 
         self._categories = []
         self._category_map = {}
+        self._relationships = CategoryRelationships()
 
         for cat_data in data["categories"]:
             category = Category.from_dict(cat_data)
             self._categories.append(category)
             self._register_category(category)
+
+        # Build relationships after all categories are loaded
+        self._build_relationships()
 
         return self._categories
 
@@ -52,6 +67,19 @@ class CategoryManager:
         self._category_map[category.id] = category
         for sub in category.subcategories:
             self._register_category(sub)
+
+    def _build_relationships(self):
+        """Build category/subcategory relationships for validation."""
+        self._relationships.valid_categories = list(self._category_map.keys())
+        self._relationships.category_parents = {}
+
+        def collect_parents(categories: list[Category], parent_id: Optional[str] = None):
+            for cat in categories:
+                self._relationships.category_parents[cat.id] = parent_id
+                if cat.subcategories:
+                    collect_parents(cat.subcategories, parent_id=cat.id)
+
+        collect_parents(self._categories)
 
     def get_category(self, category_id: str) -> Optional[Category]:
         """
@@ -125,5 +153,60 @@ class CategoryManager:
         """Load categories from a list of Category objects."""
         self._categories = categories
         self._category_map = {}
+        self._relationships = CategoryRelationships()
         for cat in categories:
             self._register_category(cat)
+        self._build_relationships()
+
+    # =========================================================================
+    # Category Validation Methods (moved from Validator)
+    # =========================================================================
+
+    def get_valid_categories(self) -> list[str]:
+        """Get all valid category IDs including subcategories."""
+        return self._relationships.valid_categories.copy()
+
+    def get_category_parents(self) -> dict[str, Optional[str]]:
+        """Get mapping of category_id -> parent_category_id."""
+        return self._relationships.category_parents.copy()
+
+    def validate_category_reference(self, category: str, subcategory: str = "") -> ValidationResult:
+        """
+        Validate that a category/subcategory reference is valid.
+
+        Args:
+            category: The category ID to validate
+            subcategory: The subcategory ID (optional)
+
+        Returns:
+            ValidationResult with any errors
+        """
+        result = ValidationResult(is_valid=True)
+
+        # Validate category exists
+        if (
+            self._relationships.valid_categories
+            and category not in self._relationships.valid_categories
+        ):
+            result.add_error(
+                f"Invalid category: '{category}'. "
+                f"Valid categories: {', '.join(sorted(self._relationships.valid_categories))}"
+            )
+            return result
+
+        # Validate subcategory if provided
+        if subcategory:
+            if subcategory not in self._relationships.category_parents:
+                result.add_error(f"Invalid subcategory: '{subcategory}'")
+            else:
+                parent_category = self._relationships.category_parents[subcategory]
+                if parent_category is None:
+                    result.add_error(
+                        f"Invalid subcategory: '{subcategory}' is a top-level category"
+                    )
+                elif parent_category != category:
+                    result.add_error(
+                        f"Subcategory '{subcategory}' does not belong to category '{category}'"
+                    )
+
+        return result

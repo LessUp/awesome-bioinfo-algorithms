@@ -1,6 +1,6 @@
 """
 Data validation for Awesome Bioinformatics Algorithms.
-Implements Validator class for algorithm and category validation.
+Implements FieldValidator class for algorithm and category field validation.
 """
 
 import os
@@ -39,8 +39,8 @@ class ValidationResult:
         self.warnings.extend(other.warnings)
 
 
-class Validator:
-    """Validates algorithm entries and categories."""
+class FieldValidator:
+    """Validates algorithm entry field formats (pure functions, no external state)."""
 
     REQUIRED_ALGORITHM_FIELDS = [
         "id",
@@ -96,14 +96,9 @@ class Validator:
         re.IGNORECASE,
     )
 
-    def __init__(self, valid_categories: Optional[list[str]] = None):
-        """Initialize validator with optional list of valid category IDs."""
-        self.valid_categories = valid_categories or []
-        self.category_parents: dict[str, Optional[str]] = {}
-
-    def validate_algorithm(self, data: dict[str, Any]) -> ValidationResult:
+    def validate_algorithm_fields(self, data: dict[str, Any]) -> ValidationResult:
         """
-        Validate an algorithm entry.
+        Validate an algorithm entry's field formats (does not validate category references).
 
         Args:
             data: Dictionary containing algorithm data
@@ -179,29 +174,6 @@ class Validator:
                 f"Description too long: {desc_length} characters "
                 f"(maximum: {self.MAX_DESCRIPTION_LENGTH})"
             )
-
-        if self.valid_categories and data.get("category") not in self.valid_categories:
-            result.add_error(
-                f"Invalid category: '{data.get('category')}'. "
-                f"Valid categories: {', '.join(self.valid_categories)}"
-            )
-
-        subcategory = data.get("subcategory", "")
-        if subcategory:
-            if self.category_parents:
-                if subcategory not in self.category_parents:
-                    result.add_error(f"Invalid subcategory: '{subcategory}'")
-                else:
-                    parent_category = self.category_parents[subcategory]
-                    if parent_category is None:
-                        result.add_error(
-                            f"Invalid subcategory: '{subcategory}' is a top-level category"
-                        )
-                    elif parent_category != data.get("category"):
-                        result.add_error(
-                            f"Subcategory '{subcategory}' does not belong to "
-                            f"category '{data.get('category')}'"
-                        )
 
         year = data.get("year", 0)
         if year:
@@ -279,9 +251,9 @@ class Validator:
 
         return result
 
-    def validate_category(self, data: dict[str, Any]) -> ValidationResult:
+    def validate_category_fields(self, data: dict[str, Any]) -> ValidationResult:
         """
-        Validate a category entry.
+        Validate a category entry's field formats.
 
         Args:
             data: Dictionary containing category data
@@ -327,7 +299,7 @@ class Validator:
                         )
                         continue
 
-                    sub_result = self.validate_category(sub)
+                    sub_result = self.validate_category_fields(sub)
                     for error in sub_result.errors:
                         result.add_error(f"Subcategory {i}: {error}")
                     for warning in sub_result.warnings:
@@ -367,6 +339,69 @@ class Validator:
 
         return result, data
 
+    # =========================================================================
+    # Backward compatibility methods
+    # =========================================================================
+
+    def validate_algorithm(self, data: dict[str, Any]) -> ValidationResult:
+        """Backward compatible method - delegates to validate_algorithm_fields."""
+        return self.validate_algorithm_fields(data)
+
+    def validate_category(self, data: dict[str, Any]) -> ValidationResult:
+        """Backward compatible method - delegates to validate_category_fields."""
+        return self.validate_category_fields(data)
+
+
+class Validator(FieldValidator):
+    """
+    Full validator with category relationship tracking.
+    Maintains backward compatibility with tests that expect stateful validation.
+    """
+
+    def __init__(self, valid_categories: Optional[list[str]] = None):
+        """Initialize validator with optional list of valid category IDs."""
+        super().__init__()
+        self.valid_categories = valid_categories or []
+        self.category_parents: dict[str, Optional[str]] = {}
+
+    def validate_algorithm(self, data: dict[str, Any]) -> ValidationResult:
+        """
+        Validate an algorithm entry with category reference checking.
+
+        Args:
+            data: Dictionary containing algorithm data
+
+        Returns:
+            ValidationResult with validation status and any errors/warnings
+        """
+        result = super().validate_algorithm(data)
+
+        # Validate category references
+        if self.valid_categories and data.get("category") not in self.valid_categories:
+            result.add_error(
+                f"Invalid category: '{data.get('category')}'. "
+                f"Valid categories: {', '.join(self.valid_categories)}"
+            )
+
+        subcategory = data.get("subcategory", "")
+        if subcategory:
+            if self.category_parents:
+                if subcategory not in self.category_parents:
+                    result.add_error(f"Invalid subcategory: '{subcategory}'")
+                else:
+                    parent_category = self.category_parents[subcategory]
+                    if parent_category is None:
+                        result.add_error(
+                            f"Invalid subcategory: '{subcategory}' is a top-level category"
+                        )
+                    elif parent_category != data.get("category"):
+                        result.add_error(
+                            f"Subcategory '{subcategory}' does not belong to "
+                            f"category '{data.get('category')}'"
+                        )
+
+        return result
+
     def validate_algorithms_file(self, file_path: str) -> ValidationResult:
         """
         Validate an algorithms YAML file.
@@ -397,7 +432,6 @@ class Validator:
             for warning in algo_result.warnings:
                 result.add_warning(f"Algorithm {i} ({algo.get('id', 'unknown')}): {warning}")
 
-            # Check for duplicate IDs
             algo_id = algo.get("id")
             if algo_id:
                 if algo_id in seen_ids:
@@ -463,13 +497,11 @@ class Validator:
         self.valid_categories = []
         self.category_parents = {}
 
-        # Validate categories file
         categories_path = os.path.join(data_dir, "categories.yaml")
         if os.path.exists(categories_path):
             cat_result = self.validate_categories_file(categories_path)
             result.merge(cat_result)
 
-        # Validate algorithm files
         algorithms_dir = os.path.join(data_dir, "algorithms")
         seen_ids: dict[str, str] = {}
         if os.path.exists(algorithms_dir):
