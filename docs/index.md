@@ -25,19 +25,16 @@ features:
 
 <script setup>
 import { onMounted } from 'vue'
-import { useRouter } from 'vitepress'
 
 const LANG_KEY = 'preferred-language'
 
 onMounted(() => {
-  const router = useRouter()
-
   // 检查是否有存储的语言偏好
   const storedLang = localStorage.getItem(LANG_KEY)
 
   if (storedLang) {
-    // 用户已有偏好，直接跳转
-    router.go(storedLang === 'zh' ? '/zh/' : '/en/')
+    // 用户已有偏好，直接跳转（使用完整页面跳转，更可靠）
+    window.location.href = storedLang === 'zh' ? '/zh/' : '/en/'
     return
   }
 
@@ -49,7 +46,7 @@ onMounted(() => {
   // 存储偏好
   localStorage.setItem(LANG_KEY, targetLang)
 
-  // 跳转到对应语言版本
-  router.go(isZh ? '/zh/' : '/en/')
+  // 跳转到对应语言版本（使用完整页面跳转，更可靠）
+  window.location.href = isZh ? '/zh/' : '/en/'
 })
 </script>
