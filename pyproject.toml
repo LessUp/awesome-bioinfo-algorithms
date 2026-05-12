@@ -42,11 +42,6 @@ dev = [
     "pre-commit>=3.0",
     "types-PyYAML>=6.0",
 ]
-docs = [
-    # MkDocs Material theme — the only plugin in use is the built-in search.
-    # [imaging] is omitted: social cards are not configured in mkdocs/mkdocs.yml.
-    "mkdocs-material>=9.0",
-]
 
 [project.urls]
 Homepage = "https://github.com/LessUp/awesome-bioinfo-algorithms"

@@ -232,14 +232,13 @@ results/
 output/
 temp/
 tmp/
-# MkDocs generated docs
-mkdocs/docs/algorithms/
-mkdocs/docs/categories/
-mkdocs/docs/tags.md
-mkdocs/docs/search.md
-mkdocs/docs/about.md
-mkdocs/docs/index.md
-mkdocs/site/
+
+# VitePress generated docs
+docs/zh/
+docs/en/
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+docs/node_modules/
 
 # =============================================================================
 # Claude Code Local

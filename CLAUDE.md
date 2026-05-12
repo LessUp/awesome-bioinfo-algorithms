@@ -91,7 +91,7 @@ awesome_bioinfo/           # 核心 Python 包
   validate.py              # 字段规则验证（含 JSON Schema）
   data_io.py               # YAML/JSON 导入导出
   readme_generator.py      # 生成 README.md（从模板）
-  generate_mkdocs.py       # 生成 mkdocs/docs/
+  generate_docs.py         # 生成 VitePress 文档 (docs/zh/, docs/en/)
   __main__.py              # CLI 入口（python -m awesome_bioinfo）
   search.py / info_cmd.py / compare.py / export_cmd.py / link_checker.py
 
@@ -103,6 +103,11 @@ schemas/
   algorithm-schema.json    # JSON Schema（validate 命令使用）
 
 openspec/specs/            # 需求规格（各子目录含 spec.md）
+
+docs/                      # VitePress 文档站点
+  .vitepress/config.ts     # VitePress 配置
+  zh/                      # 中文文档
+  en/                      # 英文文档
 ```
 
 ## 生成输出（禁止手动编辑）
@@ -110,13 +115,14 @@ openspec/specs/            # 需求规格（各子目录含 spec.md）
 | 文件/目录 | 生成命令 |
 |---|---|
 | `README.md` | `python -m awesome_bioinfo generate` |
-| `mkdocs/docs/` | `python -m awesome_bioinfo mkdocs` |
+| `docs/zh/`, `docs/en/` | `python -m awesome_bioinfo vitepress` |
 
 数据或模板变更后须重新生成并验证无漂移：
 
 ```bash
-python -m awesome_bioinfo generate && python -m awesome_bioinfo mkdocs
-git diff --exit-code -- README.md mkdocs/docs/
+python -m awesome_bioinfo generate
+python -m awesome_bioinfo vitepress
+cd docs && npm run build
 ```
 
 **`README.zh-CN.md` 为手动维护，永远不要自动覆写。**

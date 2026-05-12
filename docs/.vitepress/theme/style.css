@@ -1,0 +1,33 @@
+/* BioTech Horizon 主题配色 */
+:root {
+  /* 深蓝主色 */
+  --vp-c-brand-1: #1a365d;
+  --vp-c-brand-2: #2c5282;
+  --vp-c-brand-3: #3182ce;
+  --vp-c-brand-soft: rgba(26, 54, 93, 0.14);
+
+  /* 生物绿辅助色 */
+  --vp-c-tip-1: #276749;
+  --vp-c-tip-2: #38a169;
+  --vp-c-tip-3: #48bb78;
+  --vp-c-tip-soft: rgba(39, 103, 73, 0.14);
+}
+
+.dark {
+  --vp-c-brand-1: #4299e1;
+  --vp-c-brand-2: #3182ce;
+  --vp-c-brand-3: #2c5282;
+  --vp-c-brand-soft: rgba(66, 153, 225, 0.16);
+
+  --vp-c-tip-1: #68d391;
+  --vp-c-tip-2: #48bb78;
+  --vp-c-tip-3: #38a169;
+  --vp-c-tip-soft: rgba(104, 211, 145, 0.16);
+}
+
+/* 自定义样式增强 */
+.vp-doc h1 {
+  background: linear-gradient(120deg, var(--vp-c-brand-1), var(--vp-c-tip-1));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
