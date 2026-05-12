@@ -27,13 +27,29 @@ features:
 import { onMounted } from 'vue'
 import { useRouter } from 'vitepress'
 
+const LANG_KEY = 'preferred-language'
+
 onMounted(() => {
   const router = useRouter()
-  const lang = navigator.language || navigator.userLanguage
-  if (lang.startsWith('zh')) {
-    router.go('/zh/')
-  } else {
-    router.go('/en/')
+
+  // 检查是否有存储的语言偏好
+  const storedLang = localStorage.getItem(LANG_KEY)
+
+  if (storedLang) {
+    // 用户已有偏好，直接跳转
+    router.go(storedLang === 'zh' ? '/zh/' : '/en/')
+    return
   }
+
+  // 首次访问：根据浏览器语言自动检测
+  const browserLang = navigator.language || navigator.userLanguage || 'en'
+  const isZh = browserLang.toLowerCase().startsWith('zh')
+  const targetLang = isZh ? 'zh' : 'en'
+
+  // 存储偏好
+  localStorage.setItem(LANG_KEY, targetLang)
+
+  // 跳转到对应语言版本
+  router.go(isZh ? '/zh/' : '/en/')
 })
 </script>
