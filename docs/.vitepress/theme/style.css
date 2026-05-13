@@ -1,28 +1,28 @@
-/* BioTech Horizon 主题配色 */
+/* BioTech Horizon 主题配色 - 活力蓝绿版 */
 :root {
-  /* 深蓝主色 */
-  --vp-c-brand-1: #1a365d;
-  --vp-c-brand-2: #2c5282;
-  --vp-c-brand-3: #3182ce;
-  --vp-c-brand-soft: rgba(26, 54, 93, 0.14);
+  /* 明亮科技蓝主色 */
+  --vp-c-brand-1: #2563eb;
+  --vp-c-brand-2: #3b82f6;
+  --vp-c-brand-3: #60a5fa;
+  --vp-c-brand-soft: rgba(37, 99, 235, 0.18);
 
-  /* 生物绿辅助色 */
-  --vp-c-tip-1: #276749;
-  --vp-c-tip-2: #38a169;
-  --vp-c-tip-3: #48bb78;
-  --vp-c-tip-soft: rgba(39, 103, 73, 0.14);
+  /* 明亮翠绿辅助色 */
+  --vp-c-tip-1: #059669;
+  --vp-c-tip-2: #10b981;
+  --vp-c-tip-3: #34d399;
+  --vp-c-tip-soft: rgba(5, 150, 105, 0.18);
 }
 
 .dark {
-  --vp-c-brand-1: #4299e1;
-  --vp-c-brand-2: #3182ce;
-  --vp-c-brand-3: #2c5282;
-  --vp-c-brand-soft: rgba(66, 153, 225, 0.16);
+  --vp-c-brand-1: #60a5fa;
+  --vp-c-brand-2: #3b82f6;
+  --vp-c-brand-3: #2563eb;
+  --vp-c-brand-soft: rgba(96, 165, 250, 0.20);
 
-  --vp-c-tip-1: #68d391;
-  --vp-c-tip-2: #48bb78;
-  --vp-c-tip-3: #38a169;
-  --vp-c-tip-soft: rgba(104, 211, 145, 0.16);
+  --vp-c-tip-1: #34d399;
+  --vp-c-tip-2: #10b981;
+  --vp-c-tip-3: #059669;
+  --vp-c-tip-soft: rgba(52, 211, 153, 0.20);
 }
 
 /* 自定义样式增强 */
