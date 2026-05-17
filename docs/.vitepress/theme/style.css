@@ -1,167 +1,388 @@
+/**
+ * Awesome Bioinformatics Algorithms - Theme Styles
+ * 
+ * Color System: Emerald (Bioinformatics Green)
+ * Based on OKLCH color space for perceptual uniformity
+ */
+
+/* ============================================
+   LIGHT THEME (Default)
+   ============================================ */
 :root {
-  --vp-c-brand-1: oklch(0.56 0.18 251);
-  --vp-c-brand-2: oklch(0.62 0.16 251);
-  --vp-c-brand-3: oklch(0.72 0.11 251);
-  --vp-c-brand-soft: oklch(0.9 0.03 251);
-
-  --vp-c-bg: oklch(0.985 0.004 251);
-  --vp-c-bg-soft: oklch(0.968 0.007 251);
-  --vp-c-bg-alt: oklch(0.95 0.01 251);
-  --vp-c-border: oklch(0.88 0.012 251);
-  --vp-c-divider: oklch(0.9 0.01 251);
-  --vp-c-gutter: oklch(0.9 0.01 251);
-
-  --vp-c-text-1: oklch(0.24 0.02 251);
-  --vp-c-text-2: oklch(0.41 0.02 251);
-  --vp-c-text-3: oklch(0.57 0.015 251);
-
-  --vp-home-hero-name-color: oklch(0.29 0.08 251);
-  --vp-home-hero-name-background: transparent;
-  --vp-home-hero-image-background-image: none;
-  --vp-home-hero-image-filter: none;
-
+  /* Brand Colors - Emerald */
+  --vp-c-brand-1: oklch(0.55 0.17 163);
+  --vp-c-brand-2: oklch(0.60 0.15 163);
+  --vp-c-brand-3: oklch(0.70 0.12 163);
+  --vp-c-brand-soft: oklch(0.92 0.04 163);
+  
+  /* Background Colors */
+  --vp-c-bg: oklch(0.99 0.003 163);
+  --vp-c-bg-soft: oklch(0.97 0.006 163);
+  --vp-c-bg-alt: oklch(0.94 0.01 163);
+  --vp-c-bg-elv: oklch(0.96 0.008 163);
+  
+  /* Border & Divider */
+  --vp-c-border: oklch(0.88 0.012 163);
+  --vp-c-divider: oklch(0.90 0.01 163);
+  --vp-c-gutter: oklch(0.90 0.01 163);
+  
+  /* Text Colors */
+  --vp-c-text-1: oklch(0.22 0.02 163);
+  --vp-c-text-2: oklch(0.40 0.02 163);
+  --vp-c-text-3: oklch(0.58 0.015 163);
+  
+  /* Hero */
+  --vp-home-hero-name-color: oklch(0.35 0.12 163);
+  --vp-home-hero-name-background: linear-gradient(135deg, 
+    oklch(0.55 0.17 163) 0%, 
+    oklch(0.45 0.15 180) 100%);
+  --vp-home-hero-image-background-image: linear-gradient(135deg, 
+    oklch(0.92 0.04 163) 0%, 
+    oklch(0.88 0.06 180) 50%,
+    oklch(0.90 0.05 150) 100%);
+  --vp-home-hero-image-filter: blur(80px);
+  
+  /* Custom Spacing */
   --aba-space-1: 0.5rem;
   --aba-space-2: 0.75rem;
   --aba-space-3: 1rem;
   --aba-space-4: 1.5rem;
   --aba-space-5: 2.5rem;
   --aba-space-6: 4rem;
+  
+  /* Custom Colors */
+  --aba-accent: oklch(0.55 0.17 163);
+  --aba-accent-soft: oklch(0.92 0.04 163);
+  --aba-code-bg: oklch(0.96 0.008 163);
+  
+  /* Shadows */
+  --aba-shadow-sm: 0 1px 2px oklch(0.5 0 0 / 0.05);
+  --aba-shadow-md: 0 4px 6px -1px oklch(0.5 0 0 / 0.1);
+  --aba-shadow-lg: 0 10px 15px -3px oklch(0.5 0 0 / 0.1);
 }
 
+/* ============================================
+   DARK THEME
+   ============================================ */
 .dark {
-  --vp-c-brand-1: oklch(0.76 0.12 251);
-  --vp-c-brand-2: oklch(0.7 0.13 251);
-  --vp-c-brand-3: oklch(0.63 0.12 251);
-  --vp-c-brand-soft: oklch(0.32 0.05 251);
-
-  --vp-c-bg: oklch(0.18 0.015 251);
-  --vp-c-bg-soft: oklch(0.23 0.02 251);
-  --vp-c-bg-alt: oklch(0.26 0.025 251);
-  --vp-c-border: oklch(0.34 0.02 251);
-  --vp-c-divider: oklch(0.34 0.02 251);
-  --vp-c-gutter: oklch(0.34 0.02 251);
-
-  --vp-c-text-1: oklch(0.9 0.012 251);
-  --vp-c-text-2: oklch(0.76 0.012 251);
-  --vp-c-text-3: oklch(0.63 0.012 251);
+  /* Brand Colors - Emerald (Lighter for dark mode) */
+  --vp-c-brand-1: oklch(0.75 0.14 163);
+  --vp-c-brand-2: oklch(0.68 0.13 163);
+  --vp-c-brand-3: oklch(0.58 0.12 163);
+  --vp-c-brand-soft: oklch(0.28 0.06 163);
+  
+  /* Background Colors */
+  --vp-c-bg: oklch(0.16 0.015 163);
+  --vp-c-bg-soft: oklch(0.22 0.02 163);
+  --vp-c-bg-alt: oklch(0.26 0.025 163);
+  --vp-c-bg-elv: oklch(0.24 0.022 163);
+  
+  /* Border & Divider */
+  --vp-c-border: oklch(0.32 0.025 163);
+  --vp-c-divider: oklch(0.32 0.02 163);
+  --vp-c-gutter: oklch(0.32 0.02 163);
+  
+  /* Text Colors */
+  --vp-c-text-1: oklch(0.92 0.01 163);
+  --vp-c-text-2: oklch(0.76 0.012 163);
+  --vp-c-text-3: oklch(0.60 0.015 163);
+  
+  /* Hero */
+  --vp-home-hero-name-color: oklch(0.78 0.14 163);
+  --vp-home-hero-name-background: linear-gradient(135deg, 
+    oklch(0.75 0.14 163) 0%, 
+    oklch(0.65 0.12 180) 100%);
+  --vp-home-hero-image-background-image: linear-gradient(135deg, 
+    oklch(0.28 0.06 163) 0%, 
+    oklch(0.24 0.07 180) 50%,
+    oklch(0.30 0.05 150) 100%);
+  
+  /* Custom Colors */
+  --aba-accent: oklch(0.75 0.14 163);
+  --aba-accent-soft: oklch(0.28 0.06 163);
+  --aba-code-bg: oklch(0.22 0.02 163);
+  
+  /* Shadows */
+  --aba-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.3);
+  --aba-shadow-md: 0 4px 6px -1px oklch(0 0 0 / 0.4);
+  --aba-shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 0.5);
 }
 
+/* ============================================
+   HERO SECTION
+   ============================================ */
 .VPHero {
   padding: calc(var(--vp-nav-height) + var(--aba-space-6)) var(--aba-space-4) var(--aba-space-6);
 }
 
 .VPHero .name {
-  font-size: clamp(2rem, 4vw, 3.3rem);
-  font-weight: 700;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 800;
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  background: var(--vp-home-hero-name-background);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .VPHero .text {
-  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
-  font-weight: 520;
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+  margin-top: 0.5rem;
 }
 
 .VPHero .tagline {
-  max-width: 65ch;
+  max-width: 70ch;
   line-height: 1.7;
   color: var(--vp-c-text-2);
+  margin-top: 1rem;
 }
 
+.VPHero .image {
+  filter: drop-shadow(var(--aba-shadow-lg));
+}
+
+/* ============================================
+   FEATURES SECTION
+   ============================================ */
 .VPFeatures {
   padding: var(--aba-space-5) var(--aba-space-4);
 }
 
+.VPFeatures .container {
+  max-width: 1200px;
+}
+
+.VPFeatures .items {
+  gap: 1.5rem;
+}
+
 .VPFeatures .item {
   border: 1px solid var(--vp-c-border);
-  border-radius: 0.9rem;
+  border-radius: 1rem;
   background: var(--vp-c-bg);
+  transition: all 0.3s ease;
+  box-shadow: var(--aba-shadow-sm);
+}
+
+.VPFeatures .item:hover {
+  border-color: var(--vp-c-brand-1);
+  box-shadow: var(--aba-shadow-md);
+  transform: translateY(-2px);
+}
+
+.VPFeature {
+  padding: 1.5rem;
+}
+
+.VPFeature .icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
 }
 
 .VPFeature .title {
-  font-size: 1rem;
-  font-weight: 620;
+  font-size: 1.1rem;
+  font-weight: 650;
+  color: var(--vp-c-text-1);
+  margin-bottom: 0.5rem;
 }
 
+.VPFeature .details {
+  font-size: 0.95rem;
+  color: var(--vp-c-text-2);
+  line-height: 1.6;
+}
+
+/* ============================================
+   DOCUMENTATION LAYOUT
+   ============================================ */
 .VPDoc {
-  padding: clamp(1.8rem, 2.2vw, 2.8rem) clamp(1rem, 2.4vw, 2rem) 5rem;
+  padding: clamp(2rem, 2.5vw, 3rem) clamp(1rem, 3vw, 2.5rem) 5rem;
+}
+
+.VPDoc .content-container {
+  max-width: 820px;
 }
 
 .VPDoc .content {
-  max-width: 72ch;
+  max-width: 100%;
 }
 
+/* Typography */
 .VPDoc h1 {
-  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 750;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--vp-c-text-1);
+  margin-bottom: 1.5rem;
 }
 
 .VPDoc h2 {
-  font-size: clamp(1.35rem, 2.1vw, 1.9rem);
-  margin-top: 2.8rem;
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  font-weight: 650;
+  margin-top: 3rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--vp-c-divider);
 }
 
 .VPDoc h3 {
-  font-size: clamp(1.15rem, 1.7vw, 1.35rem);
-  margin-top: 2rem;
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  font-weight: 600;
+  margin-top: 2.2rem;
+}
+
+.VPDoc h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 1.8rem;
 }
 
 .VPDoc p,
 .VPDoc li {
-  line-height: 1.75;
-}
-
-.dark .VPDoc p,
-.dark .VPDoc li {
   line-height: 1.8;
+  color: var(--vp-c-text-2);
 }
 
+.VPDoc a {
+  color: var(--vp-c-brand-1);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.VPDoc a:hover {
+  color: var(--vp-c-brand-2);
+  text-decoration: underline;
+}
+
+/* Tables */
 .VPDoc table {
   border: 1px solid var(--vp-c-border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  margin: 1.5rem 0;
 }
 
 .VPDoc th {
   background: var(--vp-c-bg-soft);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--vp-c-border);
 }
 
-.VPNav {
+.VPDoc td {
+  padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--vp-c-divider);
 }
 
+.VPDoc tr:last-child td {
+  border-bottom: none;
+}
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+.VPNav {
+  background: var(--vp-c-bg);
+  border-bottom: 1px solid var(--vp-c-divider);
+  backdrop-filter: blur(12px);
+}
+
+.VPNav .title {
+  font-weight: 700;
+}
+
+.VPNavBarTitle .title {
+  color: var(--vp-c-text-1);
+}
+
+/* Navigation Links */
+.VPNavBarMenuLink:hover,
+.VPNavBarMenuGroup:hover .text {
+  color: var(--vp-c-brand-1);
+}
+
+/* ============================================
+   SIDEBAR
+   ============================================ */
 .VPSidebar {
   border-right: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg);
 }
 
-.VPSidebarItem.is-active .item .link {
+.VPSidebarItem.is-active > .item > .link {
   color: var(--vp-c-brand-1);
   font-weight: 600;
+  background: var(--vp-c-brand-soft);
+  border-radius: 0.5rem;
 }
 
-/* Whitepaper utility blocks */
+.VPSidebarItem .link:hover {
+  color: var(--vp-c-brand-1);
+}
+
+/* ============================================
+   CUSTOM BLOCKS
+   ============================================ */
 .vp-doc .aba-panel {
   border: 1px solid var(--vp-c-border);
-  border-radius: 0.8rem;
+  border-radius: 1rem;
   background: var(--vp-c-bg-soft);
   padding: var(--aba-space-4);
   margin: var(--aba-space-4) 0;
+  box-shadow: var(--aba-shadow-sm);
 }
 
 .vp-doc .aba-kicker {
   display: inline-block;
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--vp-c-text-3);
+  color: var(--vp-c-brand-1);
+  font-weight: 600;
   margin-bottom: var(--aba-space-2);
 }
 
-/* Mermaid and inline SVG readability for both themes */
+/* Info/Tip/Warning/Custom Containers */
+.custom-block {
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.custom-block.info {
+  border-left: 4px solid var(--vp-c-brand-1);
+  background: var(--vp-c-brand-soft);
+}
+
+.custom-block.tip {
+  border-left: 4px solid oklch(0.70 0.15 145);
+}
+
+.custom-block.warning {
+  border-left: 4px solid oklch(0.75 0.15 85);
+}
+
+.custom-block.danger {
+  border-left: 4px solid oklch(0.60 0.18 25);
+}
+
+/* ============================================
+   MERMAID & SVG STYLING
+   Ensures diagrams are readable in both themes
+   ============================================ */
 .vp-doc .mermaid {
   border: 1px solid var(--vp-c-border);
-  border-radius: 0.8rem;
+  border-radius: 1rem;
   padding: var(--aba-space-3);
   background: var(--vp-c-bg);
+  margin: 1.5rem 0;
+  overflow-x: auto;
 }
 
 .vp-doc .mermaid svg {
@@ -169,39 +390,189 @@
   height: auto;
 }
 
+/* Mermaid Node Colors */
 .vp-doc .mermaid .node rect,
 .vp-doc .mermaid .node polygon,
 .vp-doc .mermaid .node circle,
-.vp-doc .mermaid .node ellipse {
+.vp-doc .mermaid .node ellipse,
+.vp-doc .mermaid .node path {
   fill: var(--vp-c-bg-soft) !important;
   stroke: var(--vp-c-text-2) !important;
 }
 
+/* Mermaid Text Colors */
 .vp-doc .mermaid .label,
-.vp-doc .mermaid .edgeLabel {
+.vp-doc .mermaid .edgeLabel,
+.vp-doc .mermaid .nodeLabel {
   color: var(--vp-c-text-1) !important;
   fill: var(--vp-c-text-1) !important;
 }
 
+/* Mermaid Cluster Colors */
 .vp-doc .mermaid .cluster rect {
   fill: var(--vp-c-bg-alt) !important;
   stroke: var(--vp-c-border) !important;
 }
 
+/* Mermaid Edge Colors */
+.vp-doc .mermaid .edgePath .path {
+  stroke: var(--vp-c-text-3) !important;
+}
+
+.vp-doc .mermaid .arrowheadPath {
+  fill: var(--vp-c-text-3) !important;
+}
+
+/* ============================================
+   INLINE SVG ADAPTATION
+   Fixes hardcoded #000/#fff/#333 colors
+   ============================================ */
+
+/* Black to text color */
 .vp-doc svg [fill="#000"],
-.vp-doc svg [stroke="#000"] {
+.vp-doc svg [fill="black"],
+.vp-doc svg [stroke="#000"],
+.vp-doc svg [stroke="black"] {
   fill: var(--vp-c-text-1) !important;
   stroke: var(--vp-c-text-1) !important;
 }
 
+/* White to background color */
 .vp-doc svg [fill="#fff"],
-.vp-doc svg [stroke="#fff"] {
+.vp-doc svg [fill="white"],
+.vp-doc svg [stroke="#fff"],
+.vp-doc svg [stroke="white"] {
   fill: var(--vp-c-bg) !important;
   stroke: var(--vp-c-bg) !important;
 }
 
+/* Common gray values */
+.vp-doc svg [fill="#333"],
+.vp-doc svg [fill="#333333"],
+.vp-doc svg [stroke="#333"],
+.vp-doc svg [stroke="#333333"] {
+  fill: var(--vp-c-text-2) !important;
+  stroke: var(--vp-c-text-2) !important;
+}
+
+.vp-doc svg [fill="#666"],
+.vp-doc svg [fill="#666666"],
+.vp-doc svg [stroke="#666"],
+.vp-doc svg [stroke="#666666"] {
+  fill: var(--vp-c-text-3) !important;
+  stroke: var(--vp-c-text-3) !important;
+}
+
+/* ============================================
+   CODE BLOCKS
+   ============================================ */
+.vp-doc [class*='language-'] {
+  border-radius: 0.75rem;
+  margin: 1.25rem 0;
+}
+
+.vp-doc [class*='language-'] code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+  font-size: 0.9em;
+  line-height: 1.7;
+}
+
+/* Inline code */
+.vp-doc :not(pre) > code {
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+  padding: 0.2em 0.4em;
+  border-radius: 0.375rem;
+  font-size: 0.9em;
+}
+
+.dark .vp-doc :not(pre) > code {
+  background: var(--aba-code-bg);
+}
+
+/* ============================================
+   LAYOUT UTILITIES
+   ============================================ */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
 @media (max-width: 960px) {
   .VPHero {
-    padding-top: calc(var(--vp-nav-height) + 3rem);
+    padding-top: calc(var(--vp-nav-height) + 2rem);
+    padding-bottom: 2rem;
+  }
+  
+  .VPFeatures {
+    padding: 2rem 1rem;
+  }
+  
+  .VPDoc {
+    padding: 1.5rem 1rem 3rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .VPHero .name {
+    font-size: 2rem;
+  }
+  
+  .VPHero .text {
+    font-size: 1.1rem;
+  }
+  
+  .VPFeatures .items {
+    gap: 1rem;
+  }
+  
+  .VPFeature {
+    padding: 1.25rem;
+  }
+}
+
+/* ============================================
+   TRANSITIONS & ANIMATIONS
+   ============================================ */
+.vp-doc a,
+.VPFeature .item,
+.VPNavBarMenuLink,
+.VPSidebarItem .link {
+  transition: all 0.2s ease;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+  .VPNav,
+  .VPSidebar,
+  .VPDocFooter {
+    display: none;
+  }
+  
+  .VPDoc {
+    padding: 0;
+  }
+  
+  .vp-doc a {
+    color: inherit;
+    text-decoration: underline;
   }
 }
