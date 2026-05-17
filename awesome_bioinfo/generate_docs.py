@@ -6,7 +6,6 @@ Usage:
     python -m awesome_bioinfo vitepress
 """
 
-from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
@@ -83,9 +82,367 @@ def get_difficulty_badge(difficulty: str, lang: str = "zh") -> str:
     return DIFFICULTY_LABELS.get(difficulty, difficulty)
 
 
-# -----------------------------------------------------------------------------
-# Chinese Pages (zh/)
-# -----------------------------------------------------------------------------
+def _generate_zh_project_overview(total: int, categories: int, tags: int) -> str:
+    return f"""---
+title: 项目导读
+---
+
+# 项目导读
+
+本项目定位为**生物信息学算法技术白皮书与架构展示站**，同时承担算法知识库与工程实践指南角色。
+
+## 核心定位
+
+- 面向严苛技术面试与高级开发者评审场景
+- 强调“算法知识组织 + 工程化生成链路 + 可验证质量体系”
+- 提供可追溯的数据源、生成流程与发布流程
+
+## 当前规模
+
+| 指标 | 数值 |
+|---|---|
+| 算法条目 | {total} |
+| 顶级分类 | {categories} |
+| 标签总数 | {tags} |
+
+## 建议阅读路径
+
+1. [学院路径](/zh/academy/learning-path)
+2. [系统架构](/zh/architecture/system-architecture)
+3. [数据与生成链路](/zh/architecture/data-pipeline)
+4. [质量保障](/zh/architecture/quality-assurance)
+5. [参考文献与竞品研究](/zh/research/references)
+"""
+
+
+def _generate_en_project_overview(total: int, categories: int, tags: int) -> str:
+    return f"""---
+title: Project Overview
+---
+
+# Project Overview
+
+This project is positioned as a **technical whitepaper and architecture showcase** for bioinformatics
+algorithms, with a parallel role as a practical knowledge academy.
+
+## Core Positioning
+
+- Designed for rigorous interview and senior engineering review contexts
+- Combines algorithm curation, generation pipelines, and verifiable quality controls
+- Keeps source data, generation flow, and publishing flow transparent
+
+## Current Scale
+
+| Metric | Value |
+|---|---|
+| Algorithms | {total} |
+| Top-level Categories | {categories} |
+| Tags | {tags} |
+
+## Recommended Reading Path
+
+1. [Learning Path](/en/academy/learning-path)
+2. [System Architecture](/en/architecture/system-architecture)
+3. [Data and Generation Pipeline](/en/architecture/data-pipeline)
+4. [Quality Assurance](/en/architecture/quality-assurance)
+5. [References and Ecosystem Study](/en/research/references)
+"""
+
+
+def _generate_zh_learning_path() -> str:
+    return """---
+title: 学院路径
+---
+
+# 学院路径
+
+## Level 1: 导航理解
+
+- 理解分类体系与标签体系
+- 通过算法总览快速建立领域地图
+
+## Level 2: 算法评估能力
+
+- 从用途、复杂度、难度、实现语言评估选型
+- 结合标签交叉检索同类方案
+
+## Level 3: 架构与工程能力
+
+- 理解数据源、生成器、VitePress 发布链路
+- 通过 CLI 工作流维护数据一致性与文档质量
+"""
+
+
+def _generate_en_learning_path() -> str:
+    return """---
+title: Learning Path
+---
+
+# Learning Path
+
+## Level 1: Navigation Literacy
+
+- Understand category and tag taxonomies
+- Build a domain map from algorithm index pages
+
+## Level 2: Algorithm Evaluation
+
+- Evaluate choices through purpose, complexity, difficulty, and implementation language
+- Cross-check alternatives via tag intersections
+
+## Level 3: Architecture and Engineering
+
+- Understand source data, generator internals, and VitePress publishing flow
+- Maintain consistency and quality through the CLI workflow
+"""
+
+
+def _generate_zh_system_architecture() -> str:
+    return """---
+title: 系统架构
+---
+
+# 系统架构
+
+```mermaid
+flowchart LR
+    A[data/categories.yaml + data/algorithms/*.yaml] --> B[DataStore]
+    B --> C[Validation]
+    C --> D[generate_docs.py]
+    D --> E[docs/zh + docs/en]
+    E --> F[VitePress Build]
+    F --> G[GitHub Pages]
+```
+
+本架构采用“数据源单一真相 + 生成驱动文档”的模式，降低手工维护成本并提升一致性。
+"""
+
+
+def _generate_en_system_architecture() -> str:
+    return """---
+title: System Architecture
+---
+
+# System Architecture
+
+```mermaid
+flowchart LR
+    A[data/categories.yaml + data/algorithms/*.yaml] --> B[DataStore]
+    B --> C[Validation]
+    C --> D[generate_docs.py]
+    D --> E[docs/zh + docs/en]
+    E --> F[VitePress Build]
+    F --> G[GitHub Pages]
+```
+
+The architecture follows a single-source-of-truth data model with generation-driven docs publishing.
+"""
+
+
+def _generate_zh_data_pipeline() -> str:
+    return """---
+title: 数据与生成链路
+---
+
+# 数据与生成链路
+
+## 输入层
+
+- `data/categories.yaml` 维护分类与层级
+- `data/algorithms/*.yaml` 维护算法条目
+
+## 处理层
+
+- `DataStore` 加载并索引数据
+- `validate` 负责规则校验
+- `generate_docs.py` 生成 VitePress 页面
+
+## 输出层
+
+- `docs/zh/**`, `docs/en/**` 作为站点源码
+- GitHub Actions 构建并发布到 Pages
+"""
+
+
+def _generate_en_data_pipeline() -> str:
+    return """---
+title: Data and Generation Pipeline
+---
+
+# Data and Generation Pipeline
+
+## Input Layer
+
+- `data/categories.yaml` defines category hierarchy
+- `data/algorithms/*.yaml` stores algorithm entries
+
+## Processing Layer
+
+- `DataStore` loads and indexes data
+- `validate` enforces schema and quality rules
+- `generate_docs.py` produces VitePress content
+
+## Output Layer
+
+- `docs/zh/**`, `docs/en/**` become site sources
+- GitHub Actions builds and deploys to Pages
+"""
+
+
+def _generate_zh_quality_assurance() -> str:
+    return """---
+title: 质量保障
+---
+
+# 质量保障
+
+质量体系覆盖三层：
+
+1. 数据层校验：`python -m awesome_bioinfo validate`
+2. 代码层质量：`ruff` + `mypy` + `pytest`
+3. 文档层验证：VitePress 构建与页面导航一致性检查
+"""
+
+
+def _generate_en_quality_assurance() -> str:
+    return """---
+title: Quality Assurance
+---
+
+# Quality Assurance
+
+The quality strategy is enforced across three layers:
+
+1. Data validation: `python -m awesome_bioinfo validate`
+2. Code quality: `ruff` + `mypy` + `pytest`
+3. Documentation verification: VitePress build and navigation consistency checks
+"""
+
+
+def _generate_zh_references() -> str:
+    return """---
+title: 参考文献与相关项目
+---
+
+# 参考文献与相关项目
+
+## 经典论文
+
+- Smith T.F., Waterman M.S. (1981). Identification of common molecular subsequences.
+- Needleman S.B., Wunsch C.D. (1970). A general method applicable to the search for similarities.
+
+## 相关开源项目探究
+
+- [bioinformatics-workflows](https://github.com/topics/bioinformatics)
+- [awesome-bioinformatics](https://github.com/danielecook/Awesome-Bioinformatics)
+
+## 技术启发
+
+- 数据单一真相有助于维持大型知识库一致性
+- 生成驱动文档可降低维护成本与链接漂移
+"""
+
+
+def _generate_en_references() -> str:
+    return """---
+title: References and Related Projects
+---
+
+# References and Related Projects
+
+## Foundational Papers
+
+- Smith T.F., Waterman M.S. (1981). Identification of common molecular subsequences.
+- Needleman S.B., Wunsch C.D. (1970). A general method applicable to the search for similarities.
+
+## Related Open Source Ecosystem
+
+- [bioinformatics-workflows](https://github.com/topics/bioinformatics)
+- [awesome-bioinformatics](https://github.com/danielecook/Awesome-Bioinformatics)
+
+## Engineering Insights
+
+- Single-source data models keep large knowledge systems coherent
+- Generation-driven docs reduce maintenance burden and link drift
+"""
+
+
+def _generate_zh_evolution() -> str:
+    return """---
+title: 演进思考
+---
+
+# 演进思考
+
+## 阶段一：列表化收录
+
+重点解决“收录广度”问题，建立多分类算法目录。
+
+## 阶段二：工程化治理
+
+引入校验、生成、测试和 CI，解决一致性与可维护性问题。
+
+## 阶段三：白皮书化表达
+
+以架构叙事、研究引用、学院路径提升项目专业说服力。
+"""
+
+
+def _generate_en_evolution() -> str:
+    return """---
+title: Evolution Notes
+---
+
+# Evolution Notes
+
+## Phase 1: List-Oriented Curation
+
+Focused on breadth, creating a multi-category algorithm index.
+
+## Phase 2: Engineering Governance
+
+Added validation, generation, testing, and CI to improve consistency and maintainability.
+
+## Phase 3: Whitepaper Positioning
+
+Introduced architecture narratives, research references, and academy-style guidance for expert readers.
+"""
+
+
+def _generate_zh_cli_workflow() -> str:
+    return """---
+title: CLI 工作流参考
+---
+
+# CLI 工作流参考
+
+```bash
+python -m awesome_bioinfo validate
+python -m awesome_bioinfo stats
+python -m awesome_bioinfo search smith
+python -m awesome_bioinfo info smith-waterman
+python -m awesome_bioinfo compare smith-waterman needleman-wunsch
+python -m awesome_bioinfo vitepress
+```
+"""
+
+
+def _generate_en_cli_workflow() -> str:
+    return """---
+title: CLI Workflow Reference
+---
+
+# CLI Workflow Reference
+
+```bash
+python -m awesome_bioinfo validate
+python -m awesome_bioinfo stats
+python -m awesome_bioinfo search smith
+python -m awesome_bioinfo info smith-waterman
+python -m awesome_bioinfo compare smith-waterman needleman-wunsch
+python -m awesome_bioinfo vitepress
+```
+"""
 
 
 def generate_zh_index(
@@ -98,22 +455,19 @@ def generate_zh_index(
     """Generate Chinese landing page."""
     total = len(algorithms)
     all_tags: set[str] = set()
-    cats_with_algo = [cat for cat in categories if by_cat.get(cat.id)]
 
     for algo in algorithms:
         all_tags.update(algo.tags)
 
-    # Build category cards
     cat_cards = []
     for cat in categories:
         count = len(by_cat.get(cat.id, []))
         if count == 0:
             continue
-        cat_cards.append(f"""
-- **[{cat.name}](categories/{cat.id}/)** — {trim_text(cat.description, 60)} ({count} 个算法)
-""")
+        cat_cards.append(
+            f"- **[{cat.name}](categories/{cat.id}/)** — {trim_text(cat.description, 60)} ({count} 个算法)"
+        )
 
-    # Build latest algorithms
     latest = sorted(
         [a for a in algorithms if a.year],
         key=lambda e: (e.year, e.name),
@@ -122,43 +476,50 @@ def generate_zh_index(
 
     algo_list = []
     for algo in latest:
-        cat_info = cat_map.get(algo.category)
         year_str = f"({algo.year})" if algo.year else ""
         algo_list.append(
             f"- [{algo.name}](algorithms/{algo.id}.md) {year_str} — {trim_text(algo.purpose, 50)}"
         )
-
-    current_year = datetime.now().year
 
     return f"""---
 layout: home
 title: 首页
 hero:
   name: Awesome Bioinformatics
-  text: Algorithms
-  tagline: 生物信息学算法知识库 — 收录 {total} 个算法
+  text: Whitepaper
+  tagline: 技术白皮书 / 架构展示站 / 项目学院
   actions:
     - theme: brand
-      text: 浏览算法
-      link: /zh/algorithms/
+      text: 阅读导读
+      link: /zh/guides/project-overview
     - theme: alt
-      text: 分类导航
-      link: /zh/categories/
+      text: 算法总览
+      link: /zh/algorithms/
 features:
   - icon: 🧬
     title: {total}+ 算法
-    details: 涵盖序列比对、基因组组装、变异检测等核心领域
-  - icon: 📊
-    title: {len(cats_with_algo)} 个分类
-    details: 系统化分类体系，快速定位所需算法
-  - icon: 🔍
-    title: {len(all_tags)} 个标签
-    details: 多维度索引，精准检索
+    details: 可追溯的数据驱动算法图谱
+  - icon: 🏛️
+    title: 技术白皮书
+    details: 面向严苛面试与架构评审的叙事结构
+  - icon: 🧪
+    title: 可验证工程链路
+    details: 从校验、生成到发布的完整流程
 ---
+
+## 技术白皮书入口
+
+- [项目导读](/zh/guides/project-overview)
+- [学院路径](/zh/academy/learning-path)
+- [系统架构](/zh/architecture/system-architecture)
+- [数据与生成链路](/zh/architecture/data-pipeline)
+- [质量保障](/zh/architecture/quality-assurance)
+- [参考文献与相关项目](/zh/research/references)
+- [演进思考](/zh/research/evolution)
 
 ## 研究方向
 
-{"".join(cat_cards)}
+{chr(10).join(cat_cards)}
 
 ## 最新收录
 
@@ -172,22 +533,17 @@ def generate_zh_algo_page(algo: AlgorithmEntry, cat_map: dict[str, Category]) ->
     """Generate Chinese algorithm detail page."""
     cat = cat_map.get(algo.category)
     cat_name = cat.name if cat else algo.category
-    sub = cat_map.get(algo.subcategory) if algo.subcategory else None
-    sub_name = sub.name if sub else ""
 
-    # Build frontmatter
     frontmatter = f"""---
 title: {algo.name}
 description: {trim_text(algo.description, 150)}
 ---"""
 
-    # Build info section
     info_lines = [f"# {algo.name}\n"]
 
     if algo.description:
         info_lines.append(f"{algo.description}\n")
 
-    # Meta info table
     info_lines.append("| 属性 | 值 |")
     info_lines.append("|------|-----|")
 
@@ -208,32 +564,27 @@ description: {trim_text(algo.description, 150)}
 
     info_lines.append("")
 
-    # Links
     links = []
     if algo.paper_url:
         links.append(f"- [📄 论文链接]({algo.paper_url})")
     if algo.implementation_url:
         links.append(f"- [💻 代码实现]({algo.implementation_url})")
-
     if links:
         info_lines.append("## 链接\n")
         info_lines.extend(links)
         info_lines.append("")
 
-    # Related tools
     if algo.related_tools:
         info_lines.append("## 相关工具\n")
         info_lines.append(" · ".join(f"`{tool}`" for tool in algo.related_tools))
         info_lines.append("")
 
-    # Tags
     if algo.tags:
         info_lines.append("## 标签\n")
         tag_links = " ".join(f"[{tag}](../tags#{tag})" for tag in algo.tags)
         info_lines.append(tag_links)
         info_lines.append("")
 
-    # References
     if algo.references:
         info_lines.append("## 参考资料\n")
         for ref in algo.references:
@@ -244,10 +595,7 @@ description: {trim_text(algo.description, 150)}
     return frontmatter + "\n" + "\n".join(info_lines)
 
 
-def generate_zh_algo_index(
-    algorithms: list[AlgorithmEntry],
-    cat_map: dict[str, Category],
-) -> str:
+def generate_zh_algo_index(algorithms: list[AlgorithmEntry], cat_map: dict[str, Category]) -> str:
     """Generate Chinese algorithm listing page."""
     rows = []
     for algo in sorted(algorithms, key=lambda a: a.name.lower()):
@@ -255,7 +603,6 @@ def generate_zh_algo_index(
         cat_name = cat_info.name if cat_info else "-"
         year = str(algo.year) if algo.year else "-"
         diff = get_difficulty_badge(algo.difficulty, "zh") if algo.difficulty else "-"
-
         rows.append(
             f"| [{algo.name}]({algo.id}.md) | {year} | {cat_name} | {trim_text(algo.purpose or '-', 40)} | {diff} |"
         )
@@ -280,6 +627,7 @@ def generate_zh_category_page(
     cat_map: dict[str, Category],
 ) -> str:
     """Generate Chinese category page."""
+    _ = cat_map
     lines = [f"# {cat.name}\n"]
 
     if cat.description:
@@ -287,7 +635,6 @@ def generate_zh_category_page(
 
     lines.append(f"**{len(algos)}** 个算法收录于该分类。\n")
 
-    # Subcategories
     for sub in cat.subcategories:
         sub_algos = sorted(
             [a for a in algos if a.subcategory == sub.id],
@@ -310,7 +657,6 @@ def generate_zh_category_page(
             )
         lines.append("")
 
-    # Algorithms without subcategory
     direct = sorted(
         [a for a in algos if not a.subcategory],
         key=lambda a: (a.year or 0, a.name),
@@ -349,9 +695,7 @@ title: 分类总览
     ]
 
     for cat, count in sorted(cats_with_algo, key=lambda x: -x[1]):
-        lines.append(
-            f"- **[{cat.name}]({cat.id}/)** — {trim_text(cat.description, 60)} ({count} 个算法)"
-        )
+        lines.append(f"- **[{cat.name}]({cat.id}/)** — {trim_text(cat.description, 60)} ({count} 个算法)")
 
     return "\n".join(lines)
 
@@ -359,7 +703,6 @@ title: 分类总览
 def generate_zh_tags_page(by_tag: dict[str, list[AlgorithmEntry]]) -> str:
     """Generate Chinese tags page."""
     sorted_tags = sorted(by_tag.items(), key=lambda x: (-len(x[1]), x[0]))
-
     lines = [
         """---
 title: 标签索引
@@ -381,11 +724,6 @@ title: 标签索引
     return "\n".join(lines)
 
 
-# -----------------------------------------------------------------------------
-# English Pages (en/)
-# -----------------------------------------------------------------------------
-
-
 def generate_en_index(
     categories: list[Category],
     algorithms: list[AlgorithmEntry],
@@ -394,9 +732,9 @@ def generate_en_index(
     by_tag: dict[str, list[AlgorithmEntry]],
 ) -> str:
     """Generate English landing page."""
+    _ = cat_map
     total = len(algorithms)
     all_tags: set[str] = set()
-    cats_with_algo = [cat for cat in categories if by_cat.get(cat.id)]
 
     for algo in algorithms:
         all_tags.update(algo.tags)
@@ -407,9 +745,9 @@ def generate_en_index(
         if count == 0:
             continue
         desc = cat.description_en if cat.description_en else cat.description
-        cat_cards.append(f"""
-- **[{cat.name_en}](categories/{cat.id}/)** — {trim_text(desc, 60)} ({count} algorithms)
-""")
+        cat_cards.append(
+            f"- **[{cat.name_en}](categories/{cat.id}/)** — {trim_text(desc, 60)} ({count} algorithms)"
+        )
 
     latest = sorted(
         [a for a in algorithms if a.year],
@@ -419,7 +757,6 @@ def generate_en_index(
 
     algo_list = []
     for algo in latest:
-        cat_info = cat_map.get(algo.category)
         year_str = f"({algo.year})" if algo.year else ""
         purpose = algo.purpose_en if algo.purpose_en else algo.purpose
         algo_list.append(
@@ -431,30 +768,40 @@ layout: home
 title: Home
 hero:
   name: Awesome Bioinformatics
-  text: Algorithms
-  tagline: Bioinformatics Algorithm Knowledge Base — {total} algorithms
+  text: Whitepaper
+  tagline: Technical Whitepaper / Architecture Showcase / Project Academy
   actions:
     - theme: brand
+      text: Start with Overview
+      link: /en/guides/project-overview
+    - theme: alt
       text: Browse Algorithms
       link: /en/algorithms/
-    - theme: alt
-      text: Categories
-      link: /en/categories/
 features:
   - icon: 🧬
     title: {total}+ Algorithms
-    details: Covering sequence alignment, genome assembly, variant calling and more
-  - icon: 📊
-    title: {len(cats_with_algo)} Categories
-    details: Systematic classification for quick navigation
-  - icon: 🔍
-    title: {len(all_tags)} Tags
-    details: Multi-dimensional indexing for precise search
+    details: Data-driven algorithm atlas with traceable metadata
+  - icon: 🏛️
+    title: Technical Whitepaper
+    details: Architecture-oriented narrative for expert reviewers
+  - icon: 🧪
+    title: Verifiable Engineering
+    details: Validation, generation, and deployment as one chain
 ---
+
+## Technical Whitepaper Entry
+
+- [Project Overview](/en/guides/project-overview)
+- [Learning Path](/en/academy/learning-path)
+- [System Architecture](/en/architecture/system-architecture)
+- [Data and Generation Pipeline](/en/architecture/data-pipeline)
+- [Quality Assurance](/en/architecture/quality-assurance)
+- [References and Related Projects](/en/research/references)
+- [Evolution Notes](/en/research/evolution)
 
 ## Categories
 
-{"".join(cat_cards)}
+{chr(10).join(cat_cards)}
 
 ## Latest Additions
 
@@ -468,8 +815,6 @@ def generate_en_algo_page(algo: AlgorithmEntry, cat_map: dict[str, Category]) ->
     """Generate English algorithm detail page."""
     cat = cat_map.get(algo.category)
     cat_name = cat.name_en if cat and cat.name_en else (cat.name if cat else algo.category)
-    sub = cat_map.get(algo.subcategory) if algo.subcategory else None
-    sub_name = sub.name_en if sub and sub.name_en else (sub.name if sub else "")
 
     description = algo.description_en if algo.description_en else algo.description
     purpose = algo.purpose_en if algo.purpose_en else algo.purpose
@@ -509,7 +854,6 @@ description: {trim_text(description, 150)}
         links.append(f"- [📄 Paper]({algo.paper_url})")
     if algo.implementation_url:
         links.append(f"- [💻 Implementation]({algo.implementation_url})")
-
     if links:
         info_lines.append("## Links\n")
         info_lines.extend(links)
@@ -536,10 +880,7 @@ description: {trim_text(description, 150)}
     return frontmatter + "\n" + "\n".join(info_lines)
 
 
-def generate_en_algo_index(
-    algorithms: list[AlgorithmEntry],
-    cat_map: dict[str, Category],
-) -> str:
+def generate_en_algo_index(algorithms: list[AlgorithmEntry], cat_map: dict[str, Category]) -> str:
     """Generate English algorithm listing page."""
     rows = []
     for algo in sorted(algorithms, key=lambda a: a.name.lower()):
@@ -577,6 +918,7 @@ def generate_en_category_page(
     cat_map: dict[str, Category],
 ) -> str:
     """Generate English category page."""
+    _ = cat_map
     cat_name = cat.name_en if cat.name_en else cat.name
     cat_desc = cat.description_en if cat.description_en else cat.description
 
@@ -685,9 +1027,56 @@ title: Tags
     return "\n".join(lines)
 
 
-# -----------------------------------------------------------------------------
-# Main Generation
-# -----------------------------------------------------------------------------
+def _write_whitepaper_pages(
+    docs_dir: Path,
+    total_algorithms: int,
+    total_categories: int,
+    total_tags: int,
+) -> None:
+    zh_dir = docs_dir / "zh"
+    en_dir = docs_dir / "en"
+
+    write_file(
+        zh_dir / "guides" / "project-overview.md",
+        _generate_zh_project_overview(total_algorithms, total_categories, total_tags),
+    )
+    write_file(zh_dir / "academy" / "learning-path.md", _generate_zh_learning_path())
+    write_file(
+        zh_dir / "architecture" / "system-architecture.md",
+        _generate_zh_system_architecture(),
+    )
+    write_file(
+        zh_dir / "architecture" / "data-pipeline.md",
+        _generate_zh_data_pipeline(),
+    )
+    write_file(
+        zh_dir / "architecture" / "quality-assurance.md",
+        _generate_zh_quality_assurance(),
+    )
+    write_file(zh_dir / "research" / "references.md", _generate_zh_references())
+    write_file(zh_dir / "research" / "evolution.md", _generate_zh_evolution())
+    write_file(zh_dir / "reference" / "cli-workflow.md", _generate_zh_cli_workflow())
+
+    write_file(
+        en_dir / "guides" / "project-overview.md",
+        _generate_en_project_overview(total_algorithms, total_categories, total_tags),
+    )
+    write_file(en_dir / "academy" / "learning-path.md", _generate_en_learning_path())
+    write_file(
+        en_dir / "architecture" / "system-architecture.md",
+        _generate_en_system_architecture(),
+    )
+    write_file(
+        en_dir / "architecture" / "data-pipeline.md",
+        _generate_en_data_pipeline(),
+    )
+    write_file(
+        en_dir / "architecture" / "quality-assurance.md",
+        _generate_en_quality_assurance(),
+    )
+    write_file(en_dir / "research" / "references.md", _generate_en_references())
+    write_file(en_dir / "research" / "evolution.md", _generate_en_evolution())
+    write_file(en_dir / "reference" / "cli-workflow.md", _generate_en_cli_workflow())
 
 
 def write_all_pages(
@@ -699,12 +1088,12 @@ def write_all_pages(
     by_tag: dict[str, list[AlgorithmEntry]],
 ) -> None:
     """Write all pages to docs/zh/ and docs/en/ directories."""
-
-    # Chinese pages
     zh_dir = docs_dir / "zh"
+    en_dir = docs_dir / "en"
 
     write_file(
-        zh_dir / "index.md", generate_zh_index(categories, algorithms, cat_map, by_cat, by_tag)
+        zh_dir / "index.md",
+        generate_zh_index(categories, algorithms, cat_map, by_cat, by_tag),
     )
     write_file(zh_dir / "algorithms" / "index.md", generate_zh_algo_index(algorithms, cat_map))
     write_file(zh_dir / "categories" / "index.md", generate_zh_category_index(categories, by_cat))
@@ -716,17 +1105,14 @@ def write_all_pages(
     for cat in categories:
         algos = by_cat.get(cat.id, [])
         if algos:
-            # Use directory form: {cat_id}/index.md
             write_file(
                 zh_dir / "categories" / cat.id / "index.md",
                 generate_zh_category_page(cat, algos, cat_map),
             )
 
-    # English pages
-    en_dir = docs_dir / "en"
-
     write_file(
-        en_dir / "index.md", generate_en_index(categories, algorithms, cat_map, by_cat, by_tag)
+        en_dir / "index.md",
+        generate_en_index(categories, algorithms, cat_map, by_cat, by_tag),
     )
     write_file(en_dir / "algorithms" / "index.md", generate_en_algo_index(algorithms, cat_map))
     write_file(en_dir / "categories" / "index.md", generate_en_category_index(categories, by_cat))
@@ -738,11 +1124,12 @@ def write_all_pages(
     for cat in categories:
         algos = by_cat.get(cat.id, [])
         if algos:
-            # Use directory form: {cat_id}/index.md
             write_file(
                 en_dir / "categories" / cat.id / "index.md",
                 generate_en_category_page(cat, algos, cat_map),
             )
+
+    _write_whitepaper_pages(docs_dir, len(algorithms), len(categories), len(by_tag))
 
 
 def main(base_dir: Optional[Path] = None) -> int:
@@ -760,10 +1147,8 @@ def main(base_dir: Optional[Path] = None) -> int:
     write_all_pages(docs_dir, categories, algorithms, cat_map, by_cat, by_tag)
 
     print(f"  Generated {len(algorithms)} algorithm pages (x2 languages)")
-    print(
-        f"  Generated {len([c for c in categories if by_cat.get(c.id)])} category pages (x2 languages)"
-    )
-    print("  Generated index pages and tags pages (x2 languages)")
+    print(f"  Generated {len([c for c in categories if by_cat.get(c.id)])} category pages (x2 languages)")
+    print("  Generated index, tags, and whitepaper academy pages (x2 languages)")
     print("\nDone! Run 'cd docs && npm run dev' to preview.")
     return 0
 

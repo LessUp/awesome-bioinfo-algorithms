@@ -1,33 +1,207 @@
-/* BioTech Horizon 主题配色 - 活力蓝绿版 */
 :root {
-  /* 明亮科技蓝主色 */
-  --vp-c-brand-1: #2563eb;
-  --vp-c-brand-2: #3b82f6;
-  --vp-c-brand-3: #60a5fa;
-  --vp-c-brand-soft: rgba(37, 99, 235, 0.18);
+  --vp-c-brand-1: oklch(0.56 0.18 251);
+  --vp-c-brand-2: oklch(0.62 0.16 251);
+  --vp-c-brand-3: oklch(0.72 0.11 251);
+  --vp-c-brand-soft: oklch(0.9 0.03 251);
 
-  /* 明亮翠绿辅助色 */
-  --vp-c-tip-1: #059669;
-  --vp-c-tip-2: #10b981;
-  --vp-c-tip-3: #34d399;
-  --vp-c-tip-soft: rgba(5, 150, 105, 0.18);
+  --vp-c-bg: oklch(0.985 0.004 251);
+  --vp-c-bg-soft: oklch(0.968 0.007 251);
+  --vp-c-bg-alt: oklch(0.95 0.01 251);
+  --vp-c-border: oklch(0.88 0.012 251);
+  --vp-c-divider: oklch(0.9 0.01 251);
+  --vp-c-gutter: oklch(0.9 0.01 251);
+
+  --vp-c-text-1: oklch(0.24 0.02 251);
+  --vp-c-text-2: oklch(0.41 0.02 251);
+  --vp-c-text-3: oklch(0.57 0.015 251);
+
+  --vp-home-hero-name-color: oklch(0.29 0.08 251);
+  --vp-home-hero-name-background: transparent;
+  --vp-home-hero-image-background-image: none;
+  --vp-home-hero-image-filter: none;
+
+  --aba-space-1: 0.5rem;
+  --aba-space-2: 0.75rem;
+  --aba-space-3: 1rem;
+  --aba-space-4: 1.5rem;
+  --aba-space-5: 2.5rem;
+  --aba-space-6: 4rem;
 }
 
 .dark {
-  --vp-c-brand-1: #60a5fa;
-  --vp-c-brand-2: #3b82f6;
-  --vp-c-brand-3: #2563eb;
-  --vp-c-brand-soft: rgba(96, 165, 250, 0.20);
+  --vp-c-brand-1: oklch(0.76 0.12 251);
+  --vp-c-brand-2: oklch(0.7 0.13 251);
+  --vp-c-brand-3: oklch(0.63 0.12 251);
+  --vp-c-brand-soft: oklch(0.32 0.05 251);
 
-  --vp-c-tip-1: #34d399;
-  --vp-c-tip-2: #10b981;
-  --vp-c-tip-3: #059669;
-  --vp-c-tip-soft: rgba(52, 211, 153, 0.20);
+  --vp-c-bg: oklch(0.18 0.015 251);
+  --vp-c-bg-soft: oklch(0.23 0.02 251);
+  --vp-c-bg-alt: oklch(0.26 0.025 251);
+  --vp-c-border: oklch(0.34 0.02 251);
+  --vp-c-divider: oklch(0.34 0.02 251);
+  --vp-c-gutter: oklch(0.34 0.02 251);
+
+  --vp-c-text-1: oklch(0.9 0.012 251);
+  --vp-c-text-2: oklch(0.76 0.012 251);
+  --vp-c-text-3: oklch(0.63 0.012 251);
 }
 
-/* 自定义样式增强 */
-.vp-doc h1 {
-  background: linear-gradient(120deg, var(--vp-c-brand-1), var(--vp-c-tip-1));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.VPHero {
+  padding: calc(var(--vp-nav-height) + var(--aba-space-6)) var(--aba-space-4) var(--aba-space-6);
+}
+
+.VPHero .name {
+  font-size: clamp(2rem, 4vw, 3.3rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.VPHero .text {
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  font-weight: 520;
+}
+
+.VPHero .tagline {
+  max-width: 65ch;
+  line-height: 1.7;
+  color: var(--vp-c-text-2);
+}
+
+.VPFeatures {
+  padding: var(--aba-space-5) var(--aba-space-4);
+}
+
+.VPFeatures .item {
+  border: 1px solid var(--vp-c-border);
+  border-radius: 0.9rem;
+  background: var(--vp-c-bg);
+}
+
+.VPFeature .title {
+  font-size: 1rem;
+  font-weight: 620;
+}
+
+.VPDoc {
+  padding: clamp(1.8rem, 2.2vw, 2.8rem) clamp(1rem, 2.4vw, 2rem) 5rem;
+}
+
+.VPDoc .content {
+  max-width: 72ch;
+}
+
+.VPDoc h1 {
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.VPDoc h2 {
+  font-size: clamp(1.35rem, 2.1vw, 1.9rem);
+  margin-top: 2.8rem;
+}
+
+.VPDoc h3 {
+  font-size: clamp(1.15rem, 1.7vw, 1.35rem);
+  margin-top: 2rem;
+}
+
+.VPDoc p,
+.VPDoc li {
+  line-height: 1.75;
+}
+
+.dark .VPDoc p,
+.dark .VPDoc li {
+  line-height: 1.8;
+}
+
+.VPDoc table {
+  border: 1px solid var(--vp-c-border);
+}
+
+.VPDoc th {
+  background: var(--vp-c-bg-soft);
+}
+
+.VPNav {
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.VPSidebar {
+  border-right: 1px solid var(--vp-c-divider);
+}
+
+.VPSidebarItem.is-active .item .link {
+  color: var(--vp-c-brand-1);
+  font-weight: 600;
+}
+
+/* Whitepaper utility blocks */
+.vp-doc .aba-panel {
+  border: 1px solid var(--vp-c-border);
+  border-radius: 0.8rem;
+  background: var(--vp-c-bg-soft);
+  padding: var(--aba-space-4);
+  margin: var(--aba-space-4) 0;
+}
+
+.vp-doc .aba-kicker {
+  display: inline-block;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--vp-c-text-3);
+  margin-bottom: var(--aba-space-2);
+}
+
+/* Mermaid and inline SVG readability for both themes */
+.vp-doc .mermaid {
+  border: 1px solid var(--vp-c-border);
+  border-radius: 0.8rem;
+  padding: var(--aba-space-3);
+  background: var(--vp-c-bg);
+}
+
+.vp-doc .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.vp-doc .mermaid .node rect,
+.vp-doc .mermaid .node polygon,
+.vp-doc .mermaid .node circle,
+.vp-doc .mermaid .node ellipse {
+  fill: var(--vp-c-bg-soft) !important;
+  stroke: var(--vp-c-text-2) !important;
+}
+
+.vp-doc .mermaid .label,
+.vp-doc .mermaid .edgeLabel {
+  color: var(--vp-c-text-1) !important;
+  fill: var(--vp-c-text-1) !important;
+}
+
+.vp-doc .mermaid .cluster rect {
+  fill: var(--vp-c-bg-alt) !important;
+  stroke: var(--vp-c-border) !important;
+}
+
+.vp-doc svg [fill="#000"],
+.vp-doc svg [stroke="#000"] {
+  fill: var(--vp-c-text-1) !important;
+  stroke: var(--vp-c-text-1) !important;
+}
+
+.vp-doc svg [fill="#fff"],
+.vp-doc svg [stroke="#fff"] {
+  fill: var(--vp-c-bg) !important;
+  stroke: var(--vp-c-bg) !important;
+}
+
+@media (max-width: 960px) {
+  .VPHero {
+    padding-top: calc(var(--vp-nav-height) + 3rem);
+  }
 }
