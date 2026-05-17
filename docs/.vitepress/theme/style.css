@@ -1,47 +1,74 @@
 /**
- * Awesome Bioinformatics Algorithms - Theme Styles
- * 
- * Color System: Emerald (Bioinformatics Green)
+ * Awesome Bioinformatics Algorithms - Academic Geek Aesthetic
+ *
+ * Color System: Indigo-Cyan Dual-Tone
  * Based on OKLCH color space for perceptual uniformity
  */
 
 /* ============================================
-   LIGHT THEME (Default)
+   FONTS & BASE
    ============================================ */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/jetbrainsmono/v18/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxjPVmUsaaDhw.woff2') format('woff2');
+}
+
 :root {
-  /* Brand Colors - Emerald */
-  --vp-c-brand-1: oklch(0.55 0.17 163);
-  --vp-c-brand-2: oklch(0.60 0.15 163);
-  --vp-c-brand-3: oklch(0.70 0.12 163);
-  --vp-c-brand-soft: oklch(0.92 0.04 163);
-  
+  color-scheme: light dark;
+
+  /* Typography */
+  --vp-font-family-base: 'Inter', 'Inter var', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --vp-font-family-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, Monaco, monospace;
+
+  /* Brand Colors - Indigo (Light Mode Primary) / Cyan (Light Mode Secondary) */
+  --vp-c-brand-1: oklch(0.55 0.18 264);
+  --vp-c-brand-2: oklch(0.60 0.16 264);
+  --vp-c-brand-3: oklch(0.70 0.14 264);
+  --vp-c-brand-soft: oklch(0.90 0.06 264);
+
+  /* Secondary Accent - Cyan */
+  --aba-accent-secondary: oklch(0.65 0.15 195);
+  --aba-accent-secondary-soft: oklch(0.92 0.04 195);
+
   /* Background Colors */
-  --vp-c-bg: oklch(0.99 0.003 163);
-  --vp-c-bg-soft: oklch(0.97 0.006 163);
-  --vp-c-bg-alt: oklch(0.94 0.01 163);
-  --vp-c-bg-elv: oklch(0.96 0.008 163);
-  
+  --vp-c-bg: oklch(0.98 0.002 264);
+  --vp-c-bg-soft: oklch(0.96 0.004 264);
+  --vp-c-bg-alt: oklch(0.94 0.006 264);
+  --vp-c-bg-elv: oklch(0.97 0.005 264);
+
   /* Border & Divider */
-  --vp-c-border: oklch(0.88 0.012 163);
-  --vp-c-divider: oklch(0.90 0.01 163);
-  --vp-c-gutter: oklch(0.90 0.01 163);
-  
+  --vp-c-border: oklch(0.88 0.012 264);
+  --vp-c-divider: oklch(0.90 0.01 264);
+  --vp-c-gutter: oklch(0.90 0.01 264);
+
   /* Text Colors */
-  --vp-c-text-1: oklch(0.22 0.02 163);
-  --vp-c-text-2: oklch(0.40 0.02 163);
-  --vp-c-text-3: oklch(0.58 0.015 163);
-  
-  /* Hero */
-  --vp-home-hero-name-color: oklch(0.35 0.12 163);
-  --vp-home-hero-name-background: linear-gradient(135deg, 
-    oklch(0.55 0.17 163) 0%, 
-    oklch(0.45 0.15 180) 100%);
-  --vp-home-hero-image-background-image: linear-gradient(135deg, 
-    oklch(0.92 0.04 163) 0%, 
-    oklch(0.88 0.06 180) 50%,
-    oklch(0.90 0.05 150) 100%);
+  --vp-c-text-1: oklch(0.20 0.02 264);
+  --vp-c-text-2: oklch(0.40 0.02 264);
+  --vp-c-text-3: oklch(0.58 0.015 264);
+
+  /* Hero Gradients */
+  --vp-home-hero-name-color: oklch(0.35 0.12 264);
+  --vp-home-hero-name-background: linear-gradient(135deg,
+    oklch(0.55 0.18 264) 0%,
+    oklch(0.60 0.15 195) 50%,
+    oklch(0.50 0.12 180) 100%);
+  --vp-home-hero-image-background-image: linear-gradient(135deg,
+    oklch(0.90 0.06 264) 0%,
+    oklch(0.88 0.08 195) 50%,
+    oklch(0.85 0.07 180) 100%);
   --vp-home-hero-image-filter: blur(80px);
-  
+
   /* Custom Spacing */
   --aba-space-1: 0.5rem;
   --aba-space-2: 0.75rem;
@@ -49,70 +76,158 @@
   --aba-space-4: 1.5rem;
   --aba-space-5: 2.5rem;
   --aba-space-6: 4rem;
-  
+
   /* Custom Colors */
-  --aba-accent: oklch(0.55 0.17 163);
-  --aba-accent-soft: oklch(0.92 0.04 163);
-  --aba-code-bg: oklch(0.96 0.008 163);
-  
+  --aba-accent: oklch(0.55 0.18 264);
+  --aba-accent-soft: oklch(0.90 0.06 264);
+  --aba-code-bg: oklch(0.96 0.005 264);
+
   /* Shadows */
   --aba-shadow-sm: 0 1px 2px oklch(0.5 0 0 / 0.05);
-  --aba-shadow-md: 0 4px 6px -1px oklch(0.5 0 0 / 0.1);
-  --aba-shadow-lg: 0 10px 15px -3px oklch(0.5 0 0 / 0.1);
+  --aba-shadow-md: 0 4px 6px -1px oklch(0.5 0 0 / 0.1), 0 2px 4px -2px oklch(0.5 0 0 / 0.1);
+  --aba-shadow-lg: 0 10px 15px -3px oklch(0.5 0 0 / 0.1), 0 4px 6px -4px oklch(0.5 0 0 / 0.1);
+  --aba-shadow-glow: 0 0 20px oklch(0.55 0.18 264 / 0.15);
+
+  /* Glassmorphism */
+  --aba-glass-bg: oklch(0.98 0.002 264 / 0.7);
+  --aba-glass-border: oklch(0.88 0.012 264 / 0.5);
 }
 
 /* ============================================
    DARK THEME
    ============================================ */
 .dark {
-  /* Brand Colors - Emerald (Lighter for dark mode) */
-  --vp-c-brand-1: oklch(0.75 0.14 163);
-  --vp-c-brand-2: oklch(0.68 0.13 163);
-  --vp-c-brand-3: oklch(0.58 0.12 163);
-  --vp-c-brand-soft: oklch(0.28 0.06 163);
-  
+  color-scheme: dark;
+
+  /* Brand Colors - Cyan (Dark Mode Primary) / Indigo (Dark Mode Secondary) */
+  --vp-c-brand-1: oklch(0.75 0.14 195);
+  --vp-c-brand-2: oklch(0.68 0.13 195);
+  --vp-c-brand-3: oklch(0.58 0.12 195);
+  --vp-c-brand-soft: oklch(0.28 0.06 195);
+
+  /* Secondary Accent - Indigo */
+  --aba-accent-secondary: oklch(0.70 0.12 264);
+  --aba-accent-secondary-soft: oklch(0.28 0.05 264);
+
   /* Background Colors */
-  --vp-c-bg: oklch(0.16 0.015 163);
-  --vp-c-bg-soft: oklch(0.22 0.02 163);
-  --vp-c-bg-alt: oklch(0.26 0.025 163);
-  --vp-c-bg-elv: oklch(0.24 0.022 163);
-  
+  --vp-c-bg: oklch(0.14 0.015 264);
+  --vp-c-bg-soft: oklch(0.20 0.02 264);
+  --vp-c-bg-alt: oklch(0.24 0.025 264);
+  --vp-c-bg-elv: oklch(0.22 0.022 264);
+
   /* Border & Divider */
-  --vp-c-border: oklch(0.32 0.025 163);
-  --vp-c-divider: oklch(0.32 0.02 163);
-  --vp-c-gutter: oklch(0.32 0.02 163);
-  
+  --vp-c-border: oklch(0.32 0.025 264);
+  --vp-c-divider: oklch(0.32 0.02 264);
+  --vp-c-gutter: oklch(0.32 0.02 264);
+
   /* Text Colors */
-  --vp-c-text-1: oklch(0.92 0.01 163);
-  --vp-c-text-2: oklch(0.76 0.012 163);
-  --vp-c-text-3: oklch(0.60 0.015 163);
-  
-  /* Hero */
-  --vp-home-hero-name-color: oklch(0.78 0.14 163);
-  --vp-home-hero-name-background: linear-gradient(135deg, 
-    oklch(0.75 0.14 163) 0%, 
-    oklch(0.65 0.12 180) 100%);
-  --vp-home-hero-image-background-image: linear-gradient(135deg, 
-    oklch(0.28 0.06 163) 0%, 
-    oklch(0.24 0.07 180) 50%,
-    oklch(0.30 0.05 150) 100%);
-  
+  --vp-c-text-1: oklch(0.92 0.01 264);
+  --vp-c-text-2: oklch(0.76 0.012 264);
+  --vp-c-text-3: oklch(0.60 0.015 264);
+
+  /* Hero Gradients - Cyan → Indigo */
+  --vp-home-hero-name-color: oklch(0.78 0.14 195);
+  --vp-home-hero-name-background: linear-gradient(135deg,
+    oklch(0.75 0.14 195) 0%,
+    oklch(0.65 0.12 264) 100%);
+  --vp-home-hero-image-background-image: linear-gradient(135deg,
+    oklch(0.28 0.06 195) 0%,
+    oklch(0.24 0.07 264) 100%);
+
   /* Custom Colors */
-  --aba-accent: oklch(0.75 0.14 163);
-  --aba-accent-soft: oklch(0.28 0.06 163);
-  --aba-code-bg: oklch(0.22 0.02 163);
-  
+  --aba-accent: oklch(0.75 0.14 195);
+  --aba-accent-soft: oklch(0.28 0.06 195);
+  --aba-code-bg: oklch(0.20 0.02 264);
+
   /* Shadows */
   --aba-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.3);
-  --aba-shadow-md: 0 4px 6px -1px oklch(0 0 0 / 0.4);
-  --aba-shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 0.5);
+  --aba-shadow-md: 0 4px 6px -1px oklch(0 0 0 / 0.4), 0 2px 4px -2px oklch(0 0 0 / 0.3);
+  --aba-shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 0.5), 0 4px 6px -4px oklch(0 0 0 / 0.4);
+  --aba-shadow-glow: 0 0 20px oklch(0.75 0.14 195 / 0.25);
+
+  /* Glassmorphism */
+  --aba-glass-bg: oklch(0.14 0.015 264 / 0.7);
+  --aba-glass-border: oklch(0.32 0.025 264 / 0.5);
 }
 
 /* ============================================
-   HERO SECTION
+   BASE & SCROLL
+   ============================================ */
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--vp-c-bg-soft);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--vp-c-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--vp-c-text-3);
+}
+
+/* ============================================
+   HERO SECTION & DYNAMIC BACKGROUND
    ============================================ */
 .VPHero {
   padding: calc(var(--vp-nav-height) + var(--aba-space-6)) var(--aba-space-4) var(--aba-space-6);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Dynamic gradient mesh background */
+.VPHero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, oklch(0.55 0.18 264 / 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, oklch(0.65 0.15 195 / 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, oklch(0.50 0.12 180 / 0.05) 0%, transparent 60%);
+  background-size: 200% 200%;
+  animation: heroMesh 15s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.dark .VPHero::before {
+  background:
+    radial-gradient(ellipse at 20% 30%, oklch(0.75 0.14 195 / 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, oklch(0.70 0.12 264 / 0.10) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, oklch(0.65 0.10 180 / 0.08) 0%, transparent 60%);
+  background-size: 200% 200%;
+  animation: heroMesh 15s ease-in-out infinite;
+}
+
+@keyframes heroMesh {
+  0%, 100% {
+    background-position: 0% 50%, 100% 50%, 50% 0%;
+  }
+  33% {
+    background-position: 100% 0%, 0% 100%, 50% 50%;
+  }
+  66% {
+    background-position: 50% 100%, 50% 0%, 0% 50%;
+  }
+}
+
+.VPHero .container {
+  position: relative;
+  z-index: 1;
 }
 
 .VPHero .name {
@@ -163,13 +278,13 @@
   border: 1px solid var(--vp-c-border);
   border-radius: 1rem;
   background: var(--vp-c-bg);
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: var(--aba-shadow-sm);
 }
 
 .VPFeatures .item:hover {
   border-color: var(--vp-c-brand-1);
-  box-shadow: var(--aba-shadow-md);
+  box-shadow: var(--aba-shadow-glow), var(--aba-shadow-md);
   transform: translateY(-2px);
 }
 
@@ -182,6 +297,7 @@
   height: 2.5rem;
   font-size: 1.75rem;
   margin-bottom: 1rem;
+  color: var(--vp-c-brand-1);
 }
 
 .VPFeature .title {
@@ -195,6 +311,25 @@
   font-size: 0.95rem;
   color: var(--vp-c-text-2);
   line-height: 1.6;
+}
+
+/* ============================================
+   GLASSMORPHISM CARDS
+   ============================================ */
+.aba-glass-card {
+  background: var(--aba-glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--aba-glass-border);
+  border-radius: 1rem;
+  padding: var(--aba-space-4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.aba-glass-card:hover {
+  border-color: var(--vp-c-brand-1);
+  box-shadow: var(--aba-shadow-glow);
+  transform: translateY(-2px);
 }
 
 /* ============================================
@@ -288,9 +423,10 @@
    NAVIGATION
    ============================================ */
 .VPNav {
-  background: var(--vp-c-bg);
+  background: var(--aba-glass-bg);
   border-bottom: 1px solid var(--vp-c-divider);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .VPNav .title {
@@ -298,6 +434,10 @@
 }
 
 .VPNavBarTitle .title {
+  color: var(--vp-c-text-1);
+}
+
+.VPNavBarTitle svg {
   color: var(--vp-c-text-1);
 }
 
@@ -327,7 +467,7 @@
 }
 
 /* ============================================
-   CUSTOM BLOCKS
+   CUSTOM BLOCKS - ACADEMIC STYLE
    ============================================ */
 .vp-doc .aba-panel {
   border: 1px solid var(--vp-c-border);
@@ -348,7 +488,88 @@
   margin-bottom: var(--aba-space-2);
 }
 
-/* Info/Tip/Warning/Custom Containers */
+/* Theorem Block */
+.vp-doc .aba-theorem {
+  border-left: 4px solid var(--vp-c-brand-1);
+  background: var(--vp-c-brand-soft);
+  border-radius: 0 0.75rem 0.75rem 0;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.vp-doc .aba-theorem::before {
+  content: 'Theorem';
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--vp-c-brand-1);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+/* Lemma Block */
+.vp-doc .aba-lemma {
+  border-left: 4px solid var(--aba-accent-secondary);
+  background: var(--aba-accent-secondary-soft);
+  border-radius: 0 0.75rem 0.75rem 0;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.vp-doc .aba-lemma::before {
+  content: 'Lemma';
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--aba-accent-secondary);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+/* Proof Block */
+.vp-doc .aba-proof {
+  border-left: 4px solid var(--vp-c-text-3);
+  background: var(--vp-c-bg-soft);
+  border-radius: 0 0.75rem 0.75rem 0;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.vp-doc .aba-proof::before {
+  content: 'Proof';
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--vp-c-text-3);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.vp-doc .aba-proof::after {
+  content: '∎';
+  display: block;
+  text-align: right;
+  color: var(--vp-c-text-3);
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+}
+
+/* Citation Block */
+.vp-doc .aba-citation {
+  border: 1px solid var(--vp-c-border);
+  background: var(--vp-c-bg-soft);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+/* Info/Tip/Warning/Danger Containers */
 .custom-block {
   border-radius: 0.75rem;
   padding: 1rem 1.25rem;
@@ -374,7 +595,6 @@
 
 /* ============================================
    MERMAID & SVG STYLING
-   Ensures diagrams are readable in both themes
    ============================================ */
 .vp-doc .mermaid {
   border: 1px solid var(--vp-c-border);
@@ -425,42 +645,29 @@
 
 /* ============================================
    INLINE SVG ADAPTATION
-   Fixes hardcoded #000/#fff/#333 colors
+   Generic color inheritance mechanism
    ============================================ */
-
-/* Black to text color */
-.vp-doc svg [fill="#000"],
-.vp-doc svg [fill="black"],
-.vp-doc svg [stroke="#000"],
-.vp-doc svg [stroke="black"] {
-  fill: var(--vp-c-text-1) !important;
-  stroke: var(--vp-c-text-1) !important;
+.vp-doc svg,
+.VPNavBarTitle svg,
+.VPFooter svg {
+  color: inherit;
 }
 
-/* White to background color */
-.vp-doc svg [fill="#fff"],
-.vp-doc svg [fill="white"],
-.vp-doc svg [stroke="#fff"],
-.vp-doc svg [stroke="white"] {
-  fill: var(--vp-c-bg) !important;
-  stroke: var(--vp-c-bg) !important;
+.vp-doc svg:not([fill]) path,
+.vp-doc svg:not([fill]) rect,
+.vp-doc svg:not([fill]) circle,
+.vp-doc svg:not([fill]) line,
+.vp-doc svg:not([fill]) polyline,
+.vp-doc svg:not([fill]) polygon {
+  fill: currentColor;
+  stroke: currentColor;
 }
 
-/* Common gray values */
-.vp-doc svg [fill="#333"],
-.vp-doc svg [fill="#333333"],
-.vp-doc svg [stroke="#333"],
-.vp-doc svg [stroke="#333333"] {
-  fill: var(--vp-c-text-2) !important;
-  stroke: var(--vp-c-text-2) !important;
-}
-
-.vp-doc svg [fill="#666"],
-.vp-doc svg [fill="#666666"],
-.vp-doc svg [stroke="#666"],
-.vp-doc svg [stroke="#666666"] {
-  fill: var(--vp-c-text-3) !important;
-  stroke: var(--vp-c-text-3) !important;
+/* Override currentColor for elements that explicitly set fill/stroke */
+.vp-doc svg [fill="none"],
+.vp-doc svg [stroke="none"] {
+  fill: none;
+  stroke: none;
 }
 
 /* ============================================
@@ -472,7 +679,7 @@
 }
 
 .vp-doc [class*='language-'] code {
-  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+  font-family: var(--vp-font-family-mono);
   font-size: 0.9em;
   line-height: 1.7;
 }
@@ -488,6 +695,249 @@
 
 .dark .vp-doc :not(pre) > code {
   background: var(--aba-code-bg);
+}
+
+/* ============================================
+   ALGORITHM CARD COMPONENT STYLES
+   ============================================ */
+.algo-card {
+  border: 1px solid var(--vp-c-border);
+  border-radius: 1rem;
+  background: var(--vp-c-bg);
+  padding: var(--aba-space-4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--aba-shadow-sm);
+}
+
+.algo-card:hover {
+  border-color: var(--vp-c-brand-1);
+  box-shadow: var(--aba-shadow-glow), var(--aba-shadow-md);
+  transform: translateY(-2px);
+}
+
+.algo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--aba-space-2);
+}
+
+.algo-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--vp-c-text-1);
+}
+
+.algo-year {
+  font-size: 0.8rem;
+  font-family: var(--vp-font-family-mono);
+  color: var(--vp-c-text-3);
+  background: var(--vp-c-bg-soft);
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.algo-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--aba-space-2);
+  flex-wrap: wrap;
+}
+
+.algo-difficulty {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.algo-difficulty.beginner {
+  background: oklch(0.85 0.08 145);
+  color: oklch(0.30 0.06 145);
+}
+
+.dark .algo-difficulty.beginner {
+  background: oklch(0.30 0.06 145);
+  color: oklch(0.85 0.08 145);
+}
+
+.algo-difficulty.intermediate {
+  background: oklch(0.85 0.08 85);
+  color: oklch(0.30 0.06 85);
+}
+
+.dark .algo-difficulty.intermediate {
+  background: oklch(0.30 0.06 85);
+  color: oklch(0.85 0.08 85);
+}
+
+.algo-difficulty.advanced {
+  background: oklch(0.80 0.10 25);
+  color: oklch(0.30 0.06 25);
+}
+
+.dark .algo-difficulty.advanced {
+  background: oklch(0.30 0.06 25);
+  color: oklch(0.80 0.10 25);
+}
+
+/* Complexity Badge */
+.complexity-badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--vp-c-border);
+}
+
+.complexity-badge.green {
+  background: oklch(0.90 0.05 145);
+  color: oklch(0.25 0.06 145);
+  border-color: oklch(0.75 0.08 145);
+}
+
+.dark .complexity-badge.green {
+  background: oklch(0.25 0.05 145);
+  color: oklch(0.85 0.06 145);
+  border-color: oklch(0.40 0.06 145);
+}
+
+.complexity-badge.yellow {
+  background: oklch(0.94 0.06 95);
+  color: oklch(0.30 0.06 85);
+  border-color: oklch(0.80 0.08 85);
+}
+
+.dark .complexity-badge.yellow {
+  background: oklch(0.28 0.04 85);
+  color: oklch(0.90 0.06 85);
+  border-color: oklch(0.45 0.05 85);
+}
+
+.complexity-badge.orange {
+  background: oklch(0.92 0.06 65);
+  color: oklch(0.30 0.08 50);
+  border-color: oklch(0.75 0.10 55);
+}
+
+.dark .complexity-badge.orange {
+  background: oklch(0.28 0.04 55);
+  color: oklch(0.88 0.08 55);
+  border-color: oklch(0.45 0.06 55);
+}
+
+.complexity-badge.red {
+  background: oklch(0.88 0.08 25);
+  color: oklch(0.30 0.10 25);
+  border-color: oklch(0.70 0.12 25);
+}
+
+.dark .complexity-badge.red {
+  background: oklch(0.25 0.05 25);
+  color: oklch(0.85 0.08 25);
+  border-color: oklch(0.42 0.08 25);
+}
+
+/* Citation Block */
+.citation-block {
+  border: 1px solid var(--vp-c-border);
+  border-radius: 0.75rem;
+  background: var(--vp-c-bg-soft);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.citation-block .citation-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--vp-c-brand-1);
+  margin-bottom: 0.5rem;
+}
+
+.citation-block .citation-text {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--vp-c-text-2);
+}
+
+.citation-block .citation-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.75rem;
+}
+
+.citation-block .citation-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--vp-c-brand-1);
+  background: transparent;
+  border: 1px solid var(--vp-c-brand-1);
+  border-radius: 0.375rem;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.citation-block .citation-copy-btn:hover {
+  background: var(--vp-c-brand-1);
+  color: var(--vp-c-bg);
+}
+
+/* Hero Background Component */
+.hero-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 25% 25%, oklch(0.55 0.18 264 / 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, oklch(0.65 0.15 195 / 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, oklch(0.50 0.12 180 / 0.08) 0%, transparent 60%);
+  background-size: 200% 200%;
+  animation: heroBgDrift 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.dark .hero-bg::before {
+  background:
+    radial-gradient(circle at 25% 25%, oklch(0.75 0.14 195 / 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, oklch(0.70 0.12 264 / 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, oklch(0.65 0.10 180 / 0.10) 0%, transparent 60%);
+  background-size: 200% 200%;
+  animation: heroBgDrift 20s ease-in-out infinite;
+}
+
+@keyframes heroBgDrift {
+  0%, 100% {
+    background-position: 0% 0%, 100% 100%, 50% 50%;
+  }
+  50% {
+    background-position: 100% 100%, 0% 0%, 50% 50%;
+  }
+}
+
+/* Theme Aware SVG Wrapper */
+.theme-aware-svg {
+  color: var(--vp-c-text-1);
+}
+
+.theme-aware-svg svg {
+  color: inherit;
 }
 
 /* ============================================
@@ -508,11 +958,11 @@
     padding-top: calc(var(--vp-nav-height) + 2rem);
     padding-bottom: 2rem;
   }
-  
+
   .VPFeatures {
     padding: 2rem 1rem;
   }
-  
+
   .VPDoc {
     padding: 1.5rem 1rem 3rem;
   }
@@ -522,17 +972,22 @@
   .VPHero .name {
     font-size: 2rem;
   }
-  
+
   .VPHero .text {
     font-size: 1.1rem;
   }
-  
+
   .VPFeatures .items {
     gap: 1rem;
   }
-  
+
   .VPFeature {
     padding: 1.25rem;
+  }
+
+  .algo-header {
+    flex-direction: column;
+    gap: 0.25rem;
   }
 }
 
@@ -542,19 +997,10 @@
 .vp-doc a,
 .VPFeature .item,
 .VPNavBarMenuLink,
-.VPSidebarItem .link {
+.VPSidebarItem .link,
+.algo-card,
+.citation-block .citation-copy-btn {
   transition: all 0.2s ease;
-}
-
-/* Smooth scroll */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Selection color */
-::selection {
-  background: var(--vp-c-brand-soft);
-  color: var(--vp-c-brand-1);
 }
 
 /* ============================================
@@ -564,15 +1010,20 @@ html {
   .VPNav,
   .VPSidebar,
   .VPDocFooter {
-    display: none;
+    display: none !important;
   }
-  
+
   .VPDoc {
     padding: 0;
   }
-  
+
   .vp-doc a {
     color: inherit;
     text-decoration: underline;
+  }
+
+  .VPHero::before,
+  .hero-bg::before {
+    display: none;
   }
 }

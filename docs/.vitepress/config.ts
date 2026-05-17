@@ -9,6 +9,76 @@ const base = rawBase
     : `/${rawBase}/`
   : '/'
 
+// Light mode theme color (indigo)
+const THEME_COLOR_LIGHT = '#4f46e5'
+// Dark mode theme color (cyan)
+const THEME_COLOR_DARK = '#22d3ee'
+
+// Mermaid theme variables mapped to CSS variable values (concrete OKLCH)
+const MERMAID_THEME_VARIABLES = {
+  primaryColor: 'oklch(0.96 0.004 264)',
+  primaryTextColor: 'oklch(0.20 0.02 264)',
+  primaryBorderColor: 'oklch(0.88 0.012 264)',
+  lineColor: 'oklch(0.58 0.015 264)',
+  secondaryColor: 'oklch(0.94 0.006 264)',
+  tertiaryColor: 'oklch(0.97 0.005 264)',
+  fontFamily: "'Inter', 'JetBrains Mono', system-ui, sans-serif",
+  fontSize: '14px',
+}
+
+const MERMAID_THEME_CSS = `
+  .node rect, .node circle, .node ellipse, .node polygon, .node path {
+    fill: var(--vp-c-bg-soft, oklch(0.96 0.004 264)) !important;
+    stroke: var(--vp-c-text-2, oklch(0.40 0.02 264)) !important;
+  }
+  .node .label, .nodeLabel, .edgeLabel {
+    color: var(--vp-c-text-1, oklch(0.20 0.02 264)) !important;
+    fill: var(--vp-c-text-1, oklch(0.20 0.02 264)) !important;
+  }
+  .cluster rect {
+    fill: var(--vp-c-bg-alt, oklch(0.94 0.006 264)) !important;
+    stroke: var(--vp-c-border, oklch(0.88 0.012 264)) !important;
+  }
+  .edgePath .path {
+    stroke: var(--vp-c-text-3, oklch(0.58 0.015 264)) !important;
+  }
+  .arrowheadPath {
+    fill: var(--vp-c-text-3, oklch(0.58 0.015 264)) !important;
+  }
+  .edgeLabel rect {
+    fill: var(--vp-c-bg-soft, oklch(0.96 0.004 264)) !important;
+  }
+  .label text {
+    fill: var(--vp-c-text-1, oklch(0.20 0.02 264)) !important;
+  }
+  .titleText {
+    fill: var(--vp-c-text-1, oklch(0.20 0.02 264)) !important;
+  }
+  .pieTitleText {
+    fill: var(--vp-c-text-1, oklch(0.20 0.02 264)) !important;
+  }
+  .slice {
+    stroke: var(--vp-c-border, oklch(0.88 0.012 264)) !important;
+  }
+  .legend text {
+    fill: var(--vp-c-text-2, oklch(0.40 0.02 264)) !important;
+  }
+`
+
+// JSON-LD structured data
+const JSON_LD_WEBSITE = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Awesome Bioinformatics Algorithms',
+  description: 'Technical Whitepaper and Architecture Academy for Bioinformatics Algorithms',
+  url: 'https://lessup.github.io/awesome-bioinfo-algorithms',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://lessup.github.io/awesome-bioinfo-algorithms/?s={search_term_string}',
+    'query-input': 'required name=search_term_string',
+  },
+}
+
 export default withMermaid(defineConfig({
   base,
   title: 'Awesome Bioinformatics Algorithms',
@@ -16,9 +86,18 @@ export default withMermaid(defineConfig({
 
   // Clean URLs
   cleanUrls: true,
-  
+
   // Last updated timestamp
   lastUpdated: true,
+
+  // Mermaid configuration with CSS-variable-bound theme
+  mermaid: {
+    theme: 'base',
+    themeVariables: MERMAID_THEME_VARIABLES,
+    themeCSS: MERMAID_THEME_CSS,
+    startOnLoad: false,
+    securityLevel: 'loose',
+  },
 
   locales: {
     zh: {
@@ -219,12 +298,26 @@ export default withMermaid(defineConfig({
   },
 
   head: [
+    // Favicon
     ['link', { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }],
-    ['meta', { name: 'theme-color', content: '#10b981' }],
+
+    // Theme color (adapts to light/dark via media query)
+    ['meta', { name: 'theme-color', content: THEME_COLOR_LIGHT, media: '(prefers-color-scheme: light)' }],
+    ['meta', { name: 'theme-color', content: THEME_COLOR_DARK, media: '(prefers-color-scheme: dark)' }],
+
+    // Open Graph / Twitter
     ['meta', { name: 'og:type', content: 'website' }],
     ['meta', { name: 'og:title', content: 'Awesome Bioinformatics Algorithms' }],
     ['meta', { name: 'og:site_name', content: 'Awesome Bioinfo Algorithms' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+
+    // Google Fonts preconnect
+    ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
+    ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
+    ['link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap' }],
+
+    // JSON-LD structured data
+    ['script', { type: 'application/ld+json' }, JSON.stringify(JSON_LD_WEBSITE)],
   ],
 
   vite: {
