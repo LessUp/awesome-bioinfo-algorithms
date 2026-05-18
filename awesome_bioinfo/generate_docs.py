@@ -271,6 +271,75 @@ features:
 # Algorithm page generators
 # =====================
 
+def _infer_complexity_insight_zh(time_c: str, space_c: Optional[str]) -> str:
+    """Generate a brief Chinese insight about complexity tier."""
+    tc = (time_c or "").lower()
+    sc = (space_c or "").lower()
+
+    if "o(1)" in tc or "o(log" in tc:
+        tier = "**最优级**（近乎常数或对数时间），在大规模生产数据集上表现出色"
+    elif "o(n log" in tc or "o(nlog" in tc:
+        tier = "**准线性**（n log n 量级），兼顾实用性与理论最优性，适合 GB 级数据集"
+    elif "o(n)" in tc and "^2" not in tc and "n^" not in tc:
+        tier = "**线性**（O(n) 量级），可在 TB 级数据上线性扩展，适合流式处理"
+    elif "o(mn)" in tc or "o(m*n)" in tc or "o(n*m)" in tc:
+        tier = "**平方矩阵**（O(mn) 量级），在序列长度 n、m 均超过 10⁴ 时需评估 SIMD / 近似加速"
+    elif "o(n^2)" in tc or "²" in tc or "n2" in tc:
+        tier = "**二次方**（O(n²) 量级），适合中等规模数据，大规模场景需考虑近似算法"
+    elif "o(n^3)" in tc or "n^3" in tc:
+        tier = "**三次方**（O(n³) 量级），仅适合较小规模数据，对大型数据集需借助启发式优化"
+    elif "o(2^" in tc or "exponential" in tc or "exp" in tc:
+        tier = "**指数级**（NP-难），实际应用中通常采用启发式或近似算法降低计算开销"
+    else:
+        tier = "**多项式**量级"
+
+    sc_note = ""
+    if sc:
+        if "o(1)" in sc or "o(log" in sc:
+            sc_note = "空间开销极小，适合内存受限的嵌入式或流式场景。"
+        elif "o(n)" in sc and "^2" not in sc:
+            sc_note = "空间复杂度线性，通常可通过滑动窗口等技术在常数因子上优化。"
+        elif "o(mn)" in sc or "o(n^2)" in sc or "²" in sc:
+            sc_note = "空间复杂度较高；对超长序列可考虑 Hirschberg 算法等空间优化变体。"
+
+    result = f"该算法时间复杂度属于{tier}。{sc_note}"
+    return result
+
+
+def _infer_complexity_insight_en(time_c: str, space_c: Optional[str]) -> str:
+    """Generate a brief English insight about complexity tier."""
+    tc = (time_c or "").lower()
+    sc = (space_c or "").lower()
+
+    if "o(1)" in tc or "o(log" in tc:
+        tier = "**optimal** (near-constant or logarithmic time), excellent for large-scale production datasets"
+    elif "o(n log" in tc or "o(nlog" in tc:
+        tier = "**quasi-linear** (n log n), balancing practical efficiency with theoretical near-optimality"
+    elif "o(n)" in tc and "^2" not in tc and "n^" not in tc:
+        tier = "**linear** (O(n)), scales linearly to TB-scale data and is suitable for streaming pipelines"
+    elif "o(mn)" in tc or "o(m*n)" in tc:
+        tier = "**quadratic matrix** (O(mn)), SIMD acceleration or approximate methods are advised when m, n exceed 10⁴"
+    elif "o(n^2)" in tc or "²" in tc:
+        tier = "**quadratic** (O(n²)), suitable for moderate data sizes; consider approximation algorithms for large inputs"
+    elif "o(n^3)" in tc:
+        tier = "**cubic** (O(n³)), only practical for small inputs; heuristic optimizations required at scale"
+    elif "o(2^" in tc or "exponential" in tc:
+        tier = "**exponential** (NP-hard), heuristic or approximate methods are typically employed in practice"
+    else:
+        tier = "**polynomial**"
+
+    sc_note = ""
+    if sc:
+        if "o(1)" in sc or "o(log" in sc:
+            sc_note = " Space overhead is minimal, making it suitable for memory-constrained or streaming environments."
+        elif "o(n)" in sc and "^2" not in sc:
+            sc_note = " Linear space can often be reduced by constant factors via sliding-window techniques."
+        elif "o(mn)" in sc or "o(n^2)" in sc or "²" in sc:
+            sc_note = " High space complexity; consider Hirschberg-style space-optimized variants for very long sequences."
+
+    return f"The time complexity of this algorithm is {tier}.{sc_note}"
+
+
 def generate_zh_algo_page(algo: AlgorithmEntry, cat_map: dict[str, Category]) -> str:
     cat = cat_map.get(algo.category)
     cat_name = cat.name if cat else algo.category
@@ -305,7 +374,7 @@ description: {trim_text(algo.description, 150)}
 
     info_lines.append("")
 
-    # Complexity Analysis section
+    # Complexity Analysis section — enhanced
     if algo.time_complexity or algo.space_complexity:
         info_lines.append("## 复杂度分析\n")
         if algo.time_complexity:
@@ -313,15 +382,22 @@ description: {trim_text(algo.description, 150)}
         if algo.space_complexity:
             info_lines.append(f"- **空间复杂度**：`{algo.space_complexity}`")
         info_lines.append("")
-        info_lines.append("> 注：复杂度分析基于算法理论模型。实际运行性能受输入数据规模、硬件环境、实现优化程度等因素影响。建议结合具体应用场景进行基准测试。\n")
+        # Inline insight
+        insight = _infer_complexity_insight_zh(
+            algo.time_complexity or "", algo.space_complexity
+        )
+        info_lines.append(f"> **性能洞见**：{insight}")
+        info_lines.append("")
+        info_lines.append("> *注：复杂度基于理论模型。实际性能受数据规模、硬件环境与实现优化影响，建议针对具体场景进行基准测试。*\n")
 
+    # Links section
     links = []
     if algo.paper_url:
-        links.append(f"- [Paper]({algo.paper_url})")
+        links.append(f"- [原始论文]({algo.paper_url})")
     if algo.implementation_url:
-        links.append(f"- [Implementation]({algo.implementation_url})")
+        links.append(f"- [官方实现]({algo.implementation_url})")
     if links:
-        info_lines.append("## 链接\n")
+        info_lines.append("## 文献与实现\n")
         info_lines.extend(links)
         info_lines.append("")
 
@@ -339,8 +415,9 @@ description: {trim_text(algo.description, 150)}
     if algo.references:
         info_lines.append("## 参考资料\n")
         for ref in algo.references:
-            ref_type = f" *({ref.type})*" if ref.type else ""
-            info_lines.append(f"- [{ref.title or ref.url}]({ref.url}){ref_type}")
+            ref_type = f" *（{ref.type}）*" if ref.type else ""
+            title_display = ref.title or ref.url
+            info_lines.append(f"- [{title_display}]({ref.url}){ref_type}")
         info_lines.append("")
 
     return frontmatter + "\n" + "\n".join(info_lines)
@@ -383,7 +460,7 @@ description: {trim_text(description, 150)}
 
     info_lines.append("")
 
-    # Complexity Analysis section
+    # Complexity Analysis section — enhanced
     if algo.time_complexity or algo.space_complexity:
         info_lines.append("## Complexity Analysis\n")
         if algo.time_complexity:
@@ -391,15 +468,21 @@ description: {trim_text(description, 150)}
         if algo.space_complexity:
             info_lines.append(f"- **Space Complexity**: `{algo.space_complexity}`")
         info_lines.append("")
-        info_lines.append("> Note: Complexity analysis is based on theoretical algorithmic models. Actual runtime performance is affected by input data scale, hardware environment, and implementation optimization. Benchmark testing for specific application scenarios is recommended.\n")
+        insight = _infer_complexity_insight_en(
+            algo.time_complexity or "", algo.space_complexity
+        )
+        info_lines.append(f"> **Performance Insight**: {insight}")
+        info_lines.append("")
+        info_lines.append("> *Note: Complexity analysis is based on theoretical models. Actual runtime is affected by input scale, hardware, and implementation optimizations. Benchmark for your specific workload.*\n")
 
+    # Links
     links = []
     if algo.paper_url:
-        links.append(f"- [Paper]({algo.paper_url})")
+        links.append(f"- [Original Paper]({algo.paper_url})")
     if algo.implementation_url:
-        links.append(f"- [Implementation]({algo.implementation_url})")
+        links.append(f"- [Official Implementation]({algo.implementation_url})")
     if links:
-        info_lines.append("## Links\n")
+        info_lines.append("## Literature & Implementation\n")
         info_lines.extend(links)
         info_lines.append("")
 
@@ -418,7 +501,8 @@ description: {trim_text(description, 150)}
         info_lines.append("## References\n")
         for ref in algo.references:
             ref_type = f" *({ref.type})*" if ref.type else ""
-            info_lines.append(f"- [{ref.title or ref.url}]({ref.url}){ref_type}")
+            title_display = ref.title or ref.url
+            info_lines.append(f"- [{title_display}]({ref.url}){ref_type}")
         info_lines.append("")
 
     return frontmatter + "\n" + "\n".join(info_lines)
@@ -2435,6 +2519,338 @@ alias bio-check='ruff check awesome_bioinfo && mypy awesome_bioinfo && pytest te
 # File writing functions
 # =====================
 
+def _generate_zh_system_architecture() -> str:
+    return """---
+title: 系统架构
+description: awesome-bioinfo-algorithms 知识库的系统架构概览，包含数据流、生成引擎与部署管道图解。
+---
+# 系统架构
+
+本页面呈现知识库的完整系统架构，帮助贡献者与维护者快速理解各模块的职责边界与数据流向。
+
+## 整体数据流
+
+```mermaid
+flowchart TD
+    subgraph DATA["数据层（Single Source of Truth）"]
+        CAT["data/categories.yaml\\n16 个顶级分类"]
+        YAML["data/algorithms/*.yaml\\n195 条算法元数据"]
+    end
+
+    subgraph ENGINE["生成引擎层"]
+        VALID["validate.py\\n字段校验 + JSON Schema"]
+        GEN["generate_docs.py\\n双语页面生成器"]
+        README["readme_generator.py\\nREADME 生成器"]
+    end
+
+    subgraph OUTPUT["输出层"]
+        VP["VitePress 站点\\ndocs/zh/ + docs/en/"]
+        RM["README.md\\n+README.zh-CN.md"]
+    end
+
+    subgraph DEPLOY["部署层"]
+        GH["GitHub Pages\\n静态站点托管"]
+        CI["GitHub Actions\\nCI/CD 自动化"]
+    end
+
+    CAT --> VALID
+    YAML --> VALID
+    VALID -->|"通过验证"| GEN
+    VALID -->|"通过验证"| README
+    GEN --> VP
+    README --> RM
+    VP --> CI
+    CI --> GH
+
+    style DATA fill:oklch(0.17 0.02 265),stroke:oklch(0.45 0.12 264)
+    style ENGINE fill:oklch(0.17 0.04 220),stroke:oklch(0.45 0.12 220)
+    style OUTPUT fill:oklch(0.17 0.04 165),stroke:oklch(0.45 0.12 195)
+    style DEPLOY fill:oklch(0.17 0.03 130),stroke:oklch(0.45 0.12 160)
+```
+
+## 模块职责
+
+| 模块 | 文件 | 职责 |
+|------|------|------|
+| 数据模型 | `schema.py` | `Category`, `AlgorithmEntry`, `Reference` 数据类定义 |
+| 注册表 | `algorithm_registry.py` | 加载、索引、全文搜索 |
+| 分类管理 | `category_manager.py` | 分类层级查询、`category_exists()` 验证 |
+| 验证器 | `validate.py` | 字段规则 + JSON Schema 双重验证 |
+| 文档生成器 | `generate_docs.py` | 双语 VitePress 页面生成 |
+| CLI | `__main__.py` | 命令分发入口 |
+
+> **设计原则**：所有展示层（文档、README）均从数据层自动生成，禁止手工编辑生成文件。
+"""
+
+
+def _generate_en_system_architecture() -> str:
+    return """---
+title: System Architecture
+description: System architecture overview of the awesome-bioinfo-algorithms knowledge base, including data flow, generation engine, and deployment pipeline diagrams.
+---
+# System Architecture
+
+This page presents the complete system architecture of the knowledge base, helping contributors and maintainers quickly understand module responsibilities and data flows.
+
+## End-to-End Data Flow
+
+```mermaid
+flowchart TD
+    subgraph DATA["Data Layer (Single Source of Truth)"]
+        CAT["data/categories.yaml\\n16 top-level categories"]
+        YAML["data/algorithms/*.yaml\\n195 algorithm metadata entries"]
+    end
+
+    subgraph ENGINE["Generation Engine"]
+        VALID["validate.py\\nField rules + JSON Schema"]
+        GEN["generate_docs.py\\nBilingual page generator"]
+        README["readme_generator.py\\nREADME generator"]
+    end
+
+    subgraph OUTPUT["Output Layer"]
+        VP["VitePress site\\ndocs/zh/ + docs/en/"]
+        RM["README.md\\n+README.zh-CN.md"]
+    end
+
+    subgraph DEPLOY["Deployment Layer"]
+        GH["GitHub Pages\\nStatic site hosting"]
+        CI["GitHub Actions\\nCI/CD automation"]
+    end
+
+    CAT --> VALID
+    YAML --> VALID
+    VALID -->|"Passes validation"| GEN
+    VALID -->|"Passes validation"| README
+    GEN --> VP
+    README --> RM
+    VP --> CI
+    CI --> GH
+
+    style DATA fill:oklch(0.17 0.02 265),stroke:oklch(0.45 0.12 264)
+    style ENGINE fill:oklch(0.17 0.04 220),stroke:oklch(0.45 0.12 220)
+    style OUTPUT fill:oklch(0.17 0.04 165),stroke:oklch(0.45 0.12 195)
+    style DEPLOY fill:oklch(0.17 0.03 130),stroke:oklch(0.45 0.12 160)
+```
+
+## Module Responsibilities
+
+| Module | File | Responsibility |
+|--------|------|----------------|
+| Data model | `schema.py` | `Category`, `AlgorithmEntry`, `Reference` dataclass definitions |
+| Registry | `algorithm_registry.py` | Load, index, full-text search |
+| Category manager | `category_manager.py` | Category hierarchy queries, `category_exists()` validation |
+| Validator | `validate.py` | Field rules + JSON Schema dual validation |
+| Doc generator | `generate_docs.py` | Bilingual VitePress page generation |
+| CLI | `__main__.py` | Command dispatch entry point |
+
+> **Design principle**: All presentation layers (docs, README) are auto-generated from the data layer. Manual editing of generated files is prohibited.
+"""
+
+
+def _generate_zh_data_pipeline() -> str:
+    return """---
+title: 数据管线
+description: 从 YAML 数据源到 VitePress 站点的完整数据管线，包含验证、生成与部署各阶段的详细流程。
+---
+# 数据管线
+
+本页面描述从原始 YAML 数据到最终发布站点的完整数据管线。
+
+## 管线阶段
+
+```mermaid
+flowchart LR
+    A["✏️ 编辑\\nYAML 数据"] --> B["🔍 validate\\n字段规则校验"]
+    B --> C["📐 JSON Schema\\n双重验证"]
+    C --> D["🔄 generate_docs.py\\n页面生成"]
+    D --> E["🏗️ VitePress Build\\nnpm run build"]
+    E --> F["🚀 GitHub Pages\\n自动部署"]
+
+    style A fill:oklch(0.20 0.03 265),stroke:oklch(0.50 0.15 264)
+    style F fill:oklch(0.20 0.05 165),stroke:oklch(0.50 0.15 195)
+```
+
+## 各阶段说明
+
+| 阶段 | 命令 | 失败行为 |
+|------|------|----------|
+| 字段校验 | `python -m awesome_bioinfo validate` | 退出码 1，阻止后续步骤 |
+| 页面生成 | `python -m awesome_bioinfo vitepress` | 仅在校验通过后执行 |
+| 静态构建 | `cd docs && npm run build` | TypeScript/Markdown 错误中断构建 |
+| 部署 | GitHub Actions 自动触发 | 构建失败则不部署 |
+
+## 重新生成流程
+
+每次修改 `data/` 目录后，按以下顺序执行：
+
+```bash
+python -m awesome_bioinfo validate   # 确保数据有效
+python -m awesome_bioinfo vitepress  # 重新生成文档
+cd docs && npm run build             # 验证构建无误
+```
+"""
+
+
+def _generate_en_data_pipeline() -> str:
+    return """---
+title: Data Pipeline
+description: The complete data pipeline from YAML source to VitePress site, covering validation, generation, and deployment stages.
+---
+# Data Pipeline
+
+This page describes the complete data pipeline from raw YAML data to the final published site.
+
+## Pipeline Stages
+
+```mermaid
+flowchart LR
+    A["✏️ Edit\\nYAML data"] --> B["🔍 validate\\nField rule check"]
+    B --> C["📐 JSON Schema\\ndual validation"]
+    C --> D["🔄 generate_docs.py\\npage generation"]
+    D --> E["🏗️ VitePress Build\\nnpm run build"]
+    E --> F["🚀 GitHub Pages\\nauto-deploy"]
+
+    style A fill:oklch(0.20 0.03 265),stroke:oklch(0.50 0.15 264)
+    style F fill:oklch(0.20 0.05 165),stroke:oklch(0.50 0.15 195)
+```
+
+## Stage Details
+
+| Stage | Command | Failure behaviour |
+|-------|---------|------------------|
+| Field validation | `python -m awesome_bioinfo validate` | Exit code 1, blocks subsequent steps |
+| Page generation | `python -m awesome_bioinfo vitepress` | Only runs after validation passes |
+| Static build | `cd docs && npm run build` | TypeScript/Markdown errors abort build |
+| Deployment | GitHub Actions auto-triggered | Skipped if build fails |
+
+## Regeneration Workflow
+
+After modifying `data/`, run in order:
+
+```bash
+python -m awesome_bioinfo validate   # ensure data is valid
+python -m awesome_bioinfo vitepress  # regenerate docs
+cd docs && npm run build             # verify clean build
+```
+"""
+
+
+def _generate_zh_quality_assurance() -> str:
+    return """---
+title: 质量保障
+description: awesome-bioinfo-algorithms 的质量保障体系，涵盖数据验证、代码测试与 CI/CD 自动化。
+---
+# 质量保障
+
+本知识库通过三层质量保障体系确保数据准确性与代码可靠性。
+
+## 质量保障层次
+
+```mermaid
+flowchart TD
+    subgraph L1["第一层：数据质量"]
+        V1["字段规则校验\\n（validate.py）"]
+        V2["JSON Schema 双重校验\\n（schemas/algorithm-schema.json）"]
+        V3["重复 ID 检测"]
+    end
+
+    subgraph L2["第二层：代码质量"]
+        C1["Ruff Lint\\n（E, F, W, I, N, UP, B, C4）"]
+        C2["mypy 类型检查\\n（渐进式严格）"]
+        C3["pytest 单元测试\\n（覆盖率 ≥89%）"]
+    end
+
+    subgraph L3["第三层：集成质量"]
+        I1["VitePress 构建验证\\n（npm run build）"]
+        I2["GitHub Actions CI\\n（PR 前自动运行）"]
+    end
+
+    L1 --> L2 --> L3
+
+    style L1 fill:oklch(0.17 0.02 265),stroke:oklch(0.45 0.12 264)
+    style L2 fill:oklch(0.17 0.04 220),stroke:oklch(0.45 0.12 220)
+    style L3 fill:oklch(0.17 0.04 165),stroke:oklch(0.45 0.12 195)
+```
+
+## 关键指标
+
+| 指标 | 当前值 | 目标值 |
+|------|--------|--------|
+| 测试覆盖率 | 89% | ≥85% |
+| 数据验证通过率 | 100% | 100% |
+| 文献覆盖率 | >85% | >90% |
+| 实现链接率 | >70% | >80% |
+
+## 运行质量检查
+
+```bash
+# 完整质量检查序列
+python -m awesome_bioinfo validate
+ruff check awesome_bioinfo tests
+mypy awesome_bioinfo --ignore-missing-imports
+pytest tests/ -v --tb=short
+```
+"""
+
+
+def _generate_en_quality_assurance() -> str:
+    return """---
+title: Quality Assurance
+description: Quality assurance system for awesome-bioinfo-algorithms, covering data validation, code testing, and CI/CD automation.
+---
+# Quality Assurance
+
+The knowledge base enforces quality through a three-layer assurance system.
+
+## Quality Assurance Layers
+
+```mermaid
+flowchart TD
+    subgraph L1["Layer 1: Data Quality"]
+        V1["Field rule validation\\n(validate.py)"]
+        V2["JSON Schema dual validation\\n(schemas/algorithm-schema.json)"]
+        V3["Duplicate ID detection"]
+    end
+
+    subgraph L2["Layer 2: Code Quality"]
+        C1["Ruff lint\\n(E, F, W, I, N, UP, B, C4)"]
+        C2["mypy type checking\\n(progressive strict)"]
+        C3["pytest unit tests\\n(coverage ≥89%)"]
+    end
+
+    subgraph L3["Layer 3: Integration Quality"]
+        I1["VitePress build verification\\n(npm run build)"]
+        I2["GitHub Actions CI\\n(auto-runs before PR merge)"]
+    end
+
+    L1 --> L2 --> L3
+
+    style L1 fill:oklch(0.17 0.02 265),stroke:oklch(0.45 0.12 264)
+    style L2 fill:oklch(0.17 0.04 220),stroke:oklch(0.45 0.12 220)
+    style L3 fill:oklch(0.17 0.04 165),stroke:oklch(0.45 0.12 195)
+```
+
+## Key Metrics
+
+| Metric | Current | Target |
+|--------|---------|--------|
+| Test coverage | 89% | ≥85% |
+| Data validation pass rate | 100% | 100% |
+| Literature coverage | >85% | >90% |
+| Implementation link rate | >70% | >80% |
+
+## Running Quality Checks
+
+```bash
+# Full quality check sequence
+python -m awesome_bioinfo validate
+ruff check awesome_bioinfo tests
+mypy awesome_bioinfo --ignore-missing-imports
+pytest tests/ -v --tb=short
+```
+"""
+
+
 def _write_whitepaper_pages(
     docs_dir: Path,
     total_algorithms: int,
@@ -2449,6 +2865,9 @@ def _write_whitepaper_pages(
         _generate_zh_project_overview(total_algorithms, total_categories, total_tags),
     )
     write_file(zh_dir / "academy" / "learning-path.md", _generate_zh_learning_path())
+    write_file(zh_dir / "architecture" / "system-architecture.md", _generate_zh_system_architecture())
+    write_file(zh_dir / "architecture" / "data-pipeline.md", _generate_zh_data_pipeline())
+    write_file(zh_dir / "architecture" / "quality-assurance.md", _generate_zh_quality_assurance())
     write_file(zh_dir / "research" / "references.md", _generate_zh_references())
     write_file(zh_dir / "research" / "evolution.md", _generate_zh_evolution())
     write_file(zh_dir / "reference" / "cli-workflow.md", _generate_zh_cli_workflow())
@@ -2458,6 +2877,9 @@ def _write_whitepaper_pages(
         _generate_en_project_overview(total_algorithms, total_categories, total_tags),
     )
     write_file(en_dir / "academy" / "learning-path.md", _generate_en_learning_path())
+    write_file(en_dir / "architecture" / "system-architecture.md", _generate_en_system_architecture())
+    write_file(en_dir / "architecture" / "data-pipeline.md", _generate_en_data_pipeline())
+    write_file(en_dir / "architecture" / "quality-assurance.md", _generate_en_quality_assurance())
     write_file(en_dir / "research" / "references.md", _generate_en_references())
     write_file(en_dir / "research" / "evolution.md", _generate_en_evolution())
     write_file(en_dir / "reference" / "cli-workflow.md", _generate_en_cli_workflow())
