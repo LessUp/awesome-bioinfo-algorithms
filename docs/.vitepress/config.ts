@@ -110,7 +110,6 @@ export default withMermaid(defineConfig({
         nav: [
           { text: '导读', link: '/zh/guides/project-overview', activeMatch: '/zh/guides/' },
           { text: '学院', link: '/zh/academy/', activeMatch: '/zh/academy/' },
-          { text: '架构', link: '/zh/architecture/system-architecture', activeMatch: '/zh/architecture/' },
           { text: '研究', link: '/zh/research/references', activeMatch: '/zh/research/' },
           { text: '算法图谱', link: '/zh/algorithms/', activeMatch: '/zh/algorithms/' },
           { text: '参考', link: '/zh/reference/', activeMatch: '/zh/reference/' },
@@ -130,16 +129,6 @@ export default withMermaid(defineConfig({
               items: [
                 { text: '学院首页', link: '/zh/academy/' },
                 { text: '学习路径', link: '/zh/academy/learning-path' },
-              ],
-            },
-          ],
-          '/zh/architecture/': [
-            {
-              text: '系统架构',
-              items: [
-                { text: '系统架构', link: '/zh/architecture/system-architecture' },
-                { text: '数据与生成链路', link: '/zh/architecture/data-pipeline' },
-                { text: '质量保障', link: '/zh/architecture/quality-assurance' },
               ],
             },
           ],
@@ -207,7 +196,6 @@ export default withMermaid(defineConfig({
         nav: [
           { text: 'Overview', link: '/en/guides/project-overview', activeMatch: '/en/guides/' },
           { text: 'Academy', link: '/en/academy/', activeMatch: '/en/academy/' },
-          { text: 'Architecture', link: '/en/architecture/system-architecture', activeMatch: '/en/architecture/' },
           { text: 'Research', link: '/en/research/references', activeMatch: '/en/research/' },
           { text: 'Algorithm Atlas', link: '/en/algorithms/', activeMatch: '/en/algorithms/' },
           { text: 'Reference', link: '/en/reference/', activeMatch: '/en/reference/' },
@@ -227,16 +215,6 @@ export default withMermaid(defineConfig({
               items: [
                 { text: 'Academy Home', link: '/en/academy/' },
                 { text: 'Learning Path', link: '/en/academy/learning-path' },
-              ],
-            },
-          ],
-          '/en/architecture/': [
-            {
-              text: 'System Architecture',
-              items: [
-                { text: 'System Architecture', link: '/en/architecture/system-architecture' },
-                { text: 'Data and Generation Pipeline', link: '/en/architecture/data-pipeline' },
-                { text: 'Quality Assurance', link: '/en/architecture/quality-assurance' },
               ],
             },
           ],

@@ -61,7 +61,7 @@ graph TD
 [Learning Path](/en/academy/learning-path) · [Basic Algorithms](/en/algorithms/needleman-wunsch)
 
 ### 🔬 Intermediate
-[Architecture Docs](/en/architecture/system-architecture) · [References](/en/research/references)
+[References](/en/research/references) · [Evolution Notes](/en/research/evolution)
 
 ### 📖 Advanced
 [Algorithm Atlas](/en/algorithms/) · [Categories](/en/categories/)

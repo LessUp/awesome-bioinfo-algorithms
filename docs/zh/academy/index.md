@@ -61,7 +61,7 @@ graph TD
 [学习路径](/zh/academy/learning-path) · [基础算法](/zh/algorithms/needleman-wunsch)
 
 ### 🔬 进阶研究
-[架构文档](/zh/architecture/system-architecture) · [参考文献](/zh/research/references)
+[参考文献](/zh/research/references) · [演进思考](/zh/research/evolution)
 
 ### 📖 深度学习
 [算法图谱](/zh/algorithms/) · [分类导航](/zh/categories/)
