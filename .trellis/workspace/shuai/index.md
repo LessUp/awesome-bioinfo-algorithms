@@ -8,8 +8,8 @@
 
 <!-- @@@auto:current-status -->
 - **Active File**: `journal-1.md`
-- **Total Sessions**: 1
-- **Last Active**: 2026-05-08
+- **Total Sessions**: 2
+- **Last Active**: 2026-05-19
 <!-- @@@/auto:current-status -->
 
 ---
@@ -19,7 +19,7 @@
 <!-- @@@auto:active-documents -->
 | File | Lines | Status |
 |------|-------|--------|
-| `journal-1.md` | ~43 | Active |
+| `journal-1.md` | ~80 | Active |
 <!-- @@@/auto:active-documents -->
 
 ---
@@ -29,6 +29,7 @@
 <!-- @@@auto:session-history -->
 | # | Date | Title | Commits | Branch |
 |---|------|-------|---------|--------|
+| 2 | 2026-05-19 | 修复 33 个失效链接并验证 GitHub Pages 构建 | `85101ca`, `b1a9057`, `222b6c8`, `85e8d9f`, `6aed9ef` | `master` |
 | 1 | 2026-05-08 | 架构深化：完成 7 项重构改进 | `bf7b42a`, `fafac34`, `3430d8b`, `d22a7b4` | `master` |
 <!-- @@@/auto:session-history -->
 
