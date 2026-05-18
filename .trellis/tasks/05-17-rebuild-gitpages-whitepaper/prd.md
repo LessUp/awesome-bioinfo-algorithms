@@ -91,9 +91,9 @@
 
 ## Out of Scope (explicit)
 
-- 不修改 Python 数据生成脚本
+- ~~不修改 Python 数据生成脚本~~ — **已移除限制**，需要修改生成器以持久化学术风格改进
 - 不添加新的算法数据
--不实现搜索增强（如 Algolia）
+- 不实现搜索增强（如 Algolia）
 - 不添加评论系统
 
 ## Technical Notes
