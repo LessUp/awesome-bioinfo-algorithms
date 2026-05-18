@@ -193,6 +193,24 @@ export default withMermaid(
                   { text: '项目导读', link: '/zh/guides/project-overview' },
                 ],
               },
+              {
+                text: '技术架构',
+                items: [
+                  { text: '系统架构', link: '/zh/architecture/system-architecture' },
+                  { text: '数据管线', link: '/zh/architecture/data-pipeline' },
+                  { text: '质量保障', link: '/zh/architecture/quality-assurance' },
+                ],
+              },
+            ],
+            '/zh/architecture/': [
+              {
+                text: '技术架构',
+                items: [
+                  { text: '系统架构', link: '/zh/architecture/system-architecture' },
+                  { text: '数据管线', link: '/zh/architecture/data-pipeline' },
+                  { text: '质量保障', link: '/zh/architecture/quality-assurance' },
+                ],
+              },
             ],
             '/zh/academy/': [
               {
@@ -286,6 +304,24 @@ export default withMermaid(
                 text: 'Whitepaper',
                 items: [
                   { text: 'Project Overview', link: '/en/guides/project-overview' },
+                ],
+              },
+              {
+                text: 'Technical Architecture',
+                items: [
+                  { text: 'System Architecture', link: '/en/architecture/system-architecture' },
+                  { text: 'Data Pipeline', link: '/en/architecture/data-pipeline' },
+                  { text: 'Quality Assurance', link: '/en/architecture/quality-assurance' },
+                ],
+              },
+            ],
+            '/en/architecture/': [
+              {
+                text: 'Technical Architecture',
+                items: [
+                  { text: 'System Architecture', link: '/en/architecture/system-architecture' },
+                  { text: 'Data Pipeline', link: '/en/architecture/data-pipeline' },
+                  { text: 'Quality Assurance', link: '/en/architecture/quality-assurance' },
                 ],
               },
             ],
