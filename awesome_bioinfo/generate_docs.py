@@ -1403,6 +1403,187 @@ Regardless of your current level, we recommend starting from the **Algorithm Ind
 # END_OF_PART_1
 
 
+# =====================
+# Academy index pages
+# =====================
+
+
+def _generate_zh_academy_index() -> str:
+    return """---
+title: 学院首页
+---
+# 算法学院
+
+## 概述
+
+欢迎来到生物信息学算法学院。本学院为不同背景的学习者提供系统化的算法知识体系，从基础概念到前沿研究，覆盖序列分析、基因组学、蛋白质结构预测等核心领域。
+
+## 学习路径概览
+
+```mermaid
+flowchart TD
+    subgraph PATH["四级进阶路径"]
+        L1["Level 1<br/>导航理解<br/>2-4 小时"]
+        L2["Level 2<br/>算法评估<br/>1-2 周"]
+        L3["Level 3<br/>架构与工程<br/>2-4 周"]
+        L4["Level 4<br/>专家研究<br/>持续"]
+    end
+
+    L1 -->|"掌握检索"| L2
+    L2 -->|"理解复杂度"| L3
+    L3 -->|"贡献能力"| L4
+
+    subgraph ROLES["适合角色"]
+        R1["初学者 / 跨界开发者"]
+        R2["中级开发者 / 研究生"]
+        R3["高级开发者 / 维护者"]
+        R4["研究者 / 算法工程师"]
+    end
+
+    L1 -.-> R1
+    L2 -.-> R2
+    L3 -.-> R3
+    L4 -.-> R4
+```
+
+## 核心领域
+
+| 领域 | 算法数 | 代表算法 | 学习难度 |
+|------|--------|----------|----------|
+| 序列比对 | 30+ | Smith-Waterman, BLAST, BWA | 中级 |
+| 序列组装 | 20+ | Velvet, SPAdes, Canu | 高级 |
+| 变异检测 | 25+ | GATK, Strelka2, DeepVariant | 高级 |
+| 蛋白质结构预测 | 15+ | AlphaFold, RoseTTAFold, ESMFold | 专家 |
+| 单细胞分析 | 20+ | Seurat, SCANPY, Monocle | 中级 |
+| 宏基因组学 | 15+ | Kraken, MetaPhlAn, MEGAN | 中级 |
+
+## 推荐学习顺序
+
+```mermaid
+flowchart LR
+    A["项目导读"] --> B["学院首页"]
+    B --> C["学习路径"]
+    C --> D["算法总览"]
+    D --> E["分类浏览"]
+    E --> F["参考文献"]
+    F --> G["演进思考"]
+```
+
+## 快速入口
+
+- **[学习路径](/zh/academy/learning-path)** — 四级进阶课程体系与必读文献
+- **[算法总览](/zh/algorithms/)** — 195+ 算法条目完整索引
+- **[分类导航](/zh/categories/)** — 16 大顶级分类浏览
+- **[参考文献](/zh/research/references)** — 经典论文与必读综述
+
+## 学习建议
+
+### 初学者
+
+建议从 **Level 1: 导航理解** 开始，用 2-4 小时建立对生物信息学算法全景的认知。重点掌握分类体系、标签网络和检索功能。
+
+### 中级开发者
+
+建议完成 **Level 2: 算法评估**，学习从多维度评估算法并做出选型决策。重点理解时间/空间复杂度在真实大数据上的工程含义。
+
+### 高级开发者
+
+建议挑战 **Level 3: 架构与工程**，深入理解数据源、生成器、VitePress 发布链路以及 CLI 工作流，具备独立扩展知识库的能力。
+
+### 研究者
+
+建议进入 **Level 4: 专家研究**，追踪前沿算法（2022-2025），具备论文复现、性能基准测试与社区贡献的能力。
+"""
+
+
+def _generate_en_academy_index() -> str:
+    return """---
+title: Academy Home
+---
+# Algorithm Academy
+
+## Overview
+
+Welcome to the Bioinformatics Algorithm Academy. This academy provides a systematic knowledge framework for learners of diverse backgrounds, covering core domains from foundational concepts to frontier research in sequence analysis, genomics, protein structure prediction, and beyond.
+
+## Learning Path Overview
+
+```mermaid
+flowchart TD
+    subgraph PATH["Four-Level Progressive Path"]
+        L1["Level 1<br/>Navigation Literacy<br/>2-4 hours"]
+        L2["Level 2<br/>Algorithm Evaluation<br/>1-2 weeks"]
+        L3["Level 3<br/>Architecture & Engineering<br/>2-4 weeks"]
+        L4["Level 4<br/>Expert Research<br/>Continuous"]
+    end
+
+    L1 -->|"Master retrieval"| L2
+    L2 -->|"Understand complexity"| L3
+    L3 -->|"Contribution capability"| L4
+
+    subgraph ROLES["Target Audience"]
+        R1["Beginners / Cross-domain Developers"]
+        R2["Mid-level Developers / Graduate Students"]
+        R3["Senior Developers / Maintainers"]
+        R4["Researchers / Algorithm Engineers"]
+    end
+
+    L1 -.-> R1
+    L2 -.-> R2
+    L3 -.-> R3
+    L4 -.-> R4
+```
+
+## Core Domains
+
+| Domain | Algorithms | Representative Algorithms | Difficulty |
+|--------|------------|---------------------------|------------|
+| Sequence Alignment | 30+ | Smith-Waterman, BLAST, BWA | Intermediate |
+| Sequence Assembly | 20+ | Velvet, SPAdes, Canu | Advanced |
+| Variant Calling | 25+ | GATK, Strelka2, DeepVariant | Advanced |
+| Protein Structure Prediction | 15+ | AlphaFold, RoseTTAFold, ESMFold | Expert |
+| Single-Cell Analysis | 20+ | Seurat, SCANPY, Monocle | Intermediate |
+| Metagenomics | 15+ | Kraken, MetaPhlAn, MEGAN | Intermediate |
+
+## Recommended Learning Sequence
+
+```mermaid
+flowchart LR
+    A["Project Overview"] --> B["Academy Home"]
+    B --> C["Learning Path"]
+    C --> D["Algorithm Index"]
+    D --> E["Category Browse"]
+    E --> F["References"]
+    F --> G["Evolution Notes"]
+```
+
+## Quick Access
+
+- **[Learning Path](/en/academy/learning-path)** — Four-level progressive curriculum and required reading
+- **[Algorithm Index](/en/algorithms/)** — Complete index of 195+ algorithm entries
+- **[Category Navigation](/en/categories/)** — Browse 16 top-level categories
+- **[References](/en/research/references)** — Classic papers and must-read reviews
+
+## Learning Recommendations
+
+### Beginners
+
+Start with **Level 1: Navigation Literacy**, spending 2-4 hours to establish a panoramic understanding of bioinformatics algorithms. Focus on mastering the category taxonomy, tag network, and retrieval functions.
+
+### Intermediate Developers
+
+Complete **Level 2: Algorithm Evaluation**, learning to evaluate algorithms from multiple dimensions and make selection decisions. Focus on understanding the engineering implications of time/space complexity on real-world big data.
+
+### Senior Developers
+
+Challenge **Level 3: Architecture and Engineering**, gaining deep understanding of data sources, generators, VitePress publishing pipeline, and CLI workflow, with the ability to independently extend the knowledge base.
+
+### Researchers
+
+Enter **Level 4: Expert Research**, tracking frontier algorithms (2022-2025), with capabilities in paper reproduction, performance benchmarking, and community contribution.
+"""
+
+
 # Architecture pages removed — not needed for an algorithm curation repository.
 
 
@@ -2532,7 +2713,7 @@ description: awesome-bioinfo-algorithms 知识库的系统架构概览，包含�
 
 ```mermaid
 flowchart TD
-    subgraph DATA["数据层（Single Source of Truth）"]
+    subgraph DATA["数据层 (Single Source of Truth)"]
         CAT["data/categories.yaml\\n16 个顶级分类"]
         YAML["data/algorithms/*.yaml\\n195 条算法元数据"]
     end
@@ -2561,11 +2742,6 @@ flowchart TD
     README --> RM
     VP --> CI
     CI --> GH
-
-    style DATA fill:oklch(0.17 0.02 265),stroke:oklch(0.45 0.12 264)
-    style ENGINE fill:oklch(0.17 0.04 220),stroke:oklch(0.45 0.12 220)
-    style OUTPUT fill:oklch(0.17 0.04 165),stroke:oklch(0.45 0.12 195)
-    style DEPLOY fill:oklch(0.17 0.03 130),stroke:oklch(0.45 0.12 160)
 ```
 
 ## 模块职责
@@ -2625,11 +2801,6 @@ flowchart TD
     README --> RM
     VP --> CI
     CI --> GH
-
-    style DATA fill:oklch(0.17 0.02 265),stroke:oklch(0.45 0.12 264)
-    style ENGINE fill:oklch(0.17 0.04 220),stroke:oklch(0.45 0.12 220)
-    style OUTPUT fill:oklch(0.17 0.04 165),stroke:oklch(0.45 0.12 195)
-    style DEPLOY fill:oklch(0.17 0.03 130),stroke:oklch(0.45 0.12 160)
 ```
 
 ## Module Responsibilities
@@ -2660,14 +2831,11 @@ description: 从 YAML 数据源到 VitePress 站点的完整数据管线，包�
 
 ```mermaid
 flowchart LR
-    A["✏️ 编辑\\nYAML 数据"] --> B["🔍 validate\\n字段规则校验"]
-    B --> C["📐 JSON Schema\\n双重验证"]
-    C --> D["🔄 generate_docs.py\\n页面生成"]
-    D --> E["🏗️ VitePress Build\\nnpm run build"]
-    E --> F["🚀 GitHub Pages\\n自动部署"]
-
-    style A fill:oklch(0.20 0.03 265),stroke:oklch(0.50 0.15 264)
-    style F fill:oklch(0.20 0.05 165),stroke:oklch(0.50 0.15 195)
+    A["编辑\\nYAML 数据"] --> B["validate\\n字段规则校验"]
+    B --> C["JSON Schema\\n双重验证"]
+    C --> D["generate_docs.py\\n页面生成"]
+    D --> E["VitePress Build\\nnpm run build"]
+    E --> F["GitHub Pages\\n自动部署"]
 ```
 
 ## 各阶段说明
@@ -2704,14 +2872,11 @@ This page describes the complete data pipeline from raw YAML data to the final p
 
 ```mermaid
 flowchart LR
-    A["✏️ Edit\\nYAML data"] --> B["🔍 validate\\nField rule check"]
-    B --> C["📐 JSON Schema\\ndual validation"]
-    C --> D["🔄 generate_docs.py\\npage generation"]
-    D --> E["🏗️ VitePress Build\\nnpm run build"]
-    E --> F["🚀 GitHub Pages\\nauto-deploy"]
-
-    style A fill:oklch(0.20 0.03 265),stroke:oklch(0.50 0.15 264)
-    style F fill:oklch(0.20 0.05 165),stroke:oklch(0.50 0.15 195)
+    A["Edit\\nYAML data"] --> B["validate\\nField rule check"]
+    B --> C["JSON Schema\\ndual validation"]
+    C --> D["generate_docs.py\\npage generation"]
+    D --> E["VitePress Build\\nnpm run build"]
+    E --> F["GitHub Pages\\nauto-deploy"]
 ```
 
 ## Stage Details
@@ -2766,10 +2931,6 @@ flowchart TD
     end
 
     L1 --> L2 --> L3
-
-    style L1 fill:oklch(0.17 0.02 265),stroke:oklch(0.45 0.12 264)
-    style L2 fill:oklch(0.17 0.04 220),stroke:oklch(0.45 0.12 220)
-    style L3 fill:oklch(0.17 0.04 165),stroke:oklch(0.45 0.12 195)
 ```
 
 ## 关键指标
@@ -2824,10 +2985,6 @@ flowchart TD
     end
 
     L1 --> L2 --> L3
-
-    style L1 fill:oklch(0.17 0.02 265),stroke:oklch(0.45 0.12 264)
-    style L2 fill:oklch(0.17 0.04 220),stroke:oklch(0.45 0.12 220)
-    style L3 fill:oklch(0.17 0.04 165),stroke:oklch(0.45 0.12 195)
 ```
 
 ## Key Metrics
@@ -2864,6 +3021,7 @@ def _write_whitepaper_pages(
         zh_dir / "guides" / "project-overview.md",
         _generate_zh_project_overview(total_algorithms, total_categories, total_tags),
     )
+    write_file(zh_dir / "academy" / "index.md", _generate_zh_academy_index())
     write_file(zh_dir / "academy" / "learning-path.md", _generate_zh_learning_path())
     write_file(zh_dir / "architecture" / "system-architecture.md", _generate_zh_system_architecture())
     write_file(zh_dir / "architecture" / "data-pipeline.md", _generate_zh_data_pipeline())
@@ -2876,6 +3034,7 @@ def _write_whitepaper_pages(
         en_dir / "guides" / "project-overview.md",
         _generate_en_project_overview(total_algorithms, total_categories, total_tags),
     )
+    write_file(en_dir / "academy" / "index.md", _generate_en_academy_index())
     write_file(en_dir / "academy" / "learning-path.md", _generate_en_learning_path())
     write_file(en_dir / "architecture" / "system-architecture.md", _generate_en_system_architecture())
     write_file(en_dir / "architecture" / "data-pipeline.md", _generate_en_data_pipeline())
