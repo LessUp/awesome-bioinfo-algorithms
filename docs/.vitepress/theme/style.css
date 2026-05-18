@@ -1,13 +1,16 @@
 /**
  * Awesome Bioinformatics Algorithms
- * Theme: Academic Precision · Geek Elegance
+ * Theme: Academic Precision · Scholarly Elegance
  *
  * Design principles:
- *   - Indigo / Cyan dual-tone brand palette
+ *   - Indigo / Cyan dual-tone brand palette with refined academic restraint
  *   - OKLCH colour space for perceptual uniformity
  *   - Type scale based on the Major Third (1.250) ratio
  *   - Maximum line-length ~72ch for comfortable reading
- *   - Light mode = scholarly white-space; Dark mode = deep-lab aesthetic
+ *   - Light mode = scholarly white-space with subtle warmth
+ *   - Dark mode = deep-lab aesthetic with precision feel
+ *   - Enhanced typography for academic credibility
+ *   - Refined visual hierarchy for whitepaper presentation
  */
 
 /* ============================================================
@@ -219,7 +222,7 @@ html {
 .VPSidebarItem .link:hover { color: var(--vp-c-brand-1); }
 
 /* ============================================================
-   HERO SECTION
+   HERO SECTION — Academic Whitepaper Portal
    ============================================================ */
 .VPHero {
   position: relative;
@@ -227,22 +230,23 @@ html {
   padding: calc(var(--vp-nav-height) + 4rem) 1.5rem 4rem;
 }
 
+/* Subtle academic pattern overlay */
 .VPHero::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: 0;
   background:
-    radial-gradient(ellipse 60% 50% at 20% 35%, oklch(0.51 0.19 265 / 0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 50% at 80% 65%, oklch(0.62 0.14 196 / 0.07) 0%, transparent 60%);
-  animation: heroDrift 18s ease-in-out infinite;
+    radial-gradient(ellipse 60% 50% at 20% 35%, oklch(0.51 0.19 265 / 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 80% 65%, oklch(0.62 0.14 196 / 0.06) 0%, transparent 60%);
+  animation: heroDrift 20s ease-in-out infinite;
   pointer-events: none;
 }
 
 .dark .VPHero::before {
   background:
-    radial-gradient(ellipse 60% 50% at 20% 35%, oklch(0.74 0.13 196 / 0.10) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 50% at 80% 65%, oklch(0.67 0.12 265 / 0.08) 0%, transparent 60%);
+    radial-gradient(ellipse 60% 50% at 20% 35%, oklch(0.74 0.13 196 / 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 80% 65%, oklch(0.67 0.12 265 / 0.06) 0%, transparent 60%);
 }
 
 @keyframes heroDrift {
@@ -253,10 +257,10 @@ html {
 .VPHero .container { position: relative; z-index: 1; }
 
 .VPHero .name {
-  font-size: clamp(2.2rem, 5.5vw, 3.8rem);
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 750;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
   background: var(--vp-home-hero-name-background);
   -webkit-background-clip: text;
   background-clip: text;
@@ -265,19 +269,19 @@ html {
 }
 
 .VPHero .text {
-  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
-  font-weight: 500;
-  color: var(--vp-c-text-2);
-  margin-top: 0.6rem;
+  font-size: clamp(1.05rem, 2vw, 1.4rem);
+  font-weight: 550;
+  color: var(--vp-c-text-1);
+  margin-top: 0.5rem;
   letter-spacing: -0.01em;
 }
 
 .VPHero .tagline {
-  max-width: 68ch;
-  line-height: 1.75;
+  max-width: 70ch;
+  line-height: 1.8;
   color: var(--vp-c-text-2);
-  margin-top: 1.1rem;
-  font-size: 1rem;
+  margin-top: 1.25rem;
+  font-size: 0.98rem;
 }
 
 .VPHero .image-container { filter: drop-shadow(var(--aba-shadow-lg)); }
@@ -310,7 +314,7 @@ html {
 }
 
 /* ============================================================
-   FEATURES SECTION
+   FEATURES SECTION — Academic Card Grid
    ============================================================ */
 .VPFeatures { padding: 3rem 1.5rem; }
 
@@ -322,40 +326,44 @@ html {
   border: 1px solid var(--vp-c-border);
   border-radius: var(--aba-radius-lg);
   background: var(--vp-c-bg);
-  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
   box-shadow: var(--aba-shadow-sm);
 }
 
 .VPFeatures .item:hover {
   border-color: var(--vp-c-brand-1);
   box-shadow: var(--aba-shadow-glow), var(--aba-shadow-md);
-  transform: translateY(-3px);
+  transform: translateY(-4px);
 }
 
-.VPFeature { padding: 1.5rem; }
+.VPFeature { padding: 1.75rem; }
 
 .VPFeature .icon {
-  width: 2.5rem;
-  height: 2.5rem;
-  font-size: 1.75rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  font-size: 1.85rem;
   line-height: 1;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
   display: flex;
   align-items: center;
+  /* Academic touch: subtle icon background */
+  background: var(--vp-c-brand-soft);
+  border-radius: var(--aba-radius-md);
+  padding: 0.5rem;
 }
 
 .VPFeature .title {
-  font-size: 1.05rem;
-  font-weight: 650;
+  font-size: 1.1rem;
+  font-weight: 620;
   color: var(--vp-c-text-1);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
   letter-spacing: -0.01em;
 }
 
 .VPFeature .details {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: var(--vp-c-text-2);
-  line-height: 1.65;
+  line-height: 1.72;
 }
 
 /* ============================================================
@@ -367,36 +375,52 @@ html {
 
 .VPDoc .content-container { max-width: 840px; }
 
-/* Typography */
+/* Typography — Academic Refinement */
 .VPDoc h1 {
   font-size: clamp(1.9rem, 3.5vw, 2.7rem);
-  font-weight: 780;
+  font-weight: 750;
   line-height: 1.15;
   letter-spacing: -0.025em;
   color: var(--vp-c-text-1);
   margin-bottom: 1.75rem;
+  /* Academic touch: subtle bottom accent */
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--vp-c-brand-1);
 }
 
 .VPDoc h2 {
   font-size: clamp(1.4rem, 2.2vw, 1.85rem);
-  font-weight: 650;
+  font-weight: 620;
   letter-spacing: -0.02em;
   margin-top: 3rem;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.6rem;
   border-bottom: 1px solid var(--vp-c-divider);
+  /* Counter reset for academic numbering */
+  counter-reset: h3-counter;
 }
 
 .VPDoc h3 {
   font-size: clamp(1.15rem, 1.8vw, 1.4rem);
-  font-weight: 620;
+  font-weight: 600;
   letter-spacing: -0.015em;
   margin-top: 2.25rem;
+  counter-increment: h3-counter;
 }
+
+/* Academic section numbering (optional, uncomment to enable) */
+/*
+.VPDoc h3::before {
+  content: counter(h3-counter) '. ';
+  color: var(--vp-c-brand-1);
+  font-weight: 700;
+}
+*/
 
 .VPDoc h4 {
   font-size: 1.05rem;
   font-weight: 600;
   margin-top: 1.8rem;
+  color: var(--vp-c-text-1);
 }
 
 .VPDoc p,
@@ -404,6 +428,16 @@ html {
   line-height: 1.82;
   color: var(--vp-c-text-2);
   max-width: 72ch;
+  /* Academic touch: slightly tighter word spacing */
+  word-spacing: -0.01em;
+}
+
+/* First paragraph after heading — slightly larger for lead */
+.VPDoc h1 + p,
+.VPDoc h2 + p {
+  font-size: 1.05em;
+  line-height: 1.75;
+  color: var(--vp-c-text-2);
 }
 
 .VPDoc a {
@@ -418,7 +452,7 @@ html {
   border-bottom-color: var(--vp-c-brand-soft);
 }
 
-/* Tables */
+/* Tables — Academic Journal Style */
 .VPDoc table {
   border: 1px solid var(--vp-c-border);
   border-radius: var(--aba-radius-md);
@@ -427,30 +461,43 @@ html {
   width: 100%;
   border-collapse: collapse;
   box-shadow: var(--aba-shadow-sm);
+  font-size: 0.92rem;
 }
 
 .VPDoc th {
   background: var(--vp-c-bg-soft);
-  font-weight: 600;
-  font-size: 0.85rem;
-  letter-spacing: 0.02em;
+  font-weight: 650;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   text-align: left;
-  padding: 0.7rem 1rem;
-  border-bottom: 1px solid var(--vp-c-border);
-  color: var(--vp-c-text-2);
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid var(--vp-c-brand-1);
+  color: var(--vp-c-brand-1);
 }
 
 .VPDoc td {
   padding: 0.7rem 1rem;
   border-bottom: 1px solid var(--vp-c-divider);
   color: var(--vp-c-text-2);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .VPDoc tr:last-child td { border-bottom: none; }
 
 .VPDoc tr:hover td { background: var(--vp-c-bg-soft); }
+
+/* Academic table caption styling */
+.VPDoc table + em,
+.VPDoc table + p > em:only-child {
+  display: block;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--vp-c-text-3);
+  margin-top: -1rem;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
 
 /* Code blocks */
 .VPDoc div[class*='language-'] {
@@ -472,20 +519,68 @@ html {
   font-family: var(--vp-font-family-mono);
 }
 
-/* Blockquote */
+/* Blockquote — Academic Citation Style */
 .VPDoc blockquote {
-  border-left: 3px solid var(--vp-c-brand-1);
+  border-left: 4px solid var(--vp-c-brand-1);
   background: var(--vp-c-brand-soft);
   border-radius: 0 var(--aba-radius-md) var(--aba-radius-md) 0;
   margin: 1.5rem 0;
-  padding: 0.9rem 1.25rem;
+  padding: 1rem 1.5rem;
+  position: relative;
+}
+
+.VPDoc blockquote::before {
+  content: '"';
+  position: absolute;
+  top: -0.2rem;
+  left: 0.5rem;
+  font-size: 2.5rem;
+  color: var(--vp-c-brand-1);
+  opacity: 0.15;
+  font-family: Georgia, serif;
+  line-height: 1;
 }
 
 .VPDoc blockquote > p {
   color: var(--vp-c-text-1);
   font-size: 0.95rem;
-  line-height: 1.7;
+  line-height: 1.75;
   margin: 0;
+  font-style: italic;
+}
+
+/* Blockquote citation/source */
+.VPDoc blockquote > p + p {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  font-style: normal;
+  color: var(--vp-c-text-3);
+}
+
+/* Definition list styling for academic definitions */
+.VPDoc dl {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  background: var(--vp-c-bg-soft);
+  border-radius: var(--aba-radius-md);
+  border-left: 3px solid var(--vp-c-brand-1);
+}
+
+.VPDoc dt {
+  font-weight: 650;
+  color: var(--vp-c-text-1);
+  margin-top: 0.75rem;
+}
+
+.VPDoc dt:first-child {
+  margin-top: 0;
+}
+
+.VPDoc dd {
+  margin-left: 1.5rem;
+  color: var(--vp-c-text-2);
+  line-height: 1.7;
+  margin-bottom: 0.5rem;
 }
 
 /* ============================================================
@@ -511,6 +606,76 @@ html {
   margin-bottom: 0.4rem;
 }
 
+/* Definition block */
+.vp-doc .aba-definition {
+  border: 1px solid var(--vp-c-brand-1);
+  background: var(--vp-c-brand-soft);
+  border-radius: var(--aba-radius-md);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.vp-doc .aba-definition::before {
+  content: 'Definition';
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vp-c-brand-1);
+  margin-bottom: 0.6rem;
+}
+
+/* Lemma block */
+.vp-doc .aba-lemma {
+  border-left: 4px solid var(--aba-cyan);
+  background: var(--aba-cyan-soft);
+  border-radius: 0 var(--aba-radius-md) var(--aba-radius-md) 0;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.vp-doc .aba-lemma::before {
+  content: 'Lemma';
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--aba-cyan);
+  margin-bottom: 0.4rem;
+}
+
+/* Proof block */
+.vp-doc .aba-proof {
+  border-left: 2px solid var(--vp-c-text-3);
+  background: var(--vp-c-bg-soft);
+  border-radius: 0 var(--aba-radius-md) var(--aba-radius-md) 0;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+}
+
+.vp-doc .aba-proof::before {
+  content: 'Proof';
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vp-c-text-3);
+  margin-bottom: 0.4rem;
+  font-style: normal;
+}
+
+.vp-doc .aba-proof::after {
+  content: '∎';
+  float: right;
+  font-size: 1.2rem;
+  color: var(--vp-c-brand-1);
+  margin-top: 0.5rem;
+}
+
 /* Complexity callout */
 .vp-doc .aba-complexity {
   display: flex;
@@ -528,6 +693,29 @@ html {
   color: var(--vp-c-brand-1);
   font-weight: 700;
   margin-bottom: 0.5rem;
+}
+
+/* Academic footnote style */
+.vp-doc .aba-footnote {
+  font-size: 0.85rem;
+  color: var(--vp-c-text-3);
+  border-top: 1px solid var(--vp-c-divider);
+  padding-top: 0.75rem;
+  margin-top: 2rem;
+  line-height: 1.6;
+}
+
+/* Equation-like display */
+.vp-doc .aba-equation {
+  display: block;
+  text-align: center;
+  padding: 1.25rem 1rem;
+  margin: 1.5rem 0;
+  background: var(--vp-c-bg-soft);
+  border-radius: var(--aba-radius-md);
+  font-family: var(--vp-font-family-mono);
+  font-size: 1.05rem;
+  overflow-x: auto;
 }
 
 /* ============================================================
