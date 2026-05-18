@@ -125,7 +125,7 @@ algorithms:
     year: 2017
     category: expression-analysis
     subcategory: differential-expression
-    paper_url: https://doi.org/10.1186/s13059-017-1218-3
+    paper_url: https://doi.org/10.1038/nmeth.4324
     implementation_url: https://github.com/pachterlab/sleuth
     related_tools:
       - DESeq2
@@ -235,7 +235,7 @@ algorithms:
     year: 2014
     category: expression-analysis
     subcategory: differential-expression
-    paper_url: https://doi.org/10.1186/s13059-014-0556-x
+    paper_url: https://doi.org/10.1038/nbt.3172
     related_tools:
       - DESeq2
       - StringTie

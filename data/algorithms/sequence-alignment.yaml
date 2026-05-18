@@ -302,7 +302,7 @@ algorithms:
   year: 2004
   category: sequence-alignment
   subcategory: pairwise
-  paper_url: https://doi.org/10.1101/gr.087106.108
+  paper_url: https://www.bx.psu.edu/~rsharris/rsharris_phd_thesis_2007.pdf
   implementation_url: https://github.com/lastz/lastz
   related_tools:
   - MUMmer
@@ -329,7 +329,7 @@ algorithms:
   category: sequence-alignment
   subcategory: multiple
   paper_url: https://doi.org/10.1093/bioinformatics/bti060
-  implementation_url: https://github.com/Timozer/Kalign
+  implementation_url: https://github.com/TimoLassmann/kalign
   related_tools:
   - MAFFT
   - MUSCLE
@@ -377,7 +377,7 @@ algorithms:
   category: sequence-alignment
   subcategory: pairwise
   paper_url: https://doi.org/10.1186/1471-2105-6-31
-  implementation_url: https://github.com/nickloman/exonerate
+  implementation_url: https://github.com/nathanweeks/exonerate
   related_tools:
   - BLAST
   - FASTA

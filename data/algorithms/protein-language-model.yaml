@@ -146,7 +146,7 @@ algorithms:
     year: 2020
     category: protein-language-model
     subcategory: protein-lm
-    paper_url: https://doi.org/10.1109/TCBB.2021.3095196
+    paper_url: https://doi.org/10.1093/bioinformatics/btac020
     implementation_url: https://github.com/agemagician/ProtTrans
     related_tools:
       - ESM-2
@@ -228,7 +228,7 @@ algorithms:
     category: protein-language-model
     subcategory: protein-function-prediction
     paper_url: https://doi.org/10.1038/nmeth.3547
-    implementation_url: https://github.com/FunctionLab/DeepSEA
+    implementation_url: https://github.com/FunctionLab/selene
     related_tools:
       - Basset
       - DanQ

@@ -194,7 +194,7 @@ algorithms:
     year: 2022
     category: protein-structure
     subcategory: ab-initio
-    paper_url: https://doi.org/10.1038/s41467-023-41843-w
+    paper_url: https://doi.org/10.1101/2022.11.20.517210
     implementation_url: https://github.com/aqlaboratory/openfold
     related_tools:
       - AlphaFold
@@ -282,7 +282,7 @@ algorithms:
     year: 2023
     category: protein-structure
     subcategory: template-based
-    paper_url: https://doi.org/10.1038/s41587-023-01773-x
+    paper_url: https://doi.org/10.1038/s41587-023-01773-0
     implementation_url: https://github.com/steineggerlab/foldseek
     related_tools:
       - TM-align

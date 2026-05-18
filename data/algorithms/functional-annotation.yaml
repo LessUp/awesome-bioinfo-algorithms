@@ -226,7 +226,7 @@ algorithms:
   year: 2001
   category: functional-annotation
   subcategory: domain-based
-  paper_url: https://doi.org/10.1016/S0022-2836(01)51020-X
+  paper_url: https://doi.org/10.1006/jmbi.2000.4315
   related_tools:
   - Phobius
   - SignalP

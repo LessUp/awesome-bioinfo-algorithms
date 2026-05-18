@@ -102,7 +102,7 @@ algorithms:
     year: 1993
     category: gene-prediction
     subcategory: prokaryotic
-    paper_url: https://doi.org/10.1093/nar/21.23.5668
+    paper_url: https://doi.org/10.1016/0097-8485(93)85004-V
     implementation_url: http://topaz.gatech.edu/GeneMark/
     related_tools:
       - AUGUSTUS
@@ -246,7 +246,7 @@ algorithms:
     year: 1998
     category: gene-prediction
     subcategory: prokaryotic
-    paper_url: https://doi.org/10.1093/nar/26.2.545
+    paper_url: https://doi.org/10.1093/nar/26.2.544
     related_tools:
       - Prodigal
       - GeneMark

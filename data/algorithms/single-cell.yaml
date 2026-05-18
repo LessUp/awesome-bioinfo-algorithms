@@ -125,7 +125,7 @@ algorithms:
     year: 2019
     category: single-cell
     subcategory: sc-preprocessing
-    paper_url: https://doi.org/10.1038/s41592-019-0465-8
+    paper_url: https://doi.org/10.1186/s13059-019-1670-y
     implementation_url: https://github.com/COMBINE-lab/salmon
     related_tools:
       - STARsolo
@@ -171,7 +171,7 @@ algorithms:
     year: 2019
     category: single-cell
     subcategory: sc-clustering
-    paper_url: https://doi.org/10.1038/nbt.4402
+    paper_url: https://doi.org/10.1038/s41586-019-0969-x
     implementation_url: https://github.com/cole-trapnell-lab/monocle3
     related_tools:
       - Seurat
@@ -245,7 +245,7 @@ algorithms:
     year: 2022
     category: single-cell
     subcategory: sc-clustering
-    paper_url: https://doi.org/10.1038/s41467-022-29299-4
+    paper_url: https://doi.org/10.1038/s41587-021-01001-7
     related_tools:
       - scVI
       - scANVI

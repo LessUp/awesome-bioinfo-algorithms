@@ -38,8 +38,8 @@ algorithms:
     year: 2009
     category: population-genetics
     subcategory: pca-structure
-    paper_url: https://doi.org/10.1146/annurev-genom-090210-110729
-    implementation_url: https://github.com/alexandr1223/ancestry
+    paper_url: https://doi.org/10.1101/gr.094052.109
+    implementation_url: https://github.com/NovembreLab/admixture
     related_tools:
       - STRUCTURE
       - fastSTRUCTURE
@@ -65,7 +65,7 @@ algorithms:
     year: 2000
     category: population-genetics
     subcategory: pca-structure
-    paper_url: https://doi.org/10.1534/genetics.103.020701
+    paper_url: https://doi.org/10.1093/genetics/155.2.945
     related_tools:
       - ADMIXTURE
       - fastSTRUCTURE
@@ -119,7 +119,7 @@ algorithms:
     category: population-genetics
     subcategory: gwas
     paper_url: https://doi.org/10.1038/ng.3190
-    implementation_url: https://github.com/broadinstitute/bolt
+    implementation_url: https://data.broadinstitute.org/alkesgroup/BOLT-LMM/
     related_tools:
       - GCTA
       - SAIGE
@@ -249,8 +249,8 @@ algorithms:
     year: 2013
     category: population-genetics
     subcategory: selection-signature
-    paper_url: https://doi.org/10.1371/journal.pgen.1003911
-    implementation_url: https://github.com/popgenmethods/hapflk
+    paper_url: https://doi.org/10.1534/genetics.112.147231
+    implementation_url: https://pypi.org/project/hapflk/
     related_tools:
       - Selscan
       - SweeD

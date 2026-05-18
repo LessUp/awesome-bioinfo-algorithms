@@ -147,7 +147,7 @@ algorithms:
     year: 2023
     category: variant-calling
     subcategory: structural
-    paper_url: https://doi.org/10.1038/s41587-023-01743-3
+    paper_url: https://doi.org/10.1038/s41587-023-02024-y
     implementation_url: https://github.com/fritzsedlazeck/Sniffles
     related_tools:
       - Delly
@@ -170,7 +170,7 @@ algorithms:
     year: 2013
     category: variant-calling
     subcategory: snv
-    paper_url: https://doi.org/10.1101/gr.169185.113
+    paper_url: https://doi.org/10.1101/861054
     implementation_url: https://github.com/broadinstitute/gatk
     related_tools:
       - GATK
@@ -193,7 +193,7 @@ algorithms:
     year: 2022
     category: variant-calling
     subcategory: snv
-    paper_url: https://doi.org/10.1038/s41587-021-01138-7
+    paper_url: https://doi.org/10.1038/s43588-022-00387-x
     implementation_url: https://github.com/HKU-BAL/Clair3
     related_tools:
       - DeepVariant

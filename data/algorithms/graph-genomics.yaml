@@ -37,7 +37,6 @@ algorithms:
     year: 2022
     category: graph-genomics
     subcategory: variation-graph
-    paper_url: https://doi.org/10.1038/s41587-022-01347-y
     related_tools:
       - VG
       - Minigraph

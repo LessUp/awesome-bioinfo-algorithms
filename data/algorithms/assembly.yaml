@@ -12,7 +12,7 @@ algorithms:
   year: 2001
   category: assembly
   subcategory: de-novo
-  paper_url: https://doi.org/10.1073/pnas.98.17.9748
+  paper_url: https://doi.org/10.1073/pnas.171285098
   implementation_url: https://github.com/voutcn/megahit
   related_tools:
   - SPAdes
@@ -85,7 +85,7 @@ algorithms:
   category: assembly
   subcategory: reference-guided
   paper_url: https://doi.org/10.1186/gb-2011-12-5-r42
-  implementation_url: https://github.com/ablab/ragout
+  implementation_url: https://github.com/mikolmogorov/Ragout
   related_tools:
   - Ragout
   - RaGOO

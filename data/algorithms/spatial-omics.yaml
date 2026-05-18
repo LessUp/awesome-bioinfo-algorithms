@@ -37,7 +37,7 @@ algorithms:
     year: 2021
     category: spatial-omics
     subcategory: spatial-transcriptomics
-    paper_url: https://doi.org/10.1038/s41467-021-24778-8
+    paper_url: https://doi.org/10.1186/s13059-021-02286-2
     implementation_url: https://github.com/drieslab/Giotto
     related_tools:
       - Seurat
@@ -118,7 +118,7 @@ algorithms:
     year: 2019
     category: spatial-omics
     subcategory: spatial-transcriptomics
-    paper_url: https://doi.org/10.1038/s41467-019-13318-4
+    paper_url: https://doi.org/10.1038/s41592-019-0701-7
     implementation_url: https://github.com/xzhoulab/SPARK
     related_tools:
       - SpatialDE
@@ -224,7 +224,7 @@ algorithms:
     year: 2020
     category: spatial-omics
     subcategory: spatial-proteomics
-    paper_url: https://doi.org/10.1038/s41592-020-01018-z
+    paper_url: https://doi.org/10.1038/s41592-020-01018-x
     implementation_url: https://github.com/MouseLand/cellpose
     related_tools:
       - Stardist

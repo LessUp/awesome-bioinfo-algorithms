@@ -35,7 +35,7 @@ algorithms:
   year: 2011
   category: data-compression
   subcategory: specialized-compression
-  paper_url: https://doi.org/10.1093/nar/gkq1373
+  paper_url: https://doi.org/10.1101/gr.114819.110
   implementation_url: https://github.com/samtools/htslib
   related_tools:
   - samtools
@@ -208,7 +208,6 @@ algorithms:
   year: 2018
   category: data-compression
   subcategory: specialized-compression
-  paper_url: https://doi.org/10.1038/s41467-018-05612-6
   related_tools:
   - Genozip
   - CRAM
