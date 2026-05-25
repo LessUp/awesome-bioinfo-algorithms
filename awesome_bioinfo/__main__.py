@@ -10,7 +10,6 @@ Usage:
     python -m awesome_bioinfo info <id>                    # Show algorithm details
     python -m awesome_bioinfo compare <id1> <id2>          # Compare two algorithms
     python -m awesome_bioinfo export [options]             # Export data to JSON/CSV
-    python -m awesome_bioinfo mkdocs                       # Generate MkDocs pages
     python -m awesome_bioinfo vitepress                    # Generate VitePress pages
 """
 
@@ -537,17 +536,6 @@ def cmd_export_cli(*, fmt: str = "json", output: str = "") -> int:
     return cmd_export(registry, category_manager, fmt, output)
 
 
-def cmd_mkdocs() -> int:
-    """Generate MkDocs pages."""
-    from .generate_mkdocs import main as generate_mkdocs_main
-
-    base_dir, missing_paths = ensure_repo_layout()
-    if missing_paths:
-        return _print_repo_layout_error(missing_paths)
-
-    return generate_mkdocs_main(base_dir)
-
-
 def cmd_vitepress() -> int:
     """Generate VitePress pages."""
     from .generate_docs import main as generate_docs_main
@@ -613,7 +601,6 @@ def build_parser() -> argparse.ArgumentParser:
     )
     export_parser.add_argument("--output", default="", help="Write export output to a file")
 
-    subparsers.add_parser("mkdocs", help="Generate MkDocs pages")
     subparsers.add_parser("vitepress", help="Generate VitePress pages")
 
     subparsers.add_parser("check-links", help="Check validity of algorithm URLs")
@@ -655,8 +642,6 @@ def main(argv: Optional[list[str]] = None) -> int:
         return cmd_compare_cli(args.id1, args.id2)
     if args.command == "export":
         return cmd_export_cli(fmt=args.fmt, output=args.output)
-    if args.command == "mkdocs":
-        return cmd_mkdocs()
     if args.command == "vitepress":
         return cmd_vitepress()
     if args.command == "check-links":

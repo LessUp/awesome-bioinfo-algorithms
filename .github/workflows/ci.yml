@@ -9,10 +9,8 @@ on:
       - 'tests/**'
       - 'data/**'
       - 'templates/**'
-      - 'mkdocs/**'
       - 'README.md'
       - 'pyproject.toml'
-      - 'requirements.txt'
   pull_request:
     branches: [main, master]
     paths: *ci_paths
@@ -103,8 +101,8 @@ jobs:
           python -m awesome_bioinfo info smith-waterman
           python -m awesome_bioinfo compare smith-waterman needleman-wunsch
           python -m awesome_bioinfo export --format json > /tmp/algorithms.json
-          python -m awesome_bioinfo mkdocs
+          python -m awesome_bioinfo vitepress
           python -m awesome_bioinfo generate
 
       - name: Verify generated outputs are up to date
-        run: git diff --exit-code -- README.md mkdocs/docs/
+        run: git diff --exit-code -- README.md docs/

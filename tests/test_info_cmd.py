@@ -2,9 +2,9 @@
 
 import pytest
 
+from awesome_bioinfo.__main__ import cmd_info
 from awesome_bioinfo.algorithm_registry import AlgorithmRegistry
 from awesome_bioinfo.category_manager import CategoryManager
-from awesome_bioinfo.info_cmd import cmd_info
 from awesome_bioinfo.schema import AlgorithmEntry, Category
 
 

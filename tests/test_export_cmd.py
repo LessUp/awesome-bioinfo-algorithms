@@ -6,9 +6,9 @@ import tempfile
 
 import pytest
 
+from awesome_bioinfo.__main__ import cmd_export
 from awesome_bioinfo.algorithm_registry import AlgorithmRegistry
 from awesome_bioinfo.category_manager import CategoryManager
-from awesome_bioinfo.export_cmd import cmd_export
 from awesome_bioinfo.schema import AlgorithmEntry
 
 

@@ -9,9 +9,9 @@ Covers gaps identified in testing-strategy spec:
 
 import pytest
 
+from awesome_bioinfo.__main__ import cmd_compare
 from awesome_bioinfo.algorithm_registry import AlgorithmRegistry
 from awesome_bioinfo.category_manager import CategoryManager
-from awesome_bioinfo.compare import cmd_compare
 from awesome_bioinfo.link_checker import (
     LinkCheckResult,
     LinkCheckSummary,
@@ -110,7 +110,7 @@ class TestCompareAmbiguousArgument:
         exit_code = cmd_compare(
             registry_with_ambiguous_pair,
             simple_category_manager,
-            "align",       # matches both local-align and global-align
+            "align",  # matches both local-align and global-align
             "unique-algo",
         )
         output = capsys.readouterr().out
@@ -227,7 +227,7 @@ class TestCompareFuzzyUnambiguous:
         exit_code = cmd_compare(
             registry_with_ambiguous_pair,
             simple_category_manager,
-            "unique",       # matches only unique-algo
+            "unique",  # matches only unique-algo
             "local-align",
         )
         output = capsys.readouterr().out
@@ -269,11 +269,14 @@ class TestCmdCheckLinks:
     def test_returns_zero_when_no_errors(self, capsys):
         """Spec: all links valid → exit code 0 with summary."""
         summary = LinkCheckSummary(total=3, ok=3, errors=0, warnings=0)
+
         async def fake_check_all_links(_data_dir):
             return summary
 
         with pytest.MonkeyPatch.context() as monkeypatch:
-            monkeypatch.setattr("awesome_bioinfo.link_checker.check_all_links", fake_check_all_links)
+            monkeypatch.setattr(
+                "awesome_bioinfo.link_checker.check_all_links", fake_check_all_links
+            )
             exit_code = cmd_check_links()
         output = capsys.readouterr().out
         assert exit_code == 0
@@ -289,11 +292,14 @@ class TestCmdCheckLinks:
             error_message="Connection refused",
         )
         summary = LinkCheckSummary(total=2, ok=1, errors=1, warnings=0, results=[bad])
+
         async def fake_check_all_links(_data_dir):
             return summary
 
         with pytest.MonkeyPatch.context() as monkeypatch:
-            monkeypatch.setattr("awesome_bioinfo.link_checker.check_all_links", fake_check_all_links)
+            monkeypatch.setattr(
+                "awesome_bioinfo.link_checker.check_all_links", fake_check_all_links
+            )
             exit_code = cmd_check_links()
         output = capsys.readouterr().out
         assert exit_code == 1
@@ -303,6 +309,7 @@ class TestCmdCheckLinks:
     def test_docstring_references_correct_module(self):
         """link_checker module docstring must say python -m awesome_bioinfo."""
         import awesome_bioinfo.link_checker as lc
+
         module_doc = lc.__doc__ or ""
         assert "python -m awesome_bioinfo" in module_doc
         assert "python -m scripts" not in module_doc

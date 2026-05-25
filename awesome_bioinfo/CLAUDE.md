@@ -4,7 +4,7 @@
 
 ## 包边界
 
-- **是**：数据模型、加载/索引/搜索、字段验证、README/MkDocs 生成、CLI
+- **是**：数据模型、加载/索引/搜索、字段验证、README/VitePress 生成、CLI
 - **不是**：Web 服务、算法实现（仅收录元数据）
 
 ## 模块速查
@@ -16,11 +16,10 @@
 | `category_manager.py` | 分类层级加载与查询；`category_exists()` 用于验证 |
 | `validate.py` | 字段规则 + JSON Schema（`schemas/algorithm-schema.json`）双重验证；重复 ID 检测 |
 | `data_io.py` | YAML 读写、JSON/CSV 导出 |
+| `data_store.py` | 数据存储 |
 | `readme_generator.py` | 从 `templates/readme_template.md` 生成 `README.md` |
-| `generate_mkdocs.py` | 生成 `mkdocs/docs/` 下各分类页面 |
-| `generate_readme.py` | 向后兼容包装，内部调用 `readme_generator` |
-| `__main__.py` | CLI 入口，分发到各子命令模块 |
-| `search.py` / `info_cmd.py` / `compare.py` / `export_cmd.py` | 各 CLI 子命令实现 |
+| `generate_docs.py` | 生成 VitePress 文档 (docs/zh/, docs/en/) |
+| `__main__.py` | CLI 入口（包含所有子命令实现） |
 | `link_checker.py` | 异步检查算法条目中的 URL |
 
 ## 关键不变量

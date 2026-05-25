@@ -1,11 +1,13 @@
 from pathlib import Path
 
 import awesome_bioinfo.__main__ as cli
-from awesome_bioinfo.compare import cmd_compare
-from awesome_bioinfo.export_cmd import cmd_export
-from awesome_bioinfo.generate_mkdocs import main as generate_mkdocs
-from awesome_bioinfo.info_cmd import cmd_info
-from awesome_bioinfo.search import cmd_search, search_algorithms
+from awesome_bioinfo.__main__ import (
+    cmd_compare,
+    cmd_export,
+    cmd_info,
+    cmd_search,
+    search_algorithms,
+)
 
 
 def test_search_algorithms_filters_loaded_registry(loaded_registry, loaded_category_manager):
@@ -85,44 +87,6 @@ def test_cmd_export_csv_to_file(loaded_registry, loaded_category_manager, tmp_pa
     assert "id,name,year,category" in output_path.read_text(encoding="utf-8")
 
 
-def test_generate_mkdocs_creates_expected_pages(project_root, tmp_path):
-    source_root = Path(project_root)
-    temp_root = tmp_path / "repo"
-    temp_root.mkdir()
-
-    for relative in ["data", "mkdocs", "CHANGELOG.md", "CODE_OF_CONDUCT.md", "SECURITY.md"]:
-        source_path = source_root / relative
-        target_path = temp_root / relative
-        if source_path.is_dir():
-            import shutil
-
-            shutil.copytree(source_path, target_path)
-        else:
-            target_path.write_text(source_path.read_text(encoding="utf-8"), encoding="utf-8")
-
-    exit_code = generate_mkdocs(temp_root)
-
-    assert exit_code == 0
-    assert (temp_root / "mkdocs" / "docs" / "index.md").exists()
-    assert (temp_root / "mkdocs" / "docs" / "tags.md").exists()
-    assert (temp_root / "mkdocs" / "docs" / "algorithms" / "index.md").exists()
-    assert (temp_root / "mkdocs" / "docs" / "categories" / "index.md").exists()
-
-    index_content = (temp_root / "mkdocs" / "docs" / "index.md").read_text(encoding="utf-8")
-    category_index_content = (temp_root / "mkdocs" / "docs" / "categories" / "index.md").read_text(
-        encoding="utf-8"
-    )
-    algorithm_index_content = (temp_root / "mkdocs" / "docs" / "algorithms" / "index.md").read_text(
-        encoding="utf-8"
-    )
-
-    # Title is split across lines in HTML: "Awesome Bioinformatics" + "Algorithms"
-    assert "Awesome Bioinformatics" in index_content
-    assert "Algorithms" in index_content
-    assert "分类总览" in category_index_content or "Categories" in category_index_content
-    assert "全部算法" in algorithm_index_content or "Algorithms" in algorithm_index_content
-
-
 def test_main_dispatches_new_cli_commands(monkeypatch):
     called = []
 
@@ -132,15 +96,15 @@ def test_main_dispatches_new_cli_commands(monkeypatch):
     monkeypatch.setattr(
         cli, "cmd_export_cli", lambda **kwargs: called.append(("export", kwargs)) or 0
     )
-    monkeypatch.setattr(cli, "cmd_mkdocs", lambda: called.append(("mkdocs", {})) or 0)
+    monkeypatch.setattr(cli, "cmd_vitepress", lambda: called.append(("vitepress", {})) or 0)
 
     assert cli.main(["search", "smith"]) == 0
     assert cli.main(["export", "--format", "csv", "--output", "out.csv"]) == 0
-    assert cli.main(["mkdocs"]) == 0
+    assert cli.main(["vitepress"]) == 0
 
     assert called[0] == (
         "search",
         {"keyword": "smith", "tag": "", "category": "", "difficulty": ""},
     )
     assert called[1] == ("export", {"fmt": "csv", "output": "out.csv"})
-    assert called[2] == ("mkdocs", {})
+    assert called[2] == ("vitepress", {})

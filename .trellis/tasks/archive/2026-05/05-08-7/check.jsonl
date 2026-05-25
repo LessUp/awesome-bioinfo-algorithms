@@ -1,2 +1,0 @@
-{"file": ".trellis/spec/core-architecture/spec.md", "reason": "验证重构是否符合架构约束"}
-{"file": ".trellis/spec/algorithm-schema/spec.md", "reason": "验证数据模型未被破坏"}

@@ -2,10 +2,10 @@
 
 import pytest
 
+from awesome_bioinfo.__main__ import cmd_search, format_algorithm_short, search_algorithms
 from awesome_bioinfo.algorithm_registry import AlgorithmRegistry
 from awesome_bioinfo.category_manager import CategoryManager
 from awesome_bioinfo.schema import AlgorithmEntry, Category
-from awesome_bioinfo.search import cmd_search, format_algorithm_short, search_algorithms
 
 
 @pytest.fixture
@@ -162,7 +162,9 @@ class TestCmdSearch:
         output = capsys.readouterr().out
         assert "No algorithms found" in output
 
-    def test_cmd_search_usage_references_correct_module(self, mock_registry, mock_category_manager, capsys):
+    def test_cmd_search_usage_references_correct_module(
+        self, mock_registry, mock_category_manager, capsys
+    ):
         """Usage text must reference python -m awesome_bioinfo, not python -m scripts."""
         cmd_search(mock_registry, mock_category_manager)
         output = capsys.readouterr().out
