@@ -159,9 +159,7 @@ data/algorithms/*.bak
 data/categories.tmp
 data/categories.bak
 
-# Generated documentation
-docs/_build/
-/site
+# Worktrees & tooling
 .worktrees/
 .omc/
 
