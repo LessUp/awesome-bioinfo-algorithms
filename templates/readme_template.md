@@ -3,7 +3,6 @@
 <p align="center">
   <a href="https://awesome.re"><img src="https://awesome.re/badge.svg" alt="Awesome"></a>
   <a href="https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/ci.yml"><img src="https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="https://lessup.github.io/awesome-bioinfo-algorithms/"><img src="https://img.shields.io/badge/Docs-GitHub%20Pages-blue?logo=github" alt="Documentation"></a>
   <a href="http://creativecommons.org/publicdomain/zero/1.0/"><img src="https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg" alt="License"></a>
   <a href="https://github.com/LessUp/awesome-bioinfo-algorithms/blob/main/CITATION.cff"><img src="https://img.shields.io/badge/Cite%20Me-APA-blue" alt="Citation"></a>
 </p>
@@ -16,38 +15,36 @@
 </p>
 
 <p align="center">
-  <b>🧬 A curated collection of bioinformatics algorithms with complexity analysis</b>
+  <b>🧬 精选生物信息学算法合集，附时间/空间复杂度分析</b>
 </p>
 
 <p align="center">
-  <a href="README.zh-CN.md">简体中文</a> • 
-  <a href="https://lessup.github.io/awesome-bioinfo-algorithms/">📖 Documentation Site</a> • 
-  <a href="CONTRIBUTING.md">🤝 Contributing</a> • 
-  <a href="#-citation">📚 Citation</a>
+  <a href="CONTRIBUTING.md">🤝 贡献指南</a> • 
+  <a href="#citation">📚 引用</a>
 </p>
 
 ---
 
-## ✨ Highlights
+## ✨ 亮点
 
 <table>
 <tr>
 <td width="50%">
 
-**🎯 For Researchers**
-- {{ total_algorithms }}+ curated algorithms
-- Time/space complexity analysis
-- Paper and implementation links
-- Multi-language support
+**🎯 面向研究者**
+- {{ total_algorithms }}+ 精选算法
+- 时间/空间复杂度分析
+- 论文与实现链接
+- 分类标签体系
 
 </td>
 <td width="50%">
 
-**💻 For Developers**
-- CLI toolkit for data management
-- Automated validation & generation
-- Structured YAML data format
-- Extensive test coverage
+**💻 面向开发者**
+- CLI 数据管理工具
+- 自动校验与生成
+- 结构化 YAML 数据
+- 完整测试覆盖
 
 </td>
 </tr>
@@ -55,36 +52,36 @@
 
 ---
 
-## 🚀 Quick Start
+## 🚀 快速开始
 
 ```bash
-# Clone repository
+# 克隆仓库
 git clone https://github.com/LessUp/awesome-bioinfo-algorithms.git
 cd awesome-bioinfo-algorithms
 
-# Install dependencies (includes MkDocs support)
-pip install -e ".[dev,docs]"
+# 安装依赖
+pip install -e ".[dev]"
 
-# Validate data
+# 校验数据
 python -m awesome_bioinfo validate
 
-# Show statistics
+# 查看统计
 python -m awesome_bioinfo stats
 ```
 
 ---
 
-## 📊 Statistics
+## 📊 统计摘要
 
-| Metric | Value |
+| 指标 | 数值 |
 |:-------|------:|
-| Total Algorithms | **{{ total_algorithms }}** |
-| Categories | **{{ total_categories }}** |
-| Unique Tags | **{{ total_tags }}** |
+| 算法总数 | **{{ total_algorithms }}** |
+| 分类数量 | **{{ total_categories }}** |
+| 标签数量 | **{{ total_tags }}** |
 
 ---
 
-## 📑 Table of Contents
+## 📑 目录
 
 {{ toc }}
 
@@ -98,62 +95,59 @@ python -m awesome_bioinfo stats
 
 ---
 
-## 🛠️ CLI Commands
+## 🛠️ CLI 命令
 
 ```bash
-# Search for algorithms
+# 搜索算法
 python -m awesome_bioinfo search "alignment"
 
-# Get algorithm details
+# 查看算法详情
 python -m awesome_bioinfo info smith-waterman
 
-# Compare two algorithms
+# 对比两个算法
 python -m awesome_bioinfo compare smith-waterman needleman-wunsch
 
-# Export data to JSON
+# 导出数据为 JSON
 python -m awesome_bioinfo export --format json > algorithms.json
 
-# Generate MkDocs site
-python -m awesome_bioinfo mkdocs
-
-# Generate README
+# 生成 README
 python -m awesome_bioinfo generate
 ```
 
 ---
 
-## 📚 Resources
+## 📚 资源
 
-### Learning Platforms
-- [Rosalind](http://rosalind.info/) — Bioinformatics algorithm learning
-- [NCBI](https://www.ncbi.nlm.nih.gov/) — National Center for Biotechnology
-- [EBI](https://www.ebi.ac.uk/) — European Bioinformatics Institute
+### 学习平台
+- [Rosalind](http://rosalind.info/) — 生物信息学算法练习
+- [NCBI](https://www.ncbi.nlm.nih.gov/) — 美国国家生物技术信息中心
+- [EBI](https://www.ebi.ac.uk/) — 欧洲生物信息学研究所
 
-### Tools & Communities
-- [Bioconductor](https://www.bioconductor.org/) — R bioinformatics toolkit
-- [Galaxy](https://usegalaxy.org/) — Open analysis platform
-- [BioStars](https://www.biostars.org/) — Bioinformatics Q&A
-- [scverse](https://scverse.org/) — Single-cell Python ecosystem
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### Contribution Types
-
-- 🆕 **Add new algorithms**
-- 📝 **Improve descriptions**
-- 🔗 **Add references**
-- 🐛 **Report and fix bugs**
-- 📚 **Improve documentation**
+### 工具与社区
+- [Bioconductor](https://www.bioconductor.org/) — R 生物信息学工具集
+- [Galaxy](https://usegalaxy.org/) — 开放分析平台
+- [BioStars](https://www.biostars.org/) — 生物信息学问答社区
+- [scverse](https://scverse.org/) — 单细胞 Python 生态
 
 ---
 
-## 📚 Citation
+## 🤝 贡献
 
-If you use this project in your research, please cite it as:
+欢迎贡献！详见[贡献指南](CONTRIBUTING.md)。
+
+### 贡献方式
+
+- 🆕 **添加新算法**
+- 📝 **改进描述**
+- 🔗 **补充参考文献**
+- 🐛 **报告与修复问题**
+- 📚 **完善文档**
+
+---
+
+## 📚 引用 <a id="citation"></a>
+
+如在研究中使用了本项目，可引用为：
 
 ```bibtex
 @software{awesome_bioinfo_algorithms,
@@ -164,11 +158,11 @@ If you use this project in your research, please cite it as:
 }
 ```
 
-Or see [CITATION.cff](CITATION.cff) for more citation formats.
+更多引用格式见 [CITATION.cff](CITATION.cff)。
 
 ---
 
-## 📄 License
+## 📄 许可证
 
 <p align="center">
   <a href="https://creativecommons.org/publicdomain/zero/1.0/">
@@ -176,12 +170,12 @@ Or see [CITATION.cff](CITATION.cff) for more citation formats.
   </a>
 </p>
 
-This project is licensed under [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) (Public Domain).
+本项目采用 [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)（公有领域）许可。
 
-You are free to:
-- ✅ Copy, modify, distribute
-- ✅ Use for commercial purposes
-- ✅ No attribution required
+您可以自由地：
+- ✅ 复制、修改、分发
+- ✅ 用于商业用途
+- ✅ 无需署名
 
 ---
 

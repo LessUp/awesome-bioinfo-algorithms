@@ -1,5 +1,3 @@
-from pathlib import Path
-
 import awesome_bioinfo.__main__ as cli
 from awesome_bioinfo.__main__ import (
     cmd_compare,
@@ -96,15 +94,10 @@ def test_main_dispatches_new_cli_commands(monkeypatch):
     monkeypatch.setattr(
         cli, "cmd_export_cli", lambda **kwargs: called.append(("export", kwargs)) or 0
     )
-    monkeypatch.setattr(cli, "cmd_vitepress", lambda: called.append(("vitepress", {})) or 0)
-
     assert cli.main(["search", "smith"]) == 0
     assert cli.main(["export", "--format", "csv", "--output", "out.csv"]) == 0
-    assert cli.main(["vitepress"]) == 0
-
     assert called[0] == (
         "search",
         {"keyword": "smith", "tag": "", "category": "", "difficulty": ""},
     )
     assert called[1] == ("export", {"fmt": "csv", "output": "out.csv"})
-    assert called[2] == ("vitepress", {})

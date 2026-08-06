@@ -33,30 +33,6 @@ def test_readme_generator_no_wrong_owner():
     )
 
 
-def test_readme_generator_pages_url_correct():
-    """ReadmeGenerator should reference the correct GitHub Pages URL."""
-    from awesome_bioinfo import readme_generator
-
-    source = inspect.getsource(readme_generator)
-    assert "lessup.github.io/awesome-bioinfo-algorithms" in source.lower()
-
-
-# ---------------------------------------------------------------------------
-# generate_docs.py (VitePress)
-# ---------------------------------------------------------------------------
-
-
-def test_generate_docs_no_wrong_owner():
-    """generate_docs source must not contain stale shane owner references."""
-    from awesome_bioinfo import generate_docs
-
-    source = inspect.getsource(generate_docs)
-    assert not WRONG_OWNER_RE.search(source), (
-        "awesome_bioinfo/generate_docs.py still contains wrong owner/URL: "
-        + str(WRONG_OWNER_RE.findall(source))
-    )
-
-
 # ---------------------------------------------------------------------------
 # link_checker.py
 # ---------------------------------------------------------------------------

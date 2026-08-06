@@ -54,6 +54,7 @@ coverage.xml
 *.cover
 *.py,cover
 .hypothesis/
+.benchmarks/
 .pytest_cache/
 .ruff_cache/
 cover/
@@ -232,13 +233,6 @@ results/
 output/
 temp/
 tmp/
-
-# VitePress generated docs
-docs/zh/
-docs/en/
-docs/.vitepress/dist/
-docs/.vitepress/cache/
-docs/node_modules/
 
 # =============================================================================
 # Claude Code Local

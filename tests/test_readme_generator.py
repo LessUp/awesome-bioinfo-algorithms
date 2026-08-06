@@ -126,9 +126,9 @@ def test_property_6_toc_completeness(data):
     for category in categories:
         algos_in_cat = registry.get_by_category(category.id)
         if algos_in_cat:
-            # Category should be in TOC (using English name)
-            assert category.name_en in toc, (
-                f"Category '{category.name_en}' with {len(algos_in_cat)} algorithms should be in TOC"
+            # Category should be in TOC (using Chinese name)
+            assert category.name in toc, (
+                f"Category '{category.name}' with {len(algos_in_cat)} algorithms should be in TOC"
             )
 
 
@@ -164,9 +164,9 @@ def test_property_5_markdown_output_consistency(data):
             f"Time complexity '{algo.time_complexity}' should be in output"
         )
 
-        # Verify consistent format markers (now in English)
-        assert "**Purpose**:" in output, "Purpose should have consistent label"
-        assert "**Time**:" in output, "Time complexity should have consistent label"
+        # Verify consistent format markers (Chinese labels)
+        assert "**用途**:" in output, "Purpose should have consistent label"
+        assert "**时间**:" in output, "Time complexity should have consistent label"
 
 
 @settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
@@ -193,8 +193,8 @@ def test_property_9_anchor_link_validity(data):
     for category in categories:
         algos_in_cat = registry.get_by_category(category.id)
         if algos_in_cat:
-            # Use English name for anchor
-            anchor = generator._generate_anchor(category.name_en)
+            # Use Chinese name for anchor
+            anchor = generator._generate_anchor(category.name)
 
             # Anchor should be lowercase
             assert anchor == anchor.lower(), f"Anchor '{anchor}' should be lowercase"
@@ -230,8 +230,8 @@ def test_full_readme_generation(data):
 
     # Verify basic structure (title can be markdown or HTML)
     assert "Awesome Bioinformatics Algorithms" in readme
-    assert "Statistics" in readme  # Statistics section (English)
-    assert "Table of Contents" in readme  # Table of Contents section (English)
+    assert "统计摘要" in readme  # Statistics section (Chinese)
+    assert "目录" in readme  # Table of Contents section (Chinese)
 
     # Verify statistics are filled in
     stats = registry.get_statistics()
@@ -274,13 +274,13 @@ def test_subcategory_sections_and_toc_are_rendered():
 
     generator = ReadmeGenerator(registry, category_manager)
     toc = generator.generate_toc()
-    section = generator._generate_category_featured_section(category)
+    section = generator._generate_category_section(category)
 
-    # TOC now uses English names only
-    assert "Sequence Alignment" in toc
+    # TOC uses Chinese names
+    assert "序列比对" in toc
     # Section shows featured algorithms in table format
     assert "Smith-Waterman" in section
-    assert "Pairwise Alignment" in section  # Subcategory name shown
+    assert "双序列比对" in section  # Subcategory name shown
 
 
 def test_generated_readme_matches_repository_readme(
@@ -305,7 +305,7 @@ def test_generated_readme_matches_repository_readme(
 def test_real_repository_toc_entries_match_rendered_sections(
     project_root, loaded_registry, loaded_category_manager
 ):
-    """Real generated TOC entries should line up with rendered category headings (English only)."""
+    """Real generated TOC entries should line up with rendered category headings."""
     template_path = Path(project_root) / "templates" / "readme_template.md"
     generator = ReadmeGenerator(loaded_registry, loaded_category_manager, str(template_path))
     readme = generator.generate()
@@ -315,11 +315,11 @@ def test_real_repository_toc_entries_match_rendered_sections(
         if not category_algorithms:
             continue
 
-        # TOC now uses English name only
-        category_anchor = generator._generate_anchor(category.name_en)
-        assert f"- [{category.name_en}](#{category_anchor})" in readme
-        # Section headers use English name
-        assert f"### {category.name_en}" in readme
+        # TOC uses Chinese name
+        category_anchor = generator._generate_anchor(category.name)
+        assert f"- [{category.name}](#{category_anchor})" in readme
+        # Section headers use Chinese name
+        assert f"### {category.name}" in readme
 
 
 def test_save_writes_same_content_as_tracked_readme(

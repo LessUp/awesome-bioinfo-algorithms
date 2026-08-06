@@ -9,7 +9,6 @@ Main modules:
     - data_io: Data import/export utilities
     - validate: YAML data validation
     - readme_generator: README.md generation
-    - generate_mkdocs: MkDocs documentation generation
 
 CLI Usage:
     python -m awesome_bioinfo validate          # Validate all YAML data
@@ -17,8 +16,7 @@ CLI Usage:
     python -m awesome_bioinfo search <query>    # Search algorithms
     python -m awesome_bioinfo info <id>         # Show algorithm details
     python -m awesome_bioinfo generate          # Generate README.md
-    python -m awesome_bioinfo mkdocs            # Generate MkDocs site
 """
 
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 __author__ = "LessUp"

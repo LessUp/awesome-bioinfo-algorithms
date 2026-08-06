@@ -157,9 +157,7 @@ class DataStore:
         """Validate algorithm field formats."""
         return self.field_validator.validate_algorithm_fields(data)
 
-    def validate_category_reference(
-        self, category: str, subcategory: str = ""
-    ) -> ValidationResult:
+    def validate_category_reference(self, category: str, subcategory: str = "") -> ValidationResult:
         """Validate a category/subcategory reference."""
         return self.category_manager.validate_category_reference(category, subcategory)
 
@@ -174,9 +172,7 @@ class DataStore:
         subcategory = data.get("subcategory", "")
 
         if category:
-            cat_result = self.category_manager.validate_category_reference(
-                category, subcategory
-            )
+            cat_result = self.category_manager.validate_category_reference(category, subcategory)
             result.merge(cat_result)
 
         return result

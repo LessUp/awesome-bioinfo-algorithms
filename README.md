@@ -3,7 +3,6 @@
 <p align="center">
   <a href="https://awesome.re"><img src="https://awesome.re/badge.svg" alt="Awesome"></a>
   <a href="https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/ci.yml"><img src="https://github.com/LessUp/awesome-bioinfo-algorithms/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="https://lessup.github.io/awesome-bioinfo-algorithms/"><img src="https://img.shields.io/badge/Docs-GitHub%20Pages-blue?logo=github" alt="Documentation"></a>
   <a href="http://creativecommons.org/publicdomain/zero/1.0/"><img src="https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg" alt="License"></a>
   <a href="https://github.com/LessUp/awesome-bioinfo-algorithms/blob/main/CITATION.cff"><img src="https://img.shields.io/badge/Cite%20Me-APA-blue" alt="Citation"></a>
 </p>
@@ -16,38 +15,36 @@
 </p>
 
 <p align="center">
-  <b>🧬 A curated collection of bioinformatics algorithms with complexity analysis</b>
+  <b>🧬 精选生物信息学算法合集，附时间/空间复杂度分析</b>
 </p>
 
 <p align="center">
-  <a href="README.zh-CN.md">简体中文</a> • 
-  <a href="https://lessup.github.io/awesome-bioinfo-algorithms/">📖 Documentation Site</a> • 
-  <a href="CONTRIBUTING.md">🤝 Contributing</a> • 
-  <a href="#-citation">📚 Citation</a>
+  <a href="CONTRIBUTING.md">🤝 贡献指南</a> • 
+  <a href="#citation">📚 引用</a>
 </p>
 
 ---
 
-## ✨ Highlights
+## ✨ 亮点
 
 <table>
 <tr>
 <td width="50%">
 
-**🎯 For Researchers**
-- 195+ curated algorithms
-- Time/space complexity analysis
-- Paper and implementation links
-- Multi-language support
+**🎯 面向研究者**
+- 195+ 精选算法
+- 时间/空间复杂度分析
+- 论文与实现链接
+- 分类标签体系
 
 </td>
 <td width="50%">
 
-**💻 For Developers**
-- CLI toolkit for data management
-- Automated validation & generation
-- Structured YAML data format
-- Extensive test coverage
+**💻 面向开发者**
+- CLI 数据管理工具
+- 自动校验与生成
+- 结构化 YAML 数据
+- 完整测试覆盖
 
 </td>
 </tr>
@@ -55,105 +52,112 @@
 
 ---
 
-## 🚀 Quick Start
+## 🚀 快速开始
 
 ```bash
-# Clone repository
+# 克隆仓库
 git clone https://github.com/LessUp/awesome-bioinfo-algorithms.git
 cd awesome-bioinfo-algorithms
 
-# Install dependencies (includes MkDocs support)
-pip install -e ".[dev,docs]"
+# 安装依赖
+pip install -e ".[dev]"
 
-# Validate data
+# 校验数据
 python -m awesome_bioinfo validate
 
-# Show statistics
+# 查看统计
 python -m awesome_bioinfo stats
 ```
 
 ---
 
-## 📊 Statistics
+## 📊 统计摘要
 
-| Metric | Value |
+| 指标 | 数值 |
 |:-------|------:|
-| Total Algorithms | **195** |
-| Categories | **16** |
-| Unique Tags | **392** |
+| 算法总数 | **195** |
+| 分类数量 | **16** |
+| 标签数量 | **392** |
 
 ---
 
-## 📑 Table of Contents
+## 📑 目录
 
 <details>
-<summary>Click to expand</summary>
+<summary>点击展开</summary>
 
-- [Sequence Alignment](#sequence-alignment)
-- [Sequence Assembly](#sequence-assembly)
-- [Variant Calling](#variant-calling)
-- [Gene Expression Analysis](#gene-expression-analysis)
-- [Protein Structure Prediction](#protein-structure-prediction)
-- [Phylogenetics](#phylogenetics)
-- [Functional Annotation](#functional-annotation)
-- [Data Compression](#data-compression)
-- [Single-Cell Genomics](#single-cell-genomics)
-- [Metagenomics](#metagenomics)
-- [Epigenomics](#epigenomics)
-- [Gene Prediction](#gene-prediction)
-- [Population Genetics](#population-genetics)
-- [Spatial Omics](#spatial-omics)
-- [Graph Genomics](#graph-genomics)
-- [Protein Language Model](#protein-language-model)
+- [序列比对](#序列比对)
+- [序列组装](#序列组装)
+- [变异检测](#变异检测)
+- [基因表达分析](#基因表达分析)
+- [蛋白质结构预测](#蛋白质结构预测)
+- [系统发育分析](#系统发育分析)
+- [功能注释](#功能注释)
+- [数据压缩](#数据压缩)
+- [单细胞基因组学](#单细胞基因组学)
+- [宏基因组学](#宏基因组学)
+- [表观基因组学](#表观基因组学)
+- [基因预测](#基因预测)
+- [群体遗传学](#群体遗传学)
+- [空间组学](#空间组学)
+- [图基因组学](#图基因组学)
+- [蛋白质语言模型](#蛋白质语言模型)
 
 </details>
 
 ---
 
-## Category Overview
+## 分类总览
 
-| Category | Algorithms | Description |
+| 分类 | 算法数 | 描述 |
 |----------|------------|-------------|
-| Sequence Alignment | 19 | Algorithms for comparing and aligning biological sequences |
-| Sequence Assembly | 14 | Algorithms for reconstructing complete sequences from short reads |
-| Variant Calling | 14 | Algorithms for detecting genomic variations |
-| Gene Expression Analysis | 12 | Algorithms for analyzing gene expression levels |
-| Protein Structure Prediction | 14 | Algorithms for predicting protein 3D structures |
-| Phylogenetics | 12 | Algorithms for building and analyzing evolutionary trees |
-| Functional Annotation | 12 | Algorithms for predicting gene and protein functions |
-| Data Compression | 10 | Algorithms for compressing bioinformatics data |
-| Single-Cell Genomics | 15 | Algorithms for single-cell genomics and transcriptomics |
-| Metagenomics | 14 | Algorithms for microbial community genomics |
-| Epigenomics | 6 | Algorithms for analyzing epigenetic modifications |
-| Gene Prediction | 12 | Algorithms for gene structure prediction and annotation |
-| Population Genetics | 12 | Algorithms for population genetic structure and evolution |
-| Spatial Omics | 10 | Algorithms for spatially-resolved omics data |
-| Graph Genomics | 9 | Algorithms based on graph representations of genomes |
-| Protein Language Model | 10 | Protein analysis using large-scale pre-trained models |
+| 序列比对 | 19 | 用于比较和对齐生物序列的算法 |
+| 序列组装 | 14 | 从短读段重建完整序列的算法 |
+| 变异检测 | 14 | 检测基因组变异的算法 |
+| 基因表达分析 | 12 | 分析基因表达水平的算法 |
+| 蛋白质结构预测 | 14 | 预测蛋白质三维结构的算法 |
+| 系统发育分析 | 12 | 构建和分析进化树的算法 |
+| 功能注释 | 12 | 预测基因和蛋白质功能的算法 |
+| 数据压缩 | 10 | 压缩生物信息学数据的算法 |
+| 单细胞基因组学 | 15 | 单细胞水平的基因组和转录组分析算法 |
+| 宏基因组学 | 14 | 微生物群落的基因组分析算法 |
+| 表观基因组学 | 6 | 分析表观遗传修饰的算法 |
+| 基因预测 | 12 | 基因结构预测和基因组注释算法 |
+| 群体遗传学 | 12 | 分析群体遗传结构和进化的算法 |
+| 空间组学 | 10 | 保留空间信息的组学数据分析算法 |
+| 图基因组学 | 9 | 基于图结构表示和分析基因组的算法 |
+| 蛋白质语言模型 | 10 | 基于大规模预训练模型的蛋白质分析算法 |
 
 
 ---
 
-## Featured Algorithms
+## 算法列表
 
-### Sequence Alignment <a id="sequence-alignment"></a>
-<a href="#table-of-contents">↑ Back to Top</a>
+### 序列比对 <a id="序列比对"></a>
+<a href="#目录">↑ 返回顶部</a>
 
-**Pairwise Alignment**
+**双序列比对**
 
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | ⭐ BLAST | 1990 | O(mn) | O(mn) | `heuristic` `database-search` `classic` |
 | ⭐ Smith-Waterman | 1981 | O(mn) | O(mn) | `dynamic-programming` `local-alignment` `classic` |
 | ⭐ Needleman-Wunsch | 1970 | O(mn) | O(mn) | `dynamic-programming` `global-alignment` `classic` |
 | 🆕 WFA2-lib | 2023 | O(ns) | O(s) | `wavefront` `adaptive` `ultra-fast` |
 | Minimap2 | 2018 | O(n) | O(n) | `minimizer` `long-read` `versatile` |
+| MMseqs2 | 2017 | O(mn) | O(m + n) | `clustering` `search` `fast` |
+| Edlib | 2017 | O(mn / w) | O(m) | `edit-distance` `bit-parallel` `fast` |
+| parasail | 2016 | O(mn / w) | O(m) | `simd` `parallel` `vectorized` |
+| HISAT2 | 2015 | O(n) | O(n) | `fm-index` `splice-aware` `rna-seq` |
+| DIAMOND | 2015 | O(mn) | O(m + n) | `heuristic` `protein-alignment` `fast` |
+| Bowtie2 | 2012 | O(n) | O(n) | `fm-index` `short-read` `fast` |
+| Burrows-Wheeler Transform Alignment | 2009 | O(n) | O(n) | `bwt` `indexing` `short-read` |
+| Exonerate | 2005 | O(mn) | O(m) | `pairwise` `database-search` `versatile` |
+| LASTZ | 2004 | O(n^2) | O(n) | `genome-alignment` `whole-genome` `classic` |
 
-*[View all 14 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
+**多序列比对**
 
-**Multiple Sequence Alignment**
-
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | Clustal Omega | 2011 | O(n * L^2) | O(n * L) | `multiple-alignment` `guide-tree` `progressive` |
 | Kalign | 2005 | O(n^2 * L) | O(n * L) | `multiple-alignment` `fast` `wu-manber` |
@@ -162,103 +166,108 @@ python -m awesome_bioinfo stats
 | POA | 2002 | O(n^2 * L^2) | O(n * L^2) | `multiple-alignment` `partial-order` `graph-based` |
 
 
-### Sequence Assembly <a id="sequence-assembly"></a>
-<a href="#table-of-contents">↑ Back to Top</a>
+### 序列组装 <a id="序列组装"></a>
+<a href="#目录">↑ 返回顶部</a>
 
-**De Novo Assembly**
+**从头组装**
 
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | 🆕 Verkko | 2023 | O(n log n) | O(n) | `t2t` `hybrid` `hifi` |
 | Hifiasm | 2021 | O(n log n) | O(n) | `hifi` `haplotype-aware` `long-read` |
 | Shasta | 2020 | O(n) | O(n) | `long-read` `fast` `run-length` |
 | Flye | 2019 | O(n log n) | O(n) | `repeat-graph` `long-read` `ont` |
 | Wtdbg2 | 2019 | O(n) | O(n) | `long-read` `fuzzy-bruijn` `fast` |
+| Canu | 2017 | O(n^2) | O(n) | `long-read` `pacbio` `ont` |
+| Unicycler | 2017 | O(n log n) | O(n) | `hybrid` `bacterial` `circular` |
+| MaSuRCA | 2013 | O(n log n) | O(n) | `hybrid` `super-read` `de-novo` |
+| QUAST | 2013 | O(n * r) | O(n) | `quality-assessment` `n50` `assembly-evaluation` |
+| SPAdes | 2012 | O(n * k) | O(n) | `de-bruijn` `multi-kmer` `versatile` |
+| Overlap-Layout-Consensus (OLC) | 2010 | O(n^2) | O(n^2) | `overlap` `long-read` `de-novo` |
+| De Bruijn Graph Assembly | 2001 | O(n) | O(k * 4^k) | `graph-based` `k-mer` `de-novo` |
 
-*[View all 12 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
+**参考引导组装**
 
-**Reference-Guided Assembly**
-
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | RagTag | 2022 | O(n log n) | O(n) | `reference-based` `scaffolding` `assembly-polishing` |
 | Reference-Guided Assembly | 2011 | O(n log n) | O(n) | `reference-based` `scaffolding` `resequencing` |
 
 
-### Variant Calling <a id="variant-calling"></a>
-<a href="#table-of-contents">↑ Back to Top</a>
+### 变异检测 <a id="变异检测"></a>
+<a href="#目录">↑ 返回顶部</a>
 
-**SNV Detection**
+**单核苷酸变异**
 
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | 🆕 DeepSomatic | 2024 | O(n * r) | O(r) | `deep-learning` `somatic` `cancer` |
 | Clair3 | 2022 | O(n * r) | O(r) | `long-read` `nanopore` `pacbio` |
 | Octopus | 2021 | O(n * h) | O(h) | `bayesian` `haplotype` `germline-somatic` |
 | DeepVariant | 2018 | O(n * r) | O(r) | `deep-learning` `cnn` `snp` |
 | Strelka2 | 2018 | O(n * r) | O(r) | `somatic` `germline` `fast` |
+| MuTect2 | 2013 | O(n * r) | O(r) | `somatic` `cancer` `gatk` |
+| FreeBayes | 2012 | O(n * h) | O(h) | `bayesian` `haplotype` `polyploid` |
+| GATK HaplotypeCaller | 2010 | O(n * r) | O(r) | `haplotype` `snp` `indel` |
 
-*[View all 8 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
+**结构变异**
 
-**Structural Variants**
-
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | 🆕 Sniffles2 | 2023 | O(n * c) | O(n) | `structural-variant` `long-read` `breakpoint` |
 | cuteSV | 2020 | O(n * c) | O(n) | `structural-variant` `long-read` `clustering` |
 | GRIDSS | 2017 | O(n * c) | O(n) | `structural-variant` `breakend` `assembly-based` |
 | Manta | 2016 | O(n * c) | O(c) | `structural-variant` `graph-assembly` `clinical` |
 | SvABA | 2016 | O(n * c) | O(c) | `structural-variant` `somatic` `assembly-based` |
+| Delly | 2012 | O(n * c) | O(n) | `structural-variant` `split-read` `paired-end` |
 
-*[View all 6 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
+### 基因表达分析 <a id="基因表达分析"></a>
+<a href="#目录">↑ 返回顶部</a>
 
-### Gene Expression Analysis <a id="gene-expression-analysis"></a>
-<a href="#table-of-contents">↑ Back to Top</a>
+**表达定量**
 
-**Expression Quantification**
-
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | Salmon | 2017 | O(n) | O(t) | `selective-alignment` `quantification` `rna-seq` |
 | Kallisto | 2016 | O(n) | O(t) | `pseudoalignment` `quantification` `rna-seq` |
 | tximport | 2016 | O(n * t) | O(g) | `import` `summarization` `offset-correction` |
 | StringTie | 2015 | O(n) | O(g) | `transcript-assembly` `quantification` `rna-seq` |
 | STAR | 2013 | O(n) | O(g) | `rna-seq` `splice-aware` `alignment` |
+| RSEM | 2011 | O(n * t) | O(t) | `quantification` `expectation-maximization` `rna-seq` |
 
-*[View all 6 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
+**差异表达**
 
-**Differential Expression**
-
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | Sleuth | 2017 | O(n * g) | O(g) | `differential-expression` `bootstrap` `rna-seq` |
 | NOISeq | 2015 | O(n * g) | O(g) | `differential-expression` `non-parametric` `noiseq` |
 | DESeq2 | 2014 | O(n * g) | O(g) | `rna-seq` `differential-expression` `negative-binomial` |
 | limma-voom | 2014 | O(n * g) | O(g) | `differential-expression` `precision-weight` `linear-model` |
 | Ballgown | 2014 | O(n * g) | O(g) | `differential-expression` `fpkm` `transcript-level` |
+| edgeR | 2010 | O(n * g) | O(g) | `rna-seq` `differential-expression` `empirical-bayes` |
 
-*[View all 6 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
+### 蛋白质结构预测 <a id="蛋白质结构预测"></a>
+<a href="#目录">↑ 返回顶部</a>
 
-### Protein Structure Prediction <a id="protein-structure-prediction"></a>
-<a href="#table-of-contents">↑ Back to Top</a>
+**从头预测**
 
-**Ab Initio Prediction**
-
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | 🆕 AlphaFold3 | 2024 | O(n^2) | O(n^2) | `deep-learning` `structure-prediction` `multi-modal` |
 | 🆕 Chai-1 | 2024 | O(n^2) | O(n^2) | `structure-prediction` `multi-modal` `drug-discovery` |
 | 🆕 Boltz-1 | 2024 | O(n^2) | O(n^2) | `structure-prediction` `open-source` `diffusion` |
 | 🆕 ESMFold | 2023 | O(n^2) | O(n^2) | `language-model` `single-sequence` `fast` |
 | OmegaFold | 2022 | O(n^2) | O(n^2) | `language-model` `single-sequence` `structure-prediction` |
+| OpenFold | 2022 | O(n^2) | O(n^2) | `open-source` `trainable` `structure-prediction` |
+| ColabFold | 2022 | O(n^2) | O(n^2) | `fast` `msa` `colab` |
+| AlphaFold | 2021 | O(n^2) | O(n^2) | `deep-learning` `attention` `structure-prediction` |
+| RoseTTAFold | 2021 | O(n^2) | O(n^2) | `deep-learning` `three-track` `structure-prediction` |
 
-*[View all 9 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
+**模板方法**
 
-**Template-Based Modeling**
-
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | 🆕 Foldseek | 2023 | O(n) | O(n) | `structure-search` `fast` `3Di` |
 | I-TASSER | 2008 | O(n^3) | O(n^2) | `threading` `template-based` `fragment-assembly` |
@@ -267,98 +276,103 @@ python -m awesome_bioinfo stats
 | MODELLER | 1993 | O(n^2) | O(n^2) | `homology-modeling` `template-based` `comparative-modeling` |
 
 
-### Phylogenetics <a id="phylogenetics"></a>
-<a href="#table-of-contents">↑ Back to Top</a>
+### 系统发育分析 <a id="系统发育分析"></a>
+<a href="#目录">↑ 返回顶部</a>
 
-**Distance Methods**
+**距离法**
 
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | ⭐ Neighbor-Joining | 1987 | O(n^3) | O(n^2) | `distance-based` `tree-building` `classic` |
 | FastTree | 2010 | O(n * s * log n) | O(n * s) | `tree-building` `approximate-likelihood` `scalable` |
 
-**Character-Based Methods**
+**特征法**
 
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | IQ-TREE 2 | 2020 | O(n^2 * s) | O(n * s) | `maximum-likelihood` `model-finder` `partition` |
 | RAxML-NG | 2019 | O(n^2 * s * r) | O(n * s) | `maximum-likelihood` `scalable` `ultrafast-bootstrap` |
 | ASTRAL | 2018 | O(n * m) | O(n * m) | `species-tree` `summary-method` `coalescent` |
 | RevBayes | 2016 | O(n^2 * s * r) | O(n * s) | `bayesian` `probabilistic-programming` `flexible` |
 | IQ-TREE | 2015 | O(n^2 * s) | O(n * s) | `maximum-likelihood` `model-selection` `ultrafast-bootstrap` |
+| Maximum Likelihood Phylogeny | 2014 | O(n^2 * s * r) | O(n * s) | `maximum-likelihood` `statistical` `tree-building` |
+| BEAST2 | 2014 | O(n^2 * s * r) | O(n * s) | `bayesian` `mcmc` `phylodynamics` |
+| MrBayes | 2012 | O(n^2 * s * r) | O(n * s) | `bayesian` `mcmc` `metropolis-coupled` |
+| PhyML | 2003 | O(n^2 * s) | O(n * s) | `maximum-likelihood` `fast` `model-selection` |
+| Bayesian Phylogenetic Inference | 2001 | O(n^2 * s * r) | O(n * s) | `bayesian` `mcmc` `molecular-clock` |
 
-*[View all 10 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
+### 功能注释 <a id="功能注释"></a>
+<a href="#目录">↑ 返回顶部</a>
 
-### Functional Annotation <a id="functional-annotation"></a>
-<a href="#table-of-contents">↑ Back to Top</a>
+**同源性方法**
 
-**Homology-Based**
-
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | ⭐ BLAST-based Annotation | 1990 | O(mn) | O(m) | `sequence-similarity` `database-search` `classic` |
 | Bakta | 2021 | O(n) | O(n) | `prokaryotic` `annotation` `standardized` |
 | KofamKOALA | 2020 | O(n * m) | O(m) | `kegg` `orthology` `annotation` |
 | OrthoFinder | 2019 | O(n^2) | O(n^2) | `orthology` `comparative-genomics` `gene-family` |
 | eggNOG-mapper | 2017 | O(n * m) | O(m) | `orthology` `go-annotation` `kegg` |
+| Prokka | 2014 | O(n) | O(n) | `prokaryotic` `annotation` `pipeline` |
 
-*[View all 6 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
+**结构域方法**
 
-**Domain-Based**
-
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | SignalP | 2019 | O(n) | O(n) | `signal-peptide` `deep-learning` `secretion` |
 | InterProScan | 2014 | O(m * d) | O(m) | `multi-database` `domain-detection` `go-annotation` |
 | InterPro | 2014 | O(m * d) | O(m) | `database` `domain` `protein-family` |
 | HMMER | 2011 | O(mn) | O(m) | `hmm` `domain-detection` `remote-homology` |
 | PfamScan | 2011 | O(mn) | O(m) | `domain-detection` `pfam` `protein-family` |
+| TMHMM | 2001 | O(n) | O(n) | `transmembrane` `hmm` `membrane-protein` |
 
-*[View all 6 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
+### 数据压缩 <a id="数据压缩"></a>
+<a href="#目录">↑ 返回顶部</a>
 
-### Data Compression <a id="data-compression"></a>
-<a href="#table-of-contents">↑ Back to Top</a>
+**专用压缩**
 
-**Specialized Compression**
-
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | Genozip | 2021 | O(n) | O(1) | `multi-format` `high-ratio` `random-access` |
 | SPRING Compress | 2020 | O(n log n) | O(n) | `fastq` `reordering` `high-ratio` |
 | SPRING | 2019 | O(n) | O(n) | `fastq` `specialized-compression` `high-ratio` |
 | MANGO | 2018 | O(n) | O(n) | `reference-free` `genome-compression` `context-modeling` |
 | Orione | 2015 | O(n) | O(1) | `reference-assisted` `fastq` `sam` |
+| fqzcomp | 2014 | O(n) | O(1) | `fastq` `quality-score` `lossless` |
+| DSRC | 2013 | O(n) | O(1) | `fastq` `specialized-compression` `archival` |
+| CRAM | 2011 | O(n) | O(r) | `reference-based` `alignment` `bam` |
 
-*[View all 8 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
+**通用压缩**
 
-**General Compression**
-
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | BGZF and Tabix | 2011 | O(n) | O(1) | `block-compression` `indexing` `random-access` |
 | GZIP for FASTQ | 1992 | O(n) | O(1) | `lossless` `general-purpose` `standard` |
 
 
-### Single-Cell Genomics <a id="single-cell-genomics"></a>
-<a href="#table-of-contents">↑ Back to Top</a>
+### 单细胞基因组学 <a id="单细胞基因组学"></a>
+<a href="#目录">↑ 返回顶部</a>
 
-**Cell Clustering & Annotation**
+**细胞聚类与注释**
 
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | 🆕 scVI-tools | 2023 | O(c * g * e) | O(c * g) | `variational-autoencoder` `deep-learning` `batch-correction` |
 | scArches | 2022 | O(c * g * e) | O(c * g) | `reference-mapping` `transfer-learning` `surgery` |
 | CellTypist | 2022 | O(c * g) | O(c * g) | `cell-type` `annotation` `logistic-regression` |
 | scANVI | 2021 | O(c * g * e) | O(c * g) | `semi-supervised` `annotation` `deep-learning` |
 | SCENIC | 2020 | O(c * g^2) | O(c * g) | `regulatory-network` `transcription-factor` `grn` |
+| Harmony | 2019 | O(c * k) | O(c * k) | `batch-correction` `integration` `embedding` |
+| Monocle 3 | 2019 | O(c * g) | O(c * g) | `trajectory-inference` `pseudotime` `differentiation` |
+| Scanpy | 2018 | O(c * g) | O(c * g) | `python` `scalable` `scverse` |
+| scVI | 2018 | O(c * g * e) | O(c * g) | `deep-learning` `vae` `batch-correction` |
+| Seurat | 2015 | O(c * g) | O(c * g) | `clustering` `multi-modal` `integration` |
 
-*[View all 10 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
+**数据预处理**
 
-**Preprocessing**
-
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | alevin-fry | 2022 | O(n * k) | O(g) | `quantification` `memory-efficient` `simpleaf` |
 | STARsolo | 2021 | O(n * g) | O(c * g) | `preprocessing` `alignment` `umi` |
@@ -367,24 +381,26 @@ python -m awesome_bioinfo stats
 | Cell Ranger | 2017 | O(n * g) | O(c * g) | `10x-genomics` `preprocessing` `umi` |
 
 
-### Metagenomics <a id="metagenomics"></a>
-<a href="#table-of-contents">↑ Back to Top</a>
+### 宏基因组学 <a id="宏基因组学"></a>
+<a href="#目录">↑ 返回顶部</a>
 
-**Taxonomic Profiling**
+**物种分类**
 
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | 🆕 MetaPhlAn 4 | 2023 | O(n * m) | O(m) | `marker-gene` `profiling` `enhanced` |
 | Kraken2 | 2019 | O(n * k) | O(d) | `k-mer` `classification` `fast` |
 | QIIME 2 | 2019 | O(n * d) | O(n) | `pipeline` `microbiome` `diversity` |
 | MetaBAT 2 | 2019 | O(n * c) | O(n) | `binning` `metagenome` `adaptive` |
 | mOTUs | 2017 | O(n * m) | O(m) | `marker-gene` `profiling` `universal` |
+| Bracken | 2017 | O(n) | O(d) | `abundance-estimation` `bayesian` `kraken` |
+| Centrifuge | 2016 | O(n * log d) | O(d) | `classification` `compressed-index` `low-memory` |
+| Kaiju | 2016 | O(n * log d) | O(d) | `protein-level` `classification` `sensitive` |
+| MetaPhlAn | 2012 | O(n * m) | O(m) | `marker-gene` `abundance` `low-memory` |
 
-*[View all 9 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
+**功能分析**
 
-**Functional Profiling**
-
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | metaPOST | 2021 | O(n * c) | O(n) | `post-processing` `refinement` `assembly` |
 | MetaBAT 2 | 2019 | O(n * c) | O(n) | `binning` `mags` `coverage` |
@@ -393,32 +409,32 @@ python -m awesome_bioinfo stats
 | HUMAnN | 2014 | O(n * d) | O(d) | `pathway-analysis` `gene-family` `functional` |
 
 
-### Epigenomics <a id="epigenomics"></a>
-<a href="#table-of-contents">↑ Back to Top</a>
+### 表观基因组学 <a id="表观基因组学"></a>
+<a href="#目录">↑ 返回顶部</a>
 
-**ChIP-seq Analysis**
+**ChIP-seq 分析**
 
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | HMMRATAC | 2019 | O(n) | O(n) | `atac-seq` `hmm` `peak-calling` |
 | ChromHMM | 2012 | O(n * s^2) | O(n * s) | `hmm` `chromatin-state` `histone` |
 | MACS2 | 2008 | O(n) | O(n) | `peak-calling` `chip-seq` `histone` |
 
-**Methylation Analysis**
+**甲基化分析**
 
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | DSS | 2014 | O(n * s) | O(n) | `methylation` `beta-binomial` `dmr` |
 | methylKit | 2012 | O(n * s) | O(n) | `methylation` `differential-analysis` `rrbs` |
 | Bismark | 2011 | O(n * g) | O(g) | `bisulfite-seq` `methylation` `cpg` |
 
 
-### Gene Prediction <a id="gene-prediction"></a>
-<a href="#table-of-contents">↑ Back to Top</a>
+### 基因预测 <a id="基因预测"></a>
+<a href="#目录">↑ 返回顶部</a>
 
-**Eukaryotic Gene Prediction**
+**真核基因预测**
 
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | BRAKER | 2016 | O(n * g) | O(n) | `pipeline` `evidence-based` `automated` |
 | MAKER | 2008 | O(n * g) | O(n) | `annotation-pipeline` `evidence-based` `eukaryotic` |
@@ -426,25 +442,25 @@ python -m awesome_bioinfo stats
 | SNAP | 2004 | O(n * s) | O(n) | `semi-hmm` `ab-initio` `eukaryotic` |
 | AUGUSTUS | 2003 | O(n * s^2) | O(n * s) | `ghmm` `ab-initio` `exon-intron` |
 
-**Prokaryotic Gene Prediction**
+**原核基因预测**
 
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | Prodigal | 2010 | O(n) | O(n) | `prokaryotic` `self-training` `metagenome` |
 | Prodigal | 2010 | O(n) | O(n) | `gene-prediction` `prokaryotic` `fast` |
 | RNAmmer | 2007 | O(n * s) | O(n) | `rrna` `gene-prediction` `hmm` |
 | GeneMark-ES | 2005 | O(n) | O(n) | `gene-prediction` `hmm` `prokaryotic` |
 | GLIMMER | 1998 | O(n) | O(n) | `interpolated-markov-model` `prokaryotic` `gene-finding` |
+| Glimmer | 1998 | O(n) | O(n) | `gene-prediction` `prokaryotic` `imm` |
+| GeneMark | 1993 | O(n) | O(n) | `hmm` `coding-potential` `gene-finding` |
 
-*[View all 7 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
 
+### 群体遗传学 <a id="群体遗传学"></a>
+<a href="#目录">↑ 返回顶部</a>
 
-### Population Genetics <a id="population-genetics"></a>
-<a href="#table-of-contents">↑ Back to Top</a>
+**选择信号检测**
 
-**Selection Signature Detection**
-
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | ⭐ Tajima's D | 1989 | O(n * L) | O(L) | `neutrality-test` `selection` `classic` |
 | PCAdapt | 2016 | O(n * m * k) | O(n * m) | `selection` `pca` `outlier-detection` |
@@ -452,54 +468,54 @@ python -m awesome_bioinfo stats
 | HapFLK | 2013 | O(n * m * K) | O(m * K) | `selection` `haplotype` `population-differentiation` |
 | BayeScan | 2008 | O(m * k * n) | O(m * k) | `selection` `bayesian` `fst` |
 
-**Genome-Wide Association Study**
+**全基因组关联分析**
 
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | REGENIE | 2021 | O(n * m) | O(n * m) | `gwas` `scalable` `two-stage` |
 | SAIGE | 2018 | O(n * m) | O(n * m) | `gwas` `mixed-model` `rare-variant` |
 | BOLT-LMM | 2015 | O(n * m) | O(n * m) | `lmm` `gwas` `scalable` |
 | PLINK | 2007 | O(n * m) | O(n * m) | `gwas` `association` `qc` |
 
-**PCA & Population Structure**
+**主成分与群体结构**
 
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | ADMIXTURE | 2009 | O(n * m * k) | O(n * m) | `ancestry` `maximum-likelihood` `population-structure` |
 | PCA for Population Structure | 2006 | O(n * m * k) | O(n * m) | `pca` `population-structure` `ancestry` |
 | STRUCTURE | 2000 | O(n * m * k * g) | O(n * k) | `bayesian` `mcmc` `population-structure` |
 
 
-### Spatial Omics <a id="spatial-omics"></a>
-<a href="#table-of-contents">↑ Back to Top</a>
+### 空间组学 <a id="空间组学"></a>
+<a href="#目录">↑ 返回顶部</a>
 
-**Spatial Transcriptomics**
+**空间转录组学**
 
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | Seurat Spatial | 2021 | O(c * g) | O(c * g) | `spatial` `clustering` `integration` |
 | Giotto Suite | 2021 | O(c * g) | O(c * g) | `spatial` `multi-platform` `comprehensive` |
 | Squidpy | 2021 | O(c * g) | O(c * g) | `spatial` `graph-analysis` `cell-interaction` |
 | SPARK-X | 2021 | O(g * n) | O(n) | `spatial` `fast` `non-parametric` |
 | stLearn | 2021 | O(c * g) | O(c * g) | `spatial` `image-integration` `trajectory` |
+| SPARK | 2019 | O(g * n^2) | O(n^2) | `spatial` `spatially-variable-gene` `statistical` |
+| SpatialDE | 2018 | O(g * n^2) | O(n^2) | `spatial` `gaussian-process` `pattern-detection` |
 
-*[View all 7 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
+**空间蛋白质组学**
 
-**Spatial Proteomics**
-
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | CellChat | 2021 | O(c^2 * g) | O(c^2) | `cell-communication` `ligand-receptor` `signaling` |
 | Cellpose | 2020 | O(p) | O(p) | `segmentation` `deep-learning` `cell-detection` |
 | StarDist | 2018 | O(p) | O(p) | `segmentation` `deep-learning` `cell-nuclei` |
 
 
-### Graph Genomics <a id="graph-genomics"></a>
-<a href="#table-of-contents">↑ Back to Top</a>
+### 图基因组学 <a id="图基因组学"></a>
+<a href="#目录">↑ 返回顶部</a>
 
-**Variation Graph**
+**变异图**
 
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | 🆕 PanVC | 2023 | O(n * m) | O(n) | `pangenome` `variant-calling` `genotyping` |
 | HiFiBD | 2022 | O(n * d) | O(n) | `variation-graph` `hifi` `genotyping` |
@@ -507,9 +523,9 @@ python -m awesome_bioinfo stats
 | VG (Variation Graph) | 2017 | O(n log n) | O(n) | `variation-graph` `alignment` `variant-calling` |
 | GCSA2 | 2017 | O(n) | O(n) | `indexing` `k-mer` `compressed-suffix-array` |
 
-**Pangenome**
+**泛基因组**
 
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | Minigraph | 2020 | O(n log n) | O(n) | `pangenome` `graph-alignment` `minimizer` |
 | odgi | 2020 | O(n) | O(n) | `pangenome` `graph-operations` `visualization` |
@@ -517,24 +533,23 @@ python -m awesome_bioinfo stats
 | Cactus | 2011 | O(n^2 * k) | O(n * k) | `pangenome` `alignment` `progressive` |
 
 
-### Protein Language Model <a id="protein-language-model"></a>
-<a href="#table-of-contents">↑ Back to Top</a>
+### 蛋白质语言模型 <a id="蛋白质语言模型"></a>
+<a href="#目录">↑ 返回顶部</a>
 
-**Protein Function Prediction**
+**蛋白质功能预测**
 
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | 🆕 ESMFold | 2023 | O(n^2) | O(n^2) | `structure-prediction` `single-sequence` `fast` |
 | 🆕 RFdiffusion | 2023 | O(n^2 * T) | O(n^2) | `diffusion-model` `protein-design` `structure-generation` |
 | ProteinMPNN | 2022 | O(n^2 * d) | O(n^2) | `protein-design` `inverse-folding` `graph-neural-network` |
 | ESM-1v | 2021 | O(n^2 * d) | O(n^2) | `variant-effect` `zero-shot` `pathogenicity` |
 | ProGen | 2020 | O(n^2 * d) | O(n^2) | `generative` `protein-design` `conditional-generation` |
+| DeepSEA | 2015 | O(n * d) | O(d) | `deep-learning` `functional-prediction` `chromatin` |
 
-*[View all 6 algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*
+**蛋白质语言模型预训练**
 
-**Protein Language Model Pretraining**
-
-| Algorithm | Year | Time | Space | Tags |
+| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | 🆕 Ankh | 2023 | O(n^2 * d) | O(n^2) | `language-model` `lightweight` `efficient` |
 | ESM-2 | 2022 | O(n^2 * d) | O(n^2) | `language-model` `transformer` `representation-learning` |
@@ -545,62 +560,59 @@ python -m awesome_bioinfo stats
 
 ---
 
-## 🛠️ CLI Commands
+## 🛠️ CLI 命令
 
 ```bash
-# Search for algorithms
+# 搜索算法
 python -m awesome_bioinfo search "alignment"
 
-# Get algorithm details
+# 查看算法详情
 python -m awesome_bioinfo info smith-waterman
 
-# Compare two algorithms
+# 对比两个算法
 python -m awesome_bioinfo compare smith-waterman needleman-wunsch
 
-# Export data to JSON
+# 导出数据为 JSON
 python -m awesome_bioinfo export --format json > algorithms.json
 
-# Generate MkDocs site
-python -m awesome_bioinfo mkdocs
-
-# Generate README
+# 生成 README
 python -m awesome_bioinfo generate
 ```
 
 ---
 
-## 📚 Resources
+## 📚 资源
 
-### Learning Platforms
-- [Rosalind](http://rosalind.info/) — Bioinformatics algorithm learning
-- [NCBI](https://www.ncbi.nlm.nih.gov/) — National Center for Biotechnology
-- [EBI](https://www.ebi.ac.uk/) — European Bioinformatics Institute
+### 学习平台
+- [Rosalind](http://rosalind.info/) — 生物信息学算法练习
+- [NCBI](https://www.ncbi.nlm.nih.gov/) — 美国国家生物技术信息中心
+- [EBI](https://www.ebi.ac.uk/) — 欧洲生物信息学研究所
 
-### Tools & Communities
-- [Bioconductor](https://www.bioconductor.org/) — R bioinformatics toolkit
-- [Galaxy](https://usegalaxy.org/) — Open analysis platform
-- [BioStars](https://www.biostars.org/) — Bioinformatics Q&A
-- [scverse](https://scverse.org/) — Single-cell Python ecosystem
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### Contribution Types
-
-- 🆕 **Add new algorithms**
-- 📝 **Improve descriptions**
-- 🔗 **Add references**
-- 🐛 **Report and fix bugs**
-- 📚 **Improve documentation**
+### 工具与社区
+- [Bioconductor](https://www.bioconductor.org/) — R 生物信息学工具集
+- [Galaxy](https://usegalaxy.org/) — 开放分析平台
+- [BioStars](https://www.biostars.org/) — 生物信息学问答社区
+- [scverse](https://scverse.org/) — 单细胞 Python 生态
 
 ---
 
-## 📚 Citation
+## 🤝 贡献
 
-If you use this project in your research, please cite it as:
+欢迎贡献！详见[贡献指南](CONTRIBUTING.md)。
+
+### 贡献方式
+
+- 🆕 **添加新算法**
+- 📝 **改进描述**
+- 🔗 **补充参考文献**
+- 🐛 **报告与修复问题**
+- 📚 **完善文档**
+
+---
+
+## 📚 引用 <a id="citation"></a>
+
+如在研究中使用了本项目，可引用为：
 
 ```bibtex
 @software{awesome_bioinfo_algorithms,
@@ -611,11 +623,11 @@ If you use this project in your research, please cite it as:
 }
 ```
 
-Or see [CITATION.cff](CITATION.cff) for more citation formats.
+更多引用格式见 [CITATION.cff](CITATION.cff)。
 
 ---
 
-## 📄 License
+## 📄 许可证
 
 <p align="center">
   <a href="https://creativecommons.org/publicdomain/zero/1.0/">
@@ -623,12 +635,12 @@ Or see [CITATION.cff](CITATION.cff) for more citation formats.
   </a>
 </p>
 
-This project is licensed under [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) (Public Domain).
+本项目采用 [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)（公有领域）许可。
 
-You are free to:
-- ✅ Copy, modify, distribute
-- ✅ Use for commercial purposes
-- ✅ No attribution required
+您可以自由地：
+- ✅ 复制、修改、分发
+- ✅ 用于商业用途
+- ✅ 无需署名
 
 ---
 

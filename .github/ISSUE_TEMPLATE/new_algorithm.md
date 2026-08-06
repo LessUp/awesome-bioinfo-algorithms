@@ -1,22 +1,22 @@
 ---
-name: 新算法提交 / New Algorithm Submission
-about: 提交一个新的生物信息学算法 / Submit a new bioinformatics algorithm
+name: 新算法提交
+about: 提交一个新的生物信息学算法
 title: '[Algorithm] '
 labels: 'new-algorithm'
 assignees: ''
 ---
 
-## 算法信息 / Algorithm Information
+## 算法信息
 
-### 基本信息 / Basic Information
+### 基本信息
 
-**算法名称 / Algorithm Name:**
-
-
-**算法ID / Algorithm ID:** (小写字母和连字符 / lowercase letters and hyphens)
+**算法名称:**
 
 
-**分类 / Category:**
+**算法ID:** (小写字母和连字符)
+
+
+**分类:**
 - [ ] sequence-alignment (序列比对)
 - [ ] assembly (序列组装)
 - [ ] variant-calling (变异检测)
@@ -29,43 +29,47 @@ assignees: ''
 - [ ] metagenomics (宏基因组学)
 - [ ] epigenomics (表观基因组学)
 - [ ] gene-prediction (基因预测)
+- [ ] population-genetics (群体遗传学)
+- [ ] spatial-omics (空间组学)
+- [ ] graph-genomics (图基因组学)
+- [ ] protein-language-model (蛋白质语言模型)
 
-**子分类 / Subcategory:** (如适用 / if applicable)
-
-
-### 详细信息 / Details
-
-**算法描述 / Description:** (50-200字 / 50-200 characters)
-
-
-**主要用途 / Purpose:**
+**子分类:** (如适用)
 
 
-**时间复杂度 / Time Complexity:**
+### 详细信息
+
+**算法描述:** (50-500字)
 
 
-**空间复杂度 / Space Complexity:** (可选 / optional)
+**主要用途:**
 
 
-### 参考资料 / References
-
-**原始论文 / Original Paper:** (URL)
+**时间复杂度:**
 
 
-**参考实现 / Reference Implementation:** (URL, 可选 / optional)
+**空间复杂度:** (可选)
 
 
-**相关工具 / Related Tools:** (可选 / optional)
+### 参考资料
+
+**原始论文:** (URL)
 
 
-**标签 / Tags:** (可选 / optional)
+**参考实现:** (URL, 可选)
+
+
+**相关工具:** (可选)
+
+
+**标签:** (可选)
 
 
 ---
 
-## 检查清单 / Checklist
+## 检查清单
 
-- [ ] 我已阅读贡献指南 / I have read the contributing guide
-- [ ] 算法描述在 50-200 字之间 / Description is between 50-200 characters
-- [ ] 所有必填字段已填写 / All required fields are filled
-- [ ] 分类ID有效 / Category ID is valid
+- [ ] 我已阅读贡献指南
+- [ ] 算法描述在 50-500 字之间
+- [ ] 所有必填字段已填写
+- [ ] 分类ID有效

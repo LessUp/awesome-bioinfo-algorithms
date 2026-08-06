@@ -182,7 +182,7 @@ def test_main_returns_help_when_no_command_is_provided(capsys):
     assert exit_code == 1
     assert "usage: python -m awesome_bioinfo" in output
     assert "search" in output
-    assert "vitepress" in output
+    assert "generate" in output
 
 
 def test_main_rejects_unknown_command(capsys):
@@ -224,9 +224,6 @@ def test_build_parser_accepts_new_command_options():
     assert args.command == "export"
     assert args.fmt == "csv"
     assert args.output == "out.csv"
-
-    args = parser.parse_args(["vitepress"])
-    assert args.command == "vitepress"
 
     args = parser.parse_args(["check-links"])
     assert args.command == "check-links"
@@ -273,15 +270,6 @@ def test_main_dispatches_info_and_compare_commands(monkeypatch):
     assert cli.main(["compare", "smith-waterman", "needleman-wunsch"]) == 0
     assert info_called == ["smith-waterman"]
     assert compare_called == [("smith-waterman", "needleman-wunsch")]
-
-
-def test_main_dispatches_vitepress_command(monkeypatch):
-    """main() should dispatch the vitepress subcommand."""
-    called = []
-    monkeypatch.setattr(cli, "cmd_vitepress", lambda: called.append("vitepress") or 0)
-
-    assert cli.main(["vitepress"]) == 0
-    assert called == ["vitepress"]
 
 
 def test_main_dispatches_check_links_command(monkeypatch):

@@ -1,6 +1,6 @@
 """
 README Generator for Awesome Bioinformatics Algorithms.
-Generates formatted README.md from algorithm data.
+Generates the Chinese README.md from algorithm data.
 """
 
 import os
@@ -25,12 +25,7 @@ class ReadmeGenerator:
         self._template_path = template_path
 
     def generate(self) -> str:
-        """
-        Generate the complete README content.
-
-        Returns:
-            Complete README markdown string
-        """
+        """Generate the complete README content."""
         template = self._load_template()
 
         stats = self._registry.get_statistics()
@@ -60,15 +55,15 @@ class ReadmeGenerator:
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
-> A curated collection of bioinformatics algorithms with complexity analysis
+> 精选生物信息学算法合集，附时间/空间复杂度分析
 
-## Statistics
+## 统计摘要
 
-- 📊 Total Algorithms: {{ total_algorithms }}
-- 📁 Categories: {{ total_categories }}
-- 🏷️ Tags: {{ total_tags }}
+- 📊 算法总数: {{ total_algorithms }}
+- 📁 分类数量: {{ total_categories }}
+- 🏷️ 标签数量: {{ total_tags }}
 
-## Table of Contents
+## 目录
 
 {{ toc }}
 
@@ -80,30 +75,27 @@ class ReadmeGenerator:
 
 {{ featured_content }}
 
-## Contributing
+---
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+## 贡献
 
-## License
+欢迎贡献！详见[贡献指南](CONTRIBUTING.md)。
+
+## 许可证
 
 [![CC0](https://licensebuttons.net/p/zero/1.0/88x31.png)](https://creativecommons.org/publicdomain/zero/1.0/)
 """
 
     def generate_toc(self) -> str:
-        """
-        Generate table of contents with anchor links.
-
-        Returns:
-            Markdown formatted table of contents
-        """
-        toc_lines = ["<details>", "<summary>Click to expand</summary>", ""]
+        """Generate table of contents with anchor links."""
+        toc_lines = ["<details>", "<summary>点击展开</summary>", ""]
         categories = self._category_manager.list_all_categories()
 
         for category in categories:
             algos = self._registry.get_by_category(category.id)
             if algos:  # Only include categories with algorithms
-                anchor = self._generate_anchor(category.name_en)
-                toc_lines.append(f"- [{category.name_en}](#{anchor})")
+                anchor = self._generate_anchor(category.name)
+                toc_lines.append(f"- [{category.name}](#{anchor})")
 
         toc_lines.extend(["", "</details>"])
         return "\n".join(toc_lines)
@@ -120,8 +112,8 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
     def _generate_category_overview(self) -> str:
         """Generate category overview table with statistics."""
-        lines = ["## Category Overview", ""]
-        lines.append("| Category | Algorithms | Description |")
+        lines = ["## 分类总览", ""]
+        lines.append("| 分类 | 算法数 | 描述 |")
         lines.append("|----------|------------|-------------|")
 
         categories = self._category_manager.list_all_categories()
@@ -129,38 +121,26 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
             algos = self._registry.get_by_category(category.id)
             if algos:
                 count = len(algos)
-                desc = category.description_en or category.description
-                lines.append(f"| {category.name_en} | {count} | {desc} |")
+                lines.append(f"| {category.name} | {count} | {category.description} |")
 
         lines.append("")
         return "\n".join(lines)
 
     def _generate_featured_content(self) -> str:
-        """Generate featured algorithms content (limited per category)."""
-        sections = ["## Featured Algorithms", ""]
+        """Generate the full algorithm listing grouped by category."""
+        sections = ["## 算法列表", ""]
         categories = self._category_manager.list_all_categories()
 
         for category in categories:
-            section = self._generate_category_featured_section(category)
+            section = self._generate_category_section(category)
             if section.strip():
                 sections.append(section)
                 sections.append("")
 
         return "\n".join(sections)
 
-    def _generate_category_featured_section(
-        self, category: Category, max_algorithms: int = 5
-    ) -> str:
-        """
-        Generate markdown section for a category with featured algorithms.
-
-        Args:
-            category: The category to generate section for
-            max_algorithms: Maximum number of algorithms to show per subcategory
-
-        Returns:
-            Markdown formatted category section
-        """
+    def _generate_category_section(self, category: Category) -> str:
+        """Generate the markdown section listing all algorithms in one category."""
         lines = []
         all_algos = self._registry.get_by_category(category.id)
 
@@ -168,9 +148,9 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
             return ""
 
         # Category header with anchor and back-to-top link
-        anchor = self._generate_anchor(category.name_en)
-        lines.append(f'### {category.name_en} <a id="{anchor}"></a>')
-        lines.append('<a href="#table-of-contents">↑ Back to Top</a>')
+        anchor = self._generate_anchor(category.name)
+        lines.append(f'### {category.name} <a id="{anchor}"></a>')
+        lines.append('<a href="#目录">↑ 返回顶部</a>')
         lines.append("")
 
         # Get all algorithms with their subcategory info
@@ -180,7 +160,7 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
             if algo.subcategory:
                 for sub in category.subcategories:
                     if sub.id == algo.subcategory:
-                        subcategory_name = sub.name_en
+                        subcategory_name = sub.name
                         break
             algo_data.append((algo, subcategory_name))
 
@@ -195,24 +175,22 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
         # Group by subcategory
         subcategory_groups: dict[str, list[tuple[AlgorithmEntry, str]]] = {}
         for algo, sub_name in algo_data:
-            key = sub_name or "General"
+            key = sub_name or "通用"
             if key not in subcategory_groups:
                 subcategory_groups[key] = []
             subcategory_groups[key].append((algo, sub_name))
 
         # Generate tables for each subcategory
         for sub_name, algos in subcategory_groups.items():
-            if sub_name != "General":
+            if sub_name != "通用":
                 lines.append(f"**{sub_name}**")
                 lines.append("")
 
             # Table header
-            lines.append("| Algorithm | Year | Time | Space | Tags |")
+            lines.append("| 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |")
             lines.append("|-----------|------|------|-------|------|")
 
-            # Featured algorithms
-            featured = algos[:max_algorithms]
-            for algo, _ in featured:
+            for algo, _ in algos:
                 badge = algo.get_year_badge()
                 name = f"{badge} {algo.name}" if badge else algo.name
                 year = str(algo.year) if algo.year else "-"
@@ -224,26 +202,10 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
             lines.append("")
 
-            # Link to view all
-            total_in_sub = len(algos)
-            if total_in_sub > max_algorithms:
-                lines.append(
-                    f"*[View all {total_in_sub} algorithms in this category →](https://lessup.github.io/awesome-bioinfo-algorithms/)*"
-                )
-                lines.append("")
-
         return "\n".join(lines)
 
     def generate_algorithm_entry(self, algo: AlgorithmEntry) -> str:
-        """
-        Generate markdown for a single algorithm entry (full detail format).
-
-        Args:
-            algo: The algorithm entry to format
-
-        Returns:
-            Markdown formatted algorithm entry
-        """
+        """Generate markdown for a single algorithm entry (full detail format)."""
         lines = []
 
         # Algorithm name as header (with year if available)
@@ -255,51 +217,47 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
             lines.append(f"\n#### {name_display}")
         lines.append("")
 
-        # Description (prefer English if available)
-        desc = algo.description_en.strip() if algo.description_en else algo.description.strip()
-        lines.append(desc)
+        # Description
+        lines.append(algo.description.strip())
         lines.append("")
 
         # Purpose
-        purpose = algo.purpose_en if algo.purpose_en else algo.purpose
-        lines.append(f"**Purpose**: {purpose}")
+        lines.append(f"**用途**: {algo.purpose}")
 
         # Complexity
-        lines.append(f"**Time**: {algo.time_complexity}")
+        lines.append(f"**时间**: {algo.time_complexity}")
         if algo.space_complexity:
-            lines.append(f"**Space**: {algo.space_complexity}")
+            lines.append(f"**空间**: {algo.space_complexity}")
 
         # Links
         if algo.paper_url:
-            lines.append(f"**Paper**: [{algo.paper_url}]({algo.paper_url})")
+            lines.append(f"**论文**: [{algo.paper_url}]({algo.paper_url})")
         if algo.implementation_url:
-            lines.append(
-                f"**Implementation**: [{algo.implementation_url}]({algo.implementation_url})"
-            )
+            lines.append(f"**实现**: [{algo.implementation_url}]({algo.implementation_url})")
 
         # Related tools
         if algo.related_tools:
             tools = ", ".join(algo.related_tools)
-            lines.append(f"**Related Tools**: {tools}")
+            lines.append(f"**相关工具**: {tools}")
 
         # Tags
         if algo.tags:
             tags = " ".join([f"`{tag}`" for tag in algo.tags])
-            lines.append(f"**Tags**: {tags}")
+            lines.append(f"**标签**: {tags}")
 
         # Difficulty
         if algo.difficulty:
             label = DIFFICULTY_LABELS_BILINGUAL.get(algo.difficulty, algo.difficulty)
-            lines.append(f"**Difficulty**: {label}")
+            lines.append(f"**难度**: {label}")
 
         # Implementation languages
         if algo.language:
             langs = ", ".join(algo.language)
-            lines.append(f"**Language**: {langs}")
+            lines.append(f"**语言**: {langs}")
 
         # Extended references
         if algo.references:
-            lines.append("**References**:")
+            lines.append("**参考资料**:")
             for ref in algo.references:
                 title = ref.title or ref.url
                 ref_type = f" [{ref.type}]" if ref.type else ""
@@ -319,27 +277,17 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
         ]
 
     def generate_statistics(self) -> str:
-        """
-        Generate statistics section.
-
-        Returns:
-            Markdown formatted statistics
-        """
+        """Generate the statistics section."""
         stats = self._registry.get_statistics()
         lines = [
-            f"- 📊 Total Algorithms: {stats.total_algorithms}",
-            f"- 📁 Categories: {stats.total_categories}",
-            f"- 🏷️ Tags: {stats.total_tags}",
+            f"- 📊 算法总数: {stats.total_algorithms}",
+            f"- 📁 分类数量: {stats.total_categories}",
+            f"- 🏷️ 标签数量: {stats.total_tags}",
         ]
         return "\n".join(lines)
 
     def save(self, output_path: str = "README.md") -> None:
-        """
-        Generate and save README to file.
-
-        Args:
-            output_path: Path to save the README file
-        """
+        """Generate and save README to file."""
         content = self.generate()
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(content)

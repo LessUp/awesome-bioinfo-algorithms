@@ -1,57 +1,35 @@
-<!-- TRELLIS:START -->
-# Trellis Instructions
+# AGENTS.md
 
-These instructions are for AI assistants working in this project.
+AI 助手工作指引。详细架构与模块说明见 [`CLAUDE.md`](CLAUDE.md)。
 
-This project is managed by Trellis. The working knowledge you need lives under `.trellis/`:
+## 项目
 
-- `.trellis/workflow.md` — development phases, when to create tasks, skill routing
-- `.trellis/spec/` — package- and layer-scoped coding guidelines (read before writing code in a given layer)
-- `.trellis/workspace/` — per-developer journals and session traces
-- `.trellis/tasks/` — active and archived tasks (PRDs, research, jsonl context)
+精选生物信息学算法 awesome-list：YAML 数据 + Python CLI（`awesome_bioinfo` 包）+ 自动生成的中文 README。轻量、业余维护。
 
-If a Trellis command is available on your platform (e.g. `/trellis:finish-work`, `/trellis:continue`), prefer it over manual steps. Not every platform exposes every command.
+## 核心规则
 
-If you're using Codex or another agent-capable tool, additional project-scoped helpers may live in:
-- `.agents/skills/` — reusable Trellis skills
-- `.codex/agents/` — optional custom subagents
+- `README.md` 由 `python -m awesome_bioinfo generate` 从 `templates/readme_template.md` 生成，**禁止手工编辑**。
+- 改 `data/` 或 `templates/` 后必须重新生成并确认无漂移：`python -m awesome_bioinfo generate && git diff --exit-code -- README.md`。
+- 数据真相源在 `data/algorithms/*.yaml` 与 `data/categories.yaml`。
 
-## Subagents
+## 常用命令
 
-- ALWAYS wait for every spawned subagent to reach a terminal status before yielding, acting on partial results, or spawning followups.
-  - On Codex, this means calling the `wait` tool with the subagent's thread id (requires `multi_agent_v2`). Do NOT infer completion from elapsed time.
-  - On Claude Code / OpenCode, this means awaiting the Task/agent tool result before continuing.
-- NEVER cancel or re-spawn a subagent that hasn't finished. If a subagent appears stuck, raise the wait timeout (Codex default 30s, max 1h) before judging it broken.
-- Spawn subagents automatically when:
-  - Parallelizable work (e.g., install + verify, npm test + typecheck, multiple tasks from plan)
-  - Long-running or blocking tasks where a worker can run independently
-  - Isolation for risky changes or checks
+```bash
+python -m awesome_bioinfo validate          # 数据变更前必过
+python -m awesome_bioinfo stats
+python -m awesome_bioinfo search <query>
+python -m awesome_bioinfo info <id>
+python -m awesome_bioinfo compare <id1> <id2>
+python -m awesome_bioinfo export --format json
+python -m awesome_bioinfo generate          # 生成 README.md
+python -m awesome_bioinfo check-links       # 检查条目 URL 有效性
 
-### Codex-only — `spawn_agent` parameters
-
-When calling `spawn_agent`, ALWAYS pass `fork_turns="none"`. Without it the child inherits the parent transcript and sees your prior `spawn_agent(...)` records, then applies the "wait for spawned subagents" rule to itself — causing `wait_agent` self-deadlock.
-
-```text
-spawn_agent(agent_type="trellis-implement", message="...", fork_turns="none")
+ruff check awesome_bioinfo tests
+pytest tests/ -v --tb=short
 ```
 
-### Codex-only — multi-subagent close-loop
+## 算法条目
 
-When `wait` returns a `completed` notification, treat it as an event signal — not as "all done". Run this loop:
-
-1. Maintain an `expected_agents` set of dispatched sub-agent thread IDs.
-2. After each `wait` update:
-   1. Call `list_agents` to inspect ALL live agents' status.
-   2. For each agent now in a terminal state:
-      - Verify its promised deliverable exists (e.g. `{task_dir}/research/*.md`).
-      - Read or summarize as needed.
-      - `close_agent` to release the slot.
-      - Remove from `expected_agents`.
-   3. If `expected_agents` still contains running agents → keep waiting.
-   4. If `expected_agents` is empty → continue main flow.
-3. Never `wait` on an agent that has already reported `completed`.
-4. If a `completed` agent is missing its deliverable, treat it as failed — surface that in your report instead of re-waiting.
-
-Managed by Trellis. Edits outside this block are preserved; edits inside may be overwritten by a future `trellis update`.
-
-<!-- TRELLIS:END -->
+- 必填：`id`（lowercase-hyphenated，全局唯一）、`name`、`description`（50-500 字）、`purpose`、`time_complexity`（`O(...)`）、`category`
+- `category`/`subcategory` 必须存在于 `data/categories.yaml`
+- 模板：`templates/algorithm_template.yaml`

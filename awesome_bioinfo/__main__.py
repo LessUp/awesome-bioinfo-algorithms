@@ -10,7 +10,6 @@ Usage:
     python -m awesome_bioinfo info <id>                    # Show algorithm details
     python -m awesome_bioinfo compare <id1> <id2>          # Compare two algorithms
     python -m awesome_bioinfo export [options]             # Export data to JSON/CSV
-    python -m awesome_bioinfo vitepress                    # Generate VitePress pages
 """
 
 import argparse
@@ -536,17 +535,6 @@ def cmd_export_cli(*, fmt: str = "json", output: str = "") -> int:
     return cmd_export(registry, category_manager, fmt, output)
 
 
-def cmd_vitepress() -> int:
-    """Generate VitePress pages."""
-    from .generate_docs import main as generate_docs_main
-
-    base_dir, missing_paths = ensure_repo_layout()
-    if missing_paths:
-        return _print_repo_layout_error(missing_paths)
-
-    return generate_docs_main(base_dir)
-
-
 def cmd_check_links() -> int:
     """Check validity of algorithm URLs."""
     from .link_checker import cmd_check_links as _cmd_check_links
@@ -601,19 +589,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     export_parser.add_argument("--output", default="", help="Write export output to a file")
 
-    subparsers.add_parser("vitepress", help="Generate VitePress pages")
-
     subparsers.add_parser("check-links", help="Check validity of algorithm URLs")
-
-    # Translate subcommand
-    translate_parser = subparsers.add_parser("translate", help="Translation utilities")
-    translate_subparsers = translate_parser.add_subparsers(
-        dest="translate_command", help="Translation commands"
-    )
-    translate_subparsers.add_parser("status", help="Show translation status")
-    translate_subparsers.add_parser("generate", help="Generate translation template")
-    apply_parser = translate_subparsers.add_parser("apply", help="Apply translations from file")
-    apply_parser.add_argument("file", nargs="?", help="Translation file to apply")
 
     return parser
 
@@ -642,20 +618,8 @@ def main(argv: Optional[list[str]] = None) -> int:
         return cmd_compare_cli(args.id1, args.id2)
     if args.command == "export":
         return cmd_export_cli(fmt=args.fmt, output=args.output)
-    if args.command == "vitepress":
-        return cmd_vitepress()
     if args.command == "check-links":
         return cmd_check_links()
-    if args.command == "translate":
-        from .translate import cmd_translate_apply, cmd_translate_generate, cmd_translate_status
-
-        if args.translate_command == "status":
-            return cmd_translate_status()
-        if args.translate_command == "generate":
-            return cmd_translate_generate()
-        if args.translate_command == "apply":
-            return cmd_translate_apply(getattr(args, "file", None))
-
     parser.print_help()
     return 1
 

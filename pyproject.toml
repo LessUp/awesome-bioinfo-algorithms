@@ -33,14 +33,9 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0",
-    "pytest-cov>=4.0",
-    "pytest-benchmark>=4.0",
-    "pytest-xdist>=3.0",
     "hypothesis>=6.0",
     "ruff>=0.1.0",
-    "mypy>=1.0",
     "pre-commit>=3.0",
-    "types-PyYAML>=6.0",
 ]
 
 [project.urls]
@@ -64,43 +59,6 @@ target-version = "py39"
 select = ["E", "F", "W", "I", "N", "UP", "B", "C4"]
 ignore = ["E501"]
 
-[tool.mypy]
-python_version = "3.9"
-# Type checking strictness (progressive enhancement)
-warn_return_any = true
-warn_unused_configs = true
-warn_redundant_casts = true
-warn_unused_ignores = true
-warn_unreachable = true
-# Strict mode (gradually enable)
-# strict = true
-check_untyped_defs = true
-# disallow_untyped_calls = true
-# disallow_untyped_defs = true
-# Ignore missing imports for third-party libraries without stubs
-ignore_missing_imports = true
-# Exclude patterns
-exclude = [
-    "venv/",
-    ".venv/",
-    "__pycache__/",
-]
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-v --tb=short"
-
-[tool.coverage.run]
-source = ["awesome_bioinfo"]
-branch = true
-omit = [
-    "awesome_bioinfo/link_checker.py",
-]
-
-[tool.coverage.report]
-fail_under = 85
-show_missing = true
-exclude_lines = [
-    "pragma: no cover",
-    'if __name__ == .__main__.:',
-]
