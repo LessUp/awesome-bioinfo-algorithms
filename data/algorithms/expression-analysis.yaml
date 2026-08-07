@@ -149,6 +149,7 @@ algorithms:
     category: expression-analysis
     subcategory: differential-expression
     paper_url: https://doi.org/10.1186/gb-2014-15-2-r29
+    implementation_url: https://bioconductor.org/packages/release/bioc/html/limma.html
     related_tools:
       - DESeq2
       - edgeR
@@ -170,7 +171,8 @@ algorithms:
     year: 2015
     category: expression-analysis
     subcategory: differential-expression
-    paper_url: https://doi.org/10.1038/nmeth.3053
+    paper_url: https://doi.org/10.1101/gr.124321.111
+    implementation_url: https://bioconductor.org/packages/release/bioc/html/NOISeq.html
     tags:
       - differential-expression
       - non-parametric
@@ -236,6 +238,7 @@ algorithms:
     category: expression-analysis
     subcategory: differential-expression
     paper_url: https://doi.org/10.1038/nbt.3172
+    implementation_url: https://bioconductor.org/packages/release/bioc/html/ballgown.html
     related_tools:
       - DESeq2
       - StringTie
@@ -262,6 +265,7 @@ algorithms:
     category: expression-analysis
     subcategory: quantification
     paper_url: https://doi.org/10.12688/f1000research.7563.1
+    implementation_url: https://bioconductor.org/packages/release/bioc/html/tximport.html
     related_tools:
       - Salmon
       - Kallisto

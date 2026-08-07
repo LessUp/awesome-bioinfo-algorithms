@@ -13,6 +13,7 @@ algorithms:
   category: data-compression
   subcategory: general-compression
   paper_url: https://doi.org/10.17487/RFC1952
+  implementation_url: https://www.gzip.org/
   related_tools:
   - gzip
   - pigz
@@ -107,7 +108,7 @@ algorithms:
   year: 2019
   category: data-compression
   subcategory: specialized-compression
-  paper_url: https://doi.org/10.1093/bioinformatics/btz526
+  paper_url: https://doi.org/10.1093/bioinformatics/bty1015
   implementation_url: https://github.com/shubhamchandak94/SPRING
   related_tools:
   - Genozip
@@ -131,7 +132,7 @@ algorithms:
   year: 2013
   category: data-compression
   subcategory: specialized-compression
-  paper_url: https://doi.org/10.1093/bioinformatics/btt214
+  paper_url: https://doi.org/10.1093/bioinformatics/btr014
   implementation_url: https://github.com/refresh-bio/DSRC
   related_tools:
   - SPRING
@@ -155,7 +156,8 @@ algorithms:
   year: 2014
   category: data-compression
   subcategory: specialized-compression
-  paper_url: https://doi.org/10.1093/bioinformatics/btu537
+  paper_url: https://doi.org/10.1371/journal.pone.0059190
+  implementation_url: https://github.com/jkbonfield/fqzcomp
   related_tools:
   - SPRING
   - Genozip
@@ -195,49 +197,3 @@ algorithms:
   difficulty: intermediate
   language:
   - C++
-- id: mango
-  name: MANGO
-  description: '基于上下文建模的参考基因组无关序列压缩方法，通过学习序列局部统计特征实现基因组数据的高效压缩。
-
-    该方法无需参考基因组即可达到优秀的压缩比，适用于新物种或参考基因组不可用的场景。
-
-    '
-  purpose: 无需参考基因组的基因组序列压缩
-  time_complexity: O(n)
-  space_complexity: O(n)
-  year: 2018
-  category: data-compression
-  subcategory: specialized-compression
-  related_tools:
-  - Genozip
-  - CRAM
-  - gzip
-  tags:
-  - reference-free
-  - genome-compression
-  - context-modeling
-  difficulty: advanced
-  language:
-  - C++
-- id: orione
-  name: Orione
-  description: 利用参考辅助压缩的 FASTQ 和 SAM 格式压缩工具，将读段比对到参考序列后仅存储差异信息。该方法在有高质量参考基因组时压缩效果极佳。
-  purpose: 参考辅助的 FASTQ/SAM 压缩
-  time_complexity: O(n)
-  space_complexity: O(1)
-  year: 2015
-  category: data-compression
-  subcategory: specialized-compression
-  paper_url: https://doi.org/10.1109/DCC.2015.45
-  related_tools:
-  - CRAM
-  - Genozip
-  - Spring
-  tags:
-  - reference-assisted
-  - fastq
-  - sam
-  - archival
-  difficulty: intermediate
-  language:
-  - C

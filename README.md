@@ -8,9 +8,9 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Algorithms-195-blue.svg" alt="Algorithms">
+  <img src="https://img.shields.io/badge/Algorithms-186-blue.svg" alt="Algorithms">
   <img src="https://img.shields.io/badge/Categories-16-green.svg" alt="Categories">
-  <img src="https://img.shields.io/badge/Tags-392-orange.svg" alt="Tags">
+  <img src="https://img.shields.io/badge/Tags-382-orange.svg" alt="Tags">
   <img src="https://img.shields.io/badge/Python-3.9%2B-blue?logo=python" alt="Python">
 </p>
 
@@ -32,7 +32,7 @@
 <td width="50%">
 
 **🎯 面向研究者**
-- 195+ 精选算法
+- 186+ 精选算法
 - 时间/空间复杂度分析
 - 论文与实现链接
 - 分类标签体系
@@ -75,9 +75,9 @@ python -m awesome_bioinfo stats
 
 | 指标 | 数值 |
 |:-------|------:|
-| 算法总数 | **195** |
+| 算法总数 | **186** |
 | 分类数量 | **16** |
-| 标签数量 | **392** |
+| 标签数量 | **382** |
 
 ---
 
@@ -118,15 +118,15 @@ python -m awesome_bioinfo stats
 | 蛋白质结构预测 | 14 | 预测蛋白质三维结构的算法 |
 | 系统发育分析 | 12 | 构建和分析进化树的算法 |
 | 功能注释 | 12 | 预测基因和蛋白质功能的算法 |
-| 数据压缩 | 10 | 压缩生物信息学数据的算法 |
+| 数据压缩 | 8 | 压缩生物信息学数据的算法 |
 | 单细胞基因组学 | 15 | 单细胞水平的基因组和转录组分析算法 |
-| 宏基因组学 | 14 | 微生物群落的基因组分析算法 |
+| 宏基因组学 | 12 | 微生物群落的基因组分析算法 |
 | 表观基因组学 | 6 | 分析表观遗传修饰的算法 |
-| 基因预测 | 12 | 基因结构预测和基因组注释算法 |
+| 基因预测 | 9 | 基因结构预测和基因组注释算法 |
 | 群体遗传学 | 12 | 分析群体遗传结构和进化的算法 |
 | 空间组学 | 10 | 保留空间信息的组学数据分析算法 |
-| 图基因组学 | 9 | 基于图结构表示和分析基因组的算法 |
-| 蛋白质语言模型 | 10 | 基于大规模预训练模型的蛋白质分析算法 |
+| 图基因组学 | 8 | 基于图结构表示和分析基因组的算法 |
+| 蛋白质语言模型 | 9 | 基于大规模预训练模型的蛋白质分析算法 |
 
 
 ---
@@ -338,8 +338,6 @@ python -m awesome_bioinfo stats
 | Genozip | 2021 | O(n) | O(1) | `multi-format` `high-ratio` `random-access` |
 | SPRING Compress | 2020 | O(n log n) | O(n) | `fastq` `reordering` `high-ratio` |
 | SPRING | 2019 | O(n) | O(n) | `fastq` `specialized-compression` `high-ratio` |
-| MANGO | 2018 | O(n) | O(n) | `reference-free` `genome-compression` `context-modeling` |
-| Orione | 2015 | O(n) | O(1) | `reference-assisted` `fastq` `sam` |
 | fqzcomp | 2014 | O(n) | O(1) | `fastq` `quality-score` `lossless` |
 | DSRC | 2013 | O(n) | O(1) | `fastq` `specialized-compression` `archival` |
 | CRAM | 2011 | O(n) | O(r) | `reference-based` `alignment` `bam` |
@@ -391,7 +389,6 @@ python -m awesome_bioinfo stats
 | 🆕 MetaPhlAn 4 | 2023 | O(n * m) | O(m) | `marker-gene` `profiling` `enhanced` |
 | Kraken2 | 2019 | O(n * k) | O(d) | `k-mer` `classification` `fast` |
 | QIIME 2 | 2019 | O(n * d) | O(n) | `pipeline` `microbiome` `diversity` |
-| MetaBAT 2 | 2019 | O(n * c) | O(n) | `binning` `metagenome` `adaptive` |
 | mOTUs | 2017 | O(n * m) | O(m) | `marker-gene` `profiling` `universal` |
 | Bracken | 2017 | O(n) | O(d) | `abundance-estimation` `bayesian` `kraken` |
 | Centrifuge | 2016 | O(n * log d) | O(d) | `classification` `compressed-index` `low-memory` |
@@ -402,7 +399,6 @@ python -m awesome_bioinfo stats
 
 | 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
-| metaPOST | 2021 | O(n * c) | O(n) | `post-processing` `refinement` `assembly` |
 | MetaBAT 2 | 2019 | O(n * c) | O(n) | `binning` `mags` `coverage` |
 | HUMAnN 3 | 2018 | O(n * d) | O(d) | `functional-profiling` `pathway` `gene-families` |
 | MaxBin 2 | 2016 | O(n * c) | O(n) | `binning` `expectation-maximization` `mags` |
@@ -438,7 +434,6 @@ python -m awesome_bioinfo stats
 |-----------|------|------|-------|------|
 | BRAKER | 2016 | O(n * g) | O(n) | `pipeline` `evidence-based` `automated` |
 | MAKER | 2008 | O(n * g) | O(n) | `annotation-pipeline` `evidence-based` `eukaryotic` |
-| AUGUSTUS | 2005 | O(n * s^2) | O(n * s) | `gene-prediction` `eukaryotic` `hmm` |
 | SNAP | 2004 | O(n * s) | O(n) | `semi-hmm` `ab-initio` `eukaryotic` |
 | AUGUSTUS | 2003 | O(n * s^2) | O(n * s) | `ghmm` `ab-initio` `exon-intron` |
 
@@ -447,11 +442,9 @@ python -m awesome_bioinfo stats
 | 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | Prodigal | 2010 | O(n) | O(n) | `prokaryotic` `self-training` `metagenome` |
-| Prodigal | 2010 | O(n) | O(n) | `gene-prediction` `prokaryotic` `fast` |
 | RNAmmer | 2007 | O(n * s) | O(n) | `rrna` `gene-prediction` `hmm` |
 | GeneMark-ES | 2005 | O(n) | O(n) | `gene-prediction` `hmm` `prokaryotic` |
 | GLIMMER | 1998 | O(n) | O(n) | `interpolated-markov-model` `prokaryotic` `gene-finding` |
-| Glimmer | 1998 | O(n) | O(n) | `gene-prediction` `prokaryotic` `imm` |
 | GeneMark | 1993 | O(n) | O(n) | `hmm` `coding-potential` `gene-finding` |
 
 
@@ -518,7 +511,6 @@ python -m awesome_bioinfo stats
 | 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
 | 🆕 PanVC | 2023 | O(n * m) | O(n) | `pangenome` `variant-calling` `genotyping` |
-| HiFiBD | 2022 | O(n * d) | O(n) | `variation-graph` `hifi` `genotyping` |
 | GraphAligner | 2019 | O(n * d) | O(n) | `graph-alignment` `long-read` `variation-graph` |
 | VG (Variation Graph) | 2017 | O(n log n) | O(n) | `variation-graph` `alignment` `variant-calling` |
 | GCSA2 | 2017 | O(n) | O(n) | `indexing` `k-mer` `compressed-suffix-array` |
@@ -540,7 +532,6 @@ python -m awesome_bioinfo stats
 
 | 算法 | 年份 | 时间复杂度 | 空间复杂度 | 标签 |
 |-----------|------|------|-------|------|
-| 🆕 ESMFold | 2023 | O(n^2) | O(n^2) | `structure-prediction` `single-sequence` `fast` |
 | 🆕 RFdiffusion | 2023 | O(n^2 * T) | O(n^2) | `diffusion-model` `protein-design` `structure-generation` |
 | ProteinMPNN | 2022 | O(n^2 * d) | O(n^2) | `protein-design` `inverse-folding` `graph-neural-network` |
 | ESM-1v | 2021 | O(n^2 * d) | O(n^2) | `variant-effect` `zero-shot` `pathogenicity` |

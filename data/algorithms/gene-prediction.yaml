@@ -79,7 +79,7 @@ algorithms:
     year: 2008
     category: gene-prediction
     subcategory: eukaryotic
-    paper_url: https://doi.org/10.1186/1471-2105-9-491
+    paper_url: https://doi.org/10.1101/gr.6743907
     implementation_url: https://github.com/Yandell-Lab/maker
     related_tools:
       - AUGUSTUS
@@ -160,31 +160,6 @@ algorithms:
       - gene-finding
       - classic
 
-  - id: augustus-gp
-    name: AUGUSTUS
-    description: |
-      基于广义隐马尔可夫模型的真核基因从头预测工具，能准确预测基因结构包括外显子、内含子、UTR 和剪接位点。
-      该方法支持整合 RNA-seq 和同源蛋白等外部证据作为提示信息，显著提高新基因组注释的预测准确性。
-    purpose: 真核生物基因结构从头预测
-    time_complexity: O(n * s^2)
-    space_complexity: O(n * s)
-    year: 2005
-    category: gene-prediction
-    subcategory: eukaryotic
-    paper_url: https://doi.org/10.1093/nar/gki356
-    related_tools:
-      - GeneMark
-      - SNAP
-      - BRAKER
-    tags:
-      - gene-prediction
-      - eukaryotic
-      - hmm
-      - ab-initio
-    difficulty: intermediate
-    language:
-      - C++
-
   - id: genemark-es
     name: GeneMark-ES
     description: |
@@ -196,7 +171,8 @@ algorithms:
     year: 2005
     category: gene-prediction
     subcategory: prokaryotic
-    paper_url: https://doi.org/10.1093/nar/gki138
+    paper_url: https://doi.org/10.1093/nar/gki937
+    implementation_url: http://topaz.gatech.edu/GeneMark/
     related_tools:
       - AUGUSTUS
       - Prodigal
@@ -206,56 +182,6 @@ algorithms:
       - hmm
       - prokaryotic
       - self-training
-    difficulty: intermediate
-    language:
-      - C
-
-  - id: prodigal-gp
-    name: Prodigal
-    description: |
-      高效的原核基因识别工具，使用动态规划和自训练策略自动学习物种特异性编码偏好性进行基因预测。
-      该方法无需外部训练数据即可准确预测蛋白编码基因，支持宏基因组模式处理混合物种组装数据。
-    purpose: 原核生物蛋白编码基因的快速从头预测
-    time_complexity: O(n)
-    space_complexity: O(n)
-    year: 2010
-    category: gene-prediction
-    subcategory: prokaryotic
-    paper_url: https://doi.org/10.1186/1471-2105-11-119
-    related_tools:
-      - GeneMark
-      - Glimmer
-      - FragGeneScan
-    tags:
-      - gene-prediction
-      - prokaryotic
-      - fast
-      - metagenome
-    difficulty: beginner
-    language:
-      - C
-
-  - id: glimmer-gp
-    name: Glimmer
-    description: |
-      基于插值马尔可夫模型的微生物基因发现工具，通过从训练序列中学习编码区统计特征高效识别开放阅读框。
-      该方法是原核基因预测领域的经典算法，在完整基因组和草图组装中都能提供可靠的基因边界和起始位点预测。
-    purpose: 原核基因组的开放阅读框和基因边界预测
-    time_complexity: O(n)
-    space_complexity: O(n)
-    year: 1998
-    category: gene-prediction
-    subcategory: prokaryotic
-    paper_url: https://doi.org/10.1093/nar/26.2.544
-    related_tools:
-      - Prodigal
-      - GeneMark
-      - FragGeneScan
-    tags:
-      - gene-prediction
-      - prokaryotic
-      - imm
-      - classic
     difficulty: intermediate
     language:
       - C
@@ -272,6 +198,7 @@ algorithms:
     category: gene-prediction
     subcategory: prokaryotic
     paper_url: https://doi.org/10.1093/nar/gkm160
+    implementation_url: https://services.healthtech.dtu.dk/services/RNAmmer-1.2/
     related_tools:
       - Barrnap
       - BLAST

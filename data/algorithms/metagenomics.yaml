@@ -181,6 +181,7 @@ algorithms:
   category: metagenomics
   subcategory: functional-profiling
   paper_url: https://doi.org/10.1038/s41592-018-0176-y
+  implementation_url: https://github.com/biobakery/humann
   related_tools:
   - MetaPhlAn
   - KEGG
@@ -206,7 +207,8 @@ algorithms:
   year: 2017
   category: metagenomics
   subcategory: taxonomic-profiling
-  paper_url: https://doi.org/10.1186/s40168-017-0357-4
+  paper_url: https://doi.org/10.1038/nmeth.2693
+  implementation_url: https://github.com/motu-tool/mOTUs
   related_tools:
   - MetaPhlAn
   - Kraken2
@@ -234,6 +236,7 @@ algorithms:
   category: metagenomics
   subcategory: taxonomic-profiling
   paper_url: https://doi.org/10.1038/s41587-019-0209-9
+  implementation_url: https://github.com/qiime2/qiime2
   related_tools:
   - mothur
   - MetaPhlAn
@@ -259,7 +262,8 @@ algorithms:
   year: 2017
   category: metagenomics
   subcategory: taxonomic-profiling
-  paper_url: https://doi.org/10.7717/peerj-cs.116
+  paper_url: https://doi.org/10.7717/peerj-cs.104
+  implementation_url: https://github.com/jenniferlu717/Bracken
   related_tools:
   - Kraken2
   - MetaPhlAn
@@ -286,6 +290,7 @@ algorithms:
   category: metagenomics
   subcategory: taxonomic-profiling
   paper_url: https://doi.org/10.1038/s41587-023-01688-w
+  implementation_url: https://github.com/biobakery/MetaPhlAn
   related_tools:
   - Kraken2
   - mOTUs
@@ -296,57 +301,5 @@ algorithms:
   - enhanced
   - clade-specific
   difficulty: intermediate
-  language:
-  - Python
-- id: metabat2-binning
-  name: MetaBAT 2
-  description: '利用四核苷酸频率和覆盖度信息的自适应宏基因组分箱方法，通过概率模型将组装重叠群聚类为微生物基因组单元。
-
-    该方法在精度和召回率之间实现了良好平衡，支持深度和浅层测序数据，是环境微生物学研究中 MAG 构建的主力工具。
-
-    '
-  purpose: 自适应宏基因组重叠群分箱与基因组恢复
-  time_complexity: O(n * c)
-  space_complexity: O(n)
-  year: 2019
-  category: metagenomics
-  subcategory: taxonomic-profiling
-  paper_url: https://doi.org/10.1186/s13059-019-1893-y
-  related_tools:
-  - MaxBin 2
-  - CONCOCT
-  - DAS Tool
-  tags:
-  - binning
-  - metagenome
-  - adaptive
-  - contig
-  difficulty: intermediate
-  language:
-  - C++
-- id: metapost
-  name: metaPOST
-  description: '宏基因组组装后处理与精修工具，通过整合覆盖度一致性和连接图信息检测并纠正组装中的错误和嵌合体重叠群。
-
-    该方法能显著提升宏基因组组装的质量指标，减少假阳性重叠群对下游分析的干扰。
-
-    '
-  purpose: 宏基因组组装结果的后处理与质量提升
-  time_complexity: O(n * c)
-  space_complexity: O(n)
-  year: 2021
-  category: metagenomics
-  subcategory: functional-profiling
-  paper_url: https://doi.org/10.1038/s41592-021-01159-7
-  related_tools:
-  - MetaBAT 2
-  - CheckM
-  - DAS Tool
-  tags:
-  - post-processing
-  - refinement
-  - assembly
-  - quality
-  difficulty: advanced
   language:
   - Python

@@ -26,33 +26,6 @@ algorithms:
     language:
       - Python
 
-  - id: esm-fold
-    name: ESMFold
-    description: |
-      基于 ESM-2 语言模型的端到端蛋白质结构预测方法，无需多序列比对即可从
-      单条氨基酸序列直接预测三维结构。该方法推理速度比 AlphaFold 快一个数量级，
-      适合大规模蛋白质组的结构预测。
-    purpose: 基于语言模型的快速端到端结构预测
-    time_complexity: O(n^2)
-    space_complexity: O(n^2)
-    year: 2023
-    category: protein-language-model
-    subcategory: protein-function-prediction
-    paper_url: https://doi.org/10.1126/science.ade2574
-    implementation_url: https://github.com/facebookresearch/esm
-    related_tools:
-      - AlphaFold
-      - OmegaFold
-      - RoseTTAFold
-    tags:
-      - structure-prediction
-      - single-sequence
-      - fast
-      - language-model
-    difficulty: intermediate
-    language:
-      - Python
-
   - id: prottrans
     name: ProtTrans
     description: |
@@ -65,7 +38,7 @@ algorithms:
     year: 2021
     category: protein-language-model
     subcategory: protein-lm
-    paper_url: https://doi.org/10.1073/pnas.2103670118
+    paper_url: https://doi.org/10.1109/TPAMI.2021.3095381
     implementation_url: https://github.com/agemagician/ProtTrans
     related_tools:
       - ESM-2

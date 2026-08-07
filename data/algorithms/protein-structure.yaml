@@ -102,7 +102,7 @@ algorithms:
     year: 1993
     category: protein-structure
     subcategory: template-based
-    paper_url: https://doi.org/10.1002/jcc.540140211
+    paper_url: https://doi.org/10.1006/jmbi.1993.1626
     implementation_url: https://salilab.org/modeller/
     related_tools:
       - Rosetta
@@ -240,6 +240,7 @@ algorithms:
     category: protein-structure
     subcategory: ab-initio
     paper_url: https://doi.org/10.48550/arXiv.2410.17155
+    implementation_url: https://github.com/chaidiscovery/chai-lab
     related_tools:
       - AlphaFold3
       - Boltz-1
@@ -306,6 +307,7 @@ algorithms:
     category: protein-structure
     subcategory: template-based
     paper_url: https://doi.org/10.1093/nar/gki524
+    implementation_url: https://zhanggroup.org/TM-align/
     related_tools:
       - DALI
       - Foldseek

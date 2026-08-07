@@ -180,7 +180,8 @@ algorithms:
   year: 2014
   category: functional-annotation
   subcategory: domain-based
-  paper_url: https://doi.org/10.1093/nar/gkz961
+  paper_url: https://doi.org/10.1093/nar/gky1100
+  implementation_url: https://www.ebi.ac.uk/interpro/
   related_tools:
   - InterProScan
   - Pfam
@@ -204,6 +205,7 @@ algorithms:
   category: functional-annotation
   subcategory: domain-based
   paper_url: https://doi.org/10.1038/s41587-019-0036-z
+  implementation_url: https://services.healthtech.dtu.dk/services/SignalP-6.0/
   related_tools:
   - TMHMM
   - Phobius
@@ -227,6 +229,7 @@ algorithms:
   category: functional-annotation
   subcategory: domain-based
   paper_url: https://doi.org/10.1006/jmbi.2000.4315
+  implementation_url: https://services.healthtech.dtu.dk/services/TMHMM-2.0/
   related_tools:
   - Phobius
   - SignalP
@@ -273,7 +276,7 @@ algorithms:
   year: 2021
   category: functional-annotation
   subcategory: homology-based
-  paper_url: https://doi.org/10.1093/bioinformatics/btab123
+  paper_url: https://doi.org/10.1099/mgen.0.000685
   implementation_url: https://github.com/oschwengers/bakta
   related_tools:
   - Prokka

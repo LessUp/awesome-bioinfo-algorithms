@@ -102,7 +102,7 @@ algorithms:
     year: 2012
     category: epigenomics
     subcategory: methylation
-    paper_url: https://doi.org/10.1186/1471-2105-13-87
+    paper_url: https://doi.org/10.1186/gb-2012-13-10-r87
     implementation_url: https://github.com/al2na/methylKit
     related_tools:
       - Bismark
@@ -125,7 +125,7 @@ algorithms:
     year: 2014
     category: epigenomics
     subcategory: methylation
-    paper_url: https://doi.org/10.1093/biostatistics/kxu022
+    paper_url: https://doi.org/10.1093/nar/gku154
     implementation_url: https://bioconductor.org/packages/DSS/
     related_tools:
       - methylKit

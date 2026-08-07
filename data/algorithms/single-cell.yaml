@@ -102,7 +102,7 @@ algorithms:
     year: 2021
     category: single-cell
     subcategory: sc-preprocessing
-    paper_url: https://doi.org/10.1093/gigascience/giab074
+    paper_url: https://doi.org/10.1101/2021.05.05.442755
     implementation_url: https://github.com/alexdobin/STAR
     related_tools:
       - Cell Ranger
@@ -220,7 +220,8 @@ algorithms:
     year: 2021
     category: single-cell
     subcategory: sc-clustering
-    paper_url: https://doi.org/10.1038/s41467-021-25548-w
+    paper_url: https://doi.org/10.1038/s41592-018-0229-2
+    implementation_url: https://github.com/scverse/scvi-tools
     related_tools:
       - scVI
       - CellTypist
@@ -246,6 +247,7 @@ algorithms:
     category: single-cell
     subcategory: sc-clustering
     paper_url: https://doi.org/10.1038/s41587-021-01001-7
+    implementation_url: https://github.com/theislab/scarches
     related_tools:
       - scVI
       - scANVI
@@ -270,7 +272,8 @@ algorithms:
     year: 2022
     category: single-cell
     subcategory: sc-clustering
-    paper_url: https://doi.org/10.1016/j.immuni.2022.07.010
+    paper_url: https://doi.org/10.1126/science.abl5197
+    implementation_url: https://github.com/Teichlab/celltypist
     related_tools:
       - scANVI
       - scVI
@@ -296,6 +299,7 @@ algorithms:
     category: single-cell
     subcategory: sc-clustering
     paper_url: https://doi.org/10.1038/nmeth.4463
+    implementation_url: https://github.com/aertslab/pySCENIC
     related_tools:
       - Scanpy
       - Seurat
@@ -322,6 +326,7 @@ algorithms:
     category: single-cell
     subcategory: sc-preprocessing
     paper_url: https://doi.org/10.1038/s41587-021-00870-2
+    implementation_url: https://github.com/pachterlab/kallisto
     related_tools:
       - Cell Ranger
       - STARsolo
@@ -347,6 +352,7 @@ algorithms:
     category: single-cell
     subcategory: sc-preprocessing
     paper_url: https://doi.org/10.1038/s41592-022-01408-3
+    implementation_url: https://github.com/COMBINE-lab/alevin-fry
     related_tools:
       - Alevin
       - kallisto-bustools

@@ -153,7 +153,7 @@ algorithms:
   year: 2014
   category: phylogenetics
   subcategory: character-method
-  paper_url: https://doi.org/10.1093/molbev/mst024
+  paper_url: https://doi.org/10.1371/journal.pcbi.1003537
   implementation_url: https://github.com/CompEvol/beast2
   related_tools:
   - BEAST
@@ -200,7 +200,7 @@ algorithms:
   year: 2018
   category: phylogenetics
   subcategory: character-method
-  paper_url: https://doi.org/10.1093/molbev/msx270
+  paper_url: https://doi.org/10.1093/bioinformatics/btu462
   implementation_url: https://github.com/smirarab/ASTRAL
   related_tools:
   - ASTRAL-III
@@ -244,7 +244,8 @@ algorithms:
   year: 2003
   category: phylogenetics
   subcategory: character-method
-  paper_url: https://doi.org/10.1093/nar/gkh368
+  paper_url: https://doi.org/10.1080/10635150390235520
+  implementation_url: https://github.com/stephaneguindon/phyml
   related_tools:
   - RAxML-NG
   - IQ-TREE

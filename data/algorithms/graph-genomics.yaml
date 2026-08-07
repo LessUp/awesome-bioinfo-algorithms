@@ -11,7 +11,7 @@ algorithms:
     year: 2020
     category: graph-genomics
     subcategory: pangenome
-    paper_url: https://doi.org/10.1093/bioinformatics/btaa743
+    paper_url: https://doi.org/10.1186/s13059-020-02168-z
     implementation_url: https://github.com/lh3/minigraph
     related_tools:
       - vg
@@ -22,30 +22,6 @@ algorithms:
       - graph-alignment
       - minimizer
       - structural-variant
-    difficulty: advanced
-    language:
-      - C++
-
-  - id: hifibd
-    name: HiFiBD
-    description: |
-      专为 PacBio HiFi 数据设计的泛基因组图分型方法，利用图结构中的变异信息
-      提高低频变异的检测灵敏度。该方法可直接在泛基因组图上进行比对和分型。
-    purpose: 泛基因组图上的 HiFi 数据分型
-    time_complexity: O(n * d)
-    space_complexity: O(n)
-    year: 2022
-    category: graph-genomics
-    subcategory: variation-graph
-    related_tools:
-      - VG
-      - Minigraph
-      - GraphAligner
-    tags:
-      - variation-graph
-      - hifi
-      - genotyping
-      - pangenome
     difficulty: advanced
     language:
       - C++
@@ -61,7 +37,8 @@ algorithms:
     year: 2023
     category: graph-genomics
     subcategory: variation-graph
-    paper_url: https://doi.org/10.1186/s13059-023-03029-1
+    paper_url: https://doi.org/10.1093/bioadv/vbae027
+    implementation_url: https://github.com/tsnorri/panvc3
     related_tools:
       - VG
       - Minigraph
@@ -116,7 +93,7 @@ algorithms:
     year: 2017
     category: graph-genomics
     subcategory: variation-graph
-    paper_url: https://doi.org/10.1038/nbt.3820
+    paper_url: https://doi.org/10.1038/nbt.4227
     implementation_url: https://github.com/vgteam/vg
     related_tools:
       - Minigraph
@@ -143,7 +120,7 @@ algorithms:
     year: 2017
     category: graph-genomics
     subcategory: variation-graph
-    paper_url: https://doi.org/10.1093/bioinformatics/btw513
+    paper_url: https://doi.org/10.1038/nbt.4227
     implementation_url: https://github.com/jltsiren/gcsa2
     related_tools:
       - VG
@@ -170,7 +147,7 @@ algorithms:
     year: 2019
     category: graph-genomics
     subcategory: variation-graph
-    paper_url: https://doi.org/10.1093/bioinformatics/btz161
+    paper_url: https://doi.org/10.1186/s13059-020-02157-2
     implementation_url: https://github.com/maickrau/GraphAligner
     related_tools:
       - VG
@@ -196,7 +173,7 @@ algorithms:
     year: 2020
     category: graph-genomics
     subcategory: pangenome
-    paper_url: https://doi.org/10.1093/bioinformatics/btaa767
+    paper_url: https://doi.org/10.1093/bioinformatics/btac308
     implementation_url: https://github.com/pangenome/odgi
     related_tools:
       - PGGB
@@ -222,7 +199,7 @@ algorithms:
     year: 2020
     category: graph-genomics
     subcategory: pangenome
-    paper_url: https://doi.org/10.1093/bioinformatics/btaa767
+    paper_url: https://doi.org/10.1101/2022.02.14.480413
     implementation_url: https://github.com/ekg/seqwish
     related_tools:
       - PGGB

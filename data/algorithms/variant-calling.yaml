@@ -216,8 +216,8 @@ algorithms:
     year: 2024
     category: variant-calling
     subcategory: snv
-    paper_url: https://doi.org/10.1101/2024.07.02.601671
-    implementation_url: ""
+    paper_url: https://doi.org/10.1038/s41587-025-02839-x
+    implementation_url: https://github.com/google/deepsomatic
     related_tools:
       - MuTect2
       - DeepVariant
@@ -239,7 +239,7 @@ algorithms:
     year: 2021
     category: variant-calling
     subcategory: snv
-    paper_url: https://doi.org/10.1038/s41587-020-0711-0
+    paper_url: https://doi.org/10.1038/s41587-021-00861-3
     implementation_url: https://github.com/luntergroup/octopus
     related_tools:
       - FreeBayes
@@ -262,7 +262,7 @@ algorithms:
     year: 2017
     category: variant-calling
     subcategory: structural
-    paper_url: https://doi.org/10.1186/s13059-021-02422-y
+    paper_url: https://doi.org/10.1101/gr.222109.117
     implementation_url: https://github.com/PapenfussLab/gridss
     related_tools:
       - Delly
@@ -284,7 +284,7 @@ algorithms:
     year: 2020
     category: variant-calling
     subcategory: structural
-    paper_url: https://doi.org/10.1038/s41592-020-01047-6
+    paper_url: https://doi.org/10.1186/s13059-020-02107-y
     implementation_url: https://github.com/tjiangHIT/cuteSV
     related_tools:
       - Sniffles2
@@ -307,7 +307,7 @@ algorithms:
     year: 2016
     category: variant-calling
     subcategory: structural
-    paper_url: https://doi.org/10.1038/nmeth.4139
+    paper_url: https://doi.org/10.1101/gr.221028.117
     implementation_url: https://github.com/walaj/svaba
     related_tools:
       - Manta

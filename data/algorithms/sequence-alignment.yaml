@@ -328,7 +328,7 @@ algorithms:
   year: 2005
   category: sequence-alignment
   subcategory: multiple
-  paper_url: https://doi.org/10.1093/bioinformatics/bti060
+  paper_url: https://doi.org/10.1186/1471-2105-6-298
   implementation_url: https://github.com/TimoLassmann/kalign
   related_tools:
   - MAFFT
@@ -356,6 +356,7 @@ algorithms:
   category: sequence-alignment
   subcategory: multiple
   paper_url: https://doi.org/10.1093/bioinformatics/18.3.452
+  implementation_url: https://github.com/yangao07/abPOA
   related_tools:
   - MAFFT
   - MUSCLE
@@ -423,7 +424,7 @@ algorithms:
   year: 2017
   category: sequence-alignment
   subcategory: pairwise
-  paper_url: https://doi.org/10.1093/bioinformatics/btx780
+  paper_url: https://doi.org/10.1093/bioinformatics/btw753
   implementation_url: https://github.com/Martinsos/edlib
   related_tools:
   - parasail

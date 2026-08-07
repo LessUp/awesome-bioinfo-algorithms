@@ -66,6 +66,7 @@ algorithms:
     category: population-genetics
     subcategory: pca-structure
     paper_url: https://doi.org/10.1093/genetics/155.2.945
+    implementation_url: https://web.stanford.edu/group/pritchardlab/structure.html
     related_tools:
       - ADMIXTURE
       - fastSTRUCTURE
@@ -119,7 +120,7 @@ algorithms:
     category: population-genetics
     subcategory: gwas
     paper_url: https://doi.org/10.1038/ng.3190
-    implementation_url: https://data.broadinstitute.org/alkesgroup/BOLT-LMM/
+    implementation_url: https://alkesgroup.broadinstitute.org/BOLT-LMM/BOLT-LMM_manual.html
     related_tools:
       - GCTA
       - SAIGE
@@ -197,7 +198,7 @@ algorithms:
     year: 1989
     category: population-genetics
     subcategory: selection-signature
-    paper_url: https://doi.org/10.1093/oxfordjournals.molbev.a040563
+    paper_url: https://doi.org/10.1093/genetics/123.3.585
     related_tools:
       - VCFtools
       - popgenome
@@ -223,7 +224,7 @@ algorithms:
     year: 2014
     category: population-genetics
     subcategory: selection-signature
-    paper_url: https://doi.org/10.1093/bioinformatics/btu514
+    paper_url: https://doi.org/10.1093/molbev/msu211
     implementation_url: https://github.com/szpiech/selscan
     related_tools:
       - SweeD
@@ -276,7 +277,7 @@ algorithms:
     year: 2016
     category: population-genetics
     subcategory: selection-signature
-    paper_url: https://doi.org/10.1093/molbev/msw055
+    paper_url: https://doi.org/10.1111/1755-0998.12592
     implementation_url: https://github.com/bcm-uga/pcadapt
     related_tools:
       - BayeScan
@@ -303,7 +304,8 @@ algorithms:
     year: 2008
     category: population-genetics
     subcategory: selection-signature
-    paper_url: https://doi.org/10.1093/molbev/msn067
+    paper_url: https://doi.org/10.1534/genetics.108.092221
+    implementation_url: http://cmpg.unibe.ch/software/BayeScan/
     related_tools:
       - PCAdapt
       - OutFLANK
