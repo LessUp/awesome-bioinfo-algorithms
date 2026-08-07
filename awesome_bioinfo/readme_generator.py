@@ -8,7 +8,7 @@ import re
 
 from .algorithm_registry import AlgorithmRegistry
 from .category_manager import CategoryManager
-from .schema import DIFFICULTY_LABELS_BILINGUAL, AlgorithmEntry, Category
+from .schema import AlgorithmEntry, Category
 
 
 class ReadmeGenerator:
@@ -202,68 +202,6 @@ class ReadmeGenerator:
 
             lines.append("")
 
-        return "\n".join(lines)
-
-    def generate_algorithm_entry(self, algo: AlgorithmEntry) -> str:
-        """Generate markdown for a single algorithm entry (full detail format)."""
-        lines = []
-
-        # Algorithm name as header (with year if available)
-        badge = algo.get_year_badge()
-        name_display = f"{badge} {algo.name}" if badge else algo.name
-        if algo.year:
-            lines.append(f"\n#### {name_display} ({algo.year})")
-        else:
-            lines.append(f"\n#### {name_display}")
-        lines.append("")
-
-        # Description
-        lines.append(algo.description.strip())
-        lines.append("")
-
-        # Purpose
-        lines.append(f"**用途**: {algo.purpose}")
-
-        # Complexity
-        lines.append(f"**时间**: {algo.time_complexity}")
-        if algo.space_complexity:
-            lines.append(f"**空间**: {algo.space_complexity}")
-
-        # Links
-        if algo.paper_url:
-            lines.append(f"**论文**: [{algo.paper_url}]({algo.paper_url})")
-        if algo.implementation_url:
-            lines.append(f"**实现**: [{algo.implementation_url}]({algo.implementation_url})")
-
-        # Related tools
-        if algo.related_tools:
-            tools = ", ".join(algo.related_tools)
-            lines.append(f"**相关工具**: {tools}")
-
-        # Tags
-        if algo.tags:
-            tags = " ".join([f"`{tag}`" for tag in algo.tags])
-            lines.append(f"**标签**: {tags}")
-
-        # Difficulty
-        if algo.difficulty:
-            label = DIFFICULTY_LABELS_BILINGUAL.get(algo.difficulty, algo.difficulty)
-            lines.append(f"**难度**: {label}")
-
-        # Implementation languages
-        if algo.language:
-            langs = ", ".join(algo.language)
-            lines.append(f"**语言**: {langs}")
-
-        # Extended references
-        if algo.references:
-            lines.append("**参考资料**:")
-            for ref in algo.references:
-                title = ref.title or ref.url
-                ref_type = f" [{ref.type}]" if ref.type else ""
-                lines.append(f"  - [{title}]({ref.url}){ref_type}")
-
-        lines.append("")
         return "\n".join(lines)
 
     def _get_subcategory_algorithms(

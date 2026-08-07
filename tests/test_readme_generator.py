@@ -134,43 +134,6 @@ def test_property_6_toc_completeness(data):
 
 @settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
 @given(data=registry_with_categories_strategy())
-def test_property_5_markdown_output_consistency(data):
-    """
-    Feature: awesome-bioinfo-algorithms, Property 5: Markdown Output Consistency
-
-    For any algorithm entry, the generated Markdown output SHALL contain
-    the algorithm name, description, purpose, and time complexity in a consistent format.
-
-    Validates: Requirements 2.3
-    """
-    categories, algorithms = data
-
-    registry = AlgorithmRegistry()
-    registry.from_algorithms(algorithms)
-
-    category_manager = CategoryManager()
-    category_manager.from_categories(categories)
-
-    generator = ReadmeGenerator(registry, category_manager)
-
-    for algo in algorithms:
-        output = generator.generate_algorithm_entry(algo)
-
-        # Verify required fields are present
-        assert algo.name in output, f"Algorithm name '{algo.name}' should be in output"
-        assert algo.description.strip() in output, "Algorithm description should be in output"
-        assert algo.purpose in output, f"Algorithm purpose '{algo.purpose}' should be in output"
-        assert algo.time_complexity in output, (
-            f"Time complexity '{algo.time_complexity}' should be in output"
-        )
-
-        # Verify consistent format markers (Chinese labels)
-        assert "**用途**:" in output, "Purpose should have consistent label"
-        assert "**时间**:" in output, "Time complexity should have consistent label"
-
-
-@settings(max_examples=100, suppress_health_check=[HealthCheck.filter_too_much])
-@given(data=registry_with_categories_strategy())
 def test_property_9_anchor_link_validity(data):
     """
     Feature: awesome-bioinfo-algorithms, Property 9: Anchor Link Format Validity
